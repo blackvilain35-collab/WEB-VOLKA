@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VOLKA STORE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0,0&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f7e7b7;--ink:#171717;--muted:#625d4f;--green:#80d83d;
+  --red:#ff4b3e;--yellow:#ffbf32;--blue:#54b9e8;--cream:#fff3c9;
+  --shadow:5px 5px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#111;color:var(--ink);font-family:"Space Mono",monospace;min-height:100dvh}
+button,input{font:inherit}button{cursor:pointer}button:active{transform:translate(1px,1px)}
+.app{width:min(100%,520px);min-height:100dvh;margin:auto;background:
+radial-gradient(circle at 15% 10%,rgba(255,255,255,.35) 0 2px,transparent 3px),
+radial-gradient(circle at 70% 35%,rgba(0,0,0,.05) 0 1px,transparent 2px),var(--paper);
+background-size:18px 18px,23px 23px,auto;border-left:3px solid var(--ink);border-right:3px solid var(--ink);position:relative}
+.page{display:none;min-height:100dvh}.page.active{display:block}.hidden{display:none!important}
+.material-symbols-rounded{vertical-align:middle}
+.topbar,.detail-top,.checkout-head{display:flex;align-items:center;gap:10px;padding:13px;border-bottom:3px solid var(--ink);background:#ffd06a;position:sticky;top:0;z-index:50}
+.logo{width:44px;height:44px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);flex:none}
+.logo .material-symbols-rounded{font-size:27px}.top-title{font-size:16px;font-weight:700;line-height:1.1}.top-sub{font-size:9px;margin-top:4px}.header-spacer{flex:1}
+.header-btn,.back-btn{width:42px;height:42px;border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;flex:none;position:relative;overflow:visible}
+.cart-count{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:1px 5px;border:2px solid var(--ink);background:var(--red);font-size:9px;font-weight:700;display:grid;place-items:center;border-radius:50%;z-index:10;line-height:1;color:#fff}
+.hero{padding:14px}.paint-card{border:3px solid var(--ink);box-shadow:var(--shadow);background:var(--green);padding:15px;position:relative;transform:rotate(-.3deg)}
+.badge{display:inline-flex;align-items:center;gap:7px;border:2px solid var(--ink);background:#f9edc8;padding:6px 9px;font-size:10px;font-weight:700}
+h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line-height:1.7;margin:0}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:15px 14px 9px;font-size:15px;font-weight:700}
+.section-title span:first-child{border-bottom:3px solid var(--ink)}
+
+/* BANNER: video 4/3 (besar) + foto 16/9 (pendek) auto-slide */
+.banner-wrap{padding:0 14px;display:flex;flex-direction:column;gap:11px}
+.home-video-box{border:3px solid var(--ink);box-shadow:var(--shadow);overflow:hidden;background:#111;position:relative}
+.home-video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#111}
+.video-sound-btn{position:absolute;top:10px;right:10px;width:44px;height:44px;border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;z-index:7;padding:0}
+.video-sound-btn .material-symbols-rounded{font-size:22px}
+.video-sound-btn.on{background:var(--green)}
+.video-sound-btn.off{background:var(--red);color:#fff}
+.video-sound-btn.off .material-symbols-rounded{color:#fff}
+.home-banner-box{border:3px solid var(--ink);box-shadow:var(--shadow);overflow:hidden;background:#111;position:relative}
+.home-banner{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:opacity .5s ease}
+.banner-dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px;z-index:6}
+.banner-dot{width:10px;height:10px;padding:0;border:2px solid var(--ink);background:#fff;cursor:pointer;border-radius:50%}
+.banner-dot.active{background:var(--red)}
+
+.store{padding:0 14px 100px}.search{display:flex;align-items:center;gap:8px;border:3px solid var(--ink);background:#fff8dd;padding:8px 10px;box-shadow:3px 3px 0 var(--ink);margin-bottom:15px}
+.search input{border:0;outline:0;background:transparent;width:100%;font-size:12px;color:var(--ink)}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.product{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:8px;display:flex;flex-direction:column;min-width:0;cursor:pointer;transition:.12s ease}
+.product:hover{transform:translate(-1px,-1px)}.product-img{width:100%;aspect-ratio:1/1;object-fit:cover;border:2px solid var(--ink);background:#ddd;display:block}
+.product-name{font-size:12px;font-weight:700;margin:9px 1px 6px;line-height:1.35}.product-price{margin-top:auto}
+.old{text-decoration:line-through;color:#7d7563;font-size:9px}.new{font-size:15px;font-weight:700}
+.discount{display:inline-block;margin-top:5px;padding:3px 5px;border:2px solid var(--ink);background:var(--red);font-size:8px;font-weight:700;color:#fff}
+.empty{grid-column:1/-1;border:3px solid var(--ink);padding:20px;text-align:center;background:var(--cream);font-size:11px}
+.store-footer{margin:25px 0 20px;padding:16px 10px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);text-align:center;font-size:9px;line-height:1.7}
+.store-footer strong{display:block;font-size:11px;margin-bottom:4px}
+
+.detail-page{min-height:100dvh;padding-bottom:95px}.detail-top{position:sticky;top:0;z-index:60;padding:10px}.detail-title{font-size:13px;font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.detail-content{width:100%}.detail-gallery{width:100%;background:#111;border-bottom:3px solid var(--ink);position:relative;overflow:hidden}
+.detail-slides{display:flex;transition:transform .3s ease;touch-action:pan-y}.detail-slide{min-width:100%;aspect-ratio:1/1;background:#222}.detail-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border:2px solid var(--ink);background:var(--cream);display:grid;place-items:center;z-index:5}
+.gallery-prev{left:10px}.gallery-next{right:10px}.gallery-dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:5px;z-index:6}
+.gallery-dot{width:9px;height:9px;padding:0;border:2px solid var(--ink);background:#fff}.gallery-dot.active{background:var(--red)}
+.detail-info{padding:16px 14px 0}.detail-name{font-size:22px;line-height:1.15;font-weight:700}.detail-prices{margin-top:12px;display:flex;align-items:end;flex-wrap:wrap;gap:8px}
+.detail-old{font-size:12px;text-decoration:line-through;color:#766e5e}.detail-new{font-size:22px;font-weight:700}.detail-discount{border:2px solid var(--ink);background:var(--red);padding:4px 6px;font-size:9px;font-weight:700;color:#fff}
+.detail-description{margin-top:17px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;font-size:11px;line-height:1.75;white-space:pre-line}
+.detail-actions{position:fixed;z-index:70;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);padding:10px;display:grid;grid-template-columns:1fr 1.25fr;gap:8px;border-top:3px solid var(--ink);background:#fff0bf}
+.action-cart,.action-buy,.checkout-btn,.wa-button{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:12px 5px;font-size:10px;font-weight:700}
+.action-cart{background:var(--yellow)}.action-buy{background:var(--red);color:#fff}
+
+.cart-page{padding-bottom:100px}.cart-list{padding:0 14px}.cart-item{display:grid;grid-template-columns:72px 1fr 42px;gap:10px;align-items:center;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:10px;margin-bottom:11px}
+.cart-img{width:72px;height:72px;object-fit:cover;border:2px solid var(--ink)}.cart-name{font-size:11px;font-weight:700;line-height:1.35}.cart-price{margin-top:5px;font-size:10px;font-weight:700}
+.qty{display:flex;align-items:center;gap:4px;margin-top:7px}.qty button{width:26px;height:26px;border:2px solid var(--ink);background:var(--yellow);display:grid;place-items:center;font-weight:700;font-size:12px}.qty span{min-width:24px;text-align:center;font-size:10px;font-weight:700}
+.cart-remove{border:3px solid var(--ink);background:var(--red);width:42px;height:42px;display:grid;place-items:center;box-shadow:2px 2px 0 var(--ink);padding:0;align-self:center}
+.cart-remove .material-symbols-rounded{font-size:22px;color:#fff;line-height:1}
+.cart-total{margin:17px 14px;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:14px;display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:700}
+.checkout-btn{margin:0 14px;width:calc(100% - 28px);background:var(--red);color:#fff}
+
+.checkout-page{min-height:100dvh;padding-bottom:35px}.checkout-body{padding:14px}.payment-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:14px;text-align:center}
+.payment-title{font-size:17px;font-weight:700;margin-bottom:10px}.qr{width:min(100%,300px);aspect-ratio:1/1;object-fit:contain;background:#fff;border:3px solid var(--ink);display:block;margin:0 auto 12px}
+.payment-note{font-size:9px;line-height:1.7}.order-summary{margin-top:15px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:13px}
+.summary-title{font-size:12px;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:8px}.summary-row{display:flex;justify-content:space-between;gap:10px;font-size:9px;padding:5px 0;border-bottom:1px dashed #777}.summary-row:last-child{border-bottom:0}
+.summary-total{margin-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:700}.checkout-instruction{margin-top:15px;border:3px solid var(--ink);background:var(--blue);box-shadow:4px 4px 0 var(--ink);padding:13px;font-size:10px;line-height:1.7}
+.checkout-instruction strong{display:block;font-size:12px;margin-bottom:7px}.wa-button{width:100%;margin-top:15px;background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:14px;font-size:11px}
+.thanks{text-align:center;margin:25px 0 5px;font-size:11px;line-height:1.7}.thanks strong{display:block;font-size:15px}
+
+.info-grid{padding:0 14px 100px;display:grid;gap:10px}.info-card{border:3px solid var(--ink);background:#ffbd34;box-shadow:4px 4px 0 var(--ink);padding:13px;display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+.info-card:nth-child(2){background:var(--blue)}.info-card:nth-child(3){background:#80d83d}.info-card:nth-child(4){background:#ff7367}
+.info-card .icon{width:42px;height:42px;border:2px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.info-name{font-weight:700;font-size:12px}.info-hint{font-size:9px;margin-top:4px}
+
+.feature-grid{padding:0 14px 100px;display:grid;gap:11px}.feature-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;display:flex;align-items:center;gap:12px;text-align:left;width:100%}
+.feature-card.game{background:var(--green)}.feature-card.converter{background:var(--blue)}.feature-card.music{background:var(--yellow)}.feature-card .feature-icon{width:48px;height:48px;border:3px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.feature-name{font-weight:700;font-size:12px}.feature-hint{font-size:9px;line-height:1.5;margin-top:4px}
+
+.ai-page,.game-page,.converter-page,.music-page{padding-bottom:30px}.tool-body{padding:14px}
+.ai-panel{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);overflow:hidden}.ai-head{display:flex;align-items:center;gap:8px;padding:10px;background:var(--blue);border-bottom:3px solid var(--ink);font-weight:700;font-size:12px}
+.ai-log{min-height:380px;max-height:55dvh;overflow:auto;padding:15px;background:#fff8dd}.msg{margin:10px 0;padding:9px 11px;border:2px solid var(--ink);width:fit-content;max-width:90%;font-size:10px;line-height:1.55;position:relative}
+.msg.bot{background:#fff;border-radius:2px 12px 12px 2px;clip-path:polygon(0 0,100% 0,100% 86%,88% 100%,0 100%)}.msg.user{margin-left:auto;background:var(--green);clip-path:polygon(0 0,100% 0,100% 100%,12% 100%,0 86%)}
+.ai-row{display:flex;gap:6px;padding:10px;border-top:3px solid var(--ink);background:#fff0bf}.ai-row input{flex:1;border:2px solid var(--ink);background:#fff;padding:8px;font-size:10px;outline:none}.ai-row button{border:2px solid var(--ink);background:var(--yellow);padding:7px 9px;font-weight:700;font-size:10px}
+
+/* Naga makan ekor - animasi melingkar */
+.typing-dragon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px}
+.typing-dragon svg{width:26px;height:26px;animation:spinDragon 1.4s linear infinite}
+.typing-dragon svg .tail{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-dasharray:22 45;animation:dragonTail 1.4s ease-in-out infinite}
+.typing-dragon svg .head{fill:var(--green);stroke:var(--ink);stroke-width:1.5}
+@keyframes spinDragon{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes dragonTail{0%,100%{stroke-dasharray:22 45}50%{stroke-dasharray:40 45}}
+
+.game-wrap{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:8px}.game-head{display:flex;justify-content:space-between;color:var(--ink);font-size:10px;padding:5px 2px 8px}
+.snake-canvas{width:100%;aspect-ratio:1/1;display:block;background:#fff8dd;border:2px solid var(--ink);touch-action:none}
+.game-controls{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.game-controls button{height:42px;border:3px solid var(--ink);background:var(--yellow);font-weight:700}.game-controls .empty-control{visibility:hidden}.game-help{margin-top:10px;border:3px solid var(--ink);background:var(--cream);padding:10px;font-size:9px;line-height:1.6}
+
+/* GAME CENTER */
+.game-center-grid{padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.game-center-grid.with-nav{padding-bottom:100px}
+.game-center-card{position:relative;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:.12s ease;overflow:hidden}
+.game-center-card.playable:hover{transform:translate(-1px,-1px)}
+.game-center-card .game-icon{width:52px;height:52px;border:3px solid var(--ink);display:grid;place-items:center;background:var(--yellow)}
+.game-center-card .game-icon .material-symbols-rounded{font-size:30px}
+.game-center-card .game-name{font-size:11px;font-weight:700;line-height:1.3}
+.game-center-card .game-desc{font-size:8px;color:#555;line-height:1.4}
+.game-center-card .play-btn{margin-top:4px;border:2px solid var(--ink);background:var(--green);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-size:9px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.game-center-card .play-btn .material-symbols-rounded{font-size:14px}
+.game-center-card.coming-soon{opacity:.75}
+.game-center-card.coming-soon .game-icon{background:#d8d2c0}
+.game-center-card .soon-badge{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:7px;font-weight:700;padding:3px 6px;border:2px solid var(--ink);letter-spacing:.5px}
+.game-center-card:nth-child(4n+1) .game-icon{background:var(--green)}
+.game-center-card:nth-child(4n+2) .game-icon{background:var(--blue)}
+.game-center-card:nth-child(4n+3) .game-icon{background:var(--yellow)}
+.game-center-card:nth-child(4n+4) .game-icon{background:var(--red)}
+
+/* MUSIC PAGE */
+.music-list-page{padding:14px;display:flex;flex-direction:column;gap:10px}
+.music-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.12s}
+.music-card:hover{transform:translate(-1px,-1px)}
+.music-card.active{background:var(--green)}
+.music-card .music-icon{width:44px;height:44px;border:3px solid var(--ink);background:var(--yellow);display:grid;place-items:center;flex:none}
+.music-card .music-info{flex:1}
+.music-card .music-name{font-size:12px;font-weight:700}
+.music-card .music-status{font-size:9px;margin-top:3px;color:#555}
+.music-controls{margin:14px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;text-align:center}
+.music-controls .now-playing{font-size:11px;font-weight:700;margin-bottom:10px}
+.music-controls .ctrl-row{display:flex;justify-content:center;gap:10px}
+.music-controls .ctrl-row button{width:50px;height:50px;border:3px solid var(--ink);background:var(--yellow);display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink)}
+.music-controls .ctrl-row button.play-btn{background:var(--green);width:60px;height:60px}
+
+.converter-box{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:13px}.dropzone{border:3px dashed var(--ink);background:#fff8dd;padding:20px 12px;text-align:center}.dropzone .material-symbols-rounded{font-size:38px}.dropzone-title{font-size:12px;font-weight:700;margin-top:7px}.dropzone-hint{font-size:9px;line-height:1.5;margin-top:5px}
+.file-input{display:none}.choose-file{display:inline-block;margin-top:12px;border:3px solid var(--ink);background:var(--yellow);box-shadow:3px 3px 0 var(--ink);padding:10px 13px;font-size:10px;font-weight:700;cursor:pointer}
+.file-preview{margin-top:12px;display:none}.preview-media{width:100%;max-height:300px;object-fit:contain;background:#111;border:3px solid var(--ink);display:block}.file-meta{font-size:9px;margin-top:6px;line-height:1.5}
+.upload-btn{width:100%;margin-top:12px;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:13px;font-size:11px;font-weight:700}.progress{height:16px;border:3px solid var(--ink);background:#fff;margin-top:10px;display:none}.progress-bar{height:100%;width:0;background:var(--blue);transition:.2s}.result-box{margin-top:12px;border:3px solid var(--ink);background:#fff;padding:10px;display:none}.result-box input{width:100%;border:2px solid var(--ink);padding:8px;font-size:9px}.copy-btn{margin-top:7px;width:100%;border:2px solid var(--ink);background:var(--yellow);padding:9px;font-size:10px;font-weight:700}
+
+.admin-chat{margin:0 14px 100px}.admin-chat button{width:100%;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:13px;font-weight:700;font-size:11px}
+.nav{position:fixed;z-index:90;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);display:grid;grid-template-columns:repeat(4,1fr);border:3px solid var(--ink);border-bottom:0;background:#fff0bf}
+.nav button{position:relative;border:0;border-right:2px solid var(--ink);padding:8px 4px;background:transparent;font-size:8px;font-weight:700}.nav button:last-child{border-right:0}.nav .material-symbols-rounded{display:block;font-size:23px;margin-bottom:2px}.nav button.active{background:var(--green)}
+@media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
+@media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HOME -->
+<main id="home" class="page active">
+  <div class="topbar">
+    <div class="logo"><span class="material-symbols-rounded">storefront</span></div>
+    <div><div class="top-title">VOLKA STORE</div><div class="top-sub">DIGITAL GOODS • SIMPLE • FAST</div></div>
+    <div class="header-spacer"></div>
+    <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="headerCartCount">0</span></button>
+  </div>
+
+  <section class="hero"><div class="paint-card">
+    <div class="badge"><span class="material-symbols-rounded">auto_awesome</span>WELCOME</div>
+    <h1>Digital stuff,<br>dibikin simpel.</h1>
+    <p>Pilih produk yang kamu butuhkan. Lihat detailnya, masukkan ke keranjang, atau langsung beli sekarang.</p>
+  </div></section>
+
+  <div class="section-title"><span>STORE PREVIEW</span><span class="material-symbols-rounded">arrow_forward</span></div>
+  <div class="banner-wrap">
+    <div class="home-video-box">
+      <video id="homeVideo" class="home-video" src="home.mp4" autoplay muted loop playsinline></video>
+      <button class="video-sound-btn off" id="videoSoundBtn" onclick="toggleVideoSound()" aria-label="Toggle suara video">
+        <span class="material-symbols-rounded" id="videoSoundIcon">volume_off</span>
+      </button>
+    </div>
+    <div class="home-banner-box">
+      <img id="homeBanner" class="home-banner" src="banner1.png" alt="Home Banner">
+      <div class="banner-dots" id="bannerDots"></div>
+    </div>
+  </div>
+
+  <div class="section-title"><span>FITUR STORE</span></div>
+  <section class="feature-grid">
+    <button class="feature-card" onclick="showPage('aiPage')">
+      <div class="feature-icon"><span class="material-symbols-rounded">smart_toy</span></div>
+      <div><div class="feature-name">VOLKA AI</div><div class="feature-hint">Buka halaman chat AI saat tombol ditekan.</div></div>
+    </button>
+    <button class="feature-card game" onclick="showPage('gameCenter')">
+      <div class="feature-icon"><span class="material-symbols-rounded">sports_esports</span></div>
+      <div><div class="feature-name">GAME CENTER</div><div class="feature-hint">20+ game keren langsung dimainkan.</div></div>
+    </button>
+    <button class="feature-card music" onclick="showPage('musicPage')">
+      <div class="feature-icon"><span class="material-symbols-rounded">music_note</span></div>
+      <div><div class="feature-name">MUSIC PLAYER</div><div class="feature-hint">Dengarkan musik favoritmu.</div></div>
+    </button>
+    <button class="feature-card converter" onclick="showPage('converterPage')">
+      <div class="feature-icon"><span class="material-symbols-rounded">upload_file</span></div>
+      <div><div class="feature-name">CONVERT GAMBAR / VIDEO</div><div class="feature-hint">Upload file dan dapatkan link Catbox.</div></div>
+    </button>
+  </section>
+
+  <div class="section-title"><span>CHAT ADMIN</span></div>
+  <div class="admin-chat"><button type="button" onclick="chatAdmin()"><span class="material-symbols-rounded" style="font-size:16px">support_agent</span> CHAT ADMIN</button></div>
+</main>
+
+<!-- STORE -->
+<main id="store" class="page">
+  <div class="topbar">
+    <div class="logo"><span class="material-symbols-rounded">shopping_bag</span></div>
+    <div><div class="top-title">STORE</div><div class="top-sub">PILIH PRODUK YANG KAMU BUTUHKAN</div></div>
+    <div class="header-spacer"></div>
+    <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="storeCartCount">0</span></button>
+  </div>
+  <div class="section-title"><span>ALL PRODUCTS</span></div>
+  <section class="store">
+    <div class="search"><span class="material-symbols-rounded">search</span><input id="search" type="search" placeholder="Cari nama produk..." oninput="renderProducts()"></div>
+    <div class="products" id="products"></div>
+    <div class="store-footer"><strong>VOLKA STORE</strong>Produk digital • Pelayanan cepat • Pemesanan via WhatsApp<br>© 2026 VOLKA STORE. All rights reserved.</div>
+  </section>
+</main>
+
+<!-- INFO -->
+<main id="info" class="page">
+  <div class="topbar"><div class="logo"><span class="material-symbols-rounded">info</span></div><div><div class="top-title">INFO</div><div class="top-sub">TEMUKAN KAMI</div></div></div>
+  <div class="hero"><div class="paint-card">
+    <div class="badge"><span class="material-symbols-rounded">link</span>SOCIAL LINKS</div>
+    <h1>Connect<br>with us.</h1><p>Semua link admin dan media sosial ada di sini.</p>
+  </div></div>
+  <section class="info-grid">
+    <a class="info-card" id="waChannel" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">campaign</span></div><div><div class="info-name">WhatsApp Channel</div><div class="info-hint">Info & update terbaru</div></div></a>
+    <a class="info-card" id="tiktok" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">music_note</span></div><div><div class="info-name">TikTok</div><div class="info-hint">Video & konten store</div></div></a>
+    <a class="info-card" id="xSocial" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">alternate_email</span></div><div><div class="info-name">X</div><div class="info-hint">Update singkat</div></div></a>
+    <a class="info-card" id="saweria" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">volunteer_activism</span></div><div><div class="info-name">Saweria</div><div class="info-hint">Dukung creator</div></div></a>
+  </section>
+</main>
+
+<!-- AI PAGE -->
+<main id="aiPage" class="page ai-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">VOLKA AI</div><div class="top-sub">ASISTEN STORE</div></div>
+  </div>
+  <div class="tool-body"><div class="ai-panel">
+    <div class="ai-head"><span class="material-symbols-rounded">smart_toy</span>VOLKA AI</div>
+    <div class="ai-log" id="aiLog"><div class="msg bot">Halo! Saya VOLKA AI. Ada yang ingin ditanyakan tentang produk atau store?</div></div>
+    <div class="ai-row"><input id="aiInput" placeholder="Tulis pertanyaan..." maxlength="500"><button type="button" onclick="askAI()">KIRIM</button></div>
+  </div></div>
+</main>
+
+<!-- MUSIC PAGE -->
+<main id="musicPage" class="page music-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">MUSIC PLAYER</div><div class="top-sub">PUTAR MUSIK FAVORITMU</div></div>
+  </div>
+  <div class="music-list-page" id="musicListPage"></div>
+  <div class="music-controls">
+    <div class="now-playing" id="nowPlaying">Tidak ada musik diputar</div>
+    <div class="ctrl-row">
+      <button onclick="prevMusic()"><span class="material-symbols-rounded">skip_previous</span></button>
+      <button class="play-btn" onclick="togglePlayMusic()"><span class="material-symbols-rounded" id="playIcon">play_arrow</span></button>
+      <button onclick="nextMusic()"><span class="material-symbols-rounded">skip_next</span></button>
+    </div>
+  </div>
+</main>
+
+<!-- GAME CENTER -->
+<main id="gameCenter" class="page">
+  <div class="topbar">
+    <div class="logo"><span class="material-symbols-rounded">sports_esports</span></div>
+    <div><div class="top-title">GAME CENTER</div><div class="top-sub">PILIH GAME FAVORITMU</div></div>
+    <div class="header-spacer"></div>
+    <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="gameCartCount">0</span></button>
+  </div>
+  <div class="game-center-grid with-nav" id="gameCenterGrid"></div>
+</main>
+
+<!-- GAME PLAY (universal) -->
+<main id="gamePlay" class="page game-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="closeGamePlay()"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title" id="gamePlayTitle">GAME</div><div class="top-sub" id="gamePlaySub">MAIN GAME</div></div>
+  </div>
+  <div class="tool-body"><div class="game-wrap" id="gamePlayBody"></div></div>
+</main>
+
+<!-- SNAKE -->
+<main id="gamePage" class="page game-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="stopSnake();showPage('gameCenter')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">GAME CACING NOKIA</div><div class="top-sub">SNAKE CLASSIC</div></div>
+  </div>
+  <div class="tool-body">
+    <div class="game-wrap">
+      <div class="game-head"><span>SCORE: <b id="snakeScore">0</b></span><span id="snakeStatus">SIAP</span></div>
+      <canvas id="snakeCanvas" class="snake-canvas" width="360" height="360"></canvas>
+      <div class="game-controls">
+        <span class="empty-control"></span><button onclick="setSnakeDirection(0,-1)">▲</button><span class="empty-control"></span>
+        <button onclick="setSnakeDirection(-1,0)">◀</button><button onclick="startSnake()">START</button><button onclick="setSnakeDirection(1,0)">▶</button>
+        <span class="empty-control"></span><button onclick="setSnakeDirection(0,1)">▼</button><span class="empty-control"></span>
+      </div>
+      <div class="game-help">Tekan START untuk mulai. Bisa pakai tombol arah atau tombol panah keyboard. Makan titik untuk menambah skor.</div>
+    </div>
+  </div>
+</main>
+
+<!-- CONVERTER -->
+<main id="converterPage" class="page converter-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">CONVERT FILE</div><div class="top-sub">GAMBAR / VIDEO → LINK</div></div>
+  </div>
+  <div class="tool-body">
+    <div class="converter-box">
+      <div class="dropzone">
+        <span class="material-symbols-rounded">cloud_upload</span>
+        <div class="dropzone-title">UPLOAD GAMBAR / VIDEO</div>
+        <div class="dropzone-hint">File dikirim ke layanan Catbox dan hasilnya berupa link langsung.</div>
+        <label class="choose-file" for="fileInput">PILIH FILE</label>
+        <input class="file-input" id="fileInput" type="file" accept="image/*,video/*">
+      </div>
+      <div class="file-preview" id="filePreview"><img id="imagePreview" class="preview-media hidden" alt="Preview"><video id="videoPreview" class="preview-media hidden" controls></video><div class="file-meta" id="fileMeta"></div></div>
+      <div class="progress" id="uploadProgress"><div class="progress-bar" id="progressBar"></div></div>
+      <button class="upload-btn" id="uploadBtn" onclick="uploadToCatbox()"><span class="material-symbols-rounded">link</span> UPLOAD & BUAT LINK</button>
+      <div class="result-box" id="resultBox"><div style="font-size:10px;font-weight:700;margin-bottom:6px">LINK BERHASIL DIBUAT</div><input id="resultUrl" readonly><button class="copy-btn" onclick="copyResultUrl()">SALIN LINK</button></div>
+    </div>
+  </div>
+</main>
+
+<!-- PRODUCT DETAIL -->
+<main id="productDetail" class="page detail-page">
+  <div class="detail-top"><button class="back-btn" onclick="closeProductDetail()"><span class="material-symbols-rounded">arrow_back</span></button><div class="detail-title" id="detailHeaderName">DETAIL PRODUK</div></div>
+  <div class="detail-content">
+    <div class="detail-gallery"><div class="detail-slides" id="detailSlides"></div><button class="gallery-btn gallery-prev" onclick="moveProductImage(-1)"><span class="material-symbols-rounded">chevron_left</span></button><button class="gallery-btn gallery-next" onclick="moveProductImage(1)"><span class="material-symbols-rounded">chevron_right</span></button><div class="gallery-dots" id="galleryDots"></div></div>
+    <div class="detail-info"><div class="detail-name" id="detailName"></div><div class="detail-prices"><span class="detail-old" id="detailOld"></span><span class="detail-new" id="detailNew"></span><span class="detail-discount" id="detailDiscount"></span></div><div class="detail-description" id="detailDescription"></div></div>
+  </div>
+  <div class="detail-actions"><button class="action-cart" onclick="addCurrentProductToCart()"><span class="material-symbols-rounded">add_shopping_cart</span> TAMBAH KERANJANG</button><button class="action-buy" onclick="buyCurrentProductNow()"><span class="material-symbols-rounded">shopping_cart_checkout</span> BELI SEKARANG</button></div>
+</main>
+
+<!-- CART / CHECKOUT -->
+<main id="cart" class="page cart-page">
+  <div class="topbar"><button class="back-btn" onclick="showPage('store')"><span class="material-symbols-rounded">arrow_back</span></button><div><div class="top-title">KERANJANG</div><div class="top-sub">PRODUK YANG KAMU PILIH</div></div></div>
+  <div class="cart-list" id="cartList"></div><div class="cart-total" id="cartTotal"></div>
+  <button class="checkout-btn" onclick="goCheckout()"><span class="material-symbols-rounded">payments</span> LANJUT KE PEMBAYARAN</button>
+</main>
+
+<main id="checkout" class="page checkout-page">
+  <div class="checkout-head"><button class="back-btn" onclick="backFromCheckout()"><span class="material-symbols-rounded">arrow_back</span></button><div><div class="top-title">PEMBAYARAN</div><div class="top-sub">SELESAIKAN PESANAN KAMU</div></div></div>
+  <div class="checkout-body">
+    <div class="payment-card"><div class="payment-title">SCAN QR UNTUK TRANSFER</div><img class="qr" src="QR.jpg" alt="QR Pembayaran" onerror="this.alt='QR.jpg belum ditemukan'"><div class="payment-note">Silakan transfer sesuai total pesanan. Setelah transfer, simpan screenshot bukti transaksi untuk dikirim ke admin.</div></div>
+    <div class="order-summary"><div class="summary-title">DETAIL PESANAN</div><div id="checkoutSummary"></div><div class="summary-total"><span>TOTAL</span><span id="checkoutTotal">Rp0</span></div></div>
+    <div class="checkout-instruction"><strong>CARA TRANSAKSI</strong>1. Scan QR di atas dan lakukan transfer sesuai total pesanan.<br>2. Simpan screenshot bukti transaksi.<br>3. Setelah transfer, tekan tombol WhatsApp Admin.<br>4. Kirim screenshot bukti transaksi kepada admin.<br>5. Tunggu admin memproses pesanan kamu.</div>
+    <button class="wa-button" onclick="chatOrderToAdmin()"><span class="material-symbols-rounded">chat</span> SUDAH TRANSFER — CHAT ADMIN</button>
+    <div class="thanks">Terima kasih sudah berbelanja di<strong>VOLKA STORE</strong></div>
+  </div>
+</main>
+
+<nav class="nav" id="mainNav">
+  <button type="button" class="active" onclick="showPage('home',this)"><span class="material-symbols-rounded">home</span>HOME</button>
+  <button type="button" onclick="showPage('store',this)"><span class="material-symbols-rounded">store</span>STORE</button>
+  <button type="button" onclick="showPage('gameCenter',this)"><span class="material-symbols-rounded">sports_esports</span>GAME</button>
+  <button type="button" onclick="showPage('info',this)"><span class="material-symbols-rounded">info</span>INFO</button>
+</nav>
+</div>
+
+<script>
+const CONFIG={
+  adminWA:"584167367544",
+  links:{
+    waChannel:"https://whatsapp.com/channel/0029VaeWGaZ05MUZJYQa9345",
+    tiktok:"https://www.tiktok.com/@shironez7",
+    xSocial:"https://x.com/username",
+    saweria:"https://saweria.co/username"
+  },
+  banners:["banner1.png","banner2.png","banner3.png"],
+  musics:[
+    {title:"Apa Kabar Mantan",file:"musik1.mp3"},
+    {title:"Musik 2",file:"musik2.mp3"},
+    {title:"Musik 3",file:"musik3.mp3"},
+    {title:"Musik 4",file:"musik4.mp3"},
+    {title:"Musik 5",file:"musik5.mp3"}
+  ],
+  products:[
+    {name:"Alight Motion Premium",description:`Akses Alight Motion Premium.\nBisa menggunakan akun dari buyer ataupun admin.\nDetail, proses aktivasi, dan ketentuan penggunaan akan dijelaskan oleh admin setelah pembayaran.`,image:"https://files.catbox.moe/snwgh0.jpeg",gallery:["https://files.catbox.moe/snwgh0.jpeg","https://files.catbox.moe/wadrke.jpg","https://files.catbox.moe/46wo3p.jpg"],oldPrice:10000,price:7000,wa:"584167367544"},
+    {name:"Font Desain Siap Pakai",description:`1 PACK berisi 10 font keren.\nRekomendasi dari admin Volz\nCocok untuk desain, poster, GFX, konten sosial media, dan kebutuhan editing lainnya.\n#Font Khusus alight motion Saja.`,image:"https://files.catbox.moe/tdwbcf.jpg",gallery:["https://files.catbox.moe/tdwbcf.jpg","https://files.catbox.moe/ooolq8.jpg"],oldPrice:5000,price:2000,wa:"584167367544"},
+    {name:"Jasa Buat Website",description:`Jasa pembuatan website oleh VOLKA STORE.\n\nJenis website:\n• Website sekolah\n• Website store\n• Landing page\n• Website custom\n\nKonsep, desain, fitur, dan harga dapat dibicarakan langsung dengan admin melalui WhatsApp.`,image:"https://files.catbox.moe/gz0ak8.jpg",gallery:["https://files.catbox.moe/5owt5z.jpg","https://files.catbox.moe/rkoqu1.jpg"],oldPrice:200000,price:50000,wa:"584167367544"},
+    {name:"Produk Premium 4",description:`Produk digital premium.\nOrder manual melalui WhatsApp admin setelah melakukan pembayaran.`,image:"catbox.jpg",gallery:["catbox.jpg"],oldPrice:120000,price:80000,wa:"6281234567892"}
+  ],
+  games:[
+    {id:"snake",name:"Cacing Nokia",desc:"Snake classic",icon:"sports_esports",playable:true,action:"openSnakeGame()"},
+    {id:"tictactoe",name:"Tic Tac Toe",desc:"X vs O",icon:"grid_3x3",playable:true},
+    {id:"memory",name:"Memory Match",desc:"Cocokkan kartu",icon:"style",playable:true},
+    {id:"simon",name:"Simon Says",desc:"Ingat urutan warna",icon:"palette",playable:true},
+    {id:"reaction",name:"Reaction Test",desc:"Uji refleks",icon:"bolt",playable:true},
+    {id:"whack",name:"Whack a Mole",desc:"Pukul tikus",icon:"pest_control",playable:true},
+    {id:"guess",name:"Guess Number",desc:"Tebak angka 1-100",icon:"casino",playable:true},
+    {id:"math",name:"Math Challenge",desc:"Hitung cepat",icon:"functions",playable:true},
+    {id:"color",name:"Color Match",desc:"Cocokkan warna",icon:"colorize",playable:true},
+    {id:"typing",name:"Typing Test",desc:"Uji kecepatan ketik",icon:"keyboard",playable:true},
+    {id:"rps",name:"Rock Paper Scissors",desc:"Gunting batu kertas",icon:"back_hand",playable:true},
+    {id:"flappy",name:"Flappy Bird",desc:"Terbang hindari pipa",icon:"flight",playable:false},
+    {id:"breakout",name:"Breakout",desc:"Pecahkan bata",icon:"sports_tennis",playable:false},
+    {id:"pong",name:"Pong",desc:"Pong klasik",icon:"sports_handball",playable:false},
+    {id:"2048",name:"2048",desc:"Gabung angka",icon:"calculate",playable:false},
+    {id:"minesweeper",name:"Minesweeper",desc:"Hindari ranjau",icon:"dangerous",playable:false},
+    {id:"hangman",name:"Hangman",desc:"Tebak kata",icon:"spellcheck",playable:false},
+    {id:"quiz",name:"Quiz",desc:"Kuis pengetahuan",icon:"quiz",playable:false},
+    {id:"sudoku",name:"Sudoku Mini",desc:"Isi angka 1-4",icon:"apps",playable:false},
+    {id:"runner",name:"Endless Runner",desc:"Lari tanpa henti",icon:"directions_run",playable:false},
+    {id:"space",name:"Space Shooter",desc:"Tembak alien",icon:"rocket_launch",playable:false},
+    {id:"puzzle",name:"Sliding Puzzle",desc:"Geser puzzle",icon:"extension",playable:false},
+    {id:"connect4",name:"Connect 4",desc:"Hubungkan 4",icon:"circle",playable:false}
+  ]
+};
+
+let cart=JSON.parse(localStorage.getItem("volka_cart")||"[]");
+let currentProductIndex=-1,currentGalleryIndex=0,previousPage="store",checkoutSource="cart",checkoutItems=[],detailTouchX=0;
+let bannerIndex=0,bannerTimer=null,snakeTimer=null,snakeRunning=false,snake=[],snakeDir={x:1,y:0},nextSnakeDir={x:1,y:0},food={x:5,y:5},snakeScore=0;
+let currentMusic=null,currentMusicIndex=-1,currentGameCleanup=null;
+let videoSoundOn=false;
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function formatRupiah(n){return"Rp"+Number(n||0).toLocaleString("id-ID")}
+function discountPercent(oldPrice,price){return oldPrice&&oldPrice>price?Math.round(((oldPrice-price)/oldPrice)*100)+"% OFF":""}
+function saveCart(){localStorage.setItem("volka_cart",JSON.stringify(cart));updateCartCount()}
+function hideBottomNav(){document.getElementById("mainNav").style.display="none"}
+function showBottomNav(){document.getElementById("mainNav").style.display="grid"}
+function showPage(id,btn=null){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const page=document.getElementById(id);if(!page)return;page.classList.add("active");
+  if(["productDetail","checkout","aiPage","gamePage","converterPage","gamePlay","musicPage"].includes(id))hideBottomNav();else showBottomNav();
+  if(btn){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="gamePage")drawSnake();
+  if(id==="gameCenter")renderGameCenter();
+  if(id==="musicPage")renderMusicPage();
+}
+function productCard(p,index){
+  const d=discountPercent(p.oldPrice,p.price);
+  return `<article class="product" onclick="openProductDetail(${index})"><img class="product-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.opacity='.25'"><div class="product-name">${escapeHtml(p.name)}</div><div class="product-price"><div class="old">${formatRupiah(p.oldPrice)}</div><div class="new">${formatRupiah(p.price)}</div>${d?`<span class="discount">${d}</span>`:""}</div></article>`;
+}
+function renderProducts(){
+  const q=(document.getElementById("search")?.value||"").toLowerCase().trim(),el=document.getElementById("products");
+  const list=CONFIG.products.map((p,i)=>({p,i})).filter(x=>x.p.name.toLowerCase().includes(q));
+  el.innerHTML=list.length?list.map(x=>productCard(x.p,x.i)).join(""):'<div class="empty">Produk tidak ditemukan.</div>';
+}
+function startBanners(){
+  const img=document.getElementById("homeBanner"),dots=document.getElementById("bannerDots");
+  if(!img||!dots)return;
+  dots.innerHTML=CONFIG.banners.map((_,i)=>`<button class="banner-dot ${i===0?"active":""}" onclick="goBanner(${i})"></button>`).join("");
+  const set=()=>{img.style.opacity="0";setTimeout(()=>{img.src=CONFIG.banners[bannerIndex];img.style.opacity="1";dots.querySelectorAll(".banner-dot").forEach((d,i)=>d.classList.toggle("active",i===bannerIndex));bannerIndex=(bannerIndex+1)%CONFIG.banners.length},300)};
+  setTimeout(set,800);clearInterval(bannerTimer);bannerTimer=setInterval(set,3500);
+}
+function goBanner(i){bannerIndex=i;const img=document.getElementById("homeBanner");img.src=CONFIG.banners[i];document.querySelectorAll(".banner-dot").forEach((d,j)=>d.classList.toggle("active",j===i))}
+
+/* VIDEO SOUND TOGGLE */
+function toggleVideoSound(){
+  const v=document.getElementById("homeVideo");
+  const btn=document.getElementById("videoSoundBtn");
+  const icon=document.getElementById("videoSoundIcon");
+  if(!v)return;
+  videoSoundOn=!videoSoundOn;
+  v.muted=!videoSoundOn;
+  if(videoSoundOn){
+    v.volume=1;
+    const p=v.play();if(p&&p.catch)p.catch(()=>{});
+    btn.classList.remove("off");btn.classList.add("on");
+    icon.textContent="volume_up";
+  }else{
+    btn.classList.remove("on");btn.classList.add("off");
+    icon.textContent="volume_off";
+  }
+}
+
+/* MUSIC PAGE */
+function renderMusicPage(){
+  const list=document.getElementById("musicListPage");
+  if(!list)return;
+  list.innerHTML=CONFIG.musics.map((m,i)=>`<div class="music-card ${i===currentMusicIndex?"active":""}" onclick="playMusic(${i})"><div class="music-icon"><span class="material-symbols-rounded">${i===currentMusicIndex&&currentMusic&&!currentMusic.paused?"pause":"play_arrow"}</span></div><div class="music-info"><div class="music-name">${escapeHtml(m.title)}</div><div class="music-status">${i===currentMusicIndex&&currentMusic&&!currentMusic.paused?"Sedang diputar...":"Klik untuk memutar"}</div></div></div>`).join("");
+  document.getElementById("nowPlaying").textContent=currentMusicIndex>=0?CONFIG.musics[currentMusicIndex].title:"Tidak ada musik diputar";
+  document.getElementById("playIcon").textContent=currentMusic&&!currentMusic.paused?"pause":"play_arrow";
+}
+function playMusic(i){
+  if(currentMusic){currentMusic.pause();currentMusic.currentTime=0}
+  currentMusicIndex=i;
+  currentMusic=new Audio(CONFIG.musics[i].file);
+  currentMusic.play().catch(()=>alert("File musik tidak ditemukan: "+CONFIG.musics[i].file));
+  currentMusic.onended=()=>nextMusic();
+  renderMusicPage();
+}
+function togglePlayMusic(){
+  if(!currentMusic){if(CONFIG.musics.length)playMusic(0);return}
+  if(currentMusic.paused)currentMusic.play();else currentMusic.pause();
+  renderMusicPage();
+}
+function nextMusic(){if(!CONFIG.musics.length)return;const n=(currentMusicIndex+1)%CONFIG.musics.length;playMusic(n)}
+function prevMusic(){if(!CONFIG.musics.length)return;const n=(currentMusicIndex-1+CONFIG.musics.length)%CONFIG.musics.length;playMusic(n)}
+
+function openProductDetail(index){
+  const p=CONFIG.products[index];if(!p)return;currentProductIndex=index;currentGalleryIndex=0;
+  previousPage=document.getElementById("store").classList.contains("active")?"store":"home";
+  document.getElementById("detailHeaderName").textContent=p.name;document.getElementById("detailName").textContent=p.name;
+  document.getElementById("detailOld").textContent=formatRupiah(p.oldPrice);document.getElementById("detailNew").textContent=formatRupiah(p.price);
+  document.getElementById("detailDiscount").textContent=discountPercent(p.oldPrice,p.price);document.getElementById("detailDescription").textContent=p.description;
+  buildProductGallery(p);showPage("productDetail");
+}
+function buildProductGallery(p){
+  const gallery=p.gallery?.length?p.gallery:[p.image],slides=document.getElementById("detailSlides"),dots=document.getElementById("galleryDots");
+  slides.innerHTML=gallery.map((src,i)=>`<div class="detail-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(p.name)} ${i+1}" onerror="this.style.opacity='.25'"></div>`).join("");
+  dots.innerHTML=gallery.map((_,i)=>`<button class="gallery-dot ${i===0?"active":""}" onclick="goProductImage(${i})"></button>`).join("");
+  updateProductGallery();
+}
+function updateProductGallery(){document.getElementById("detailSlides").style.transform=`translateX(-${currentGalleryIndex*100}%)`;[...document.getElementById("galleryDots").children].forEach((d,i)=>d.classList.toggle("active",i===currentGalleryIndex))}
+function moveProductImage(dir){const p=CONFIG.products[currentProductIndex];if(!p)return;const g=p.gallery?.length?p.gallery:[p.image];currentGalleryIndex=(currentGalleryIndex+dir+g.length)%g.length;updateProductGallery()}
+function goProductImage(i){currentGalleryIndex=i;updateProductGallery()}
+function closeProductDetail(){showPage(previousPage)}
+document.getElementById("detailSlides").addEventListener("touchstart",e=>detailTouchX=e.touches[0].clientX,{passive:true});
+document.getElementById("detailSlides").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-detailTouchX;if(Math.abs(dx)>40)moveProductImage(dx<0?1:-1)},{passive:true});
+
+function addToCart(index,qty=1){const p=CONFIG.products[index];if(!p)return;const ex=cart.find(x=>x.productIndex===index);if(ex)ex.qty+=qty;else cart.push({productIndex:index,qty});saveCart()}
+function addCurrentProductToCart(){if(currentProductIndex<0)return;addToCart(currentProductIndex);alert("Produk berhasil ditambahkan ke keranjang.")}
+function changeQty(index,delta){const item=cart.find(x=>x.productIndex===index);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
+function removeFromCart(index){cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
+function getCartTotal(){return cart.reduce((t,i)=>t+(CONFIG.products[i.productIndex]?CONFIG.products[i.productIndex].price*i.qty:0),0)}
+function getCartCount(){return cart.reduce((t,i)=>t+i.qty,0)}
+function updateCartCount(){["headerCartCount","storeCartCount","gameCartCount"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=getCartCount();})}
+function renderCart(){
+  const list=document.getElementById("cartList");
+  if(!cart.length){list.innerHTML='<div class="empty"><span class="material-symbols-rounded" style="font-size:35px">shopping_cart</span><br>Keranjang masih kosong.</div>';document.getElementById("cartTotal").innerHTML="<span>Total</span><span>Rp0</span>";return}
+  list.innerHTML=cart.map(item=>{const p=CONFIG.products[item.productIndex];if(!p)return"";return `<div class="cart-item"><img class="cart-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}"><div><div class="cart-name">${escapeHtml(p.name)}</div><div class="cart-price">${formatRupiah(p.price)}</div><div class="qty"><button onclick="changeQty(${item.productIndex},-1)">−</button><span>${item.qty}</span><button onclick="changeQty(${item.productIndex},1)">+</button></div></div><button class="cart-remove" onclick="removeFromCart(${item.productIndex})" aria-label="Hapus"><span class="material-symbols-rounded">delete</span></button></div>`}).join("");
+  document.getElementById("cartTotal").innerHTML=`<span>TOTAL</span><span>${formatRupiah(getCartTotal())}</span>`;
+}
+function openCart(){renderCart();showPage("cart")}
+function buyCurrentProductNow(){if(currentProductIndex<0)return;checkoutSource="buyNow";checkoutItems=[{productIndex:currentProductIndex,qty:1}];renderCheckout();showPage("checkout")}
+function goCheckout(){if(!cart.length){alert("Keranjang masih kosong.");return}checkoutSource="cart";checkoutItems=cart.map(i=>({productIndex:i.productIndex,qty:i.qty}));renderCheckout();showPage("checkout")}
+function backFromCheckout(){showPage(checkoutSource==="buyNow"?"productDetail":"cart")}
+function renderCheckout(){
+  document.getElementById("checkoutSummary").innerHTML=checkoutItems.map(i=>{const p=CONFIG.products[i.productIndex];if(!p)return"";return `<div class="summary-row"><span>${escapeHtml(p.name)} × ${i.qty}</span><strong>${formatRupiah(p.price*i.qty)}</strong></div>`}).join("");
+  document.getElementById("checkoutTotal").textContent=formatRupiah(checkoutItems.reduce((s,i)=>{const p=CONFIG.products[i.productIndex];return s+(p?p.price*i.qty:0)},0));
+}
+function buildOrderText(){
+  const orderId="VOLKA-"+Date.now().toString().slice(-8);
+  let text=`DETAIL PESANAN VOLKA STORE\nOrder ID: ${orderId}\n\n`;
+  checkoutItems.forEach(i=>{const p=CONFIG.products[i.productIndex];if(p)text+=`Produk: ${p.name}\nHarga: ${formatRupiah(p.price)}\nJumlah: ${i.qty}\nSubtotal: ${formatRupiah(p.price*i.qty)}\n\n`});
+  text+=`TOTAL PEMBAYARAN: ${formatRupiah(checkoutItems.reduce((s,i)=>{const p=CONFIG.products[i.productIndex];return s+(p?p.price*i.qty:0)},0))}\n\nSaya sudah transfer dan akan mengirim screenshot bukti transaksi di chat ini.`;
+  return {text,orderId};
+}
+function chatOrderToAdmin(){
+  const order=buildOrderText(),wa=(checkoutItems[0]&&CONFIG.products[checkoutItems[0].productIndex]?.wa)||CONFIG.adminWA;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent("Halo Admin VOLKA STORE 👋\n\n"+order.text+"\n\nMohon dicek dan diproses. Terima kasih.")}`,"_blank");
+}
+function chatAdmin(){window.open(`https://wa.me/${CONFIG.adminWA}?text=${encodeURIComponent("Halo Admin VOLKA STORE, saya mau bertanya tentang produk/store.")}`,"_blank")}
+
+document.getElementById("waChannel").href=CONFIG.links.waChannel;
+document.getElementById("tiktok").href=CONFIG.links.tiktok;
+document.getElementById("xSocial").href=CONFIG.links.xSocial;
+document.getElementById("saweria").href=CONFIG.links.saweria;
+
+/* AI - naga makan ekor */
+function typingDragonSvg(){
+  return `<span class="typing-dragon"><svg viewBox="0 0 30 30"><circle class="tail" cx="15" cy="15" r="10"/><circle class="head" cx="15" cy="5" r="3"/></svg></span>`;
+}
+async function askAI(){
+  const input=document.getElementById("aiInput"),log=document.getElementById("aiLog"),q=input.value.trim();if(!q)return;
+  log.innerHTML+=`<div class="msg user">${escapeHtml(q)}</div>`;input.value="";
+  const id="typing-"+Date.now();
+  log.innerHTML+=`<div class="msg bot" id="${id}">${typingDragonSvg()}</div>`;log.scrollTop=log.scrollHeight;
+  await new Promise(r=>setTimeout(r,900));
+  const el=document.getElementById(id);if(el)el.innerHTML="Untuk pertanyaan produk, silakan cek Store atau chat Admin VOLKA STORE.";
+  log.scrollTop=log.scrollHeight;
+}
+document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
+
+/* GAME CENTER */
+function renderGameCenter(){
+  const grid=document.getElementById("gameCenterGrid");
+  if(!grid)return;
+  grid.innerHTML=CONFIG.games.map(g=>{
+    if(g.playable){
+      const action=g.action||`openGame('${g.id}')`;
+      return `<div class="game-center-card playable"><div class="game-icon"><span class="material-symbols-rounded">${g.icon}</span></div><div class="game-name">${escapeHtml(g.name)}</div><div class="game-desc">${escapeHtml(g.desc)}</div><button class="play-btn" onclick="${action}"><span class="material-symbols-rounded">play_arrow</span>MAIN</button></div>`;
+    }else{
+      return `<div class="game-center-card coming-soon"><span class="soon-badge">SOON</span><div class="game-icon"><span class="material-symbols-rounded">${g.icon}</span></div><div class="game-name">${escapeHtml(g.name)}</div><div class="game-desc">${escapeHtml(g.desc)}</div></div>`;
+    }
+  }).join("");
+}
+function openSnakeGame(){showPage("gamePage");drawSnake()}
+function closeGamePlay(){
+  if(currentGameCleanup){try{currentGameCleanup()}catch(e){}currentGameCleanup=null}
+  showPage("gameCenter");
+}
+function openGame(id){
+  const g=CONFIG.games.find(x=>x.id===id);
+  document.getElementById("gamePlayTitle").textContent=g?g.name:"GAME";
+  document.getElementById("gamePlaySub").textContent=g?g.desc.toUpperCase():"MAIN GAME";
+  const body=document.getElementById("gamePlayBody");
+  body.innerHTML="";
+  if(currentGameCleanup){try{currentGameCleanup()}catch(e){}currentGameCleanup=null}
+  showPage("gamePlay");
+  setTimeout(()=>{const fn=GAMES[id];if(fn)currentGameCleanup=fn(body)||null;else body.innerHTML='<div class="empty">Game belum tersedia.</div>';},50);
+}
+
+/* ================= GAMES ================= */
+const GAMES={};
+
+GAMES.tictactoe=function(body){
+  body.innerHTML=`<div class="game-head"><span>STATUS: <b id="tttStatus">GILIRAN X</b></span><span>SKOR: <b id="tttScore">0 - 0</b></span></div>
+  <div id="tttBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button onclick="tttReset()">ULANG</button><button onclick="tttNewGame()">GAME BARU</button></div>`;
+  const boardEl=document.getElementById("tttBoard");
+  const cells=Array(9).fill("");
+  let turn="X",done=false,scoreX=0,scoreO=0;
+  boardEl.innerHTML=cells.map((_,i)=>`<button data-i="${i}" style="height:90px;border:3px solid var(--ink);background:var(--cream);font-size:32px;font-weight:700"></button>`).join("");
+  function render(){
+    boardEl.querySelectorAll("button").forEach((b,i)=>{b.textContent=cells[i];b.style.background=cells[i]==="X"?"var(--green)":cells[i]==="O"?"var(--blue)":"var(--cream)"});
+    document.getElementById("tttStatus").textContent=done?"SELESAI":("GILIRAN "+turn);
+    document.getElementById("tttScore").textContent=scoreX+" - "+scoreO;
+  }
+  function winner(){
+    const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for(const [a,b,c] of L){if(cells[a]&&cells[a]===cells[b]&&cells[a]===cells[c])return cells[a]}
+    return cells.every(c=>c)?"draw":null;
+  }
+  boardEl.onclick=e=>{
+    const b=e.target.closest("button");if(!b||done)return;const i=+b.dataset.i;if(cells[i])return;
+    cells[i]=turn;const w=winner();
+    if(w==="X"){scoreX++;done=true}else if(w==="O"){scoreO++;done=true}else if(w==="draw")done=true;else turn=turn==="X"?"O":"X";
+    render();
+  };
+  window.tttReset=()=>{for(let i=0;i<9;i++)cells[i]="";turn="X";done=false;render()};
+  window.tttNewGame=()=>{scoreX=0;scoreO=0;tttReset()};
+  render();
+  return ()=>{delete window.tttReset;delete window.tttNewGame};
+};
+
+GAMES.memory=function(body){
+  const icons=["star","favorite","bolt","cloud","anchor","rocket_launch","pets","cake"];
+  const deck=[...icons,...icons].sort(()=>Math.random()-.5);
+  body.innerHTML=`<div class="game-head"><span>MOVES: <b id="memMoves">0</b></span><span>MATCH: <b id="memMatch">0/8</b></span></div>
+  <div id="memBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr"><button onclick="openGame('memory')">ULANG</button></div>`;
+  const board=document.getElementById("memBoard");
+  board.innerHTML=deck.map((_,i)=>`<button data-i="${i}" style="height:70px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center"><span class="material-symbols-rounded" style="font-size:26px;opacity:0">star</span></button>`).join("");
+  let flipped=[],matched=0,moves=0,lock=false;
+  board.onclick=e=>{
+    const b=e.target.closest("button");if(!b||lock)return;const i=+b.dataset.i;
+    if(flipped.includes(i)||b.dataset.done)return;
+    b.querySelector("span").textContent=deck[i];b.querySelector("span").style.opacity="1";b.style.background="var(--cream)";
+    flipped.push(i);
+    if(flipped.length===2){
+      moves++;document.getElementById("memMoves").textContent=moves;lock=true;
+      const [a,c]=flipped;
+      if(deck[a]===deck[c]){
+        board.querySelector(`[data-i="${a}"]`).dataset.done=1;board.querySelector(`[data-i="${c}"]`).dataset.done=1;
+        board.querySelector(`[data-i="${a}"]`).style.background="var(--green)";board.querySelector(`[data-i="${c}"]`).style.background="var(--green)";
+        matched++;document.getElementById("memMatch").textContent=matched+"/8";flipped=[];lock=false;
+        if(matched===8)setTimeout(()=>alert("SELESAI! Moves: "+moves),200);
+      }else{
+        setTimeout(()=>{
+          [a,c].forEach(k=>{const el=board.querySelector(`[data-i="${k}"]`);el.querySelector("span").style.opacity="0";el.style.background="var(--blue)"});
+          flipped=[];lock=false;
+        },700);
+      }
+    }
+  };
+  return ()=>{};
+};
+
+GAMES.simon=function(body){
+  const colors=["var(--red)","var(--green)","var(--blue)","var(--yellow)"];
+  body.innerHTML=`<div class="game-head"><span>LEVEL: <b id="simonLevel">0</b></span><span>SKOR: <b id="simonScore">0</b></span></div>
+  <div id="simonBoard" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:300px;margin:0 auto"></div>
+  <div class="game-controls" style="grid-template-columns:1fr"><button id="simonStart">MULAI</button></div>
+  <div class="game-help">Perhatikan urutan warna yang menyala, lalu tekan dengan urutan yang sama.</div>`;
+  const board=document.getElementById("simonBoard");
+  board.innerHTML=colors.map((c,i)=>`<button data-i="${i}" style="height:110px;border:3px solid var(--ink);background:${c};opacity:.5"></button>`).join("");
+  let seq=[],input=[],level=0,score=0,playing=false;
+  function flash(i,dur=350){
+    const b=board.querySelector(`[data-i="${i}"]`);b.style.opacity="1";b.style.transform="scale(.95)";
+    setTimeout(()=>{b.style.opacity=".5";b.style.transform="scale(1)"},dur);
+  }
+  async function playSeq(){
+    playing=false;board.querySelectorAll("button").forEach(b=>b.style.pointerEvents="none");
+    await new Promise(r=>setTimeout(r,500));
+    for(const i of seq){flash(i);await new Promise(r=>setTimeout(r,550))}
+    input=[];playing=true;board.querySelectorAll("button").forEach(b=>b.style.pointerEvents="auto");
+  }
+  function next(){
+    seq.push(Math.floor(Math.random()*4));level++;document.getElementById("simonLevel").textContent=level;
+    playSeq();
+  }
+  board.onclick=e=>{
+    const b=e.target.closest("button");if(!b||!playing)return;const i=+b.dataset.i;
+    flash(i,200);input.push(i);
+    const idx=input.length-1;
+    if(input[idx]!==seq[idx]){playing=false;setTimeout(()=>{alert("GAME OVER! Skor: "+score);simonReset()},200);return}
+    if(input.length===seq.length){score++;document.getElementById("simonScore").textContent=score;playing=false;setTimeout(next,700)}
+  };
+  function simonReset(){seq=[];input=[];level=0;score=0;document.getElementById("simonLevel").textContent=0;document.getElementById("simonScore").textContent=0;playing=false}
+  document.getElementById("simonStart").onclick=()=>{simonReset();next()};
+  return ()=>{};
+};
+
+GAMES.reaction=function(body){
+  body.innerHTML=`<div class="game-head"><span>BEST: <b id="reactBest">-</b></span><span>STATUS: <b id="reactStatus">KLIK MULAI</b></span></div>
+  <div id="reactArea" style="height:280px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px;cursor:pointer;text-align:center;padding:10px">KLIK UNTUK MULAI</div>
+  <div class="game-controls" style="grid-template-columns:1fr"><button onclick="openGame('reaction')">ULANG</button></div>
+  <div class="game-help">Tunggu sampai warna berubah menjadi HIJAU, lalu klik secepat mungkin!</div>`;
+  const area=document.getElementById("reactArea");let state="idle",startTime=0,best=null,timeout=null;
+  area.onclick=()=>{
+    if(state==="idle"){
+      state="wait";area.style.background="var(--red)";area.textContent="TUNGGU...";document.getElementById("reactStatus").textContent="TUNGGU...";
+      const delay=1000+Math.random()*3000;
+      timeout=setTimeout(()=>{state="go";area.style.background="var(--green)";area.textContent="KLIK!";document.getElementById("reactStatus").textContent="KLIK SEKARANG!";startTime=performance.now()},delay);
+    }else if(state==="wait"){clearTimeout(timeout);state="idle";area.style.background="var(--blue)";area.textContent="TERLALU CEPAT! KLIK UNTUK COBA LAGI";document.getElementById("reactStatus").textContent="GAGAL"}
+    else if(state==="go"){const t=Math.round(performance.now()-startTime);state="idle";area.style.background="var(--blue)";area.textContent=t+" ms — KLIK UNTUK COBA LAGI";document.getElementById("reactStatus").textContent=t+" MS";
+      if(best===null||t<best){best=t;document.getElementById("reactBest").textContent=t+" ms"}}
+  };
+  return ()=>{clearTimeout(timeout)};
+};
+
+GAMES.whack=function(body){
+  body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="whackTime">30</b>s</span><span>SKOR: <b id="whackScore">0</b></span></div>
+  <div id="whackBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr"><button id="whackStart">MULAI</button></div>`;
+  const board=document.getElementById("whackBoard");
+  board.innerHTML=Array(9).fill(0).map((_,i)=>`<button data-i="${i}" style="height:80px;border:3px solid var(--ink);background:var(--cream);font-size:32px"></button>`).join("");
+  let score=0,time=30,running=false,moleTimer=null,countTimer=null,currentMole=-1;
+  function showMole(){
+    if(currentMole>=0)board.querySelector(`[data-i="${currentMole}"]`).textContent="";
+    currentMole=Math.floor(Math.random()*9);board.querySelector(`[data-i="${currentMole}"]`).textContent="🐭";
+  }
+  board.onclick=e=>{
+    const b=e.target.closest("button");if(!b||!running)return;
+    if(+b.dataset.i===currentMole){score++;document.getElementById("whackScore").textContent=score;b.textContent="💥";currentMole=-1;setTimeout(showMole,200)}
+  };
+  document.getElementById("whackStart").onclick=()=>{
+    clearInterval(moleTimer);clearInterval(countTimer);score=0;time=30;running=true;currentMole=-1;
+    document.getElementById("whackScore").textContent=0;document.getElementById("whackTime").textContent=30;
+    board.querySelectorAll("button").forEach(b=>b.textContent="");
+    showMole();moleTimer=setInterval(showMole,800);
+    countTimer=setInterval(()=>{time--;document.getElementById("whackTime").textContent=time;if(time<=0){clearInterval(moleTimer);clearInterval(countTimer);running=false;board.querySelectorAll("button").forEach(b=>b.textContent="");alert("WAKTU HABIS! Skor: "+score)}},1000);
+  };
+  return ()=>{clearInterval(moleTimer);clearInterval(countTimer)};
+};
+
+GAMES.guess=function(body){
+  body.innerHTML=`<div class="game-head"><span>PERCOBAAN: <b id="guessTries">0</b></span><span id="guessHint">TEBAK 1-100</span></div>
+  <div style="display:flex;gap:6px;margin-top:8px"><input id="guessInput" type="number" min="1" max="100" placeholder="1-100" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="guessCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">TEBAK</button></div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button onclick="guessReset()">GAME BARU</button></div>`;
+  let target=Math.floor(Math.random()*100)+1,tries=0;
+  window.guessCheck=()=>{
+    const v=+document.getElementById("guessInput").value;if(!v)return;
+    tries++;document.getElementById("guessTries").textContent=tries;
+    const hint=document.getElementById("guessHint");
+    if(v===target)hint.textContent="BENAR! Angka: "+target+" ("+tries+"x)";
+    else if(v<target)hint.textContent="TERLALU KECIL ⬆";
+    else hint.textContent="TERLALU BESAR ⬇";
+  };
+  window.guessReset=()=>{target=Math.floor(Math.random()*100)+1;tries=0;document.getElementById("guessTries").textContent=0;document.getElementById("guessHint").textContent="TEBAK 1-100";document.getElementById("guessInput").value=""};
+  return ()=>{delete window.guessCheck;delete window.guessReset};
+};
+
+GAMES.math=function(body){
+  body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="mathTime">30</b>s</span><span>SKOR: <b id="mathScore">0</b></span></div>
+  <div id="mathQ" style="border:3px solid var(--ink);background:var(--cream);padding:25px;text-align:center;font-size:28px;font-weight:700;margin-top:8px">?</div>
+  <div style="display:flex;gap:6px;margin-top:10px"><input id="mathInput" type="number" placeholder="Jawaban" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="mathCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">OK</button></div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button id="mathStart">MULAI</button></div>`;
+  let a=0,b=0,op="+",ans=0,score=0,time=30,running=false,ct=null;
+  function newQ(){
+    a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;
+    const ops=["+","-","×"];op=ops[Math.floor(Math.random()*3)];
+    if(op==="+")ans=a+b;else if(op==="-")ans=a-b;else ans=a*b;
+    document.getElementById("mathQ").textContent=`${a} ${op} ${b} = ?`;
+  }
+  window.mathCheck=()=>{
+    if(!running)return;
+    const v=+document.getElementById("mathInput").value;
+    if(v===ans){score++;document.getElementById("mathScore").textContent=score;document.getElementById("mathInput").value="";newQ()}
+    else document.getElementById("mathInput").value="";
+  };
+  document.getElementById("mathStart").onclick=()=>{
+    score=0;time=30;running=true;document.getElementById("mathScore").textContent=0;document.getElementById("mathTime").textContent=30;
+    newQ();clearInterval(ct);ct=setInterval(()=>{time--;document.getElementById("mathTime").textContent=time;if(time<=0){clearInterval(ct);running=false;alert("WAKTU HABIS! Skor: "+score)}},1000);
+  };
+  document.getElementById("mathInput").addEventListener("keydown",e=>{if(e.key==="Enter")mathCheck()});
+  return ()=>{clearInterval(ct);delete window.mathCheck};
+};
+
+GAMES.color=function(body){
+  const palette=["#ff4b3e","#80d83d","#54b9e8","#ffbf32","#ff7367","#a855f7"];
+  body.innerHTML=`<div class="game-head"><span>SKOR: <b id="colScore">0</b></span><span id="colHint">KLIK WARNA YANG SAMA</span></div>
+  <div id="colTarget" style="height:120px;border:3px solid var(--ink);margin-top:8px"></div>
+  <div id="colOpts" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button onclick="openGame('color')">ULANG</button></div>`;
+  let score=0,target="";
+  function round(){
+    target=palette[Math.floor(Math.random()*palette.length)];
+    document.getElementById("colTarget").style.background=target;
+    const opts=[...palette].sort(()=>Math.random()-.5).slice(0,6);
+    if(!opts.includes(target))opts[0]=target;
+    document.getElementById("colOpts").innerHTML=opts.sort(()=>Math.random()-.5).map(c=>`<button data-c="${c}" style="height:60px;border:3px solid var(--ink);background:${c}"></button>`).join("");
+    document.getElementById("colOpts").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      if(b.dataset.c===target){score++;document.getElementById("colScore").textContent=score;round()}
+      else{score=0;document.getElementById("colScore").textContent=0;document.getElementById("colHint").textContent="SALAH! SKOR RESET";round()}
+    });
+  }
+  round();return ()=>{};
+};
+
+GAMES.typing=function(body){
+  const words=["volka","store","digital","produk","keranjang","pembayaran","whatsapp","website","desain","premium","musik","game","banner","admin","chat"];
+  body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="typeTime">30</b>s</span><span>WPM: <b id="typeWpm">0</b></span></div>
+  <div id="typeWord" style="border:3px solid var(--ink);background:var(--cream);padding:30px;text-align:center;font-size:22px;font-weight:700;margin-top:8px">?</div>
+  <input id="typeInput" placeholder="Ketik kata di atas..." style="width:100%;border:3px solid var(--ink);padding:12px;font-size:12px;background:#fff;margin-top:10px">
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button id="typeStart">MULAI</button></div>`;
+  let correct=0,time=30,running=false,ct=null,current="";
+  function newWord(){current=words[Math.floor(Math.random()*words.length)];document.getElementById("typeWord").textContent=current;document.getElementById("typeInput").value="";document.getElementById("typeInput").focus()}
+  document.getElementById("typeInput").addEventListener("input",e=>{
+    if(!running)return;
+    if(e.target.value===current){correct++;document.getElementById("typeWpm").textContent=Math.round(correct*2);newWord()}
+  });
+  document.getElementById("typeStart").onclick=()=>{
+    correct=0;time=30;running=true;document.getElementById("typeWpm").textContent=0;document.getElementById("typeTime").textContent=30;newWord();
+    clearInterval(ct);ct=setInterval(()=>{time--;document.getElementById("typeTime").textContent=time;if(time<=0){clearInterval(ct);running=false;alert("WAKTU HABIS! WPM: "+Math.round(correct*2))}},1000);
+  };
+  return ()=>{clearInterval(ct)};
+};
+
+GAMES.rps=function(body){
+  body.innerHTML=`<div class="game-head"><span>KAMU: <b id="rpsP">0</b></span><span>CPU: <b id="rpsC">0</b></span></div>
+  <div id="rpsShow" style="border:3px solid var(--ink);background:var(--cream);padding:20px;text-align:center;font-size:14px;margin-top:8px">PILIH SENJATA</div>
+  <div class="game-controls" style="grid-template-columns:repeat(3,1fr);margin-top:10px">
+    <button data-c="rock">✊</button><button data-c="paper">✋</button><button data-c="scissors">✌</button>
+  </div>
+  <div class="game-help">Menang: Rock>Scissors, Scissors>Paper, Paper>Rock.</div>`;
+  let p=0,c=0;
+  const be=["rock","paper","scissors"];
+  body.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{
+    const you=b.dataset.c,cpu=be[Math.floor(Math.random()*3)];
+    let res="SERI";
+    if(you===cpu)res="SERI";
+    else if((you==="rock"&&cpu==="scissors")||(you==="paper"&&cpu==="rock")||(you==="scissors"&&cpu==="paper")){res="MENANG!";p++}
+    else{res="KALAH!";c++}
+    document.getElementById("rpsShow").textContent=`Kamu: ${you} | CPU: ${cpu} — ${res}`;
+    document.getElementById("rpsP").textContent=p;document.getElementById("rpsC").textContent=c;
+  });
+  return ()=>{};
+};
+
+/* SNAKE - Naga makan ekor */
+function startSnake(){
+  clearInterval(snakeTimer);snake=[{x:9,y:9},{x:8,y:9},{x:7,y:9}];snakeDir={x:1,y:0};nextSnakeDir={x:1,y:0};snakeScore=0;spawnFood();snakeRunning=true;
+  document.getElementById("snakeScore").textContent=0;document.getElementById("snakeStatus").textContent="MAIN";snakeTimer=setInterval(stepSnake,110);drawSnake();
+}
+function stopSnake(){clearInterval(snakeTimer);snakeTimer=null;snakeRunning=false;const s=document.getElementById("snakeStatus");if(s)s.textContent="SIAP"}
+function spawnFood(){let ok=false;while(!ok){food={x:Math.floor(Math.random()*18),y:Math.floor(Math.random()*18)};ok=!snake.some(s=>s.x===food.x&&s.y===food.y)}}
+function setSnakeDirection(x,y){if(x===-snakeDir.x&&y===-snakeDir.y)return;nextSnakeDir={x,y};if(!snakeRunning)startSnake()}
+function stepSnake(){
+  snakeDir=nextSnakeDir;const head={x:snake[0].x+snakeDir.x,y:snake[0].y+snakeDir.y};
+  if(head.x<0||head.y<0||head.x>=18||head.y>=18||snake.some(s=>s.x===head.x&&s.y===head.y)){snakeRunning=false;clearInterval(snakeTimer);document.getElementById("snakeStatus").textContent="GAME OVER";drawSnake();return}
+  snake.unshift(head);
+  if(head.x===food.x&&head.y===food.y){snakeScore++;document.getElementById("snakeScore").textContent=snakeScore;spawnFood()}else snake.pop();
+  drawSnake();
+}
+function drawSnake(){
+  const c=document.getElementById("snakeCanvas");if(!c)return;const ctx=c.getContext("2d"),cell=c.width/18;ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle="#e8dcc0";for(let i=0;i<=18;i++){ctx.beginPath();ctx.moveTo(i*cell,0);ctx.lineTo(i*cell,c.height);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*cell);ctx.lineTo(c.width,i*cell);ctx.stroke()}
+  ctx.fillStyle="#ff4b3e";ctx.beginPath();ctx.arc(food.x*cell+cell/2,food.y*cell+cell/2,cell/2-2,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle="#171717";ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle="rgba(255,255,255,.4)";ctx.beginPath();ctx.arc(food.x*cell+cell/2-2,food.y*cell+cell/2-2,cell/6,0,Math.PI*2);ctx.fill();
+  snake.forEach((s,i)=>{
+    const x=s.x*cell,y=s.y*cell;
+    if(i===0){
+      ctx.fillStyle="#80d83d";ctx.fillRect(x+2,y+2,cell-4,cell-4);
+      ctx.strokeStyle="#171717";ctx.lineWidth=2;ctx.strokeRect(x+2,y+2,cell-4,cell-4);
+      ctx.fillStyle="#171717";ctx.beginPath();ctx.arc(x+cell*0.3,y+cell*0.35,2.5,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(x+cell*0.7,y+cell*0.35,2.5,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(x+cell*0.3,y+cell*0.35,1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(x+cell*0.7,y+cell*0.35,1,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle="#ffbf32";
+      ctx.beginPath();ctx.moveTo(x+cell*0.35,y+cell*0.15);ctx.lineTo(x+cell*0.25,y-cell*0.1);ctx.lineTo(x+cell*0.45,y+cell*0.1);ctx.fill();
+      ctx.beginPath();ctx.moveTo(x+cell*0.65,y+cell*0.15);ctx.lineTo(x+cell*0.75,y-cell*0.1);ctx.lineTo(x+cell*0.55,y+cell*0.1);ctx.fill();
+      ctx.strokeStyle="#ff4b3e";ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(x+cell*0.5,y+cell*0.8);ctx.lineTo(x+cell*0.5,y+cell*0.95);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(x+cell*0.5,y+cell*0.95);ctx.lineTo(x+cell*0.35,y+cell*1.05);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(x+cell*0.5,y+cell*0.95);ctx.lineTo(x+cell*0.65,y+cell*1.05);ctx.stroke();
+    }else{
+      ctx.fillStyle=i%2===0?"#80d83d":"#a8e86a";
+      ctx.fillRect(x+3,y+3,cell-6,cell-6);
+      ctx.strokeStyle="#171717";ctx.lineWidth=1.5;ctx.strokeRect(x+3,y+3,cell-6,cell-6);
+    }
+  });
+}
+document.addEventListener("keydown",e=>{
+  const map={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]};
+  if(map[e.key]&&document.getElementById("gamePage").classList.contains("active")){e.preventDefault();setSnakeDirection(...map[e.key])}
+});
+
+/* CATBOX UPLOADER */
+let selectedFile=null;
+document.getElementById("fileInput").addEventListener("change",e=>{
+  selectedFile=e.target.files[0]||null;const wrap=document.getElementById("filePreview"),img=document.getElementById("imagePreview"),vid=document.getElementById("videoPreview"),meta=document.getElementById("fileMeta");
+  if(!selectedFile){wrap.style.display="none";return}
+  wrap.style.display="block";meta.textContent=`${selectedFile.name} • ${(selectedFile.size/1024/1024).toFixed(2)} MB`;
+  img.classList.add("hidden");vid.classList.add("hidden");
+  const url=URL.createObjectURL(selectedFile);
+  if(selectedFile.type.startsWith("image/")){img.src=url;img.classList.remove("hidden")}else if(selectedFile.type.startsWith("video/")){vid.src=url;vid.classList.remove("hidden")}
+  document.getElementById("resultBox").style.display="none";
+});
+function uploadToCatbox(){
+  if(!selectedFile){alert("Pilih gambar atau video terlebih dahulu.");return}
+  const btn=document.getElementById("uploadBtn"),progress=document.getElementById("uploadProgress"),bar=document.getElementById("progressBar");
+  btn.disabled=true;progress.style.display="block";bar.style.width="0%";
+  const fd=new FormData();fd.append("reqtype","fileupload");fd.append("fileToUpload",selectedFile);
+  const xhr=new XMLHttpRequest();xhr.open("POST","https://catbox.moe/user/api.php",true);
+  xhr.upload.onprogress=e=>{if(e.lengthComputable)bar.style.width=Math.round(e.loaded/e.total*100)+"%"};
+  xhr.onload=()=>{btn.disabled=false;bar.style.width="100%";if(xhr.status>=200&&xhr.status<300&&/^https?:\/\//.test(xhr.responseText.trim())){document.getElementById("resultUrl").value=xhr.responseText.trim();document.getElementById("resultBox").style.display="block"}else alert("Upload gagal.")};
+  xhr.onerror=()=>{btn.disabled=false;alert("Upload gagal karena koneksi/CORS.")};
+  xhr.send(fd);
+}
+async function copyResultUrl(){const input=document.getElementById("resultUrl");try{await navigator.clipboard.writeText(input.value);alert("Link disalin.")}catch{input.select();document.execCommand("copy");alert("Link disalin.")}}
+
+renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
+</script>
+</body>
+</html>
