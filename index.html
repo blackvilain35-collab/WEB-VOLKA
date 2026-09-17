@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0,0&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --paper:#f7e7b7;--ink:#171717;--muted:#625d4f;--green:#80d83d;
@@ -613,16 +612,15 @@ async function askAI(){
 document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
 
 /* ============================================================
-   ANIME STREAMING - Otakudesu API (Vercel)
-   Sub Indo • Daftar Episode • Streaming Langsung
+   ANIME STREAMING - wajik-anime-api (otakudesu)
    ============================================================ */
-const ANIME_API = "https://unofficial-otakudesu-api-ruang-kreatif.vercel.app/api";
+const ANIME_API = "https://wajik-anime-api-chi-lac.vercel.app";
+const ANIME_SOURCE = "otakudesu";
 
 let animeHomeLoaded = false;
-let currentAnimeSlug = null;
+let currentAnimeId = null;
 let currentAnimeTitle = "";
 let currentEpisodeList = [];
-let currentEpisodeSlug = null;
 let hlsInstance = null;
 
 async function animeFetch(path, retries) {
@@ -636,7 +634,6 @@ async function animeFetch(path, retries) {
       clearTimeout(t);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const json = await res.json();
-      if (json && json.success === false) throw new Error(json.error || "API error");
       return json;
     } catch (e) {
       lastErr = e;
@@ -664,17 +661,12 @@ function errorHtml(msg, retryFn) {
     '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>';
 }
 
+// Fungsi untuk halaman awal (fallback)
 async function loadAnimeHome() {
   setAnimeStatus(loadingHtml("Memuat daftar anime Sub Indo..."), "loading");
   document.getElementById("animeDetailWrap").innerHTML = "";
-  try {
-    const res = await animeFetch("/home");
-    const data = res.data || {};
-    const list = [].concat(data.ongoing || []).concat(data.completed || []);
-    renderAnimeGrid(list);
-  } catch (e) {
-    setAnimeStatus(errorHtml("Gagal memuat data anime. Server mungkin sedang sibuk.", "loadAnimeHome()"), "error");
-  }
+  // Karena endpoint /home & /ongoing mungkin belum stabil, kita tampilkan pesan panduan.
+  setAnimeStatus("Silakan ketik judul anime di kolom pencarian di atas untuk mulai menonton.");
 }
 
 async function searchAnime() {
@@ -683,8 +675,8 @@ async function searchAnime() {
   if (!q) { loadAnimeHome(); return; }
   setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
   try {
-    const res = await animeFetch("/search/" + encodeURIComponent(q));
-    const list = res.data || [];
+    const res = await animeFetch("/" + ANIME_SOURCE + "/search?q=" + encodeURIComponent(q));
+    const list = (res.data && res.data.animeList) ? res.data.animeList : [];
     renderAnimeGrid(list);
   } catch (e) {
     setAnimeStatus(errorHtml("Gagal mencari anime.", "loadAnimeHome()"), "error");
@@ -698,14 +690,14 @@ function renderAnimeGrid(list) {
     return;
   }
   results.innerHTML = list.map(function (a) {
-    const slug = a.slug || a.id || "";
+    const animeId = a.animeId || a.id || "";
     const title = a.title || "Tanpa judul";
-    const poster = a.image || a.poster || "";
-    const status = a.status || a.release || "";
-    return '<div class="anime-card" onclick="openAnimeDetail(\'' + String(slug).replace(/'/g, "\\'") + '\')">' +
+    const poster = a.poster || a.image || "";
+    const score = a.score || "";
+    return '<div class="anime-card" onclick="openAnimeDetail(\'' + String(animeId).replace(/'/g, "\\'") + '\')">' +
       '<img src="' + escapeHtml(poster) + '" alt="" loading="lazy" onerror="this.style.opacity=\'.2\'">' +
       '<div class="anime-title">' + escapeHtml(title) + '</div>' +
-      '<div class="anime-meta">' + escapeHtml(status) + '</div>' +
+      '<div class="anime-meta">' + escapeHtml(score) + '</div>' +
       '</div>';
   }).join("");
 }
@@ -716,8 +708,8 @@ function closeAnimeDetail() {
   closeAnimePlayer();
 }
 
-async function openAnimeDetail(slug) {
-  currentAnimeSlug = slug;
+async function openAnimeDetail(animeId) {
+  currentAnimeId = animeId;
   const wrap = document.getElementById("animeDetailWrap");
   const results = document.getElementById("animeResults");
   results.innerHTML = "";
@@ -726,12 +718,12 @@ async function openAnimeDetail(slug) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   try {
-    const res = await animeFetch("/anime/" + encodeURIComponent(slug));
+    const res = await animeFetch("/" + ANIME_SOURCE + "/anime/" + encodeURIComponent(animeId));
     const data = res.data || {};
     const title = data.title || "Anime";
     currentAnimeTitle = title;
-    const poster = data.image || "";
-    let desc = data.synopsis || "";
+    const poster = data.poster || data.image || "";
+    let desc = data.synopsis || data.description || "";
     if (desc.length > 500) desc = desc.slice(0, 500) + "...";
     const episodes = data.episodeList || data.episodes || [];
     currentEpisodeList = episodes;
@@ -740,7 +732,6 @@ async function openAnimeDetail(slug) {
       '<div class="anime-detail">' +
         (poster ? '<img src="' + escapeHtml(poster) + '" alt="" onerror="this.style.display=\'none\'">' : "") +
         '<h2>' + escapeHtml(title) + '</h2>' +
-        '<div style="font-size:9px;margin-bottom:6px">' + escapeHtml(data.status || "") + '</div>' +
         '<div class="anime-desc">' + escapeHtml(desc) + '</div>' +
         '<div style="clear:both;margin-top:12px"><strong style="font-size:11px">DAFTAR EPISODE (' + episodes.length + ')</strong></div>' +
         (episodes.length
@@ -758,7 +749,7 @@ async function openAnimeDetail(slug) {
 
     if (episodes.length) renderEpisodeList(episodes);
   } catch (e) {
-    wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail anime.", "openAnimeDetail('" + String(slug).replace(/'/g, "\\'") + "')") + '</div>';
+    wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail anime.", "openAnimeDetail('" + String(animeId).replace(/'/g, "\\'") + "')") + '</div>';
   }
 }
 
@@ -766,10 +757,10 @@ function renderEpisodeList(episodes) {
   const el = document.getElementById("episodeListInline");
   if (!el) return;
   el.innerHTML = episodes.map(function (ep, i) {
-    const epSlug = ep.slug || ep.id || "";
+    const epId = ep.episodeId || ep.id || ep.slug || "";
     const num = ep.episode || ep.number || (i + 1);
     const safeTitle = currentAnimeTitle.replace(/'/g, "\\'");
-    return '<div class="episode-item" data-ep="' + escapeHtml(epSlug) + '" onclick="playEpisode(\'' + String(epSlug).replace(/'/g, "\\'") + '\',' + Number(num) + ',\'' + safeTitle + '\')">EP ' + escapeHtml(String(num)) + '</div>';
+    return '<div class="episode-item" data-ep="' + escapeHtml(String(epId)) + '" onclick="playEpisode(\'' + String(epId).replace(/'/g, "\\'") + '\',' + Number(num) + ',\'' + safeTitle + '\')">EP ' + escapeHtml(String(num)) + '</div>';
   }).join("");
 }
 
@@ -780,88 +771,63 @@ function setVideoStatus(msg, type) {
   el.innerHTML = msg;
 }
 
-async function playEpisode(episodeSlug, epNum, animeTitle) {
-  currentEpisodeSlug = episodeSlug;
-
+async function playEpisode(episodeId, epNum, animeTitle) {
   const playerWrap = document.getElementById("animePlayerWrap");
-  const video = document.getElementById("animeVideo");
-  if (!playerWrap || !video) return;
-
+  if (!playerWrap) return;
   playerWrap.style.display = "block";
   document.getElementById("playerAnimeTitle").textContent = animeTitle + " — Episode " + epNum;
-
   document.querySelectorAll(".episode-item").forEach(function (el) { el.classList.remove("active"); });
-  const activeEp = document.querySelector('.episode-item[data-ep="' + episodeSlug.replace(/"/g, '\\"') + '"]');
+  const activeEp = document.querySelector('.episode-item[data-ep="' + String(episodeId).replace(/"/g, '\\"') + '"]');
   if (activeEp) activeEp.classList.add("active");
-
   playerWrap.scrollIntoView({ behavior: "smooth", block: "start" });
-
-  await loadEpisodeSource(episodeSlug);
+  await loadEpisodeSource(episodeId);
 }
 
-async function loadEpisodeSource(episodeSlug) {
+async function loadEpisodeSource(episodeId) {
   const video = document.getElementById("animeVideo");
   if (!video) return;
-
   if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
   video.pause();
   video.removeAttribute("src");
   video.load();
-
   setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Memuat video Episode...', "loading");
 
   try {
-    const res = await animeFetch("/episode/" + encodeURIComponent(episodeSlug));
+    const res = await animeFetch("/" + ANIME_SOURCE + "/episode/" + encodeURIComponent(episodeId));
     const data = res.data || {};
     const streams = data.streams || data.stream || [];
     if (!streams.length) throw new Error("Tidak ada sumber video");
-
-    let chosen = streams[0];
-    let url = chosen.url || chosen.link || chosen.streamUrl || "";
+    const chosen = streams[0];
+    const url = chosen.url || chosen.link || chosen.streamUrl || "";
     if (!url) throw new Error("URL kosong");
-
     await attachAndPlayVideo(video, url);
-    setVideoStatus('✅ Sedang memutar. Jika buffering, coba kualitas lain.', "");
+    setVideoStatus('✅ Sedang memutar.', "");
   } catch (e) {
-    setVideoStatus('❌ Gagal memuat video episode ini.<br>Kemungkinan episode belum tersedia, atau server sedang down.<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-weight:700;font-size:10px" onclick="loadEpisodeSource(\'' + episodeSlug.replace(/'/g, "\\'") + '\')">COBA LAGI</button>', "error");
+    setVideoStatus('❌ Gagal memuat video.<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-weight:700;font-size:10px" onclick="loadEpisodeSource(\'' + episodeId.replace(/'/g, "\\'") + '\')">COBA LAGI</button>', "error");
   }
 }
 
 function attachAndPlayVideo(video, url) {
   return new Promise(function (resolve, reject) {
     const isM3U8 = /\.m3u8(\?|$)/i.test(url);
-
     video.onerror = function(){ reject(new Error("Video error")); };
     video.onloadeddata = function(){ resolve(); };
-
     if (isM3U8) {
       if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = url;
-        video.play().catch(function(){});
+        video.src = url; video.play().catch(function(){});
       } else if (window.Hls && window.Hls.isSupported()) {
-        try {
-          hlsInstance = new Hls({ enableWorker: true });
-          hlsInstance.loadSource(url);
-          hlsInstance.attachMedia(video);
-          hlsInstance.on(Hls.Events.MANIFEST_PARSED, function () {
-            video.play().catch(function(){});
-          });
-          hlsInstance.on(Hls.Events.ERROR, function (evt, data) {
-            if (data && data.fatal) reject(new Error("HLS fatal error"));
-          });
-        } catch (e) { reject(e); }
+        hlsInstance = new Hls({ enableWorker: true });
+        hlsInstance.loadSource(url);
+        hlsInstance.attachMedia(video);
+        hlsInstance.on(Hls.Events.MANIFEST_PARSED, function () { video.play().catch(function(){}); });
+        hlsInstance.on(Hls.Events.ERROR, function (evt, data) { if (data && data.fatal) reject(new Error("HLS error")); });
       } else {
-        video.src = url;
-        video.play().catch(function(){});
+        video.src = url; video.play().catch(function(){});
       }
     } else {
-      video.src = url;
-      video.play().catch(function(){});
+      video.src = url; video.play().catch(function(){});
     }
-
-    setTimeout(function () {
-      if (video.readyState < 2) reject(new Error("Timeout video"));
-    }, 15000);
+    setTimeout(function () { if (video.readyState < 2) reject(new Error("Timeout")); }, 15000);
   });
 }
 
