@@ -144,6 +144,11 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .anime-search{display:flex;gap:8px;margin-bottom:14px}
 .anime-search input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:12px;outline:none}
 .anime-search button{border:3px solid var(--ink);background:var(--yellow);padding:10px 14px;font-weight:700;box-shadow:3px 3px 0 var(--ink)}
+.anime-genres{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px;scrollbar-width:none;-ms-overflow-style:none}
+.anime-genres::-webkit-scrollbar{display:none}
+.genre-chip{flex:none;border:2px solid var(--ink);background:var(--cream);padding:6px 12px;font-size:9px;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--ink);white-space:nowrap;border-radius:20px;transition:.1s}
+.genre-chip:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.genre-chip.active{background:var(--green)}
 .anime-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .anime-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:6px;cursor:pointer;transition:.12s;position:relative}
 .anime-card:hover{transform:translate(-1px,-1px)}
@@ -159,6 +164,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .anime-detail img{width:120px;float:left;margin:0 12px 8px 0;border:2px solid var(--ink)}
 .anime-detail h2{font-size:15px;margin:0 0 6px;line-height:1.25}
 .anime-detail .anime-desc{font-size:10px;line-height:1.65;clear:both}
+.anime-genre-tags{margin:8px 0;display:flex;flex-wrap:wrap;gap:4px;clear:both}
+.anime-genre-tag{border:2px solid var(--ink);background:var(--blue);color:#fff;padding:2px 8px;font-size:8px;font-weight:700;border-radius:10px}
 .anime-player-header{display:flex;align-items:center;gap:8px;margin:16px 0 8px}
 .anime-player-title{font-size:11px;font-weight:700;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .anime-video{width:100%;aspect-ratio:16/9;background:#000;border:3px solid var(--ink);display:block;position:relative}
@@ -176,13 +183,11 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 
 /* ===== PLAYER CONTROL BAR ===== */
 .player-controls{margin-top:10px;display:grid;gap:6px}
-.player-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 .player-row-2{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:6px}
 .player-btn{border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);padding:9px 4px;font-size:9px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;transition:.1s;cursor:pointer}
 .player-btn .material-symbols-rounded{font-size:20px}
 .player-btn:hover{transform:translate(-1px,-1px)}
 .player-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.player-btn.skip{background:var(--yellow)}
 .player-btn.prev{background:var(--blue);color:#fff}
 .player-btn.next{background:var(--blue);color:#fff}
 .player-btn.back{background:var(--red);color:#fff}
@@ -348,6 +353,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
       <input id="animeSearchInput" type="text" placeholder="Cari judul anime...">
       <button type="button" onclick="searchAnime()">CARI</button>
     </div>
+    <div class="anime-genres" id="genreChips"></div>
     <div id="animeResults" class="anime-grid"></div>
     <div id="animeDetailWrap"></div>
   </div>
@@ -459,7 +465,7 @@ function showPage(id,btn=null){
   if(id==="gamePage")drawSnake();
   if(id==="gameCenter")renderGameCenter();
   if(id==="musicPage")renderMusicPage();
-  if(id==="animePage" && !animeHomeLoaded) loadAnimeHome();
+  if(id==="animePage" && !animeHomeLoaded) { renderGenreChips(); loadAnimeHome(); }
 }
 function productCard(p,index){
   const d=discountPercent(p.oldPrice,p.price);
@@ -591,12 +597,53 @@ document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="En
 
 /* ============================================================
    ANIME STREAMING - Oploverz (wajik-anime-api Railway)
-   + Fitur: Prev/Next Episode, Kembali ke Daftar, Skip Opening
+   + Genre Filter + Episode Order Fixed
    ============================================================ */
 const ANIME_API = "https://wajik-anime-api-production-4c0e.up.railway.app";
 const ANIME_SOURCE = "oploverz";
 
+// Daftar genre Oploverz
+const ANIME_GENRES = [
+  {name:"Semua", value:""},
+  {name:"Action", value:"action"},
+  {name:"Adventure", value:"adventure"},
+  {name:"Comedy", value:"comedy"},
+  {name:"Demons", value:"demons"},
+  {name:"Drama", value:"drama"},
+  {name:"Fantasy", value:"fantasy"},
+  {name:"Game", value:"game"},
+  {name:"Harem", value:"harem"},
+  {name:"Historical", value:"historical"},
+  {name:"Horror", value:"horror"},
+  {name:"Isekai", value:"isekai"},
+  {name:"Josei", value:"josei"},
+  {name:"Kids", value:"kids"},
+  {name:"Magic", value:"magic"},
+  {name:"Martial Arts", value:"martial-arts"},
+  {name:"Mecha", value:"mecha"},
+  {name:"Military", value:"military"},
+  {name:"Music", value:"music"},
+  {name:"Mystery", value:"mystery"},
+  {name:"Parody", value:"parody"},
+  {name:"Police", value:"police"},
+  {name:"Psychological", value:"psychological"},
+  {name:"Romance", value:"romance"},
+  {name:"Samurai", value:"samurai"},
+  {name:"School", value:"school"},
+  {name:"Sci-Fi", value:"sci-fi"},
+  {name:"Seinen", value:"seinen"},
+  {name:"Shoujo", value:"shoujo"},
+  {name:"Shounen", value:"shounen"},
+  {name:"Slice of Life", value:"slice-of-life"},
+  {name:"Sports", value:"sports"},
+  {name:"Super Power", value:"super-power"},
+  {name:"Supernatural", value:"supernatural"},
+  {name:"Thriller", value:"thriller"},
+  {name:"Vampire", value:"vampire"}
+];
+
 let animeHomeLoaded = false;
+let currentGenre = "";
 let currentAnimeId = null;
 let currentAnimeTitle = "";
 let currentEpisodeList = [];
@@ -656,6 +703,36 @@ function extractAnimeList(res) {
   return list;
 }
 
+// Render genre chips
+function renderGenreChips() {
+  const el = document.getElementById("genreChips");
+  if (!el) return;
+  el.innerHTML = ANIME_GENRES.map(function(g) {
+    return '<div class="genre-chip' + (g.value === currentGenre ? ' active' : '') + '" onclick="filterByGenre(\'' + g.value + '\', this)">' + g.name + '</div>';
+  }).join("");
+}
+
+async function filterByGenre(genre, chipEl) {
+  currentGenre = genre;
+  document.querySelectorAll(".genre-chip").forEach(function(c){ c.classList.remove("active"); });
+  if (chipEl) chipEl.classList.add("active");
+  closeAnimeDetail();
+
+  const el = document.getElementById("animeResults");
+  el.innerHTML = '<div class="anime-loading">' + loadingHtml("Memuat genre...") + '</div>';
+
+  try {
+    const path = genre
+      ? "/" + ANIME_SOURCE + "/anime?genre=" + encodeURIComponent(genre) + "&page=1"
+      : "/" + ANIME_SOURCE + "/anime";
+    const res = await animeFetch(path);
+    const list = extractAnimeList(res);
+    renderAnimeGrid(list);
+  } catch (e) {
+    setAnimeStatus(errorHtml("Gagal memuat genre: " + e.message, "loadAnimeHome()"), "error");
+  }
+}
+
 async function loadAnimeHome() {
   setAnimeStatus(loadingHtml("Memuat daftar anime dari Oploverz..."), "loading");
   document.getElementById("animeDetailWrap").innerHTML = "";
@@ -672,7 +749,7 @@ async function loadAnimeHome() {
 async function searchAnime() {
   const q = document.getElementById("animeSearchInput").value.trim();
   closeAnimeDetail();
-  if (!q) { loadAnimeHome(); return; }
+  if (!q) { filterByGenre("", null); return; }
   setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
   try {
     const res = await animeFetch("/" + ANIME_SOURCE + "/search?q=" + encodeURIComponent(q));
@@ -686,7 +763,7 @@ async function searchAnime() {
 function renderAnimeGrid(list) {
   const results = document.getElementById("animeResults");
   if (!list || !list.length) {
-    setAnimeStatus("Anime tidak ditemukan. Coba kata kunci lain.");
+    setAnimeStatus("Anime tidak ditemukan. Coba kata kunci atau genre lain.");
     return;
   }
   results.innerHTML = list.map(function (a) {
@@ -709,10 +786,13 @@ function renderAnimeGrid(list) {
   }).join("");
 }
 
-// TOMBOL KEMBALI KE DAFTAR ANIME
 function backToAnimeList() {
   closeAnimeDetail();
-  renderAnimeList();
+  if (window._lastAnimeList && window._lastAnimeList.length) {
+    renderAnimeGrid(window._lastAnimeList);
+  } else {
+    loadAnimeHome();
+  }
 }
 
 function closeAnimeDetail() {
@@ -721,15 +801,6 @@ function closeAnimeDetail() {
   closeAnimePlayer();
   currentEpisodeList = [];
   currentEpisodeIndex = -1;
-}
-
-// FIX: renderAnimeList dipanggil kalau list masih ada
-function renderAnimeList() {
-  if (!window._lastAnimeList || !window._lastAnimeList.length) {
-    loadAnimeHome();
-    return;
-  }
-  renderAnimeGrid(window._lastAnimeList);
 }
 
 async function openAnimeDetail(animeId) {
@@ -752,12 +823,24 @@ async function openAnimeDetail(animeId) {
     let desc = details.synopsis || details.description || details.desc || "";
     if (desc.length > 500) desc = desc.slice(0, 500) + "...";
 
+    // Ambil genre dari detail
+    let genres = [];
+    if (Array.isArray(details.genres)) genres = details.genres;
+    else if (typeof details.genres === "string") genres = details.genres.split(",").map(function(g){ return g.trim(); });
+    else if (Array.isArray(details.genreList)) genres = details.genreList;
+
     let episodes = [];
     if (Array.isArray(root.episodeList)) episodes = root.episodeList;
     else if (Array.isArray(details.episodeList)) episodes = details.episodeList;
     else if (Array.isArray(root.episodes)) episodes = root.episodes;
     else if (Array.isArray(details.episodes)) episodes = details.episodes;
+    // REVERSE biar EP 1 di atas
+    episodes = episodes.slice().reverse();
     currentEpisodeList = episodes;
+
+    const genresHtml = genres.length
+      ? '<div class="anime-genre-tags">' + genres.map(function(g){ return '<span class="anime-genre-tag">' + escapeHtml(g) + '</span>'; }).join("") + '</div>'
+      : "";
 
     wrap.innerHTML =
       '<div class="anime-detail">' +
@@ -767,6 +850,7 @@ async function openAnimeDetail(animeId) {
         '</button>' +
         (poster ? '<img src="' + escapeHtml(poster) + '" alt="" onerror="this.style.display=\'none\'">' : "") +
         '<h2>' + escapeHtml(title) + '</h2>' +
+        genresHtml +
         '<div class="anime-desc">' + escapeHtml(desc) + '</div>' +
         '<div style="clear:both;margin-top:12px"><strong style="font-size:11px">DAFTAR EPISODE (' + episodes.length + ')</strong></div>' +
         (episodes.length
@@ -778,24 +862,16 @@ async function openAnimeDetail(animeId) {
             '<div class="anime-player-title" id="playerAnimeTitle"></div>' +
           '</div>' +
           '<div id="animeVideoBox" class="anime-video" style="overflow:hidden;position:relative;"></div>' +
-          '<div id="videoStatus" class="video-status loading">Menyiapkan pemutar...</div>' +
+          '<div class="video-status" id="videoStatus">' +
+            '<span class="material-symbols-rounded">info</span>' +
+            '<span>Pilih episode di atas untuk mulai menonton.</span>' +
+          '</div>' +
           '<div class="player-controls">' +
-            '<div class="player-row">' +
-              '<button class="player-btn skip" onclick="playerSkip(-10)">' +
-                '<span class="material-symbols-rounded">replay_10</span>KEMBALI 10s' +
-              '</button>' +
-              '<button class="player-btn skip" onclick="playerSkipOpening()">' +
-                '<span class="material-symbols-rounded">fast_forward</span>SKIP OPENING' +
-              '</button>' +
-              '<button class="player-btn skip" onclick="playerSkip(10)">' +
-                '<span class="material-symbols-rounded">forward_10</span>MAJU 10s' +
-              '</button>' +
-            '</div>' +
             '<div class="player-row-2">' +
               '<button class="player-btn prev" id="btnPrevEp" onclick="playPrevEpisode()">' +
                 '<span class="material-symbols-rounded">skip_previous</span>EP SEBELUM' +
               '</button>' +
-              '<button class="player-btn back" onclick="closeAnimePlayerOnly()">' +
+              '<button class="player-btn close-btn" onclick="closeAnimePlayerOnly()">' +
                 '<span class="material-symbols-rounded">close</span>TUTUP' +
               '</button>' +
               '<button class="player-btn next" id="btnNextEp" onclick="playNextEpisode()">' +
@@ -803,7 +879,7 @@ async function openAnimeDetail(animeId) {
               '</button>' +
             '</div>' +
           '</div>' +
-          '<div class="player-info" id="playerInfo">' +
+          '<div class="player-info">' +
             '<span class="material-symbols-rounded">info</span>' +
             '<span id="playerInfoText">-</span>' +
           '</div>' +
@@ -866,63 +942,6 @@ async function playEpisode(episodeId, epNum, animeTitle, idx) {
   await loadEpisodeSource(episodeId);
 }
 
-// Fungsi SKIP - coba kirim perintah ke iframe. Kalau berhasil, mantap. Kalau enggak, kasih info.
-function getActiveIframe() {
-  const box = document.getElementById("animeVideoBox");
-  if (!box) return null;
-  return box.querySelector("iframe");
-}
-
-function getActiveVideoEl() {
-  const box = document.getElementById("animeVideoBox");
-  if (!box) return null;
-  return box.querySelector("video");
-}
-
-function playerSkip(seconds) {
-  const video = getActiveVideoEl();
-  if (video) {
-    // mp4/m3u8 player - bisa langsung di-skip
-    try {
-      video.currentTime = Math.max(0, video.currentTime + seconds);
-      setVideoStatus('✅ Lompat ' + (seconds > 0 ? '+' : '') + seconds + ' detik berhasil.', "");
-      return;
-    } catch (e) {
-      console.log("Skip gagal:", e);
-    }
-  }
-  // Kalau iframe (blogger), kita coba kasih pesan
-  setVideoStatus('⚠️ Skip hanya bisa lewat kontrol di dalam video (bukan dari tombol ini).<br>Gunakan tombol ±10s di player Oploverz.', "");
-}
-
-function playerSkipOpening() {
-  const video = getActiveVideoEl();
-  if (video) {
-    try {
-      video.currentTime = Math.max(0, video.currentTime + 85);
-      setVideoStatus('✅ Skip opening (~85 detik).', "");
-      return;
-    } catch (e) { console.log(e); }
-  }
-  // Untuk iframe, kita hanya bisa coba trik replace src dengan parameter t
-  const iframe = getActiveIframe();
-  if (iframe) {
-    const src = iframe.src;
-    if (src && !src.includes("#skipop")) {
-      // Coba reload iframe dengan #t=90 (beberapa player HTML5 support)
-      try {
-        // Blogger tidak support hash seek, tapi kita coba aja
-        iframe.src = src;
-        setVideoStatus('⚠️ SKIP OPENING tidak didukung oleh player Oploverz.<br>Gunakan tombol ±10s di dalam player.', "");
-      } catch (e) {
-        setVideoStatus('⚠️ Skip opening tidak didukung.', "");
-      }
-      return;
-    }
-  }
-  setVideoStatus('⚠️ Skip opening tidak didukung oleh player ini.', "");
-}
-
 function playPrevEpisode() {
   if (currentEpisodeIndex <= 0) return;
   const targetIdx = currentEpisodeIndex - 1;
@@ -936,7 +955,6 @@ function playPrevEpisode() {
   if (!epId) epId = ep.slug || ep.episodeId || ep.id || "";
   const num = ep.episode || ep.number || (targetIdx + 1);
   playEpisode(epId, num, currentAnimeTitle, targetIdx);
-  // Update active di list
   document.querySelectorAll(".episode-item").forEach(function (el) { el.classList.remove("active"); });
   const target = document.querySelector('.episode-item[data-ep="' + String(epId).replace(/"/g, '\\"') + '"]');
   if (target) target.classList.add("active");
@@ -987,7 +1005,7 @@ async function loadEpisodeSource(episodeId) {
 
     if (isIframeFriendly) {
       box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border:0;display:block;width:100%;height:100%"></iframe>';
-      setVideoStatus('✅ Sedang memutar. Gunakan tombol di bawah untuk navigasi episode.', "");
+      setVideoStatus('✅ Sedang memutar. Untuk kualitas HD, klik ikon kualitas di dalam player Oploverz.', "");
     } else if (isM3U8 || /\.(mp4|webm|mkv)(\?|$)/i.test(url)) {
       const video = document.createElement('video');
       video.id = "animeVideo";
@@ -997,7 +1015,7 @@ async function loadEpisodeSource(episodeId) {
       video.setAttribute("crossorigin", "anonymous");
       box.appendChild(video);
       await attachAndPlayVideo(video, url);
-      setVideoStatus('✅ Sedang memutar. Tombol skip ±10s dan skip opening BERFUNGSI.', "");
+      setVideoStatus('✅ Sedang memutar.', "");
     } else {
       box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen style="border:0;display:block;width:100%;height:100%"></iframe>';
       setVideoStatus('✅ Sedang memutar.', "");
