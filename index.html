@@ -17,7 +17,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:#111;color:var(--ink);font-family:"Space Mono",monospace;min-height:100dvh}
-button,input{font:inherit}button{cursor:pointer}button:active{transform:translate(1px,1px)}
+button,input,textarea{font:inherit}button{cursor:pointer}button:active{transform:translate(1px,1px)}
 .app{width:min(100%,520px);min-height:100dvh;margin:auto;background:
 radial-gradient(circle at 15% 10%,rgba(255,255,255,.35) 0 2px,transparent 3px),
 radial-gradient(circle at 70% 35%,rgba(0,0,0,.05) 0 1px,transparent 2px),var(--paper);
@@ -186,8 +186,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .episode-item .material-symbols-rounded{font-size:12px}
 .server-btn{border:2px solid var(--ink);background:var(--cream);padding:6px 10px;font-size:9px;font-weight:700;box-shadow:2px 2px 0 var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
 .server-btn .material-symbols-rounded{font-size:14px}
-
-/* ===== PLAYER CONTROL BAR ===== */
 .player-controls{margin-top:10px;display:grid;gap:6px}
 .player-row-2{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:6px}
 .player-btn{border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);padding:9px 4px;font-size:9px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;transition:.1s;cursor:pointer}
@@ -202,6 +200,64 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .player-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .player-info{border:3px solid var(--ink);background:#fff0bf;padding:8px 10px;font-size:9px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
 .player-info .material-symbols-rounded{font-size:14px}
+
+/* ===== AUTH PAGES ===== */
+.auth-page{padding-bottom:30px}
+.auth-wrap{padding:20px 14px;display:flex;justify-content:center;align-items:flex-start;min-height:calc(100dvh - 70px)}
+.auth-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:20px;width:100%;max-width:400px}
+.auth-card h2{font-size:20px;margin:0 0 4px;line-height:1.2}
+.auth-card .sub{font-size:10px;color:#666;margin-bottom:18px;line-height:1.4}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:10px;font-weight:700;margin-bottom:5px;text-transform:uppercase}
+.form-group input,.form-group textarea{width:100%;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:11px;outline:none;font-family:inherit;color:var(--ink)}
+.form-group textarea{resize:vertical;min-height:90px;line-height:1.5}
+.form-group input:focus,.form-group textarea:focus{background:#fff}
+.pwd-wrap{position:relative}
+.pwd-wrap input{padding-right:44px}
+.pwd-toggle{position:absolute;right:0;top:0;height:100%;width:38px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer}
+.pwd-toggle .material-symbols-rounded{font-size:18px}
+.auth-btn{width:100%;border:3px solid var(--ink);background:var(--green);box-shadow:3px 3px 0 var(--ink);padding:12px;font-size:11px;font-weight:700;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.auth-btn.danger{background:var(--red);color:#fff}
+.auth-btn.danger .material-symbols-rounded{color:#fff}
+.auth-btn.warn{background:var(--yellow)}
+.auth-btn .material-symbols-rounded{font-size:16px}
+.auth-error{border:3px solid var(--ink);background:#ffd9d6;padding:8px 10px;font-size:10px;margin-bottom:12px;display:none;line-height:1.5}
+.auth-error.show{display:block}
+.auth-success{border:3px solid var(--ink);background:var(--green);padding:8px 10px;font-size:10px;margin-bottom:12px;display:none;line-height:1.5}
+.auth-success.show{display:block}
+.auth-link{text-align:center;font-size:10px;margin-top:14px;line-height:1.6}
+.auth-link a{color:var(--ink);font-weight:700;text-decoration:underline;cursor:pointer}
+.photo-input-row{display:flex;gap:6px;margin-bottom:6px;align-items:center}
+.photo-input-row input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:10px;outline:none;font-family:inherit;min-width:0}
+.photo-input-row .remove-photo{width:38px;height:38px;flex:none;border:3px solid var(--ink);background:var(--red);color:#fff;font-weight:700;box-shadow:2px 2px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer}
+.photo-input-row .remove-photo .material-symbols-rounded{font-size:18px;color:#fff}
+.add-photo-btn{width:100%;border:3px dashed var(--ink);background:#fff8dd;padding:10px;font-size:10px;font-weight:700;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.add-photo-btn .material-symbols-rounded{font-size:16px}
+.profile-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:18px;margin:14px}
+.profile-avatar{width:88px;height:88px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;margin:0 auto 14px;box-shadow:3px 3px 0 var(--ink)}
+.profile-avatar .material-symbols-rounded{font-size:48px;color:#fff}
+.profile-name{text-align:center;font-size:16px;font-weight:700;margin-bottom:6px}
+.profile-role-wrap{text-align:center;margin-bottom:18px}
+.role-badge{display:inline-block;padding:4px 12px;border:2px solid var(--ink);background:var(--green);font-size:9px;font-weight:700;border-radius:12px;letter-spacing:.5px}
+.role-badge.admin{background:var(--red);color:#fff}
+.profile-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:2px dashed #999;font-size:11px;gap:10px;align-items:center}
+.profile-row:last-child{border-bottom:0}
+.profile-row .label{color:#666;font-weight:700;flex:none}
+.profile-row .value{font-weight:700;text-align:right;word-break:break-word}
+.profile-actions{margin-top:14px;display:grid;gap:8px}
+.manage-list{margin-top:8px;display:grid;gap:6px}
+.manage-item{display:flex;gap:8px;align-items:center;border:2px solid var(--ink);background:#fff8dd;padding:6px;font-size:10px}
+.manage-item img{width:38px;height:38px;object-fit:cover;border:2px solid var(--ink);flex:none}
+.manage-item .info{flex:1;min-width:0}
+.manage-item .info .t{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.manage-item .info .p{font-size:9px;color:#666}
+.manage-item .del{width:34px;height:34px;flex:none;border:2px solid var(--ink);background:var(--red);color:#fff;box-shadow:2px 2px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer}
+.manage-item .del .material-symbols-rounded{font-size:16px;color:#fff}
+.fab{position:fixed;bottom:86px;right:calc(50% - 260px + 20px);width:56px;height:56px;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);display:none;place-items:center;z-index:80}
+.fab.show{display:grid}
+.fab .material-symbols-rounded{font-size:30px}
+@media(max-width:520px){.fab{right:20px}}
+.profile-hint{font-size:9px;color:#666;line-height:1.5;margin-top:8px;text-align:center;font-style:italic}
 </style>
 </head>
 <body>
@@ -212,6 +268,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="logo"><span class="material-symbols-rounded">storefront</span></div>
     <div><div class="top-title">VOLKA STORE</div><div class="top-sub">DIGITAL GOODS • SIMPLE • FAST</div></div>
     <div class="header-spacer"></div>
+    <button class="header-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="headerCartCount">0</span></button>
   </div>
   <section class="hero"><div class="paint-card">
@@ -260,6 +317,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="logo"><span class="material-symbols-rounded">shopping_bag</span></div>
     <div><div class="top-title">STORE</div><div class="top-sub">PILIH PRODUK YANG KAMU BUTUHKAN</div></div>
     <div class="header-spacer"></div>
+    <button class="header-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="storeCartCount">0</span></button>
   </div>
   <div class="section-title"><span>ALL PRODUCTS</span></div>
@@ -282,6 +340,133 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <a class="info-card" id="xSocial" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">alternate_email</span></div><div><div class="info-name">X</div><div class="info-hint">Update singkat</div></div></a>
     <a class="info-card" id="saweria" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">volunteer_activism</span></div><div><div class="info-name">Saweria</div><div class="info-hint">Dukung creator</div></div></a>
   </section>
+</main>
+
+<main id="loginPage" class="page auth-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">MASUK</div><div class="top-sub">LOGIN KE AKUN KAMU</div></div>
+  </div>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Selamat Datang</h2>
+      <p class="sub">Login untuk akses fitur profil dan admin store.</p>
+      <div class="auth-error" id="loginError"></div>
+      <div class="form-group">
+        <label>Username</label>
+        <input id="loginUsername" placeholder="Masukkan username" autocomplete="username" autocapitalize="none">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pwd-wrap">
+          <input id="loginPassword" type="password" placeholder="Masukkan password" autocomplete="current-password">
+          <button class="pwd-toggle" type="button" onclick="togglePwd('loginPassword',this)">
+            <span class="material-symbols-rounded">visibility</span>
+          </button>
+        </div>
+      </div>
+      <button class="auth-btn" onclick="submitLogin()">
+        <span class="material-symbols-rounded">login</span> MASUK
+      </button>
+      <div class="auth-link">
+        Belum punya akun? <a onclick="showPage('registerPage')">Buat akun di sini</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="registerPage" class="page auth-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('loginPage')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">BUAT AKUN</div><div class="top-sub">DAFTAR AKUN BARU</div></div>
+  </div>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Daftar Akun</h2>
+      <p class="sub">Buat akun untuk pengalaman belanja yang lebih baik. Role default: member.</p>
+      <div class="auth-error" id="registerError"></div>
+      <div class="auth-success" id="registerSuccess"></div>
+      <div class="form-group">
+        <label>Username</label>
+        <input id="regUsername" placeholder="Username bebas (min 3 huruf)" autocomplete="username" autocapitalize="none">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pwd-wrap">
+          <input id="regPassword" type="password" placeholder="Minimal 6 karakter" autocomplete="new-password">
+          <button class="pwd-toggle" type="button" onclick="togglePwd('regPassword',this)">
+            <span class="material-symbols-rounded">visibility</span>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Konfirmasi Password</label>
+        <div class="pwd-wrap">
+          <input id="regConfirm" type="password" placeholder="Ulangi password" autocomplete="new-password">
+          <button class="pwd-toggle" type="button" onclick="togglePwd('regConfirm',this)">
+            <span class="material-symbols-rounded">visibility</span>
+          </button>
+        </div>
+      </div>
+      <button class="auth-btn" onclick="submitRegister()">
+        <span class="material-symbols-rounded">person_add</span> DAFTAR
+      </button>
+      <div class="auth-link">
+        Sudah punya akun? <a onclick="showPage('loginPage')">Masuk di sini</a>
+      </div>
+      <p class="profile-hint">Akun kamu tersimpan di browser ini. Hubungi admin agar bisa login dari device lain.</p>
+    </div>
+  </div>
+</main>
+
+<main id="profilePage" class="page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">PROFIL</div><div class="top-sub">AKUN KAMU</div></div>
+  </div>
+  <div class="tool-body" id="profileBody"></div>
+</main>
+
+<main id="addProductPage" class="page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('store')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">TAMBAH PRODUK</div><div class="top-sub">KHUSUS ADMIN</div></div>
+  </div>
+  <div class="auth-wrap" style="padding-top:14px">
+    <div class="auth-card" style="max-width:100%">
+      <div class="auth-error" id="addProdError"></div>
+      <div class="form-group">
+        <label>Nama Produk</label>
+        <input id="addProdName" placeholder="Contoh: Alight Motion Premium" maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>Foto Produk (URL / Catbox)</label>
+        <div id="photoInputs"></div>
+        <button class="add-photo-btn" type="button" onclick="addPhotoInput()">
+          <span class="material-symbols-rounded">add_photo_alternate</span> Tambah Foto Lain
+        </button>
+      </div>
+      <div class="form-group">
+        <label>Harga (Rp)</label>
+        <input id="addProdPrice" type="number" placeholder="Contoh: 7000" min="0">
+      </div>
+      <div class="form-group">
+        <label>Harga Coret / Diskon (Opsional)</label>
+        <input id="addProdOldPrice" type="number" placeholder="Contoh: 10000" min="0">
+      </div>
+      <div class="form-group">
+        <label>Deskripsi Produk</label>
+        <textarea id="addProdDesc" placeholder="Jelaskan detail produk, ketentuan, dll..." maxlength="2000"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Nomor WhatsApp Admin</label>
+        <input id="addProdWa" placeholder="Contoh: 628123456789" inputmode="numeric">
+      </div>
+      <button class="auth-btn" onclick="saveProduct()">
+        <span class="material-symbols-rounded">save</span> SIMPAN PRODUK
+      </button>
+    </div>
+  </div>
 </main>
 
 <main id="aiPage" class="page ai-page">
@@ -317,6 +502,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="logo"><span class="material-symbols-rounded">sports_esports</span></div>
     <div><div class="top-title">GAME CENTER</div><div class="top-sub">PILIH GAME FAVORITMU</div></div>
     <div class="header-spacer"></div>
+    <button class="header-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="gameCartCount">0</span></button>
   </div>
   <div class="game-center-grid with-nav" id="gameCenterGrid"></div>
@@ -392,6 +578,10 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
+<button class="fab" id="fabAddProduct" onclick="openAddProduct()">
+  <span class="material-symbols-rounded">add</span>
+</button>
+
 <nav class="nav" id="mainNav">
   <button type="button" class="active" onclick="showPage('home',this)"><span class="material-symbols-rounded">home</span>HOME</button>
   <button type="button" onclick="showPage('store',this)"><span class="material-symbols-rounded">store</span>STORE</button>
@@ -402,6 +592,330 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
+/* ============================================================
+   AUTH SYSTEM
+   Ganti URL di bawah dengan raw GitHub keylist kamu.
+   Format file (keylist.txt):
+   username: NAMA
+   Password: PASS
+   Role: admin
+   ============================================================ */
+const KEYLIST_URL = "https://raw.githubusercontent.com/blackvilain35-collab/WEB-VOLKA/main/Keylist.txt";
+
+// Admin fallback — selalu bisa login walau keylist gagal di-fetch
+const HARDCODED_ADMIN = { username: "VOLZ", password: "08292012", role: "admin" };
+
+let currentUser = null;
+let keylistUsers = [];
+let localUsers = [];
+
+function parseKeylist(text) {
+  text = String(text || "").trim();
+  if (!text) return [];
+  // Support JSON juga
+  if (text.startsWith("[") || text.startsWith("{")) {
+    try {
+      const j = JSON.parse(text);
+      const arr = Array.isArray(j) ? j : [j];
+      return arr.filter(u => u && u.username && u.password).map(u => ({
+        username: String(u.username),
+        password: String(u.password),
+        role: String(u.role || "member").toLowerCase()
+      }));
+    } catch (e) {}
+  }
+  // Text format
+  const users = [];
+  const blocks = text.split(/\n\s*\n/);
+  blocks.forEach(function(block) {
+    const u = {};
+    block.split("\n").forEach(function(line) {
+      const m = line.match(/^\s*(username|password|role)\s*:\s*(.+?)\s*$/i);
+      if (m) u[m[1].toLowerCase()] = m[2];
+    });
+    if (u.username && u.password) {
+      users.push({
+        username: u.username,
+        password: u.password,
+        role: String(u.role || "member").toLowerCase()
+      });
+    }
+  });
+  return users;
+}
+
+async function fetchKeylist() {
+  try {
+    const res = await fetch(KEYLIST_URL + (KEYLIST_URL.indexOf("?") === -1 ? "?t=" + Date.now() : ""));
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    keylistUsers = parseKeylist(text);
+    console.log("Keylist loaded:", keylistUsers.length, "users");
+  } catch (e) {
+    console.warn("Keylist fetch gagal:", e.message);
+    keylistUsers = [];
+  }
+}
+
+function loadLocalData() {
+  currentUser = null;
+  try { currentUser = JSON.parse(localStorage.getItem("volka_user") || "null"); } catch (e) {}
+  try { localUsers = JSON.parse(localStorage.getItem("volka_users") || "[]"); } catch (e) { localUsers = []; }
+}
+
+function saveLocalUsers() {
+  localStorage.setItem("volka_users", JSON.stringify(localUsers));
+}
+
+function getAllUsers() {
+  const list = [HARDCODED_ADMIN].concat(keylistUsers).concat(localUsers);
+  const seen = {};
+  const out = [];
+  list.forEach(function(u) {
+    if (!u || !u.username) return;
+    const k = String(u.username).toLowerCase();
+    if (seen[k]) return;
+    seen[k] = true;
+    out.push(u);
+  });
+  return out;
+}
+
+function findUser(username) {
+  const k = String(username || "").toLowerCase();
+  return getAllUsers().find(function(u) { return String(u.username).toLowerCase() === k; });
+}
+
+function togglePwd(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (!inp) return;
+  const icon = btn.querySelector(".material-symbols-rounded");
+  if (inp.type === "password") { inp.type = "text"; icon.textContent = "visibility_off"; }
+  else { inp.type = "password"; icon.textContent = "visibility"; }
+}
+
+function showAuthError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add("show");
+  setTimeout(function(){ el.classList.remove("show"); }, 4000);
+}
+
+function submitLogin() {
+  const u = (document.getElementById("loginUsername").value || "").trim();
+  const p = document.getElementById("loginPassword").value || "";
+  if (!u || !p) { showAuthError("loginError", "Username dan password wajib diisi."); return; }
+  const user = findUser(u);
+  if (!user) { showAuthError("loginError", "Username tidak ditemukan."); return; }
+  if (user.password !== p) { showAuthError("loginError", "Password salah."); return; }
+  currentUser = { username: user.username, role: String(user.role || "member").toLowerCase() };
+  localStorage.setItem("volka_user", JSON.stringify(currentUser));
+  updateAuthUI();
+  document.getElementById("loginUsername").value = "";
+  document.getElementById("loginPassword").value = "";
+  showPage("home");
+}
+
+function submitRegister() {
+  const u = (document.getElementById("regUsername").value || "").trim();
+  const p = document.getElementById("regPassword").value || "";
+  const c = document.getElementById("regConfirm").value || "";
+  if (u.length < 3) { showAuthError("registerError", "Username minimal 3 karakter."); return; }
+  if (p.length < 6) { showAuthError("registerError", "Password minimal 6 karakter."); return; }
+  if (p !== c) { showAuthError("registerError", "Konfirmasi password tidak cocok."); return; }
+  if (findUser(u)) { showAuthError("registerError", "Username sudah dipakai."); return; }
+  const newUser = { username: u, password: p, role: "member" };
+  localUsers.push(newUser);
+  saveLocalUsers();
+  currentUser = { username: u, role: "member" };
+  localStorage.setItem("volka_user", JSON.stringify(currentUser));
+  updateAuthUI();
+  const s = document.getElementById("registerSuccess");
+  if (s) { s.textContent = "Akun berhasil dibuat! Selamat datang, " + u; s.classList.add("show"); }
+  document.getElementById("regUsername").value = "";
+  document.getElementById("regPassword").value = "";
+  document.getElementById("regConfirm").value = "";
+  setTimeout(function(){ showPage("home"); }, 900);
+}
+
+function doLogout() {
+  if (!confirm("Yakin mau keluar dari akun?")) return;
+  currentUser = null;
+  localStorage.removeItem("volka_user");
+  updateAuthUI();
+  showPage("home");
+}
+
+function updateAuthUI() {
+  document.querySelectorAll(".profile-btn").forEach(function(btn) {
+    const icon = btn.querySelector(".material-symbols-rounded");
+    if (currentUser) {
+      icon.textContent = "account_circle";
+      btn.title = currentUser.username + " (" + currentUser.role + ")";
+    } else {
+      icon.textContent = "person";
+      btn.title = "Login";
+    }
+  });
+  const fab = document.getElementById("fabAddProduct");
+  if (fab) {
+    if (currentUser && currentUser.role === "admin") fab.classList.add("show");
+    else fab.classList.remove("show");
+  }
+}
+
+function openProfile() {
+  if (currentUser) {
+    renderProfile();
+    showPage("profilePage");
+  } else {
+    showPage("loginPage");
+  }
+}
+
+function renderProfile() {
+  const body = document.getElementById("profileBody");
+  if (!body) return;
+  if (!currentUser) { body.innerHTML = '<div class="empty">Belum login.</div>'; return; }
+  const isAdmin = currentUser.role === "admin";
+  const roleClass = isAdmin ? "role-badge admin" : "role-badge";
+  const pw = "•".repeat(Math.max(6, (findUser(currentUser.username) || {}).password ? 8 : 8));
+
+  let manageHtml = "";
+  if (isAdmin && customProducts.length > 0) {
+    manageHtml =
+      '<div class="profile-row" style="border-bottom:0;padding-bottom:0"><span class="label">Produk Custom Kamu</span></div>' +
+      '<div class="manage-list" id="manageList">' +
+      customProducts.map(function(p, i) {
+        return '<div class="manage-item">' +
+          '<img src="' + escapeHtml(p.image) + '" onerror="this.style.opacity=\'.3\'">' +
+          '<div class="info"><div class="t">' + escapeHtml(p.name) + '</div><div class="p">' + formatRupiah(p.price) + '</div></div>' +
+          '<button class="del" onclick="deleteCustomProduct(' + i + ')"><span class="material-symbols-rounded">delete</span></button>' +
+          '</div>';
+      }).join("") +
+      '</div>';
+  } else if (isAdmin) {
+    manageHtml = '<div class="profile-hint" style="margin-top:14px">Belum ada produk custom. Klik tombol + di halaman store untuk menambah.</div>';
+  }
+
+  body.innerHTML =
+    '<div class="profile-card">' +
+      '<div class="profile-avatar"><span class="material-symbols-rounded">' + (isAdmin ? "shield_person" : "person") + '</span></div>' +
+      '<div class="profile-name">' + escapeHtml(currentUser.username) + '</div>' +
+      '<div class="profile-role-wrap"><span class="' + roleClass + '">' + currentUser.role.toUpperCase() + '</span></div>' +
+      '<div class="profile-row"><span class="label">Username</span><span class="value">' + escapeHtml(currentUser.username) + '</span></div>' +
+      '<div class="profile-row"><span class="label">Password</span><span class="value">' + pw + '</span></div>' +
+      '<div class="profile-row"><span class="label">Role</span><span class="value">' + currentUser.role + '</span></div>' +
+      '<div class="profile-row"><span class="label">Status</span><span class="value">Aktif</span></div>' +
+      '<div class="profile-actions">' +
+        (isAdmin ? '<button class="auth-btn warn" onclick="openAddProduct()"><span class="material-symbols-rounded">add_box</span> TAMBAH PRODUK</button>' : '') +
+        '<button class="auth-btn danger" onclick="doLogout()"><span class="material-symbols-rounded">logout</span> KELUAR</button>' +
+      '</div>' +
+    '</div>' +
+    (manageHtml ? '<div class="profile-card" style="margin-top:0"><div style="font-size:12px;font-weight:700;margin-bottom:8px">' + (isAdmin ? 'KELOLA PRODUK' : '') + '</div>' + manageHtml + '</div>' : '');
+}
+
+/* ============================================================
+   CUSTOM PRODUCTS (ADMIN)
+   ============================================================ */
+let customProducts = [];
+let PRODUCTS = [];
+
+function loadCustomProducts() {
+  try { customProducts = JSON.parse(localStorage.getItem("volka_custom_products") || "[]"); }
+  catch (e) { customProducts = []; }
+  refreshProducts();
+}
+
+function saveCustomProducts() {
+  localStorage.setItem("volka_custom_products", JSON.stringify(customProducts));
+}
+
+function refreshProducts() {
+  PRODUCTS = CONFIG.products.concat(customProducts);
+}
+
+function openAddProduct() {
+  if (!currentUser || currentUser.role !== "admin") {
+    alert("Hanya admin yang bisa menambah produk.");
+    return;
+  }
+  document.getElementById("addProdName").value = "";
+  document.getElementById("addProdPrice").value = "";
+  document.getElementById("addProdOldPrice").value = "";
+  document.getElementById("addProdDesc").value = "";
+  document.getElementById("addProdWa").value = "";
+  const wrap = document.getElementById("photoInputs");
+  wrap.innerHTML = "";
+  addPhotoInput("");
+  showPage("addProductPage");
+}
+
+function addPhotoInput(val) {
+  const wrap = document.getElementById("photoInputs");
+  if (!wrap) return;
+  if (wrap.children.length >= 8) { alert("Maksimal 8 foto."); return; }
+  const row = document.createElement("div");
+  row.className = "photo-input-row";
+  row.innerHTML =
+    '<input type="url" placeholder="https://files.catbox.moe/xxxx.jpg" value="' + escapeHtml(val || "") + '">' +
+    '<button class="remove-photo" type="button"><span class="material-symbols-rounded">close</span></button>';
+  row.querySelector(".remove-photo").onclick = function() {
+    if (wrap.children.length <= 1) { alert("Minimal 1 foto."); return; }
+    row.remove();
+  };
+  wrap.appendChild(row);
+}
+
+function saveProduct() {
+  const name = (document.getElementById("addProdName").value || "").trim();
+  const price = parseInt(document.getElementById("addProdPrice").value || "0", 10);
+  const oldPrice = parseInt(document.getElementById("addProdOldPrice").value || "0", 10);
+  const desc = (document.getElementById("addProdDesc").value || "").trim();
+  const wa = (document.getElementById("addProdWa").value || "").trim();
+  const photoInputs = document.querySelectorAll("#photoInputs input");
+  const gallery = [];
+  photoInputs.forEach(function(inp) {
+    const v = (inp.value || "").trim();
+    if (v) gallery.push(v);
+  });
+
+  if (!name) { showAuthError("addProdError", "Nama produk wajib diisi."); return; }
+  if (gallery.length < 1) { showAuthError("addProdError", "Minimal 1 foto produk."); return; }
+  if (!price || price <= 0) { showAuthError("addProdError", "Harga wajib diisi dan lebih dari 0."); return; }
+  if (!desc) { showAuthError("addProdError", "Deskripsi wajib diisi."); return; }
+  if (!wa) { showAuthError("addProdError", "Nomor WA wajib diisi."); return; }
+
+  const newProduct = {
+    name: name,
+    description: desc,
+    image: gallery[0],
+    gallery: gallery,
+    oldPrice: oldPrice || price,
+    price: price,
+    wa: wa
+  };
+  customProducts.push(newProduct);
+  saveCustomProducts();
+  refreshProducts();
+  renderProducts();
+  alert("Produk berhasil ditambahkan!");
+  showPage("store");
+}
+
+function deleteCustomProduct(index) {
+  if (!confirm("Hapus produk ini?")) return;
+  customProducts.splice(index, 1);
+  saveCustomProducts();
+  refreshProducts();
+  renderProducts();
+  renderProfile();
+}
+
+/* ============================================================
+   KONFIGURASI STORE
+   ============================================================ */
 const CONFIG={
   adminWA:"584167367544",
   links:{
@@ -466,7 +980,7 @@ function showBottomNav(){document.getElementById("mainNav").style.display="grid"
 function showPage(id,btn=null){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   const page=document.getElementById(id);if(!page)return;page.classList.add("active");
-  if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage"].includes(id))hideBottomNav();else showBottomNav();
+  if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage"].includes(id))hideBottomNav();else showBottomNav();
   if(btn){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="gamePage")drawSnake();
@@ -480,7 +994,7 @@ function productCard(p,index){
 }
 function renderProducts(){
   const q=(document.getElementById("search")?.value||"").toLowerCase().trim(),el=document.getElementById("products");
-  const list=CONFIG.products.map((p,i)=>({p,i})).filter(x=>x.p.name.toLowerCase().includes(q));
+  const list=PRODUCTS.map((p,i)=>({p,i})).filter(x=>x.p.name.toLowerCase().includes(q));
   el.innerHTML=list.length?list.map(x=>productCard(x.p,x.i)).join(""):'<div class="empty">Produk tidak ditemukan.</div>';
 }
 function startBanners(){
@@ -531,7 +1045,7 @@ function togglePlayMusic(){
 function nextMusic(){if(!CONFIG.musics.length)return;const n=(currentMusicIndex+1)%CONFIG.musics.length;playMusic(n)}
 function prevMusic(){if(!CONFIG.musics.length)return;const n=(currentMusicIndex-1+CONFIG.musics.length)%CONFIG.musics.length;playMusic(n)}
 function openProductDetail(index){
-  const p=CONFIG.products[index];if(!p)return;currentProductIndex=index;currentGalleryIndex=0;
+  const p=PRODUCTS[index];if(!p)return;currentProductIndex=index;currentGalleryIndex=0;
   previousPage=document.getElementById("store").classList.contains("active")?"store":"home";
   document.getElementById("detailHeaderName").textContent=p.name;document.getElementById("detailName").textContent=p.name;
   document.getElementById("detailOld").textContent=formatRupiah(p.oldPrice);document.getElementById("detailNew").textContent=formatRupiah(p.price);
@@ -545,22 +1059,22 @@ function buildProductGallery(p){
   updateProductGallery();
 }
 function updateProductGallery(){document.getElementById("detailSlides").style.transform=`translateX(-${currentGalleryIndex*100}%)`;[...document.getElementById("galleryDots").children].forEach((d,i)=>d.classList.toggle("active",i===currentGalleryIndex))}
-function moveProductImage(dir){const p=CONFIG.products[currentProductIndex];if(!p)return;const g=p.gallery?.length?p.gallery:[p.image];currentGalleryIndex=(currentGalleryIndex+dir+g.length)%g.length;updateProductGallery()}
+function moveProductImage(dir){const p=PRODUCTS[currentProductIndex];if(!p)return;const g=p.gallery?.length?p.gallery:[p.image];currentGalleryIndex=(currentGalleryIndex+dir+g.length)%g.length;updateProductGallery()}
 function goProductImage(i){currentGalleryIndex=i;updateProductGallery()}
 function closeProductDetail(){showPage(previousPage)}
 document.getElementById("detailSlides").addEventListener("touchstart",e=>detailTouchX=e.touches[0].clientX,{passive:true});
 document.getElementById("detailSlides").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-detailTouchX;if(Math.abs(dx)>40)moveProductImage(dx<0?1:-1)},{passive:true});
-function addToCart(index,qty=1){const p=CONFIG.products[index];if(!p)return;const ex=cart.find(x=>x.productIndex===index);if(ex)ex.qty+=qty;else cart.push({productIndex:index,qty});saveCart()}
+function addToCart(index,qty=1){const p=PRODUCTS[index];if(!p)return;const ex=cart.find(x=>x.productIndex===index);if(ex)ex.qty+=qty;else cart.push({productIndex:index,qty});saveCart()}
 function addCurrentProductToCart(){if(currentProductIndex<0)return;addToCart(currentProductIndex);alert("Produk berhasil ditambahkan ke keranjang.")}
 function changeQty(index,delta){const item=cart.find(x=>x.productIndex===index);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
 function removeFromCart(index){cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
-function getCartTotal(){return cart.reduce((t,i)=>t+(CONFIG.products[i.productIndex]?CONFIG.products[i.productIndex].price*i.qty:0),0)}
+function getCartTotal(){return cart.reduce((t,i)=>t+(PRODUCTS[i.productIndex]?PRODUCTS[i.productIndex].price*i.qty:0),0)}
 function getCartCount(){return cart.reduce((t,i)=>t+i.qty,0)}
 function updateCartCount(){["headerCartCount","storeCartCount","gameCartCount"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=getCartCount();})}
 function renderCart(){
   const list=document.getElementById("cartList");
   if(!cart.length){list.innerHTML='<div class="empty"><span class="material-symbols-rounded" style="font-size:35px">shopping_cart</span><br>Keranjang masih kosong.</div>';document.getElementById("cartTotal").innerHTML="<span>Total</span><span>Rp0</span>";return}
-  list.innerHTML=cart.map(item=>{const p=CONFIG.products[item.productIndex];if(!p)return"";return `<div class="cart-item"><img class="cart-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}"><div><div class="cart-name">${escapeHtml(p.name)}</div><div class="cart-price">${formatRupiah(p.price)}</div><div class="qty"><button onclick="changeQty(${item.productIndex},-1)">−</button><span>${item.qty}</span><button onclick="changeQty(${item.productIndex},1)">+</button></div></div><button class="cart-remove" onclick="removeFromCart(${item.productIndex})" aria-label="Hapus"><span class="material-symbols-rounded">delete</span></button></div>`}).join("");
+  list.innerHTML=cart.map(item=>{const p=PRODUCTS[item.productIndex];if(!p)return"";return `<div class="cart-item"><img class="cart-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}"><div><div class="cart-name">${escapeHtml(p.name)}</div><div class="cart-price">${formatRupiah(p.price)}</div><div class="qty"><button onclick="changeQty(${item.productIndex},-1)">−</button><span>${item.qty}</span><button onclick="changeQty(${item.productIndex},1)">+</button></div></div><button class="cart-remove" onclick="removeFromCart(${item.productIndex})" aria-label="Hapus"><span class="material-symbols-rounded">delete</span></button></div>`}).join("");
   document.getElementById("cartTotal").innerHTML=`<span>TOTAL</span><span>${formatRupiah(getCartTotal())}</span>`;
 }
 function openCart(){renderCart();showPage("cart")}
@@ -568,18 +1082,18 @@ function buyCurrentProductNow(){if(currentProductIndex<0)return;checkoutSource="
 function goCheckout(){if(!cart.length){alert("Keranjang masih kosong.");return}checkoutSource="cart";checkoutItems=cart.map(i=>({productIndex:i.productIndex,qty:i.qty}));renderCheckout();showPage("checkout")}
 function backFromCheckout(){showPage(checkoutSource==="buyNow"?"productDetail":"cart")}
 function renderCheckout(){
-  document.getElementById("checkoutSummary").innerHTML=checkoutItems.map(i=>{const p=CONFIG.products[i.productIndex];if(!p)return"";return `<div class="summary-row"><span>${escapeHtml(p.name)} × ${i.qty}</span><strong>${formatRupiah(p.price*i.qty)}</strong></div>`}).join("");
-  document.getElementById("checkoutTotal").textContent=formatRupiah(checkoutItems.reduce((s,i)=>{const p=CONFIG.products[i.productIndex];return s+(p?p.price*i.qty:0)},0));
+  document.getElementById("checkoutSummary").innerHTML=checkoutItems.map(i=>{const p=PRODUCTS[i.productIndex];if(!p)return"";return `<div class="summary-row"><span>${escapeHtml(p.name)} × ${i.qty}</span><strong>${formatRupiah(p.price*i.qty)}</strong></div>`}).join("");
+  document.getElementById("checkoutTotal").textContent=formatRupiah(checkoutItems.reduce((s,i)=>{const p=PRODUCTS[i.productIndex];return s+(p?p.price*i.qty:0)},0));
 }
 function buildOrderText(){
   const orderId="VOLKA-"+Date.now().toString().slice(-8);
   let text=`DETAIL PESANAN VOLKA STORE\nOrder ID: ${orderId}\n\n`;
-  checkoutItems.forEach(i=>{const p=CONFIG.products[i.productIndex];if(p)text+=`Produk: ${p.name}\nHarga: ${formatRupiah(p.price)}\nJumlah: ${i.qty}\nSubtotal: ${formatRupiah(p.price*i.qty)}\n\n`});
-  text+=`TOTAL PEMBAYARAN: ${formatRupiah(checkoutItems.reduce((s,i)=>{const p=CONFIG.products[i.productIndex];return s+(p?p.price*i.qty:0)},0))}\n\nSaya sudah transfer dan akan mengirim screenshot bukti transaksi di chat ini.`;
+  checkoutItems.forEach(i=>{const p=PRODUCTS[i.productIndex];if(p)text+=`Produk: ${p.name}\nHarga: ${formatRupiah(p.price)}\nJumlah: ${i.qty}\nSubtotal: ${formatRupiah(p.price*i.qty)}\n\n`});
+  text+=`TOTAL PEMBAYARAN: ${formatRupiah(checkoutItems.reduce((s,i)=>{const p=PRODUCTS[i.productIndex];return s+(p?p.price*i.qty:0)},0))}\n\nSaya sudah transfer dan akan mengirim screenshot bukti transaksi di chat ini.`;
   return {text,orderId};
 }
 function chatOrderToAdmin(){
-  const order=buildOrderText(),wa=(checkoutItems[0]&&CONFIG.products[checkoutItems[0].productIndex]?.wa)||CONFIG.adminWA;
+  const order=buildOrderText(),wa=(checkoutItems[0]&&PRODUCTS[checkoutItems[0].productIndex]?.wa)||CONFIG.adminWA;
   window.open(`https://wa.me/${wa}?text=${encodeURIComponent("Halo Admin VOLKA STORE 👋\n\n"+order.text+"\n\nMohon dicek dan diproses. Terima kasih.")}`,"_blank");
 }
 function chatAdmin(){window.open(`https://wa.me/${CONFIG.adminWA}?text=${encodeURIComponent("Halo Admin VOLKA STORE, saya mau bertanya tentang produk/store.")}`,"_blank")}
@@ -603,7 +1117,7 @@ async function askAI(){
 document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
 
 /* ============================================================
-   ANIME STREAMING - Multi Source (Oploverz + Kuramanime + Otakudesu)
+   ANIME STREAMING - Multi Source
    ============================================================ */
 const ANIME_API = "https://wajik-anime-api-production-4c0e.up.railway.app";
 
@@ -635,9 +1149,7 @@ const ANIME_GENRES = [
 
 const ANIME_SOURCES = {
   oploverz: {
-    key: "oploverz",
-    label: "Oploverz",
-    icon: "movie",
+    key: "oploverz", label: "Oploverz", icon: "movie",
     list: function() { return "/oploverz/anime"; },
     listByGenre: function(g) { return "/oploverz/anime?genre=" + encodeURIComponent(g) + "&page=1"; },
     search: function(q) { return "/oploverz/search?q=" + encodeURIComponent(q); },
@@ -655,18 +1167,10 @@ const ANIME_SOURCES = {
     },
     normalizeCard: function(a) {
       var id = a.slug || a.animeId || a.id || "";
-      return {
-        cacheKey: id,
-        slug: id,
-        animeId: "",
-        title: a.title || a.name || "Tanpa judul",
-        poster: a.poster || a.image || a.thumb || a.cover || "",
-        posterFallback: "https://i0.wp.com/oploverz.am/wp-content/uploads/manga-images/thumbnail/" + id + ".jpg"
-      };
+      return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "https://i0.wp.com/oploverz.am/wp-content/uploads/manga-images/thumbnail/" + id + ".jpg" };
     },
     extractDetail: function(res) {
-      var root = res.data || {};
-      var d = root.details || root;
+      var root = res.data || {}; var d = root.details || root;
       var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || [];
       var eps = rawEps.map(function(ep) {
         var id = "";
@@ -679,25 +1183,15 @@ const ANIME_SOURCES = {
       if (Array.isArray(d.genres)) genres = d.genres;
       else if (typeof d.genres === "string") genres = d.genres.split(",").map(function(s){return s.trim();});
       else if (Array.isArray(d.genreList)) genres = d.genreList;
-      return {
-        title: d.title || "Anime",
-        poster: d.poster || d.image || d.thumb || "",
-        synopsis: d.synopsis || d.description || d.desc || "",
-        genres: genres,
-        episodes: eps
-      };
+      return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: genres, episodes: eps };
     },
     extractStream: function(res) {
-      var root = res.data || {};
-      var d = root.details || root;
+      var root = res.data || {}; var d = root.details || root;
       return d.streamingUrl || d.streamUrl || d.url || "";
     }
   },
-  
   kuramanime: {
-    key: "kuramanime",
-    label: "Kuramanime",
-    icon: "video_library",
+    key: "kuramanime", label: "Kuramanime", icon: "video_library",
     list: function() { return "/kuramanime/anime"; },
     listByGenre: function(g) { return "/kuramanime/anime?genre=" + encodeURIComponent(g) + "&page=1"; },
     search: function(q) { return "/kuramanime/anime?search=" + encodeURIComponent(q) + "&page=1"; },
@@ -718,40 +1212,22 @@ const ANIME_SOURCES = {
     normalizeCard: function(a) {
       var animeId = a.animeId || a.id || "";
       var slug = a.slug || a.animeSlug || "";
-      return {
-        cacheKey: animeId + "|" + slug,
-        animeId: animeId,
-        slug: slug,
-        title: a.title || a.name || "Tanpa judul",
-        poster: a.poster || a.image || a.thumb || a.cover || "",
-        posterFallback: ""
-      };
+      return { cacheKey: animeId + "|" + slug, animeId: animeId, slug: slug, title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" };
     },
     extractDetail: function(res) {
-      var root = res.data || {};
-      var d = root.details || root;
+      var root = res.data || {}; var d = root.details || root;
       var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || [];
       var eps = rawEps.map(function(ep) {
-        return {
-          id: ep.episodeId || ep.id || ep.slug || "",
-          number: ep.episode || ep.number || 0
-        };
+        return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 };
       });
       eps.reverse();
       var genres = [];
       if (Array.isArray(d.genres)) genres = d.genres;
       else if (typeof d.genres === "string") genres = d.genres.split(",").map(function(s){return s.trim();});
-      return {
-        title: d.title || "Anime",
-        poster: d.poster || d.image || d.thumb || "",
-        synopsis: d.synopsis || d.description || d.desc || "",
-        genres: genres,
-        episodes: eps
-      };
+      return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: genres, episodes: eps };
     },
     extractStream: function(res) {
-      var root = res.data || {};
-      var d = root.details || root;
+      var root = res.data || {}; var d = root.details || root;
       if (d.streamingUrl) return d.streamingUrl;
       if (d.streamUrl) return d.streamUrl;
       if (d.url) return d.url;
@@ -760,11 +1236,8 @@ const ANIME_SOURCES = {
       return "";
     }
   },
-  
   otakudesu: {
-    key: "otakudesu",
-    label: "Otakudesu",
-    icon: "video_file",
+    key: "otakudesu", label: "Otakudesu", icon: "video_file",
     list: function() { return "/otakudesu/anime"; },
     listByGenre: function(g) { return "/otakudesu/genre/" + encodeURIComponent(g); },
     search: function(q) { return "/otakudesu/search?q=" + encodeURIComponent(q); },
@@ -782,34 +1255,17 @@ const ANIME_SOURCES = {
     },
     normalizeCard: function(a) {
       var id = a.slug || a.animeId || a.id || "";
-      return {
-        cacheKey: id,
-        slug: id,
-        animeId: "",
-        title: a.title || a.name || "Tanpa judul",
-        poster: a.poster || a.image || a.thumb || a.cover || "",
-        posterFallback: ""
-      };
+      return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" };
     },
     extractDetail: function(res) {
-      var root = res.data || {};
-      var d = root.details || root;
+      var root = res.data || {}; var d = root.details || root;
       var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || [];
-      var eps = rawEps.map(function(ep) {
-        return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 };
-      });
+      var eps = rawEps.map(function(ep) { return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 }; });
       eps.reverse();
-      return {
-        title: d.title || "Anime",
-        poster: d.poster || d.image || d.thumb || "",
-        synopsis: d.synopsis || d.description || d.desc || "",
-        genres: Array.isArray(d.genres) ? d.genres : [],
-        episodes: eps
-      };
+      return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: Array.isArray(d.genres) ? d.genres : [], episodes: eps };
     },
     extractStream: function(res) {
-      var root = res.data || {};
-      var d = root.details || root;
+      var root = res.data || {}; var d = root.details || root;
       return d.streamingUrl || d.streamUrl || d.url || "";
     }
   }
@@ -852,18 +1308,15 @@ function setAnimeStatus(html, type) {
   const cls = type === "error" ? "anime-error" : (type === "loading" ? "anime-loading" : "anime-empty");
   results.innerHTML = '<div class="' + cls + '">' + html + '</div>';
 }
-
 function loadingHtml(msg) {
   return '<span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>' + escapeHtml(msg || "Memuat...");
 }
-
 function errorHtml(msg, retryFn) {
   const fn = retryFn || "loadAnimeHome()";
   return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' +
     escapeHtml(msg || "Terjadi kesalahan.") +
     '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>';
 }
-
 function renderSourceChips() {
   const el = document.getElementById("sourceChips");
   if (!el) return;
@@ -874,7 +1327,6 @@ function renderSourceChips() {
       '</div>';
   }).join("");
 }
-
 function renderGenreChips() {
   const el = document.getElementById("genreChips");
   if (!el) return;
@@ -882,7 +1334,6 @@ function renderGenreChips() {
     return '<div class="genre-chip' + (g.value === currentGenre ? ' active' : '') + '" onclick="filterByGenre(\'' + g.value + '\', this)">' + g.name + '</div>';
   }).join("");
 }
-
 function switchSource(key) {
   if (!ANIME_SOURCES[key]) return;
   currentSource = key;
@@ -892,131 +1343,75 @@ function switchSource(key) {
   closeAnimeDetail();
   loadAnimeHome();
 }
-
 async function loadAnimeHome() {
   setAnimeStatus(loadingHtml("Memuat dari " + ANIME_SOURCES[currentSource].label + "..."), "loading");
   document.getElementById("animeDetailWrap").innerHTML = "";
-
   const source = ANIME_SOURCES[currentSource];
-
   try {
     const res = await animeFetch(source.list());
     const list = source.extractList(res);
-    if (list.length) {
-      animeHomeLoaded = true;
-      renderAnimeGrid(list, source);
-      return;
-    }
-  } catch (e) {
-    console.warn("Source " + currentSource + " gagal:", e.message);
-  }
-
+    if (list.length) { animeHomeLoaded = true; renderAnimeGrid(list, source); return; }
+  } catch (e) { console.warn("Source " + currentSource + " gagal:", e.message); }
   for (let i = 0; i < SOURCE_ORDER.length; i++) {
     const key = SOURCE_ORDER[i];
     if (key === currentSource) continue;
     try {
       const res = await animeFetch(ANIME_SOURCES[key].list());
       const list = ANIME_SOURCES[key].extractList(res);
-      if (list.length) {
-        currentSource = key;
-        renderSourceChips();
-        animeHomeLoaded = true;
-        renderAnimeGrid(list, ANIME_SOURCES[key]);
-        return;
-      }
+      if (list.length) { currentSource = key; renderSourceChips(); animeHomeLoaded = true; renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
     } catch (e) { continue; }
   }
-
   setAnimeStatus(errorHtml("Semua sumber gagal dimuat. Coba lagi nanti.", "loadAnimeHome()"), "error");
 }
-
 async function filterByGenre(genre, chipEl) {
   currentGenre = genre;
   document.querySelectorAll(".genre-chip").forEach(function(c){ c.classList.remove("active"); });
   if (chipEl) chipEl.classList.add("active");
   closeAnimeDetail();
-
   setAnimeStatus(loadingHtml("Memuat genre..."), "loading");
-
   const source = ANIME_SOURCES[currentSource];
-
-  if (!genre) {
-    loadAnimeHome();
-    return;
-  }
-
+  if (!genre) { loadAnimeHome(); return; }
   try {
     const res = await animeFetch(source.listByGenre(genre));
     const list = source.extractList(res);
-    if (list.length) {
-      renderAnimeGrid(list, source);
-      return;
-    }
-  } catch (e) {
-    console.warn("Genre di " + currentSource + " gagal: " + e.message);
-  }
-
+    if (list.length) { renderAnimeGrid(list, source); return; }
+  } catch (e) { console.warn("Genre di " + currentSource + " gagal: " + e.message); }
   for (let i = 0; i < SOURCE_ORDER.length; i++) {
     const key = SOURCE_ORDER[i];
     if (key === currentSource) continue;
     try {
       const res = await animeFetch(ANIME_SOURCES[key].listByGenre(genre));
       const list = ANIME_SOURCES[key].extractList(res);
-      if (list.length) {
-        currentSource = key;
-        renderSourceChips();
-        renderAnimeGrid(list, ANIME_SOURCES[key]);
-        return;
-      }
+      if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
     } catch (e) { continue; }
   }
-
   setAnimeStatus("Tidak ada anime genre ini di semua sumber. Coba genre lain.");
 }
-
 async function searchAnime() {
   const q = document.getElementById("animeSearchInput").value.trim();
   closeAnimeDetail();
   if (!q) { filterByGenre("", null); return; }
   setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
-
   const source = ANIME_SOURCES[currentSource];
-
   try {
     const res = await animeFetch(source.search(q));
     const list = source.extractList(res);
-    if (list.length) {
-      renderAnimeGrid(list, source);
-      return;
-    }
-  } catch (e) {
-    console.warn("Search di " + currentSource + " gagal: " + e.message);
-  }
-
+    if (list.length) { renderAnimeGrid(list, source); return; }
+  } catch (e) { console.warn("Search di " + currentSource + " gagal: " + e.message); }
   for (let i = 0; i < SOURCE_ORDER.length; i++) {
     const key = SOURCE_ORDER[i];
     if (key === currentSource) continue;
     try {
       const res = await animeFetch(ANIME_SOURCES[key].search(q));
       const list = ANIME_SOURCES[key].extractList(res);
-      if (list.length) {
-        currentSource = key;
-        renderSourceChips();
-        renderAnimeGrid(list, ANIME_SOURCES[key]);
-        return;
-      }
+      if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
     } catch (e) { continue; }
   }
-
   setAnimeStatus('Anime "' + escapeHtml(q) + '" tidak ditemukan di semua sumber. Coba kata kunci lain.');
 }
-
 function renderAnimeGrid(list, source) {
   const results = document.getElementById("animeResults");
-  if (!list || !list.length) {
-    setAnimeStatus("Anime tidak ditemukan. Coba kata kunci atau genre lain.");
-    return;
-  }
+  if (!list || !list.length) { setAnimeStatus("Anime tidak ditemukan. Coba kata kunci atau genre lain."); return; }
   results.innerHTML = list.map(function (a) {
     const card = source.normalizeCard(a);
     animeCache[card.cacheKey] = card;
@@ -1035,12 +1430,7 @@ function renderAnimeGrid(list, source) {
       '</div>';
   }).join("");
 }
-
-function backToAnimeList() {
-  closeAnimeDetail();
-  loadAnimeHome();
-}
-
+function backToAnimeList() { closeAnimeDetail(); loadAnimeHome(); }
 function closeAnimeDetail() {
   document.getElementById("animeResults").innerHTML = "";
   document.getElementById("animeDetailWrap").innerHTML = "";
@@ -1049,12 +1439,10 @@ function closeAnimeDetail() {
   currentEpisodeIndex = -1;
   currentAnimeCtx = null;
 }
-
 async function openAnimeDetail(cacheKey) {
   const anime = animeCache[cacheKey];
   if (!anime) { alert("Data anime tidak ditemukan. Coba refresh."); return; }
   currentAnimeCtx = anime;
-
   const source = ANIME_SOURCES[currentSource];
   const wrap = document.getElementById("animeDetailWrap");
   const results = document.getElementById("animeResults");
@@ -1063,13 +1451,11 @@ async function openAnimeDetail(cacheKey) {
   currentEpisodeIndex = -1;
   wrap.innerHTML = '<div class="anime-detail">' + loadingHtml("Memuat detail & episode dari " + source.label + "...") + '</div>';
   window.scrollTo({ top: 0, behavior: "smooth" });
-
   try {
     const res = await animeFetch(source.detailPath(anime));
     const info = source.extractDetail(res);
     currentAnimeTitle = info.title;
     currentEpisodeList = info.episodes;
-
     const poster = info.poster || anime.poster || anime.posterFallback || "";
     let desc = info.synopsis || "";
     if (desc.length > 500) desc = desc.slice(0, 500) + "...";
@@ -1077,7 +1463,6 @@ async function openAnimeDetail(cacheKey) {
     const genresHtml = genres.length
       ? '<div class="anime-genre-tags">' + genres.map(function(g){ return '<span class="anime-genre-tag">' + escapeHtml(g) + '</span>'; }).join("") + '</div>'
       : "";
-
     wrap.innerHTML =
       '<div class="anime-detail">' +
         '<button class="back-btn" onclick="backToAnimeList()" style="margin-bottom:10px;width:auto;padding:8px 14px;display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;">' +
@@ -1124,13 +1509,11 @@ async function openAnimeDetail(cacheKey) {
           '</div>' +
         '</div>' +
       '</div>';
-
     if (info.episodes.length) renderEpisodeList(info.episodes);
   } catch (e) {
     wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail: " + e.message) + '</div>';
   }
 }
-
 function renderEpisodeList(episodes) {
   const el = document.getElementById("episodeListInline");
   if (!el) return;
@@ -1140,14 +1523,12 @@ function renderEpisodeList(episodes) {
     return '<div class="episode-item" data-ep="' + escapeHtml(String(epId)) + '" onclick="playEpisode(\'' + String(epId).replace(/'/g, "\\'") + '\',' + Number(num) + ',' + i + ')">EP ' + escapeHtml(String(num)) + '</div>';
   }).join("");
 }
-
 function setVideoStatus(msg, type) {
   const el = document.getElementById("videoStatus");
   if (!el) return;
   el.className = "video-status " + (type || "");
   el.innerHTML = msg;
 }
-
 function updatePlayerInfo() {
   const infoEl = document.getElementById("playerInfoText");
   if (!infoEl) return;
@@ -1159,7 +1540,6 @@ function updatePlayerInfo() {
   if (btnPrev) btnPrev.disabled = (currentEpisodeIndex <= 0);
   if (btnNext) btnNext.disabled = (currentEpisodeIndex >= total - 1 || total === 0);
 }
-
 async function playEpisode(episodeId, epNum, idx) {
   const playerWrap = document.getElementById("animePlayerWrap");
   if (!playerWrap) return;
@@ -1173,7 +1553,6 @@ async function playEpisode(episodeId, epNum, idx) {
   playerWrap.scrollIntoView({ behavior: "smooth", block: "start" });
   await loadEpisodeSource(episodeId);
 }
-
 function playPrevEpisode() {
   if (currentEpisodeIndex <= 0) return;
   const targetIdx = currentEpisodeIndex - 1;
@@ -1181,7 +1560,6 @@ function playPrevEpisode() {
   if (!ep) return;
   playEpisode(ep.id, ep.number || (targetIdx + 1), targetIdx);
 }
-
 function playNextEpisode() {
   if (currentEpisodeIndex >= currentEpisodeList.length - 1) return;
   const targetIdx = currentEpisodeIndex + 1;
@@ -1189,26 +1567,20 @@ function playNextEpisode() {
   if (!ep) return;
   playEpisode(ep.id, ep.number || (targetIdx + 1), targetIdx);
 }
-
 async function loadEpisodeSource(episodeId) {
   const box = document.getElementById("animeVideoBox");
   if (!box || !currentAnimeCtx) return;
   if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
   box.innerHTML = "";
   setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Memuat video Episode...', "loading");
-
   const source = ANIME_SOURCES[currentSource];
-
   try {
     const res = await animeFetch(source.episodePath({id: episodeId}, currentAnimeCtx));
     let url = source.extractStream(res);
-
     if (!url) { console.log("Response /episode:", res); throw new Error("Tidak ada sumber video"); }
-
     const isBlogger = /blogger\.com|video\.g\?|googleusercontent|youtube\.com|youtu\.be/.test(url);
     const isM3U8 = /\.m3u8(\?|$)/i.test(url);
     const isIframeFriendly = isBlogger || /\/embed\//.test(url);
-
     if (isIframeFriendly) {
       box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border:0;display:block;width:100%;height:100%"></iframe>';
       setVideoStatus('✅ Sedang memutar. Klik tombol kualitas di dalam video untuk ganti resolusi.', "");
@@ -1230,7 +1602,6 @@ async function loadEpisodeSource(episodeId) {
     setVideoStatus('❌ Gagal memuat video: ' + e.message + '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-weight:700;font-size:10px" onclick="loadEpisodeSource(\'' + episodeId.replace(/'/g, "\\'") + '\')">COBA LAGI</button>', "error");
   }
 }
-
 function attachAndPlayVideo(video, url) {
   return new Promise(function (resolve, reject) {
     const isM3U8 = /\.m3u8(\?|$)/i.test(url);
@@ -1254,7 +1625,6 @@ function attachAndPlayVideo(video, url) {
     setTimeout(function () { if (video.readyState < 2) reject(new Error("Timeout")); }, 15000);
   });
 }
-
 function closeAnimePlayerOnly() {
   if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
   const box = document.getElementById("animeVideoBox");
@@ -1262,11 +1632,7 @@ function closeAnimePlayerOnly() {
   const wrap = document.getElementById("animePlayerWrap");
   if (wrap) wrap.style.display = "none";
 }
-
-function closeAnimePlayer() {
-  closeAnimePlayerOnly();
-}
-
+function closeAnimePlayer() { closeAnimePlayerOnly(); }
 document.getElementById("animeSearchInput").addEventListener("keydown", function (e) {
   if (e.key === "Enter") searchAnime();
 });
@@ -1969,7 +2335,29 @@ document.addEventListener("keydown",e=>{
   if(map[e.key]&&document.getElementById("gamePage").classList.contains("active")){e.preventDefault();setSnakeDirection(...map[e.key])}
 });
 
+/* ============ INIT ============ */
+loadLocalData();
+loadCustomProducts();
+fetchKeylist().then(function(){
+  updateAuthUI();
+  // Kalau user yang login udah gak ada di keylist, logout
+  if (currentUser && !findUser(currentUser.username)) {
+    currentUser = null;
+    localStorage.removeItem("volka_user");
+    updateAuthUI();
+  } else if (currentUser) {
+    // Refresh role dari keylist
+    const u = findUser(currentUser.username);
+    if (u && String(u.role).toLowerCase() !== currentUser.role) {
+      currentUser.role = String(u.role).toLowerCase();
+      localStorage.setItem("volka_user", JSON.stringify(currentUser));
+      updateAuthUI();
+    }
+  }
+});
+
 renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
+updateAuthUI();
 </script>
 </body>
 </html>
