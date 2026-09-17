@@ -613,8 +613,10 @@ document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="En
 const YT_CHANNEL_ID = "UCUn0hEbVJc273anl_0ozDMQ";
 
 const RSS_PROXIES = [
-  "https://api.allorigins.win/raw?url=",
-  "https://corsproxy.io/?"
+  { url: "https://api.rss2json.com/v1/api.json?rss_url=", type: "json" },
+  { url: "https://api.allorigins.win/raw?url=", type: "xml" },
+  { url: "https://corsproxy.io/?", type: "xml" },
+  { url: "https://api.codetabs.com/v1/proxy?quest=", type: "xml" }
 ];
 
 let animeMap = {};
@@ -623,9 +625,36 @@ let animeFetched = false;
 
 async function fetchWithProxy(url) {
   for (let i = 0; i < RSS_PROXIES.length; i++) {
+    const proxy = RSS_PROXIES[i];
     try {
-      const res = await fetch(RSS_PROXIES[i] + encodeURIComponent(url));
-      if (res.ok) return await res.text();
+      const fullUrl = proxy.url + encodeURIComponent(url);
+      const controller = new AbortController();
+      const timeout = setTimeout(function(){ controller.abort(); }, 12000);
+
+      const res = await fetch(fullUrl, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (!res.ok) continue;
+      const text = await res.text();
+
+      if (proxy.type === "json") {
+        try {
+          const json = JSON.parse(text);
+          if (json.status !== "ok" || !json.items) continue;
+          let xml = '<?xml version="1.0" encoding="UTF-8"?><feed xmlns:yt="http://www.youtube.com/xml/schemas/2015">';
+          json.items.forEach(function(item) {
+            const vid = (item.guid || item.link || "").replace(/.*[?&]v=/, '').replace(/&.*/, '');
+            if (!vid) return;
+            xml += '<entry>';
+            xml += '<title>' + (item.title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</title>';
+            xml += '<yt:videoId>' + vid + '</yt:videoId>';
+            xml += '</entry>';
+          });
+          xml += '</feed>';
+          return xml;
+        } catch (e) { continue; }
+      }
+      return text;
     } catch (e) { continue; }
   }
   return null;
@@ -641,7 +670,7 @@ async function loadAnimeFromChannel() {
   const xmlText = await fetchWithProxy(rssUrl);
 
   if (!xmlText) {
-    el.innerHTML = '<div class="anime-error">Gagal memuat data. Cek koneksi internet, lalu refresh halaman.</div>';
+    el.innerHTML = '<div class="anime-error">Gagal memuat data dari YouTube.<br><br>CORS proxy mungkin sedang sibuk. Coba refresh dalam 1-2 menit.</div>';
     return;
   }
 
@@ -658,8 +687,12 @@ async function loadAnimeFromChannel() {
 
   for (let i = 0; i < entries.length; i++) {
     const entry = entries[i];
-    const title = entry.getElementsByTagName("title")[0].textContent;
-    const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+    const titleEl = entry.getElementsByTagName("title")[0];
+    const vidEl = entry.getElementsByTagName("yt:videoId")[0];
+    if (!titleEl || !vidEl) continue;
+
+    const title = titleEl.textContent;
+    const videoId = vidEl.textContent;
     const thumbnail = "https://i.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
 
     const match = title.match(/^(.+?)\s*[-–—:]\s*(?:Episode|Ep|Eps)\.?\s*(\d+)/i)
