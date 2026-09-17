@@ -28,6 +28,11 @@ background-size:18px 18px,23px 23px,auto;border-left:3px solid var(--ink);border
 .logo{width:44px;height:44px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);flex:none}
 .logo .material-symbols-rounded{font-size:27px}.top-title{font-size:16px;font-weight:700;line-height:1.1}.top-sub{font-size:9px;margin-top:4px}.header-spacer{flex:1}
 .header-btn,.back-btn{width:42px;height:42px;border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;flex:none;position:relative;overflow:visible}
+.header-btn.avatar-btn{padding:0;overflow:hidden}
+.header-btn.avatar-btn img{width:100%;height:100%;object-fit:cover;display:block}
+.header-btn.avatar-btn .material-symbols-rounded{font-size:22px}
+.header-btn.admin-add-btn{background:var(--green)}
+.header-btn.admin-add-btn .material-symbols-rounded{font-size:24px;font-weight:700}
 .cart-count{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:1px 5px;border:2px solid var(--ink);background:var(--red);font-size:9px;font-weight:700;display:grid;place-items:center;border-radius:50%;z-index:10;line-height:1;color:#fff}
 .hero{padding:14px}.paint-card{border:3px solid var(--ink);box-shadow:var(--shadow);background:var(--green);padding:15px;position:relative;transform:rotate(-.3deg)}
 .badge{display:inline-flex;align-items:center;gap:7px;border:2px solid var(--ink);background:#f9edc8;padding:6px 9px;font-size:10px;font-weight:700}
@@ -234,8 +239,16 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .add-photo-btn{width:100%;border:3px dashed var(--ink);background:#fff8dd;padding:10px;font-size:10px;font-weight:700;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
 .add-photo-btn .material-symbols-rounded{font-size:16px}
 .profile-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:18px;margin:14px}
-.profile-avatar{width:88px;height:88px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;margin:0 auto 14px;box-shadow:3px 3px 0 var(--ink)}
-.profile-avatar .material-symbols-rounded{font-size:48px;color:#fff}
+.profile-avatar{width:110px;height:110px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;margin:0 auto 10px;box-shadow:3px 3px 0 var(--ink);position:relative;overflow:hidden;border-radius:50%}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-avatar .material-symbols-rounded{font-size:58px;color:#fff}
+.profile-avatar .avatar-edit{position:absolute;bottom:0;right:0;width:36px;height:36px;border:3px solid var(--ink);background:var(--green);display:grid;place-items:center;cursor:pointer;box-shadow:2px 2px 0 var(--ink);border-radius:50%}
+.profile-avatar .avatar-edit .material-symbols-rounded{font-size:18px;color:var(--ink)}
+.avatar-hint{text-align:center;font-size:9px;color:#666;margin-bottom:8px;font-style:italic}
+.avatar-actions{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.avatar-actions button{border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-size:9px;font-weight:700;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.avatar-actions button.danger{background:var(--red);color:#fff}
+.avatar-actions .material-symbols-rounded{font-size:14px}
 .profile-name{text-align:center;font-size:16px;font-weight:700;margin-bottom:6px}
 .profile-role-wrap{text-align:center;margin-bottom:18px}
 .role-badge{display:inline-block;padding:4px 12px;border:2px solid var(--ink);background:var(--green);font-size:9px;font-weight:700;border-radius:12px;letter-spacing:.5px}
@@ -253,10 +266,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .manage-item .info .p{font-size:9px;color:#666}
 .manage-item .del{width:34px;height:34px;flex:none;border:2px solid var(--ink);background:var(--red);color:#fff;box-shadow:2px 2px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer}
 .manage-item .del .material-symbols-rounded{font-size:16px;color:#fff}
-.fab{position:fixed;bottom:86px;right:calc(50% - 260px + 20px);width:56px;height:56px;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);display:none;place-items:center;z-index:80}
-.fab.show{display:grid}
-.fab .material-symbols-rounded{font-size:30px}
-@media(max-width:520px){.fab{right:20px}}
 .profile-hint{font-size:9px;color:#666;line-height:1.5;margin-top:8px;text-align:center;font-style:italic}
 </style>
 </head>
@@ -268,7 +277,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="logo"><span class="material-symbols-rounded">storefront</span></div>
     <div><div class="top-title">VOLKA STORE</div><div class="top-sub">DIGITAL GOODS • SIMPLE • FAST</div></div>
     <div class="header-spacer"></div>
-    <button class="header-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
+    <button class="header-btn admin-add-btn hidden" id="homeAddProduct" onclick="openAddProduct()" title="Tambah Produk"><span class="material-symbols-rounded">add</span></button>
+    <button class="header-btn avatar-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="headerCartCount">0</span></button>
   </div>
   <section class="hero"><div class="paint-card">
@@ -317,7 +327,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="logo"><span class="material-symbols-rounded">shopping_bag</span></div>
     <div><div class="top-title">STORE</div><div class="top-sub">PILIH PRODUK YANG KAMU BUTUHKAN</div></div>
     <div class="header-spacer"></div>
-    <button class="header-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
+    <button class="header-btn admin-add-btn hidden" id="storeAddProduct" onclick="openAddProduct()" title="Tambah Produk"><span class="material-symbols-rounded">add</span></button>
+    <button class="header-btn avatar-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="storeCartCount">0</span></button>
   </div>
   <div class="section-title"><span>ALL PRODUCTS</span></div>
@@ -502,7 +513,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="logo"><span class="material-symbols-rounded">sports_esports</span></div>
     <div><div class="top-title">GAME CENTER</div><div class="top-sub">PILIH GAME FAVORITMU</div></div>
     <div class="header-spacer"></div>
-    <button class="header-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
+    <button class="header-btn admin-add-btn hidden" id="gameAddProduct" onclick="openAddProduct()" title="Tambah Produk"><span class="material-symbols-rounded">add</span></button>
+    <button class="header-btn avatar-btn profile-btn" onclick="openProfile()" title="Login"><span class="material-symbols-rounded">person</span></button>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="gameCartCount">0</span></button>
   </div>
   <div class="game-center-grid with-nav" id="gameCenterGrid"></div>
@@ -578,10 +590,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
-<button class="fab" id="fabAddProduct" onclick="openAddProduct()">
-  <span class="material-symbols-rounded">add</span>
-</button>
-
 <nav class="nav" id="mainNav">
   <button type="button" class="active" onclick="showPage('home',this)"><span class="material-symbols-rounded">home</span>HOME</button>
   <button type="button" onclick="showPage('store',this)"><span class="material-symbols-rounded">store</span>STORE</button>
@@ -590,19 +598,14 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 </nav>
 </div>
 
+<input type="file" id="avatarFileInput" accept="image/*" style="display:none">
+
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 /* ============================================================
    AUTH SYSTEM
-   Ganti URL di bawah dengan raw GitHub keylist kamu.
-   Format file (keylist.txt):
-   username: NAMA
-   Password: PASS
-   Role: admin
    ============================================================ */
 const KEYLIST_URL = "https://raw.githubusercontent.com/blackvilain35-collab/WEB-VOLKA/main/Keylist.txt";
-
-// Admin fallback — selalu bisa login walau keylist gagal di-fetch
 const HARDCODED_ADMIN = { username: "VOLZ", password: "08292012", role: "admin" };
 
 let currentUser = null;
@@ -612,7 +615,6 @@ let localUsers = [];
 function parseKeylist(text) {
   text = String(text || "").trim();
   if (!text) return [];
-  // Support JSON juga
   if (text.startsWith("[") || text.startsWith("{")) {
     try {
       const j = JSON.parse(text);
@@ -624,7 +626,6 @@ function parseKeylist(text) {
       }));
     } catch (e) {}
   }
-  // Text format
   const users = [];
   const blocks = text.split(/\n\s*\n/);
   blocks.forEach(function(block) {
@@ -663,9 +664,7 @@ function loadLocalData() {
   try { localUsers = JSON.parse(localStorage.getItem("volka_users") || "[]"); } catch (e) { localUsers = []; }
 }
 
-function saveLocalUsers() {
-  localStorage.setItem("volka_users", JSON.stringify(localUsers));
-}
+function saveLocalUsers() { localStorage.setItem("volka_users", JSON.stringify(localUsers)); }
 
 function getAllUsers() {
   const list = [HARDCODED_ADMIN].concat(keylistUsers).concat(localUsers);
@@ -686,6 +685,77 @@ function findUser(username) {
   return getAllUsers().find(function(u) { return String(u.username).toLowerCase() === k; });
 }
 
+/* ============ PROFILE PHOTO STORAGE ============ */
+function getProfilePhotos() {
+  try { return JSON.parse(localStorage.getItem("volka_profile_photos") || "{}"); }
+  catch (e) { return {}; }
+}
+function getProfilePhoto(username) {
+  if (!username) return "";
+  return getProfilePhotos()[String(username).toLowerCase()] || "";
+}
+function saveProfilePhoto(username, dataUrl) {
+  const all = getProfilePhotos();
+  all[String(username).toLowerCase()] = dataUrl;
+  try {
+    localStorage.setItem("volka_profile_photos", JSON.stringify(all));
+    return true;
+  } catch (e) {
+    alert("Gagal menyimpan foto (storage penuh). Coba foto yang lebih kecil.");
+    return false;
+  }
+}
+function removeProfilePhoto(username) {
+  const all = getProfilePhotos();
+  delete all[String(username).toLowerCase()];
+  localStorage.setItem("volka_profile_photos", JSON.stringify(all));
+}
+
+function triggerAvatarUpload() {
+  if (!currentUser) return;
+  const inp = document.getElementById("avatarFileInput");
+  inp.value = "";
+  inp.click();
+}
+
+document.getElementById("avatarFileInput").addEventListener("change", function(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith("image/")) { alert("File harus berupa gambar."); return; }
+  if (file.size > 3 * 1024 * 1024) { alert("Ukuran foto maksimal 3MB."); return; }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    // Kompres/resize foto biar gak berat di localStorage
+    const img = new Image();
+    img.onload = function() {
+      const maxSize = 400;
+      let w = img.width, h = img.height;
+      if (w > h) { if (w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; } }
+      else { if (h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; } }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+      if (saveProfilePhoto(currentUser.username, dataUrl)) {
+        renderProfile();
+        updateAuthUI();
+      }
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+function deleteAvatarPhoto() {
+  if (!currentUser) return;
+  if (!confirm("Hapus foto profil?")) return;
+  removeProfilePhoto(currentUser.username);
+  renderProfile();
+  updateAuthUI();
+}
+
+/* ============ AUTH UI ============ */
 function togglePwd(inputId, btn) {
   const inp = document.getElementById(inputId);
   if (!inp) return;
@@ -748,21 +818,27 @@ function doLogout() {
 }
 
 function updateAuthUI() {
+  // Update semua profile button (avatar + icon)
   document.querySelectorAll(".profile-btn").forEach(function(btn) {
-    const icon = btn.querySelector(".material-symbols-rounded");
-    if (currentUser) {
-      icon.textContent = "account_circle";
+    const photo = currentUser ? getProfilePhoto(currentUser.username) : "";
+    if (photo) {
+      btn.innerHTML = '<img src="' + photo + '" alt="">';
+      btn.title = currentUser.username + " (" + currentUser.role + ")";
+    } else if (currentUser) {
+      btn.innerHTML = '<span class="material-symbols-rounded">account_circle</span>';
       btn.title = currentUser.username + " (" + currentUser.role + ")";
     } else {
-      icon.textContent = "person";
+      btn.innerHTML = '<span class="material-symbols-rounded">person</span>';
       btn.title = "Login";
     }
   });
-  const fab = document.getElementById("fabAddProduct");
-  if (fab) {
-    if (currentUser && currentUser.role === "admin") fab.classList.add("show");
-    else fab.classList.remove("show");
-  }
+
+  // Toggle tombol add product
+  const isAdmin = currentUser && currentUser.role === "admin";
+  document.querySelectorAll(".admin-add-btn").forEach(function(btn) {
+    if (isAdmin) btn.classList.remove("hidden");
+    else btn.classList.add("hidden");
+  });
 }
 
 function openProfile() {
@@ -780,7 +856,12 @@ function renderProfile() {
   if (!currentUser) { body.innerHTML = '<div class="empty">Belum login.</div>'; return; }
   const isAdmin = currentUser.role === "admin";
   const roleClass = isAdmin ? "role-badge admin" : "role-badge";
-  const pw = "•".repeat(Math.max(6, (findUser(currentUser.username) || {}).password ? 8 : 8));
+  const pw = "•".repeat(8);
+  const photo = getProfilePhoto(currentUser.username);
+
+  const avatarInner = photo
+    ? '<img src="' + photo + '" alt="">'
+    : '<span class="material-symbols-rounded">' + (isAdmin ? "shield_person" : "person") + '</span>';
 
   let manageHtml = "";
   if (isAdmin && customProducts.length > 0) {
@@ -796,12 +877,22 @@ function renderProfile() {
       }).join("") +
       '</div>';
   } else if (isAdmin) {
-    manageHtml = '<div class="profile-hint" style="margin-top:14px">Belum ada produk custom. Klik tombol + di halaman store untuk menambah.</div>';
+    manageHtml = '<div class="profile-hint" style="margin-top:14px">Belum ada produk custom. Klik tombol + di header untuk menambah.</div>';
   }
 
   body.innerHTML =
     '<div class="profile-card">' +
-      '<div class="profile-avatar"><span class="material-symbols-rounded">' + (isAdmin ? "shield_person" : "person") + '</span></div>' +
+      '<div class="profile-avatar">' +
+        avatarInner +
+        '<div class="avatar-edit" onclick="triggerAvatarUpload()" title="Ganti foto profil">' +
+          '<span class="material-symbols-rounded">photo_camera</span>' +
+        '</div>' +
+      '</div>' +
+      '<p class="avatar-hint">Tap ikon kamera untuk ganti foto dari galeri</p>' +
+      '<div class="avatar-actions">' +
+        '<button onclick="triggerAvatarUpload()"><span class="material-symbols-rounded">upload</span> GANTI FOTO</button>' +
+        (photo ? '<button class="danger" onclick="deleteAvatarPhoto()"><span class="material-symbols-rounded">delete</span> HAPUS</button>' : '') +
+      '</div>' +
       '<div class="profile-name">' + escapeHtml(currentUser.username) + '</div>' +
       '<div class="profile-role-wrap"><span class="' + roleClass + '">' + currentUser.role.toUpperCase() + '</span></div>' +
       '<div class="profile-row"><span class="label">Username</span><span class="value">' + escapeHtml(currentUser.username) + '</span></div>' +
@@ -827,14 +918,8 @@ function loadCustomProducts() {
   catch (e) { customProducts = []; }
   refreshProducts();
 }
-
-function saveCustomProducts() {
-  localStorage.setItem("volka_custom_products", JSON.stringify(customProducts));
-}
-
-function refreshProducts() {
-  PRODUCTS = CONFIG.products.concat(customProducts);
-}
+function saveCustomProducts() { localStorage.setItem("volka_custom_products", JSON.stringify(customProducts)); }
+function refreshProducts() { PRODUCTS = CONFIG.products.concat(customProducts); }
 
 function openAddProduct() {
   if (!currentUser || currentUser.role !== "admin") {
@@ -2340,13 +2425,11 @@ loadLocalData();
 loadCustomProducts();
 fetchKeylist().then(function(){
   updateAuthUI();
-  // Kalau user yang login udah gak ada di keylist, logout
   if (currentUser && !findUser(currentUser.username)) {
     currentUser = null;
     localStorage.removeItem("volka_user");
     updateAuthUI();
   } else if (currentUser) {
-    // Refresh role dari keylist
     const u = findUser(currentUser.username);
     if (u && String(u.role).toLowerCase() !== currentUser.role) {
       currentUser.role = String(u.role).toLowerCase();
