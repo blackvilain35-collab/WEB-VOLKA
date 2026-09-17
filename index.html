@@ -161,6 +161,25 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .nav button{position:relative;border:0;border-right:2px solid var(--ink);padding:8px 4px;background:transparent;font-size:8px;font-weight:700}.nav button:last-child{border-right:0}.nav .material-symbols-rounded{display:block;font-size:23px;margin-bottom:2px}.nav button.active{background:var(--green)}
 @media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
 @media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
+
+/* ANIME EXPLORER */
+.anime-page{padding-bottom:30px}
+.anime-search{display:flex;gap:8px;margin-bottom:12px}
+.anime-search input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:12px}
+.anime-search button{border:3px solid var(--ink);background:var(--yellow);padding:10px 14px;font-weight:700;box-shadow:3px 3px 0 var(--ink)}
+.anime-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.anime-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:6px;cursor:pointer}
+.anime-card img{width:100%;aspect-ratio:2/3;object-fit:cover;border:2px solid var(--ink);display:block;background:#ddd}
+.anime-card .anime-title{font-size:10px;font-weight:700;margin-top:6px;line-height:1.3}
+.anime-card .anime-meta{font-size:8px;color:#555;margin-top:3px}
+.anime-empty,.anime-loading{grid-column:1/-1;text-align:center;padding:20px;font-size:11px;border:3px solid var(--ink);background:var(--cream)}
+.anime-detail{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:14px;margin-top:14px}
+.anime-detail img{width:120px;float:left;margin:0 12px 8px 0;border:2px solid var(--ink)}
+.anime-detail h2{font-size:15px;margin:0 0 6px;line-height:1.25}
+.anime-detail .anime-desc{font-size:10px;line-height:1.65;clear:both}
+.anime-trailer{margin-top:12px}
+.anime-trailer iframe{width:100%;aspect-ratio:16/9;border:3px solid var(--ink);display:block}
+.anime-watch-btn{display:inline-flex;align-items:center;gap:5px;margin-top:10px;border:3px solid var(--ink);background:var(--green);box-shadow:3px 3px 0 var(--ink);padding:10px 14px;font-size:10px;font-weight:700;text-decoration:none;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -209,9 +228,9 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
       <div class="feature-icon"><span class="material-symbols-rounded">music_note</span></div>
       <div><div class="feature-name">MUSIC PLAYER</div><div class="feature-hint">Dengarkan musik favoritmu.</div></div>
     </button>
-    <button class="feature-card converter" onclick="showPage('converterPage')">
-      <div class="feature-icon"><span class="material-symbols-rounded">upload_file</span></div>
-      <div><div class="feature-name">CONVERT GAMBAR / VIDEO</div><div class="feature-hint">Upload file dan dapatkan link Catbox.</div></div>
+    <button class="feature-card converter" onclick="showPage('animePage')">
+      <div class="feature-icon"><span class="material-symbols-rounded">movie</span></div>
+      <div><div class="feature-name">NONTON ANIME</div><div class="feature-hint">Cari info, sinopsis & trailer resmi anime.</div></div>
     </button>
   </section>
 
@@ -320,26 +339,19 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
-<!-- CONVERTER -->
-<main id="converterPage" class="page converter-page">
+<!-- ANIME EXPLORER -->
+<main id="animePage" class="page anime-page">
   <div class="topbar">
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
-    <div><div class="top-title">CONVERT FILE</div><div class="top-sub">GAMBAR / VIDEO → LINK</div></div>
+    <div><div class="top-title">NONTON ANIME</div><div class="top-sub">CARI INFO & TRAILER RESMI</div></div>
   </div>
   <div class="tool-body">
-    <div class="converter-box">
-      <div class="dropzone">
-        <span class="material-symbols-rounded">cloud_upload</span>
-        <div class="dropzone-title">UPLOAD GAMBAR / VIDEO</div>
-        <div class="dropzone-hint">File dikirim ke layanan Catbox dan hasilnya berupa link langsung.</div>
-        <label class="choose-file" for="fileInput">PILIH FILE</label>
-        <input class="file-input" id="fileInput" type="file" accept="image/*,video/*">
-      </div>
-      <div class="file-preview" id="filePreview"><img id="imagePreview" class="preview-media hidden" alt="Preview"><video id="videoPreview" class="preview-media hidden" controls></video><div class="file-meta" id="fileMeta"></div></div>
-      <div class="progress" id="uploadProgress"><div class="progress-bar" id="progressBar"></div></div>
-      <button class="upload-btn" id="uploadBtn" onclick="uploadToCatbox()"><span class="material-symbols-rounded">link</span> UPLOAD & BUAT LINK</button>
-      <div class="result-box" id="resultBox"><div style="font-size:10px;font-weight:700;margin-bottom:6px">LINK BERHASIL DIBUAT</div><input id="resultUrl" readonly><button class="copy-btn" onclick="copyResultUrl()">SALIN LINK</button></div>
+    <div class="anime-search">
+      <input id="animeSearchInput" type="text" placeholder="Cari judul anime...">
+      <button type="button" onclick="searchAnime()">CARI</button>
     </div>
+    <div id="animeResults" class="anime-grid"></div>
+    <div id="animeDetailWrap"></div>
   </div>
 </main>
 
@@ -414,18 +426,18 @@ const CONFIG={
     {id:"color",name:"Color Match",desc:"Cocokkan warna",icon:"colorize",playable:true},
     {id:"typing",name:"Typing Test",desc:"Uji kecepatan ketik",icon:"keyboard",playable:true},
     {id:"rps",name:"Rock Paper Scissors",desc:"Gunting batu kertas",icon:"back_hand",playable:true},
-    {id:"flappy",name:"Flappy Bird",desc:"Terbang hindari pipa",icon:"flight",playable:false},
-    {id:"breakout",name:"Breakout",desc:"Pecahkan bata",icon:"sports_tennis",playable:false},
-    {id:"pong",name:"Pong",desc:"Pong klasik",icon:"sports_handball",playable:false},
-    {id:"2048",name:"2048",desc:"Gabung angka",icon:"calculate",playable:false},
-    {id:"minesweeper",name:"Minesweeper",desc:"Hindari ranjau",icon:"dangerous",playable:false},
-    {id:"hangman",name:"Hangman",desc:"Tebak kata",icon:"spellcheck",playable:false},
-    {id:"quiz",name:"Quiz",desc:"Kuis pengetahuan",icon:"quiz",playable:false},
-    {id:"sudoku",name:"Sudoku Mini",desc:"Isi angka 1-4",icon:"apps",playable:false},
-    {id:"runner",name:"Endless Runner",desc:"Lari tanpa henti",icon:"directions_run",playable:false},
-    {id:"space",name:"Space Shooter",desc:"Tembak alien",icon:"rocket_launch",playable:false},
-    {id:"puzzle",name:"Sliding Puzzle",desc:"Geser puzzle",icon:"extension",playable:false},
-    {id:"connect4",name:"Connect 4",desc:"Hubungkan 4",icon:"circle",playable:false}
+    {id:"flappy",name:"Flappy Bird",desc:"Terbang hindari pipa",icon:"flight",playable:true},
+    {id:"breakout",name:"Breakout",desc:"Pecahkan bata",icon:"sports_tennis",playable:true},
+    {id:"pong",name:"Pong",desc:"Pong klasik",icon:"sports_handball",playable:true},
+    {id:"2048",name:"2048",desc:"Gabung angka",icon:"calculate",playable:true},
+    {id:"minesweeper",name:"Minesweeper",desc:"Hindari ranjau",icon:"dangerous",playable:true},
+    {id:"hangman",name:"Hangman",desc:"Tebak kata",icon:"spellcheck",playable:true},
+    {id:"quiz",name:"Quiz",desc:"Kuis pengetahuan",icon:"quiz",playable:true},
+    {id:"sudoku",name:"Sudoku Mini",desc:"Isi angka 1-4",icon:"apps",playable:true},
+    {id:"runner",name:"Endless Runner",desc:"Lari tanpa henti",icon:"directions_run",playable:true},
+    {id:"space",name:"Space Shooter",desc:"Tembak alien",icon:"rocket_launch",playable:true},
+    {id:"puzzle",name:"Sliding Puzzle",desc:"Geser puzzle",icon:"extension",playable:true},
+    {id:"connect4",name:"Connect 4",desc:"Hubungkan 4",icon:"circle",playable:true}
   ]
 };
 
@@ -444,7 +456,7 @@ function showBottomNav(){document.getElementById("mainNav").style.display="grid"
 function showPage(id,btn=null){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   const page=document.getElementById(id);if(!page)return;page.classList.add("active");
-  if(["productDetail","checkout","aiPage","gamePage","converterPage","gamePlay","musicPage"].includes(id))hideBottomNav();else showBottomNav();
+  if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage"].includes(id))hideBottomNav();else showBottomNav();
   if(btn){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="gamePage")drawSnake();
@@ -586,6 +598,35 @@ async function askAI(){
   log.scrollTop=log.scrollHeight;
 }
 document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
+
+/* ANIME EXPLORER (AniList API - metadata & trailer resmi saja, bukan streaming ilegal) */
+async function searchAnime(){
+  const q=document.getElementById("animeSearchInput").value.trim();
+  const results=document.getElementById("animeResults");
+  document.getElementById("animeDetailWrap").innerHTML="";
+  if(!q){results.innerHTML='<div class="anime-empty">Ketik judul anime dulu ya.</div>';return}
+  results.innerHTML='<div class="anime-loading">Mencari...</div>';
+  const query=`query($s:String){Page(perPage:10){media(search:$s,type:ANIME,sort:POPULARITY_DESC){id title{romaji english}coverImage{large}averageScore episodes format status trailer{id site}description(asHtml:false)}}}`;
+  try{
+    const res=await fetch("https://graphql.anilist.co",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({query,variables:{s:q}})});
+    const data=await res.json();
+    const list=(data&&data.data&&data.data.Page&&data.data.Page.media)||[];
+    window._animeCache=list;
+    if(!list.length){results.innerHTML='<div class="anime-empty">Anime tidak ditemukan. Coba kata kunci lain.</div>';return}
+    results.innerHTML=list.map(a=>`<div class="anime-card" onclick="showAnimeDetail(${a.id})"><img src="${a.coverImage&&a.coverImage.large?a.coverImage.large:""}" alt=""><div class="anime-title">${escapeHtml(a.title.romaji||a.title.english||"Tanpa judul")}</div><div class="anime-meta">${escapeHtml(a.format||"-")} • ${a.episodes||"?"} EP • ⭐${a.averageScore||"-"}</div></div>`).join("");
+  }catch(e){results.innerHTML='<div class="anime-empty">Gagal memuat data. Cek koneksi lalu coba lagi.</div>'}
+}
+function showAnimeDetail(id){
+  const a=(window._animeCache||[]).find(x=>x.id===id);if(!a)return;
+  const wrap=document.getElementById("animeDetailWrap");
+  const title=a.title.romaji||a.title.english||"Tanpa judul";
+  let desc=(a.description||"Tidak ada deskripsi tersedia.").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g,"");
+  if(desc.length>500)desc=desc.slice(0,500)+"...";
+  const trailer=a.trailer&&a.trailer.site==="youtube"&&a.trailer.id?`<div class="anime-trailer"><iframe src="https://www.youtube.com/embed/${escapeHtml(a.trailer.id)}" title="Trailer" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>`:"";
+  wrap.innerHTML=`<div class="anime-detail"><img src="${a.coverImage&&a.coverImage.large?a.coverImage.large:""}" alt=""><h2>${escapeHtml(title)}</h2><div style="font-size:9px;margin-bottom:6px">${escapeHtml(a.format||"-")} • ${a.episodes||"?"} Episode • Status ${escapeHtml(a.status||"-")} • Skor ${a.averageScore||"-"}</div><div class="anime-desc">${escapeHtml(desc)}</div>${trailer}<br><a class="anime-watch-btn" href="https://www.crunchyroll.com/search?q=${encodeURIComponent(title)}" target="_blank" rel="noopener"><span class="material-symbols-rounded" style="font-size:14px">play_circle</span> CARI DI CRUNCHYROLL</a></div>`;
+  wrap.scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.getElementById("animeSearchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchAnime()});
 
 /* GAME CENTER */
 function renderGameCenter(){
@@ -864,6 +905,413 @@ GAMES.rps=function(body){
   return ()=>{};
 };
 
+/* ===== GAME BARU: FLAPPY BIRD ===== */
+GAMES.flappy=function(body){
+  body.innerHTML=`<div class="game-head"><span>SKOR: <b id="flapScore">0</b></span><span>BEST: <b id="flapBest">0</b></span></div>
+  <canvas id="flapCanvas" class="snake-canvas" width="320" height="420" style="aspect-ratio:3/4"></canvas>
+  <div class="game-controls" style="grid-template-columns:1fr"><button id="flapBtn">TERBANG / MULAI</button></div>
+  <div class="game-help">Klik tombol atau canvas untuk terbang. Hindari pipa.</div>`;
+  const c=document.getElementById("flapCanvas"),ctx=c.getContext("2d");
+  let bird,pipes,score,best=+(localStorage.getItem("flap_best")||0),running=false,raf=null;
+  document.getElementById("flapBest").textContent=best;
+  function reset(){bird={x:60,y:c.height/2,vy:0};pipes=[];score=0;document.getElementById("flapScore").textContent=0;spawnPipe()}
+  function spawnPipe(){const gap=120,top=40+Math.random()*(c.height-gap-160);pipes.push({x:c.width,top,gap,passed:false})}
+  function loop(){
+    if(!running)return;
+    bird.vy+=0.45;bird.y+=bird.vy;
+    pipes.forEach(p=>p.x-=2.6);
+    if(pipes.length&&pipes[0].x<-60)pipes.shift();
+    if(pipes.length&&pipes[pipes.length-1].x<c.width-180)spawnPipe();
+    pipes.forEach(p=>{if(!p.passed&&p.x+40<bird.x){p.passed=true;score++;document.getElementById("flapScore").textContent=score}});
+    let dead=bird.y>c.height-20||bird.y<0;
+    pipes.forEach(p=>{if(bird.x+14>p.x&&bird.x-14<p.x+40&&(bird.y-14<p.top||bird.y+14>p.top+p.gap))dead=true});
+    ctx.fillStyle="#54b9e8";ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle="#80d83d";pipes.forEach(p=>{ctx.fillRect(p.x,0,40,p.top);ctx.fillRect(p.x,p.top+p.gap,40,c.height-p.top-p.gap);ctx.strokeStyle="#171717";ctx.lineWidth=2;ctx.strokeRect(p.x,0,40,p.top);ctx.strokeRect(p.x,p.top+p.gap,40,c.height-p.top-p.gap)});
+    ctx.fillStyle="#ffbf32";ctx.beginPath();ctx.arc(bird.x,bird.y,14,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#171717";ctx.lineWidth=2;ctx.stroke();
+    if(dead){running=false;if(score>best){best=score;localStorage.setItem("flap_best",best);document.getElementById("flapBest").textContent=best}ctx.fillStyle="rgba(0,0,0,.5)";ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle="#fff";ctx.font="bold 20px monospace";ctx.textAlign="center";ctx.fillText("GAME OVER",c.width/2,c.height/2);return}
+    raf=requestAnimationFrame(loop);
+  }
+  function flap(){if(!running){reset();running=true;raf=requestAnimationFrame(loop)}bird.vy=-7.5}
+  document.getElementById("flapBtn").onclick=flap;
+  c.onclick=flap;
+  reset();draw:{ctx.fillStyle="#54b9e8";ctx.fillRect(0,0,c.width,c.height)}
+  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+};
+
+/* ===== GAME BARU: BREAKOUT ===== */
+GAMES.breakout=function(body){
+  body.innerHTML=`<div class="game-head"><span>SKOR: <b id="brkScore">0</b></span><span>NYAWA: <b id="brkLife">3</b></span></div>
+  <canvas id="brkCanvas" class="snake-canvas" width="320" height="360" style="aspect-ratio:8/9"></canvas>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="brkLeft">◀</button><button id="brkStart">START</button><button id="brkRight">▶</button></div>`;
+  const c=document.getElementById("brkCanvas"),ctx=c.getContext("2d");
+  let paddleX=c.width/2-30,ballX=c.width/2,ballY=c.height-40,vx=2.4,vy=-2.4,bricks=[],score=0,life=3,running=false,raf=null,move=0;
+  function buildBricks(){bricks=[];for(let r=0;r<4;r++)for(let col=0;col<7;col++)bricks.push({x:col*44+8,y:r*20+30,w:38,h:14,alive:true})}
+  function reset(){paddleX=c.width/2-30;ballX=c.width/2;ballY=c.height-40;vx=2.4;vy=-2.4;score=0;life=3;document.getElementById("brkScore").textContent=0;document.getElementById("brkLife").textContent=3;buildBricks()}
+  function loop(){
+    if(!running)return;
+    paddleX+=move*4;paddleX=Math.max(0,Math.min(c.width-70,paddleX));
+    ballX+=vx;ballY+=vy;
+    if(ballX<6||ballX>c.width-6)vx*=-1;
+    if(ballY<6)vy*=-1;
+    if(ballY>c.height-24&&ballX>paddleX&&ballX<paddleX+70)vy=-Math.abs(vy);
+    bricks.forEach(b=>{if(b.alive&&ballX>b.x&&ballX<b.x+b.w&&ballY>b.y&&ballY<b.y+b.h){b.alive=false;vy*=-1;score+=10;document.getElementById("brkScore").textContent=score}});
+    if(ballY>c.height){life--;document.getElementById("brkLife").textContent=life;if(life<=0){running=false;alert("GAME OVER! Skor: "+score);return}ballX=c.width/2;ballY=c.height-40;vx=2.4;vy=-2.4}
+    if(bricks.every(b=>!b.alive)){running=false;alert("MENANG! Skor: "+score);return}
+    ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle="#80d83d";bricks.forEach(b=>{if(b.alive){ctx.fillRect(b.x,b.y,b.w,b.h);ctx.strokeStyle="#171717";ctx.strokeRect(b.x,b.y,b.w,b.h)}});
+    ctx.fillStyle="#ffbf32";ctx.fillRect(paddleX,c.height-16,70,10);ctx.strokeStyle="#171717";ctx.strokeRect(paddleX,c.height-16,70,10);
+    ctx.beginPath();ctx.arc(ballX,ballY,6,0,Math.PI*2);ctx.fillStyle="#ff4b3e";ctx.fill();ctx.stroke();
+    raf=requestAnimationFrame(loop);
+  }
+  document.getElementById("brkStart").onclick=()=>{reset();running=true;raf=requestAnimationFrame(loop)};
+  document.getElementById("brkLeft").onmousedown=document.getElementById("brkLeft").ontouchstart=()=>move=-1;
+  document.getElementById("brkRight").onmousedown=document.getElementById("brkRight").ontouchstart=()=>move=1;
+  ["mouseup","touchend","mouseleave"].forEach(ev=>{document.getElementById("brkLeft").addEventListener(ev,()=>move=0);document.getElementById("brkRight").addEventListener(ev,()=>move=0)});
+  reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
+  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+};
+
+/* ===== GAME BARU: PONG ===== */
+GAMES.pong=function(body){
+  body.innerHTML=`<div class="game-head"><span>KAMU: <b id="pongP">0</b></span><span>CPU: <b id="pongC">0</b></span></div>
+  <canvas id="pongCanvas" class="snake-canvas" width="320" height="320"></canvas>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="pongUp">▲</button><button id="pongDown">▼</button></div>
+  <div class="game-help">Gerakkan raket kamu (kiri) dengan tombol. CPU otomatis di kanan.</div>`;
+  const c=document.getElementById("pongCanvas"),ctx=c.getContext("2d");
+  let py=130,cy=130,bx=160,by=160,bvx=3,bvy=2.2,scoreP=0,scoreC=0,running=true,raf=null,move=0;
+  function loop(){
+    py+=move*4;py=Math.max(0,Math.min(c.height-60,py));
+    cy+=(by-30-cy)*0.06;cy=Math.max(0,Math.min(c.height-60,cy));
+    bx+=bvx;by+=bvy;
+    if(by<4||by>c.height-4)bvy*=-1;
+    if(bx<16&&by>py&&by<py+60)bvx=Math.abs(bvx);
+    if(bx>c.width-16&&by>cy&&by<cy+60)bvx=-Math.abs(bvx);
+    if(bx<0){scoreC++;document.getElementById("pongC").textContent=scoreC;bx=160;by=160}
+    if(bx>c.width){scoreP++;document.getElementById("pongP").textContent=scoreP;bx=160;by=160}
+    ctx.fillStyle="#171717";ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle="#80d83d";ctx.fillRect(6,py,10,60);
+    ctx.fillStyle="#ff4b3e";ctx.fillRect(c.width-16,cy,10,60);
+    ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(bx,by,6,0,Math.PI*2);ctx.fill();
+    if(running)raf=requestAnimationFrame(loop);
+  }
+  document.getElementById("pongUp").onmousedown=document.getElementById("pongUp").ontouchstart=()=>move=-1;
+  document.getElementById("pongDown").onmousedown=document.getElementById("pongDown").ontouchstart=()=>move=1;
+  ["mouseup","touchend","mouseleave"].forEach(ev=>{document.getElementById("pongUp").addEventListener(ev,()=>move=0);document.getElementById("pongDown").addEventListener(ev,()=>move=0)});
+  raf=requestAnimationFrame(loop);
+  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+};
+
+/* ===== GAME BARU: 2048 ===== */
+GAMES["2048"]=function(body){
+  body.innerHTML=`<div class="game-head"><span>SKOR: <b id="g2048Score">0</b></span><span>BEST: <b id="g2048Best">0</b></span></div>
+  <div id="g2048Board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#c9bd9c;padding:6px;border:3px solid var(--ink)"></div>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr 1fr">
+    <button onclick="g2048Move('left')">◀</button><button onclick="g2048Move('up')">▲</button><button onclick="g2048Move('down')">▼</button><button onclick="g2048Move('right')">▶</button>
+  </div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:6px"><button onclick="openGame('2048')">RESET</button></div>`;
+  let grid=Array(16).fill(0),score=0,best=+(localStorage.getItem("g2048_best")||0);
+  document.getElementById("g2048Best").textContent=best;
+  const colors={0:"#e4d9bb",2:"#fff3c9",4:"#ffe6a0",8:"#ffbf32",16:"#ff9f43",32:"#ff7367",64:"#ff4b3e",128:"#80d83d",256:"#54b9e8",512:"#a855f7",1024:"#171717",2048:"#ffd700"};
+  function addTile(){const empty=grid.map((v,i)=>v===0?i:-1).filter(i=>i>=0);if(!empty.length)return;const i=empty[Math.floor(Math.random()*empty.length)];grid[i]=Math.random()<0.9?2:4}
+  function render(){
+    document.getElementById("g2048Board").innerHTML=grid.map(v=>`<div style="height:64px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:${v>512?12:16}px;background:${colors[v]||"#171717"};color:${v<=8?"#171717":"#fff"}">${v||""}</div>`).join("");
+    document.getElementById("g2048Score").textContent=score;
+    if(score>best){best=score;localStorage.setItem("g2048_best",best);document.getElementById("g2048Best").textContent=best}
+  }
+  function slideRow(row){
+    let arr=row.filter(v=>v);
+    for(let i=0;i<arr.length-1;i++){if(arr[i]===arr[i+1]){arr[i]*=2;score+=arr[i];arr.splice(i+1,1)}}
+    while(arr.length<4)arr.push(0);
+    return arr;
+  }
+  window.g2048Move=function(dir){
+    let g=[...grid],changed=false;
+    function getRow(i,rev){let r=[grid[i*4],grid[i*4+1],grid[i*4+2],grid[i*4+3]];return rev?r.reverse():r}
+    function getCol(i,rev){let c=[grid[i],grid[i+4],grid[i+8],grid[i+12]];return rev?c.reverse():c}
+    let newGrid=Array(16).fill(0);
+    if(dir==="left"||dir==="right"){
+      for(let r=0;r<4;r++){let row=getRow(r,dir==="right");let res=slideRow(row);if(dir==="right")res.reverse();for(let cI=0;cI<4;cI++)newGrid[r*4+cI]=res[cI]}
+    }else{
+      for(let cI=0;cI<4;cI++){let col=getCol(cI,dir==="down");let res=slideRow(col);if(dir==="down")res.reverse();for(let r=0;r<4;r++)newGrid[r*4+cI]=res[r]}
+    }
+    changed=newGrid.some((v,i)=>v!==grid[i]);
+    grid=newGrid;
+    if(changed)addTile();
+    render();
+    if(changed&&grid.every(v=>v!==0)){
+      let stuck=true;
+      for(let i=0;i<16;i++){if(grid[i]===0)stuck=false}
+      if(stuck)setTimeout(()=>alert("GAME OVER! Skor: "+score),100);
+    }
+  };
+  addTile();addTile();render();
+  const keyHandler=e=>{const map={ArrowLeft:"left",ArrowRight:"right",ArrowUp:"up",ArrowDown:"down"};if(map[e.key]){e.preventDefault();g2048Move(map[e.key])}};
+  document.addEventListener("keydown",keyHandler);
+  return ()=>{document.removeEventListener("keydown",keyHandler);delete window.g2048Move};
+};
+
+/* ===== GAME BARU: MINESWEEPER ===== */
+GAMES.minesweeper=function(body){
+  body.innerHTML=`<div class="game-head"><span>MINE: <b id="minesLeft">10</b></span><span id="minesStatus">MAIN</span></div>
+  <div id="minesBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="minesFlagBtn">MODE: BUKA</button><button onclick="openGame('minesweeper')">ULANG</button></div>
+  <div class="game-help">Tekan MODE untuk ganti antara buka kotak dan tandai bendera (ranjau).</div>`;
+  const size=8,mines=10;
+  let board=Array(size*size).fill(0),revealed=Array(size*size).fill(false),flagged=Array(size*size).fill(false),flagMode=false,over=false;
+  const mineSet=new Set();
+  while(mineSet.size<mines)mineSet.add(Math.floor(Math.random()*size*size));
+  mineSet.forEach(i=>board[i]=-1);
+  for(let i=0;i<size*size;i++){
+    if(board[i]===-1)continue;
+    const r=Math.floor(i/size),cCol=i%size;let count=0;
+    for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const nr=r+dr,nc=cCol+dc;if(nr>=0&&nr<size&&nc>=0&&nc<size&&board[nr*size+nc]===-1)count++}
+    board[i]=count;
+  }
+  const boardEl=document.getElementById("minesBoard");
+  function reveal(i){
+    if(revealed[i]||flagged[i]||over)return;
+    revealed[i]=true;
+    if(board[i]===-1){over=true;document.getElementById("minesStatus").textContent="BOOM! KALAH";revealAll();return}
+    if(board[i]===0){
+      const r=Math.floor(i/size),cCol=i%size;
+      for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const nr=r+dr,nc=cCol+dc;if(nr>=0&&nr<size&&nc>=0&&nc<size)reveal(nr*size+nc)}
+    }
+    checkWin();
+  }
+  function checkWin(){if(!over&&revealed.filter(Boolean).length===size*size-mines){over=true;document.getElementById("minesStatus").textContent="MENANG!"}}
+  function revealAll(){for(let i=0;i<size*size;i++)revealed[i]=true;render()}
+  function render(){
+    boardEl.innerHTML="";
+    for(let i=0;i<size*size;i++){
+      const btn=document.createElement("button");
+      btn.style.cssText="height:32px;border:2px solid var(--ink);font-size:10px;font-weight:700;background:"+(revealed[i]?"#fff8dd":"var(--yellow)");
+      if(revealed[i]){btn.textContent=board[i]===-1?"💣":(board[i]||"");}
+      else if(flagged[i])btn.textContent="🚩";
+      btn.onclick=()=>{if(flagMode){if(!revealed[i]){flagged[i]=!flagged[i];document.getElementById("minesLeft").textContent=mines-flagged.filter(Boolean).length;render()}}else{reveal(i);render()}};
+      boardEl.appendChild(btn);
+    }
+  }
+  document.getElementById("minesFlagBtn").onclick=()=>{flagMode=!flagMode;document.getElementById("minesFlagBtn").textContent=flagMode?"MODE: BENDERA":"MODE: BUKA"};
+  render();
+  return ()=>{};
+};
+
+/* ===== GAME BARU: HANGMAN ===== */
+GAMES.hangman=function(body){
+  const words=["VOLKA","STORE","DIGITAL","PRODUK","WEBSITE","DESAIN","PREMIUM","BANNER","ADMIN"];
+  body.innerHTML=`<div class="game-head"><span>SALAH: <b id="hangWrong">0</b>/6</span><span id="hangStatus">TEBAK KATA</span></div>
+  <div id="hangWord" style="text-align:center;font-size:24px;font-weight:700;letter-spacing:6px;padding:20px;border:3px solid var(--ink);background:var(--cream);margin-top:8px"></div>
+  <div id="hangLetters" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button onclick="openGame('hangman')">GAME BARU</button></div>`;
+  const word=words[Math.floor(Math.random()*words.length)];
+  let guessed=[],wrong=0,over=false;
+  function renderWord(){document.getElementById("hangWord").textContent=word.split("").map(l=>guessed.includes(l)?l:"_").join(" ")}
+  function renderLetters(){
+    const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    document.getElementById("hangLetters").innerHTML=letters.map(l=>`<button data-l="${l}" ${guessed.includes(l)?"disabled":""} style="height:32px;border:2px solid var(--ink);background:${guessed.includes(l)?"#ccc":"var(--yellow)"};font-weight:700;font-size:10px">${l}</button>`).join("");
+    document.getElementById("hangLetters").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      if(over)return;const l=b.dataset.l;guessed.push(l);
+      if(!word.includes(l)){wrong++;document.getElementById("hangWrong").textContent=wrong;if(wrong>=6){over=true;document.getElementById("hangStatus").textContent="KALAH! Kata: "+word}}
+      renderWord();renderLetters();
+      if(word.split("").every(ch=>guessed.includes(ch))){over=true;document.getElementById("hangStatus").textContent="MENANG!"}
+    });
+  }
+  renderWord();renderLetters();
+  return ()=>{};
+};
+
+/* ===== GAME BARU: QUIZ ===== */
+GAMES.quiz=function(body){
+  const questions=[
+    {q:"Ibu kota Indonesia adalah?",opts:["Jakarta","Bandung","Surabaya","Medan"],a:0},
+    {q:"1 + 1 x 2 = ?",opts:["4","3","2","6"],a:1},
+    {q:"Planet terbesar di tata surya?",opts:["Bumi","Mars","Jupiter","Venus"],a:2},
+    {q:"HTML singkatan dari?",opts:["HyperText Markup Language","High Tech Modern Language","Home Tool Markup Language","None"],a:0},
+    {q:"Warna campuran merah + biru?",opts:["Hijau","Ungu","Kuning","Oranye"],a:1}
+  ];
+  body.innerHTML=`<div class="game-head"><span>SOAL: <b id="quizNum">1</b>/${questions.length}</span><span>SKOR: <b id="quizScore">0</b></span></div>
+  <div id="quizQ" style="border:3px solid var(--ink);background:var(--cream);padding:16px;font-size:13px;font-weight:700;margin-top:8px"></div>
+  <div id="quizOpts" style="display:grid;gap:8px;margin-top:10px"></div>`;
+  let idx=0,score=0;
+  function render(){
+    if(idx>=questions.length){document.getElementById("quizQ").textContent="SELESAI! Skor akhir: "+score+"/"+questions.length;const optsEl=document.getElementById("quizOpts");optsEl.innerHTML="";const again=document.createElement("button");again.textContent="MAIN LAGI";again.style.cssText="border:3px solid var(--ink);background:var(--green);padding:12px;font-weight:700";again.onclick=function(){openGame("quiz")};optsEl.appendChild(again);return}
+    const cur=questions[idx];
+    document.getElementById("quizNum").textContent=idx+1;
+    document.getElementById("quizQ").textContent=cur.q;
+    document.getElementById("quizOpts").innerHTML=cur.opts.map((o,i)=>`<button data-i="${i}" style="border:3px solid var(--ink);background:var(--cream);padding:12px;font-size:11px;font-weight:700;text-align:left">${escapeHtml(o)}</button>`).join("");
+    document.getElementById("quizOpts").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.i;
+      if(i===cur.a){score++;document.getElementById("quizScore").textContent=score;b.style.background="var(--green)"}else b.style.background="var(--red)";
+      setTimeout(()=>{idx++;render()},500);
+    });
+  }
+  render();
+  return ()=>{};
+};
+
+/* ===== GAME BARU: SUDOKU MINI 4x4 ===== */
+GAMES.sudoku=function(body){
+  body.innerHTML=`<div class="game-head"><span id="sudokuStatus">ISI 1-4, TIDAK BOLEH SAMA DI BARIS/KOLOM/KOTAK</span></div>
+  <div id="sudokuBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--ink);padding:3px;margin-top:8px"></div>
+  <div class="game-controls" style="grid-template-columns:repeat(4,1fr);margin-top:10px">
+    <button onclick="sudokuInput(1)">1</button><button onclick="sudokuInput(2)">2</button><button onclick="sudokuInput(3)">3</button><button onclick="sudokuInput(4)">4</button>
+  </div>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr;margin-top:6px"><button onclick="sudokuInput(0)">HAPUS</button><button onclick="openGame('sudoku')">ULANG</button></div>`;
+  const solution=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1];
+  let puzzle=solution.map(v=>Math.random()<0.5?v:0);
+  const fixed=puzzle.map(v=>v!==0);
+  let selected=-1;
+  const boardEl=document.getElementById("sudokuBoard");
+  function render(){
+    boardEl.innerHTML=puzzle.map((v,i)=>`<button data-i="${i}" style="height:56px;border:2px solid #888;background:${fixed[i]?"#e4d9bb":(i===selected?"var(--yellow)":"#fff8dd")};font-size:20px;font-weight:700">${v||""}</button>`).join("");
+    boardEl.querySelectorAll("button").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(!fixed[i]){selected=i;render()}});
+  }
+  window.sudokuInput=function(v){
+    if(selected<0||fixed[selected])return;
+    puzzle[selected]=v;render();
+    if(puzzle.every((val,i)=>val===solution[i]))document.getElementById("sudokuStatus").textContent="SELESAI! BENAR SEMUA 🎉";
+  };
+  render();
+  return ()=>{delete window.sudokuInput};
+};
+
+/* ===== GAME BARU: ENDLESS RUNNER ===== */
+GAMES.runner=function(body){
+  body.innerHTML=`<div class="game-head"><span>SKOR: <b id="runScore">0</b></span><span>BEST: <b id="runBest">0</b></span></div>
+  <canvas id="runCanvas" class="snake-canvas" width="320" height="200" style="aspect-ratio:8/5"></canvas>
+  <div class="game-controls" style="grid-template-columns:1fr"><button id="runJump">LOMPAT / MULAI</button></div>`;
+  const c=document.getElementById("runCanvas"),ctx=c.getContext("2d");
+  let y,vy,obstacles,score,best=+(localStorage.getItem("run_best")||0),running=false,raf=null,speed=4;
+  document.getElementById("runBest").textContent=best;
+  const groundY=c.height-20;
+  function reset(){y=groundY;vy=0;obstacles=[{x:c.width}];score=0;speed=4;document.getElementById("runScore").textContent=0}
+  function loop(){
+    if(!running)return;
+    vy+=0.6;y+=vy;if(y>groundY){y=groundY;vy=0}
+    obstacles.forEach(o=>o.x-=speed);
+    if(obstacles[0].x<-20)obstacles.shift();
+    if(obstacles[obstacles.length-1].x<c.width-140+Math.random()*80)obstacles.push({x:c.width});
+    score++;document.getElementById("runScore").textContent=Math.floor(score/5);
+    speed=4+score/500;
+    let dead=false;
+    obstacles.forEach(o=>{if(o.x<40&&o.x+16>20&&y>groundY-20)dead=true});
+    ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
+    ctx.strokeStyle="#171717";ctx.beginPath();ctx.moveTo(0,groundY+20);ctx.lineTo(c.width,groundY+20);ctx.stroke();
+    ctx.fillStyle="#ff4b3e";obstacles.forEach(o=>ctx.fillRect(o.x,groundY,16,20));
+    ctx.fillStyle="#80d83d";ctx.fillRect(20,y-20,20,20);
+    if(dead){running=false;const fs=Math.floor(score/5);if(fs>best){best=fs;localStorage.setItem("run_best",best);document.getElementById("runBest").textContent=best}alert("GAME OVER! Skor: "+fs);return}
+    raf=requestAnimationFrame(loop);
+  }
+  function jump(){if(!running){reset();running=true;raf=requestAnimationFrame(loop)}if(y>=groundY)vy=-10}
+  document.getElementById("runJump").onclick=jump;
+  c.onclick=jump;
+  reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
+  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+};
+
+/* ===== GAME BARU: SPACE SHOOTER ===== */
+GAMES.space=function(body){
+  body.innerHTML=`<div class="game-head"><span>SKOR: <b id="spaceScore">0</b></span><span>NYAWA: <b id="spaceLife">3</b></span></div>
+  <canvas id="spaceCanvas" class="snake-canvas" width="300" height="380" style="aspect-ratio:15/19"></canvas>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="spaceLeft">◀</button><button id="spaceFire">TEMBAK</button><button id="spaceRight">▶</button></div>`;
+  const c=document.getElementById("spaceCanvas"),ctx=c.getContext("2d");
+  let shipX=c.width/2,bullets=[],enemies=[],score=0,life=3,running=true,raf=null,move=0,spawnT=0;
+  function loop(){
+    shipX+=move*4;shipX=Math.max(15,Math.min(c.width-15,shipX));
+    bullets.forEach(b=>b.y-=6);bullets=bullets.filter(b=>b.y>0);
+    spawnT++;if(spawnT>50){spawnT=0;enemies.push({x:20+Math.random()*(c.width-40),y:-10})}
+    enemies.forEach(e=>e.y+=1.5);
+    enemies=enemies.filter(e=>{
+      if(e.y>c.height){life--;document.getElementById("spaceLife").textContent=life;return false}
+      return true;
+    });
+    bullets.forEach(b=>{
+      enemies.forEach(e=>{
+        if(!e.dead&&Math.abs(b.x-e.x)<14&&Math.abs(b.y-e.y)<14){e.dead=true;b.dead=true;score+=10;document.getElementById("spaceScore").textContent=score}
+      });
+    });
+    enemies=enemies.filter(e=>!e.dead);bullets=bullets.filter(b=>!b.dead);
+    ctx.fillStyle="#111";ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle="#ffbf32";bullets.forEach(b=>ctx.fillRect(b.x-2,b.y-6,4,10));
+    ctx.fillStyle="#ff4b3e";enemies.forEach(e=>{ctx.beginPath();ctx.arc(e.x,e.y,12,0,Math.PI*2);ctx.fill()});
+    ctx.fillStyle="#80d83d";ctx.beginPath();ctx.moveTo(shipX,c.height-30);ctx.lineTo(shipX-14,c.height-8);ctx.lineTo(shipX+14,c.height-8);ctx.closePath();ctx.fill();
+    if(life<=0){running=false;alert("GAME OVER! Skor: "+score);return}
+    if(running)raf=requestAnimationFrame(loop);
+  }
+  document.getElementById("spaceLeft").onmousedown=document.getElementById("spaceLeft").ontouchstart=()=>move=-1;
+  document.getElementById("spaceRight").onmousedown=document.getElementById("spaceRight").ontouchstart=()=>move=1;
+  ["mouseup","touchend","mouseleave"].forEach(ev=>{document.getElementById("spaceLeft").addEventListener(ev,()=>move=0);document.getElementById("spaceRight").addEventListener(ev,()=>move=0)});
+  document.getElementById("spaceFire").onclick=()=>bullets.push({x:shipX,y:c.height-30});
+  raf=requestAnimationFrame(loop);
+  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+};
+
+/* ===== GAME BARU: SLIDING PUZZLE ===== */
+GAMES.puzzle=function(body){
+  body.innerHTML=`<div class="game-head"><span>GERAKAN: <b id="puzMoves">0</b></span><span id="puzStatus">GESER UNTUK MENYUSUN 1-8</span></div>
+  <div id="puzBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button onclick="openGame('puzzle')">ACAK ULANG</button></div>`;
+  let tiles=[1,2,3,4,5,6,7,8,0],moves=0;
+  function shuffle(){for(let i=0;i<200;i++){const empty=tiles.indexOf(0);const neighbors=getNeighbors(empty);const swap=neighbors[Math.floor(Math.random()*neighbors.length)];[tiles[empty],tiles[swap]]=[tiles[swap],tiles[empty]]}}
+  function getNeighbors(i){const r=Math.floor(i/3),cCol=i%3,res=[];if(r>0)res.push(i-3);if(r<2)res.push(i+3);if(cCol>0)res.push(i-1);if(cCol<2)res.push(i+1);return res}
+  function render(){
+    document.getElementById("puzBoard").innerHTML=tiles.map((t,i)=>`<button data-i="${i}" style="height:80px;border:3px solid var(--ink);background:${t===0?"transparent":"var(--cream)"};font-size:24px;font-weight:700;box-shadow:${t===0?"none":"3px 3px 0 var(--ink)"}">${t||""}</button>`).join("");
+    document.getElementById("puzMoves").textContent=moves;
+    document.getElementById("puzBoard").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.i;const empty=tiles.indexOf(0);
+      if(getNeighbors(i).includes(empty)){[tiles[i],tiles[empty]]=[tiles[empty],tiles[i]];moves++;render();
+        if(tiles.every((v,idx)=>v===((idx+1)%9)))document.getElementById("puzStatus").textContent="SELESAI! 🎉";
+      }
+    });
+  }
+  shuffle();render();
+  return ()=>{};
+};
+
+/* ===== GAME BARU: CONNECT 4 ===== */
+GAMES.connect4=function(body){
+  body.innerHTML=`<div class="game-head"><span id="c4Status">GILIRAN: MERAH</span></div>
+  <div id="c4Board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:#3a6fa5;padding:6px;border:3px solid var(--ink);margin-top:8px"></div>
+  <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button onclick="openGame('connect4')">GAME BARU</button></div>`;
+  const cols=7,rows=6;
+  let grid=Array(cols*rows).fill(0),turn=1,over=false;
+  const boardEl=document.getElementById("c4Board");
+  function idx(r,cIdx){return r*cols+cIdx}
+  function render(){
+    boardEl.innerHTML="";
+    for(let r=0;r<rows;r++)for(let cIdx=0;cIdx<cols;cIdx++){
+      const v=grid[idx(r,cIdx)];
+      const cell=document.createElement("button");
+      cell.style.cssText="height:34px;border-radius:50%;border:2px solid var(--ink);background:"+(v===0?"#fff":v===1?"var(--red)":"var(--yellow)");
+      cell.onclick=()=>drop(cIdx);
+      boardEl.appendChild(cell);
+    }
+  }
+  function drop(cIdx){
+    if(over)return;
+    for(let r=rows-1;r>=0;r--){
+      if(grid[idx(r,cIdx)]===0){grid[idx(r,cIdx)]=turn;
+        if(checkWin(r,cIdx)){over=true;document.getElementById("c4Status").textContent=(turn===1?"MERAH":"KUNING")+" MENANG!"}
+        else if(grid.every(v=>v!==0)){over=true;document.getElementById("c4Status").textContent="SERI!"}
+        else{turn=turn===1?2:1;document.getElementById("c4Status").textContent="GILIRAN: "+(turn===1?"MERAH":"KUNING")}
+        render();return;
+      }
+    }
+  }
+  function checkWin(r,cIdx){
+    const val=grid[idx(r,cIdx)],dirs=[[0,1],[1,0],[1,1],[1,-1]];
+    for(const [dr,dc] of dirs){
+      let count=1;
+      for(let s=1;s<4;s++){const nr=r+dr*s,nc=cIdx+dc*s;if(nr<0||nr>=rows||nc<0||nc>=cols||grid[idx(nr,nc)]!==val)break;count++}
+      for(let s=1;s<4;s++){const nr=r-dr*s,nc=cIdx-dc*s;if(nr<0||nr>=rows||nc<0||nc>=cols||grid[idx(nr,nc)]!==val)break;count++}
+      if(count>=4)return true;
+    }
+    return false;
+  }
+  render();
+  return ()=>{};
+};
+
 /* SNAKE - Naga makan ekor */
 function startSnake(){
   clearInterval(snakeTimer);snake=[{x:9,y:9},{x:8,y:9},{x:7,y:9}];snakeDir={x:1,y:0};nextSnakeDir={x:1,y:0};snakeScore=0;spawnFood();snakeRunning=true;
@@ -911,30 +1359,6 @@ document.addEventListener("keydown",e=>{
   const map={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]};
   if(map[e.key]&&document.getElementById("gamePage").classList.contains("active")){e.preventDefault();setSnakeDirection(...map[e.key])}
 });
-
-/* CATBOX UPLOADER */
-let selectedFile=null;
-document.getElementById("fileInput").addEventListener("change",e=>{
-  selectedFile=e.target.files[0]||null;const wrap=document.getElementById("filePreview"),img=document.getElementById("imagePreview"),vid=document.getElementById("videoPreview"),meta=document.getElementById("fileMeta");
-  if(!selectedFile){wrap.style.display="none";return}
-  wrap.style.display="block";meta.textContent=`${selectedFile.name} • ${(selectedFile.size/1024/1024).toFixed(2)} MB`;
-  img.classList.add("hidden");vid.classList.add("hidden");
-  const url=URL.createObjectURL(selectedFile);
-  if(selectedFile.type.startsWith("image/")){img.src=url;img.classList.remove("hidden")}else if(selectedFile.type.startsWith("video/")){vid.src=url;vid.classList.remove("hidden")}
-  document.getElementById("resultBox").style.display="none";
-});
-function uploadToCatbox(){
-  if(!selectedFile){alert("Pilih gambar atau video terlebih dahulu.");return}
-  const btn=document.getElementById("uploadBtn"),progress=document.getElementById("uploadProgress"),bar=document.getElementById("progressBar");
-  btn.disabled=true;progress.style.display="block";bar.style.width="0%";
-  const fd=new FormData();fd.append("reqtype","fileupload");fd.append("fileToUpload",selectedFile);
-  const xhr=new XMLHttpRequest();xhr.open("POST","https://catbox.moe/user/api.php",true);
-  xhr.upload.onprogress=e=>{if(e.lengthComputable)bar.style.width=Math.round(e.loaded/e.total*100)+"%"};
-  xhr.onload=()=>{btn.disabled=false;bar.style.width="100%";if(xhr.status>=200&&xhr.status<300&&/^https?:\/\//.test(xhr.responseText.trim())){document.getElementById("resultUrl").value=xhr.responseText.trim();document.getElementById("resultBox").style.display="block"}else alert("Upload gagal.")};
-  xhr.onerror=()=>{btn.disabled=false;alert("Upload gagal karena koneksi/CORS.")};
-  xhr.send(fd);
-}
-async function copyResultUrl(){const input=document.getElementById("resultUrl");try{await navigator.clipboard.writeText(input.value);alert("Link disalin.")}catch{input.select();document.execCommand("copy");alert("Link disalin.")}}
 
 renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
 </script>
