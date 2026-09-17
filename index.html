@@ -138,26 +138,29 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .nav button{position:relative;border:0;border-right:2px solid var(--ink);padding:8px 4px;background:transparent;font-size:8px;font-weight:700}.nav button:last-child{border-right:0}.nav .material-symbols-rounded{display:block;font-size:23px;margin-bottom:2px}.nav button.active{background:var(--green)}
 @media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
 @media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
-/* ===== ANIME STREAMING ===== */
 .anime-page{padding-bottom:30px}
 .anime-search{display:flex;gap:8px;margin-bottom:14px}
 .anime-search input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:12px;outline:none}
-.anime-search .material-symbols-rounded{font-size:22px}
+.anime-search button{border:3px solid var(--ink);background:var(--yellow);padding:10px 14px;font-weight:700;box-shadow:3px 3px 0 var(--ink)}
 .anime-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .anime-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:6px;cursor:pointer;transition:.12s;position:relative}
 .anime-card:hover{transform:translate(-1px,-1px)}
-.anime-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--ink);display:block;background:#ddd}
+.anime-card img{width:100%;aspect-ratio:2/3;object-fit:cover;border:2px solid var(--ink);display:block;background:#ddd}
 .anime-card .anime-title{font-size:10px;font-weight:700;margin-top:6px;line-height:1.3}
 .anime-card .anime-meta{font-size:8px;color:#555;margin-top:3px}
 .anime-empty,.anime-loading,.anime-error{grid-column:1/-1;text-align:center;padding:20px;font-size:11px;border:3px solid var(--ink);background:var(--cream);line-height:1.6}
 .anime-error{background:#ffd9d6}
 .anime-detail{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:14px;margin-top:14px}
+.anime-detail img{width:120px;float:left;margin:0 12px 8px 0;border:2px solid var(--ink)}
 .anime-detail h2{font-size:15px;margin:0 0 6px;line-height:1.25}
-.anime-detail .anime-desc{font-size:10px;line-height:1.65;color:#444;margin-bottom:8px}
+.anime-detail .anime-desc{font-size:10px;line-height:1.65;clear:both}
 .anime-player-header{display:flex;align-items:center;gap:8px;margin:16px 0 8px}
 .anime-player-title{font-size:11px;font-weight:700;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.anime-video{width:100%;aspect-ratio:16/9;background:#000;border:3px solid var(--ink);display:block}
 .video-status{margin-top:8px;padding:8px 10px;border:2px solid var(--ink);background:var(--cream);font-size:9px;line-height:1.5;display:flex;align-items:center;gap:6px}
 .video-status .material-symbols-rounded{font-size:16px;flex:none}
+.video-status.error{background:#ffd9d6}
+.video-status.loading{background:#fff8dd}
 .episode-list{margin-top:10px;max-height:280px;overflow-y:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;border:3px solid var(--ink);padding:8px;background:#fff8dd}
 .episode-item{border:2px solid var(--ink);background:var(--cream);padding:8px 4px;font-size:9px;font-weight:700;cursor:pointer;text-align:center;transition:.1s;display:flex;align-items:center;justify-content:center;gap:2px}
 .episode-item:hover{background:var(--yellow)}
@@ -170,7 +173,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 <body>
 <div class="app">
 
-<!-- HOME -->
 <main id="home" class="page active">
   <div class="topbar">
     <div class="logo"><span class="material-symbols-rounded">storefront</span></div>
@@ -212,14 +214,13 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     </button>
     <button class="feature-card converter" onclick="showPage('animePage')">
       <div class="feature-icon"><span class="material-symbols-rounded">movie</span></div>
-      <div><div class="feature-name">NONTON ANIME</div><div class="feature-hint">Streaming anime Sub Indo via YouTube.</div></div>
+      <div><div class="feature-name">NONTON ANIME</div><div class="feature-hint">Streaming anime sub Indo langsung.</div></div>
     </button>
   </section>
   <div class="section-title"><span>CHAT ADMIN</span></div>
   <div class="admin-chat"><button type="button" onclick="chatAdmin()"><span class="material-symbols-rounded" style="font-size:16px">support_agent</span> CHAT ADMIN</button></div>
 </main>
 
-<!-- STORE -->
 <main id="store" class="page">
   <div class="topbar">
     <div class="logo"><span class="material-symbols-rounded">shopping_bag</span></div>
@@ -235,7 +236,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </section>
 </main>
 
-<!-- INFO -->
 <main id="info" class="page">
   <div class="topbar"><div class="logo"><span class="material-symbols-rounded">info</span></div><div><div class="top-title">INFO</div><div class="top-sub">TEMUKAN KAMI</div></div></div>
   <div class="hero"><div class="paint-card">
@@ -250,7 +250,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </section>
 </main>
 
-<!-- AI PAGE -->
 <main id="aiPage" class="page ai-page">
   <div class="topbar">
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
@@ -263,7 +262,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div></div>
 </main>
 
-<!-- MUSIC PAGE -->
 <main id="musicPage" class="page music-page">
   <div class="topbar">
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
@@ -280,7 +278,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
-<!-- GAME CENTER -->
 <main id="gameCenter" class="page">
   <div class="topbar">
     <div class="logo"><span class="material-symbols-rounded">sports_esports</span></div>
@@ -291,7 +288,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <div class="game-center-grid with-nav" id="gameCenterGrid"></div>
 </main>
 
-<!-- GAME PLAY -->
 <main id="gamePlay" class="page game-page">
   <div class="topbar">
     <button class="back-btn" onclick="closeGamePlay()"><span class="material-symbols-rounded">arrow_back</span></button>
@@ -300,7 +296,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <div class="tool-body"><div class="game-wrap" id="gamePlayBody"></div></div>
 </main>
 
-<!-- SNAKE -->
 <main id="gamePage" class="page game-page">
   <div class="topbar">
     <button class="back-btn" onclick="stopSnake();showPage('gameCenter')"><span class="material-symbols-rounded">arrow_back</span></button>
@@ -320,55 +315,21 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
-<!-- ANIME STREAMING -->
 <main id="animePage" class="page anime-page">
   <div class="topbar">
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
-    <div><div class="top-title">NONTON ANIME</div><div class="top-sub">SUB INDO • AUTO UPDATE</div></div>
+    <div><div class="top-title">NONTON ANIME</div><div class="top-sub">SUB INDO • OPLOVERZ</div></div>
   </div>
   <div class="tool-body">
     <div class="anime-search">
-      <input id="animeSearchInput" type="text" placeholder="Cari judul anime..." oninput="filterAnimeList()">
-      <span class="material-symbols-rounded">search</span>
+      <input id="animeSearchInput" type="text" placeholder="Cari judul anime...">
+      <button type="button" onclick="searchAnime()">CARI</button>
     </div>
-    <div id="animeListWrap">
-      <div class="section-title" style="margin:0 0 9px 0;"><span>DAFTAR ANIME</span></div>
-      <div id="animeList" class="anime-grid"></div>
-    </div>
-    <div id="animeDetailWrap" style="display:none;">
-      <div class="anime-detail">
-        <button class="back-btn" onclick="closeAnimeDetail()" style="margin-bottom:10px;">
-          <span class="material-symbols-rounded">arrow_back</span>
-        </button>
-        <h2 id="detailAnimeTitle"></h2>
-        <div id="detailAnimeDesc" class="anime-desc"></div>
-        <div style="clear:both;margin-top:12px">
-          <strong style="font-size:11px;display:inline-flex;align-items:center;gap:5px">
-            <span class="material-symbols-rounded" style="font-size:15px">playlist_play</span>
-            DAFTAR EPISODE (<span id="episodeCount">0</span>)
-          </strong>
-        </div>
-        <div class="episode-list" id="episodeListInline"></div>
-        <div id="animePlayerWrap" style="display:none;margin-top:14px">
-          <div class="anime-player-header">
-            <span class="material-symbols-rounded" style="font-size:18px">smart_display</span>
-            <div class="anime-player-title" id="playerAnimeTitle"></div>
-            <button class="server-btn" onclick="closeAnimePlayer()">
-              <span class="material-symbols-rounded">close</span>TUTUP
-            </button>
-          </div>
-          <div id="youtubePlayerBox" style="width:100%;aspect-ratio:16/9;border:3px solid var(--ink);background:#000;overflow:hidden"></div>
-          <div class="video-status" id="videoStatus">
-            <span class="material-symbols-rounded">info</span>
-            <span>Pilih episode di atas untuk mulai menonton.</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="animeResults" class="anime-grid"></div>
+    <div id="animeDetailWrap"></div>
   </div>
 </main>
 
-<!-- PRODUCT DETAIL -->
 <main id="productDetail" class="page detail-page">
   <div class="detail-top"><button class="back-btn" onclick="closeProductDetail()"><span class="material-symbols-rounded">arrow_back</span></button><div class="detail-title" id="detailHeaderName">DETAIL PRODUK</div></div>
   <div class="detail-content">
@@ -378,14 +339,12 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <div class="detail-actions"><button class="action-cart" onclick="addCurrentProductToCart()"><span class="material-symbols-rounded">add_shopping_cart</span> TAMBAH KERANJANG</button><button class="action-buy" onclick="buyCurrentProductNow()"><span class="material-symbols-rounded">shopping_cart_checkout</span> BELI SEKARANG</button></div>
 </main>
 
-<!-- CART -->
 <main id="cart" class="page cart-page">
   <div class="topbar"><button class="back-btn" onclick="showPage('store')"><span class="material-symbols-rounded">arrow_back</span></button><div><div class="top-title">KERANJANG</div><div class="top-sub">PRODUK YANG KAMU PILIH</div></div></div>
   <div class="cart-list" id="cartList"></div><div class="cart-total" id="cartTotal"></div>
   <button class="checkout-btn" onclick="goCheckout()"><span class="material-symbols-rounded">payments</span> LANJUT KE PEMBAYARAN</button>
 </main>
 
-<!-- CHECKOUT -->
 <main id="checkout" class="page checkout-page">
   <div class="checkout-head"><button class="back-btn" onclick="backFromCheckout()"><span class="material-symbols-rounded">arrow_back</span></button><div><div class="top-title">PEMBAYARAN</div><div class="top-sub">SELESAIKAN PESANAN KAMU</div></div></div>
   <div class="checkout-body">
@@ -405,6 +364,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 </nav>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 const CONFIG={
   adminWA:"584167367544",
@@ -476,7 +436,7 @@ function showPage(id,btn=null){
   if(id==="gamePage")drawSnake();
   if(id==="gameCenter")renderGameCenter();
   if(id==="musicPage")renderMusicPage();
-  if(id==="animePage") initAnimePage();
+  if(id==="animePage" && !animeHomeLoaded) loadAnimeHome();
 }
 function productCard(p,index){
   const d=discountPercent(p.oldPrice,p.price);
@@ -592,7 +552,6 @@ document.getElementById("tiktok").href=CONFIG.links.tiktok;
 document.getElementById("xSocial").href=CONFIG.links.xSocial;
 document.getElementById("saweria").href=CONFIG.links.saweria;
 
-/* AI */
 function typingDragonSvg(){
   return `<span class="typing-dragon"><svg viewBox="0 0 30 30"><circle class="tail" cx="15" cy="15" r="10"/><circle class="head" cx="15" cy="5" r="3"/></svg></span>`;
 }
@@ -608,208 +567,289 @@ async function askAI(){
 document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
 
 /* ============================================================
-   ANIME STREAMING - Auto dari Channel Ani-One Indonesia
+   ANIME STREAMING - Oploverz (wajik-anime-api Railway)
    ============================================================ */
-const YT_CHANNEL_ID = "UCUn0hEbVJc273anl_0ozDMQ";
+const ANIME_API = "https://wajik-anime-api-production-4c0e.up.railway.app";
+const ANIME_SOURCE = "oploverz";
 
-const RSS_PROXIES = [
-  { url: "https://api.rss2json.com/v1/api.json?rss_url=", type: "json" },
-  { url: "https://api.allorigins.win/raw?url=", type: "xml" },
-  { url: "https://corsproxy.io/?", type: "xml" },
-  { url: "https://api.codetabs.com/v1/proxy?quest=", type: "xml" }
-];
+let animeHomeLoaded = false;
+let currentAnimeId = null;
+let currentAnimeTitle = "";
+let currentEpisodeList = [];
+let hlsInstance = null;
 
-let animeMap = {};
-let currentAnimeKey = null;
-let animeFetched = false;
-
-async function fetchWithProxy(url) {
-  for (let i = 0; i < RSS_PROXIES.length; i++) {
-    const proxy = RSS_PROXIES[i];
+async function animeFetch(path, retries = 2) {
+  let lastErr = null;
+  for (let i = 0; i <= retries; i++) {
     try {
-      const fullUrl = proxy.url + encodeURIComponent(url);
       const controller = new AbortController();
-      const timeout = setTimeout(function(){ controller.abort(); }, 12000);
-
-      const res = await fetch(fullUrl, { signal: controller.signal });
-      clearTimeout(timeout);
-
-      if (!res.ok) continue;
-      const text = await res.text();
-
-      if (proxy.type === "json") {
-        try {
-          const json = JSON.parse(text);
-          if (json.status !== "ok" || !json.items) continue;
-          let xml = '<?xml version="1.0" encoding="UTF-8"?><feed xmlns:yt="http://www.youtube.com/xml/schemas/2015">';
-          json.items.forEach(function(item) {
-            const vid = (item.guid || item.link || "").replace(/.*[?&]v=/, '').replace(/&.*/, '');
-            if (!vid) return;
-            xml += '<entry>';
-            xml += '<title>' + (item.title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</title>';
-            xml += '<yt:videoId>' + vid + '</yt:videoId>';
-            xml += '</entry>';
-          });
-          xml += '</feed>';
-          return xml;
-        } catch (e) { continue; }
-      }
-      return text;
-    } catch (e) { continue; }
-  }
-  return null;
-}
-
-async function loadAnimeFromChannel() {
-  const el = document.getElementById('animeList');
-  if (!el) return;
-
-  el.innerHTML = '<div class="anime-loading"><span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>Memuat anime dari Ani-One Indonesia...</div>';
-
-  const rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=" + YT_CHANNEL_ID;
-  const xmlText = await fetchWithProxy(rssUrl);
-
-  if (!xmlText) {
-    el.innerHTML = '<div class="anime-error">Gagal memuat data dari YouTube.<br><br>CORS proxy mungkin sedang sibuk. Coba refresh dalam 1-2 menit.</div>';
-    return;
-  }
-
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(xmlText, "text/xml");
-  const entries = xml.getElementsByTagName("entry");
-
-  if (!entries.length) {
-    el.innerHTML = '<div class="anime-error">Tidak ada video di channel ini.</div>';
-    return;
-  }
-
-  animeMap = {};
-
-  for (let i = 0; i < entries.length; i++) {
-    const entry = entries[i];
-    const titleEl = entry.getElementsByTagName("title")[0];
-    const vidEl = entry.getElementsByTagName("yt:videoId")[0];
-    if (!titleEl || !vidEl) continue;
-
-    const title = titleEl.textContent;
-    const videoId = vidEl.textContent;
-    const thumbnail = "https://i.ytimg.com/vi/" + videoId + "/mqdefault.jpg";
-
-    const match = title.match(/^(.+?)\s*[-–—:]\s*(?:Episode|Ep|Eps)\.?\s*(\d+)/i)
-               || title.match(/^(.+?)\s+(?:Episode|Ep|Eps)\.?\s*(\d+)/i);
-
-    let animeName, episodeNum;
-    if (match) {
-      animeName = match[1].trim();
-      episodeNum = parseInt(match[2]);
-    } else {
-      animeName = title;
-      episodeNum = 0;
+      const t = setTimeout(() => controller.abort(), 20000);
+      const res = await fetch(ANIME_API + path, { signal: controller.signal });
+      clearTimeout(t);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
+      if (i < retries) await new Promise(r => setTimeout(r, 800));
     }
-
-    const key = animeName.toLowerCase().replace(/[^a-z0-9]/g, '');
-
-    if (!animeMap[key]) {
-      animeMap[key] = { title: animeName, poster: thumbnail, episodes: [] };
-    }
-    animeMap[key].episodes.push({ episode: episodeNum, videoId: videoId });
   }
-
-  for (const key in animeMap) {
-    animeMap[key].episodes.sort(function(a,b){ return a.episode - b.episode; });
-  }
-
-  animeFetched = true;
-  renderAnimeList();
+  throw lastErr || new Error("Gagal fetch");
 }
 
-function renderAnimeList(filter) {
-  const el = document.getElementById('animeList');
-  if (!el) return;
+function setAnimeStatus(html, type) {
+  const results = document.getElementById("animeResults");
+  if (!results) return;
+  const cls = type === "error" ? "anime-error" : (type === "loading" ? "anime-loading" : "anime-empty");
+  results.innerHTML = '<div class="' + cls + '">' + html + '</div>';
+}
 
-  const q = (filter || '').toLowerCase().trim();
-  const list = Object.keys(animeMap)
-    .map(function(k){ return { key: k, data: animeMap[k] }; })
-    .filter(function(x){ return !q || x.data.title.toLowerCase().indexOf(q) !== -1; });
+function loadingHtml(msg) {
+  return '<span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>' + escapeHtml(msg || "Memuat...");
+}
 
-  if (!list.length) {
-    el.innerHTML = '<div class="anime-empty">Anime tidak ditemukan.</div>';
+function errorHtml(msg, retryFn) {
+  const fn = retryFn || "loadAnimeHome()";
+  return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' +
+    escapeHtml(msg || "Terjadi kesalahan.") +
+    '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>';
+}
+
+function extractAnimeList(res) {
+  let list = [];
+  if (res && res.data) {
+    if (Array.isArray(res.data.sectionList)) {
+      res.data.sectionList.forEach(function(sec) {
+        if (Array.isArray(sec.animeList)) list = list.concat(sec.animeList);
+      });
+    }
+    if (!list.length && Array.isArray(res.data.animeList)) list = res.data.animeList;
+    if (!list.length && Array.isArray(res.data.list)) list = res.data.list;
+    if (!list.length && Array.isArray(res.data.animes)) list = res.data.animes;
+  }
+  if (!list.length && res && Array.isArray(res.data)) list = res.data;
+  if (!list.length && res && Array.isArray(res.animeList)) list = res.animeList;
+  return list;
+}
+
+async function loadAnimeHome() {
+  setAnimeStatus(loadingHtml("Memuat daftar anime dari Oploverz..."), "loading");
+  document.getElementById("animeDetailWrap").innerHTML = "";
+  try {
+    const res = await animeFetch("/" + ANIME_SOURCE + "/anime");
+    const list = extractAnimeList(res);
+    animeHomeLoaded = true;
+    renderAnimeGrid(list);
+  } catch (e) {
+    setAnimeStatus(errorHtml("Gagal memuat data anime. Error: " + e.message, "loadAnimeHome()"), "error");
+  }
+}
+
+async function searchAnime() {
+  const q = document.getElementById("animeSearchInput").value.trim();
+  closeAnimeDetail();
+  if (!q) { loadAnimeHome(); return; }
+  setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
+  try {
+    const res = await animeFetch("/" + ANIME_SOURCE + "/search?q=" + encodeURIComponent(q));
+    const list = extractAnimeList(res);
+    renderAnimeGrid(list);
+  } catch (e) {
+    setAnimeStatus(errorHtml("Gagal mencari anime: " + e.message, "loadAnimeHome()"), "error");
+  }
+}
+
+function renderAnimeGrid(list) {
+  const results = document.getElementById("animeResults");
+  if (!list || !list.length) {
+    setAnimeStatus("Anime tidak ditemukan. Coba kata kunci lain.");
     return;
   }
-
-  el.innerHTML = list.map(function(x){
-    return '<div class="anime-card" onclick="openAnimeDetail(\'' + x.key + '\')">' +
-      '<img src="' + x.data.poster + '" onerror="this.style.opacity=\'.2\'">' +
-      '<div class="anime-title">' + escapeHtml(x.data.title) + '</div>' +
-      '<div class="anime-meta">' + x.data.episodes.length + ' episode</div>' +
+  results.innerHTML = list.map(function (a) {
+    const animeId = a.slug || a.animeId || a.id || "";
+    const title = a.title || a.name || "Tanpa judul";
+    const poster = a.poster || a.image || a.thumb || a.cover || "";
+    return '<div class="anime-card" onclick="openAnimeDetail(\'' + String(animeId).replace(/'/g, "\\'") + '\')">' +
+      '<img src="' + escapeHtml(poster) + '" alt="" loading="lazy" onerror="this.style.opacity=\'.2\'">' +
+      '<div class="anime-title">' + escapeHtml(title) + '</div>' +
       '</div>';
-  }).join('');
-}
-
-function filterAnimeList() {
-  renderAnimeList(document.getElementById('animeSearchInput').value);
-}
-
-function openAnimeDetail(key) {
-  const anime = animeMap[key];
-  if (!anime) return;
-  currentAnimeKey = key;
-
-  document.getElementById('animeListWrap').style.display = 'none';
-  document.getElementById('animeDetailWrap').style.display = 'block';
-  document.getElementById('detailAnimeTitle').textContent = anime.title;
-  document.getElementById('detailAnimeDesc').textContent = anime.episodes.length + ' episode tersedia dari Ani-One Indonesia.';
-  document.getElementById('animePlayerWrap').style.display = 'none';
-  document.getElementById('episodeCount').textContent = anime.episodes.length;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  const el = document.getElementById('episodeListInline');
-  el.innerHTML = anime.episodes.map(function(ep, i){
-    return '<div class="episode-item" data-ep="' + i + '" onclick="playEpisodeAt(' + i + ', ' + (ep.episode || (i+1)) + ')">' +
-      '<span class="material-symbols-rounded">play_arrow</span>EP ' + (ep.episode || (i+1)) +
-      '</div>';
-  }).join('');
+  }).join("");
 }
 
 function closeAnimeDetail() {
-  document.getElementById('animeListWrap').style.display = 'block';
-  document.getElementById('animeDetailWrap').style.display = 'none';
-  document.getElementById('youtubePlayerBox').innerHTML = '';
-  document.getElementById('animePlayerWrap').style.display = 'none';
-  renderAnimeList();
+  document.getElementById("animeResults").innerHTML = "";
+  document.getElementById("animeDetailWrap").innerHTML = "";
+  closeAnimePlayer();
 }
 
-function playEpisodeAt(index, epNumber) {
-  const anime = animeMap[currentAnimeKey];
-  if (!anime || !anime.episodes[index]) return;
-  const ep = anime.episodes[index];
+async function openAnimeDetail(animeId) {
+  currentAnimeId = animeId;
+  const wrap = document.getElementById("animeDetailWrap");
+  const results = document.getElementById("animeResults");
+  results.innerHTML = "";
+  closeAnimePlayer();
+  wrap.innerHTML = '<div class="anime-detail">' + loadingHtml("Memuat detail & episode...") + '</div>';
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-  document.getElementById('animePlayerWrap').style.display = 'block';
-  document.getElementById('playerAnimeTitle').textContent = anime.title + ' — Episode ' + epNumber;
-  document.getElementById('youtubePlayerBox').innerHTML =
-    '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + ep.videoId + '?autoplay=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border:0;display:block;"></iframe>';
+  try {
+    const res = await animeFetch("/" + ANIME_SOURCE + "/anime/" + encodeURIComponent(animeId));
+    const root = res.data || {};
+    const details = root.details || root;
+    const title = details.title || "Anime";
+    currentAnimeTitle = title;
+    const poster = details.poster || details.image || details.thumb || "";
+    let desc = details.synopsis || details.description || details.desc || "";
+    if (desc.length > 500) desc = desc.slice(0, 500) + "...";
 
-  document.getElementById('videoStatus').innerHTML = '<span class="material-symbols-rounded">check_circle</span><span>Sedang memutar Episode ' + epNumber + '</span>';
+    let episodes = [];
+    if (Array.isArray(root.episodeList)) episodes = root.episodeList;
+    else if (Array.isArray(details.episodeList)) episodes = details.episodeList;
+    else if (Array.isArray(root.episodes)) episodes = root.episodes;
+    else if (Array.isArray(details.episodes)) episodes = details.episodes;
+    currentEpisodeList = episodes;
 
-  document.querySelectorAll('.episode-item').forEach(function(el){ el.classList.remove('active'); });
-  const activeEl = document.querySelector('.episode-item[data-ep="' + index + '"]');
-  if (activeEl) activeEl.classList.add('active');
+    wrap.innerHTML =
+      '<div class="anime-detail">' +
+        (poster ? '<img src="' + escapeHtml(poster) + '" alt="" onerror="this.style.display=\'none\'">' : "") +
+        '<h2>' + escapeHtml(title) + '</h2>' +
+        '<div class="anime-desc">' + escapeHtml(desc) + '</div>' +
+        '<div style="clear:both;margin-top:12px"><strong style="font-size:11px">DAFTAR EPISODE (' + episodes.length + ')</strong></div>' +
+        (episodes.length
+          ? '<div class="episode-list" id="episodeListInline"></div>'
+          : '<div class="anime-empty" style="margin-top:10px">Belum ada episode tersedia.</div>') +
+        '<div id="animePlayerWrap" style="display:none;margin-top:14px">' +
+          '<div class="anime-player-header">' +
+            '<div class="anime-player-title" id="playerAnimeTitle"></div>' +
+            '<button class="server-btn" onclick="closeAnimePlayer()">TUTUP</button>' +
+          '</div>' +
+          '<div id="animeVideoBox" class="anime-video" style="overflow:hidden;position:relative;"></div>' +
+          '<div id="videoStatus" class="video-status loading">Menyiapkan pemutar...</div>' +
+        '</div>' +
+      '</div>';
 
-  document.getElementById('animePlayerWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (episodes.length) renderEpisodeList(episodes);
+    else console.log("Response /anime:", res);
+  } catch (e) {
+    wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail: " + e.message) + '</div>';
+  }
+}
+
+function renderEpisodeList(episodes) {
+  const el = document.getElementById("episodeListInline");
+  if (!el) return;
+  el.innerHTML = episodes.map(function (ep, i) {
+    let epId = "";
+    if (ep.href) {
+      const m = ep.href.match(/\/([^\/]+)\/?$/);
+      if (m) epId = m[1];
+    }
+    if (!epId) epId = ep.slug || ep.episodeId || ep.id || "";
+    const num = ep.episode || ep.number || (i + 1);
+    const safeTitle = currentAnimeTitle.replace(/'/g, "\\'");
+    return '<div class="episode-item" data-ep="' + escapeHtml(String(epId)) + '" onclick="playEpisode(\'' + String(epId).replace(/'/g, "\\'") + '\',' + Number(num) + ',\'' + safeTitle + '\')">EP ' + escapeHtml(String(num)) + '</div>';
+  }).join("");
+}
+
+function setVideoStatus(msg, type) {
+  const el = document.getElementById("videoStatus");
+  if (!el) return;
+  el.className = "video-status " + (type || "");
+  el.innerHTML = msg;
+}
+
+async function playEpisode(episodeId, epNum, animeTitle) {
+  const playerWrap = document.getElementById("animePlayerWrap");
+  if (!playerWrap) return;
+  playerWrap.style.display = "block";
+  document.getElementById("playerAnimeTitle").textContent = animeTitle + " — Episode " + epNum;
+  document.querySelectorAll(".episode-item").forEach(function (el) { el.classList.remove("active"); });
+  const activeEp = document.querySelector('.episode-item[data-ep="' + String(episodeId).replace(/"/g, '\\"') + '"]');
+  if (activeEp) activeEp.classList.add("active");
+  playerWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+  await loadEpisodeSource(episodeId);
+}
+
+async function loadEpisodeSource(episodeId) {
+  const box = document.getElementById("animeVideoBox");
+  if (!box) return;
+  if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
+  box.innerHTML = "";
+  setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Memuat video Episode...', "loading");
+
+  try {
+    const res = await animeFetch("/" + ANIME_SOURCE + "/episode/" + encodeURIComponent(episodeId));
+    const root = res.data || {};
+    const details = root.details || root;
+
+    let url = details.streamingUrl || details.streamUrl || details.url || "";
+    if (!url && Array.isArray(details.servers) && details.servers.length) {
+      url = details.servers[0].url || details.servers[0].link || "";
+    }
+    if (!url && Array.isArray(details.streams) && details.streams.length) {
+      url = details.streams[0].url || details.streams[0].link || "";
+    }
+    if (!url) { console.log("Response /episode:", res); throw new Error("Tidak ada sumber video"); }
+
+    const isBlogger = /blogger\.com|video\.g\?|googleusercontent|youtube\.com|youtu\.be/.test(url);
+    const isM3U8 = /\.m3u8(\?|$)/i.test(url);
+    const isIframeFriendly = isBlogger || /\/embed\//.test(url);
+
+    if (isIframeFriendly) {
+      box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border:0;display:block;width:100%;height:100%"></iframe>';
+      setVideoStatus('✅ Sedang memutar.', "");
+    } else if (isM3U8 || /\.(mp4|webm|mkv)(\?|$)/i.test(url)) {
+      const video = document.createElement('video');
+      video.id = "animeVideo";
+      video.className = "anime-video";
+      video.controls = true;
+      video.playsInline = true;
+      video.setAttribute("crossorigin", "anonymous");
+      box.appendChild(video);
+      await attachAndPlayVideo(video, url);
+      setVideoStatus('✅ Sedang memutar.', "");
+    } else {
+      box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen style="border:0;display:block;width:100%;height:100%"></iframe>';
+      setVideoStatus('✅ Sedang memutar.', "");
+    }
+  } catch (e) {
+    setVideoStatus('❌ Gagal memuat video: ' + e.message + '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-weight:700;font-size:10px" onclick="loadEpisodeSource(\'' + episodeId.replace(/'/g, "\\'") + '\')">COBA LAGI</button>', "error");
+  }
+}
+
+function attachAndPlayVideo(video, url) {
+  return new Promise(function (resolve, reject) {
+    const isM3U8 = /\.m3u8(\?|$)/i.test(url);
+    video.onerror = function(){ reject(new Error("Video error")); };
+    video.onloadeddata = function(){ resolve(); };
+    if (isM3U8) {
+      if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = url; video.play().catch(function(){});
+      } else if (window.Hls && window.Hls.isSupported()) {
+        hlsInstance = new Hls({ enableWorker: true });
+        hlsInstance.loadSource(url);
+        hlsInstance.attachMedia(video);
+        hlsInstance.on(Hls.Events.MANIFEST_PARSED, function () { video.play().catch(function(){}); });
+        hlsInstance.on(Hls.Events.ERROR, function (evt, data) { if (data && data.fatal) reject(new Error("HLS error")); });
+      } else {
+        video.src = url; video.play().catch(function(){});
+      }
+    } else {
+      video.src = url; video.play().catch(function(){});
+    }
+    setTimeout(function () { if (video.readyState < 2) reject(new Error("Timeout")); }, 15000);
+  });
 }
 
 function closeAnimePlayer() {
-  document.getElementById('youtubePlayerBox').innerHTML = '';
-  document.getElementById('animePlayerWrap').style.display = 'none';
+  if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
+  const box = document.getElementById("animeVideoBox");
+  if (box) box.innerHTML = "";
+  const wrap = document.getElementById("animePlayerWrap");
+  if (wrap) wrap.style.display = "none";
 }
 
-function initAnimePage() {
-  if (!animeFetched) {
-    loadAnimeFromChannel();
-  } else {
-    renderAnimeList();
-  }
-}
+document.getElementById("animeSearchInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") searchAnime();
+});
 
 /* ============================================================
    GAME CENTER
@@ -844,7 +884,6 @@ function openGame(id){
 
 /* ================= GAMES ================= */
 const GAMES={};
-
 GAMES.tictactoe=function(body){
   body.innerHTML=`<div class="game-head"><span>STATUS: <b id="tttStatus">GILIRAN X</b></span><span>SKOR: <b id="tttScore">0 - 0</b></span></div>
   <div id="tttBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
@@ -874,7 +913,6 @@ GAMES.tictactoe=function(body){
   render();
   return ()=>{delete window.tttReset;delete window.tttNewGame};
 };
-
 GAMES.memory=function(body){
   const icons=["star","favorite","bolt","cloud","anchor","rocket_launch","pets","cake"];
   const deck=[...icons,...icons].sort(()=>Math.random()-.5);
@@ -907,7 +945,6 @@ GAMES.memory=function(body){
   };
   return ()=>{};
 };
-
 GAMES.simon=function(body){
   const colors=["var(--red)","var(--green)","var(--blue)","var(--yellow)"];
   body.innerHTML=`<div class="game-head"><span>LEVEL: <b id="simonLevel">0</b></span><span>SKOR: <b id="simonScore">0</b></span></div>
@@ -942,7 +979,6 @@ GAMES.simon=function(body){
   document.getElementById("simonStart").onclick=()=>{simonReset();next()};
   return ()=>{};
 };
-
 GAMES.reaction=function(body){
   body.innerHTML=`<div class="game-head"><span>BEST: <b id="reactBest">-</b></span><span>STATUS: <b id="reactStatus">KLIK MULAI</b></span></div>
   <div id="reactArea" style="height:280px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px;cursor:pointer;text-align:center;padding:10px">KLIK UNTUK MULAI</div>
@@ -960,7 +996,6 @@ GAMES.reaction=function(body){
   };
   return ()=>{clearTimeout(timeout)};
 };
-
 GAMES.whack=function(body){
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="whackTime">30</b>s</span><span>SKOR: <b id="whackScore">0</b></span></div>
   <div id="whackBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
@@ -985,7 +1020,6 @@ GAMES.whack=function(body){
   };
   return ()=>{clearInterval(moleTimer);clearInterval(countTimer)};
 };
-
 GAMES.guess=function(body){
   body.innerHTML=`<div class="game-head"><span>PERCOBAAN: <b id="guessTries">0</b></span><span id="guessHint">TEBAK 1-100</span></div>
   <div style="display:flex;gap:6px;margin-top:8px"><input id="guessInput" type="number" min="1" max="100" placeholder="1-100" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="guessCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">TEBAK</button></div>
@@ -1002,7 +1036,6 @@ GAMES.guess=function(body){
   window.guessReset=()=>{target=Math.floor(Math.random()*100)+1;tries=0;document.getElementById("guessTries").textContent=0;document.getElementById("guessHint").textContent="TEBAK 1-100";document.getElementById("guessInput").value=""};
   return ()=>{delete window.guessCheck;delete window.guessReset};
 };
-
 GAMES.math=function(body){
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="mathTime">30</b>s</span><span>SKOR: <b id="mathScore">0</b></span></div>
   <div id="mathQ" style="border:3px solid var(--ink);background:var(--cream);padding:25px;text-align:center;font-size:28px;font-weight:700;margin-top:8px">?</div>
@@ -1028,7 +1061,6 @@ GAMES.math=function(body){
   document.getElementById("mathInput").addEventListener("keydown",e=>{if(e.key==="Enter")mathCheck()});
   return ()=>{clearInterval(ct);delete window.mathCheck};
 };
-
 GAMES.color=function(body){
   const palette=["#ff4b3e","#80d83d","#54b9e8","#ffbf32","#ff7367","#a855f7"];
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="colScore">0</b></span><span id="colHint">KLIK WARNA YANG SAMA</span></div>
@@ -1049,7 +1081,6 @@ GAMES.color=function(body){
   }
   round();return ()=>{};
 };
-
 GAMES.typing=function(body){
   const words=["volka","store","digital","produk","keranjang","pembayaran","whatsapp","website","desain","premium","musik","game","banner","admin","chat"];
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="typeTime">30</b>s</span><span>WPM: <b id="typeWpm">0</b></span></div>
@@ -1068,7 +1099,6 @@ GAMES.typing=function(body){
   };
   return ()=>{clearInterval(ct)};
 };
-
 GAMES.rps=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="rpsP">0</b></span><span>CPU: <b id="rpsC">0</b></span></div>
   <div id="rpsShow" style="border:3px solid var(--ink);background:var(--cream);padding:20px;text-align:center;font-size:14px;margin-top:8px">PILIH SENJATA</div>
@@ -1089,7 +1119,6 @@ GAMES.rps=function(body){
   });
   return ()=>{};
 };
-
 GAMES.flappy=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="flapScore">0</b></span><span>BEST: <b id="flapBest">0</b></span></div>
   <canvas id="flapCanvas" class="snake-canvas" width="320" height="420" style="aspect-ratio:3/4"></canvas>
@@ -1121,7 +1150,6 @@ GAMES.flappy=function(body){
   reset();ctx.fillStyle="#54b9e8";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.breakout=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="brkScore">0</b></span><span>NYAWA: <b id="brkLife">3</b></span></div>
   <canvas id="brkCanvas" class="snake-canvas" width="320" height="360" style="aspect-ratio:8/9"></canvas>
@@ -1153,7 +1181,6 @@ GAMES.breakout=function(body){
   reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.pong=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="pongP">0</b></span><span>CPU: <b id="pongC">0</b></span></div>
   <canvas id="pongCanvas" class="snake-canvas" width="320" height="320"></canvas>
@@ -1182,7 +1209,6 @@ GAMES.pong=function(body){
   raf=requestAnimationFrame(loop);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES["2048"]=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="g2048Score">0</b></span><span>BEST: <b id="g2048Best">0</b></span></div>
   <div id="g2048Board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#c9bd9c;padding:6px;border:3px solid var(--ink)"></div>
@@ -1230,7 +1256,6 @@ GAMES["2048"]=function(body){
   document.addEventListener("keydown",keyHandler);
   return ()=>{document.removeEventListener("keydown",keyHandler);delete window.g2048Move};
 };
-
 GAMES.minesweeper=function(body){
   body.innerHTML=`<div class="game-head"><span>MINE: <b id="minesLeft">10</b></span><span id="minesStatus">MAIN</span></div>
   <div id="minesBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px"></div>
@@ -1275,7 +1300,6 @@ GAMES.minesweeper=function(body){
   render();
   return ()=>{};
 };
-
 GAMES.hangman=function(body){
   const words=["VOLKA","STORE","DIGITAL","PRODUK","WEBSITE","DESAIN","PREMIUM","BANNER","ADMIN"];
   body.innerHTML=`<div class="game-head"><span>SALAH: <b id="hangWrong">0</b>/6</span><span id="hangStatus">TEBAK KATA</span></div>
@@ -1298,7 +1322,6 @@ GAMES.hangman=function(body){
   renderWord();renderLetters();
   return ()=>{};
 };
-
 GAMES.quiz=function(body){
   const questions=[
     {q:"Ibu kota Indonesia adalah?",opts:["Jakarta","Bandung","Surabaya","Medan"],a:0},
@@ -1326,7 +1349,6 @@ GAMES.quiz=function(body){
   render();
   return ()=>{};
 };
-
 GAMES.sudoku=function(body){
   body.innerHTML=`<div class="game-head"><span id="sudokuStatus">ISI 1-4, TIDAK BOLEH SAMA DI BARIS/KOLOM/KOTAK</span></div>
   <div id="sudokuBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--ink);padding:3px;margin-top:8px"></div>
@@ -1351,7 +1373,6 @@ GAMES.sudoku=function(body){
   render();
   return ()=>{delete window.sudokuInput};
 };
-
 GAMES.runner=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="runScore">0</b></span><span>BEST: <b id="runBest">0</b></span></div>
   <canvas id="runCanvas" class="snake-canvas" width="320" height="200" style="aspect-ratio:8/5"></canvas>
@@ -1384,7 +1405,6 @@ GAMES.runner=function(body){
   reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.space=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="spaceScore">0</b></span><span>NYAWA: <b id="spaceLife">3</b></span></div>
   <canvas id="spaceCanvas" class="snake-canvas" width="300" height="380" style="aspect-ratio:15/19"></canvas>
@@ -1420,7 +1440,6 @@ GAMES.space=function(body){
   raf=requestAnimationFrame(loop);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.puzzle=function(body){
   body.innerHTML=`<div class="game-head"><span>GERAKAN: <b id="puzMoves">0</b></span><span id="puzStatus">GESER UNTUK MENYUSUN 1-8</span></div>
   <div id="puzBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px"></div>
@@ -1441,7 +1460,6 @@ GAMES.puzzle=function(body){
   shuffle();render();
   return ()=>{};
 };
-
 GAMES.connect4=function(body){
   body.innerHTML=`<div class="game-head"><span id="c4Status">GILIRAN: MERAH</span></div>
   <div id="c4Board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:#3a6fa5;padding:6px;border:3px solid var(--ink);margin-top:8px"></div>
@@ -1484,8 +1502,6 @@ GAMES.connect4=function(body){
   render();
   return ()=>{};
 };
-
-/* SNAKE */
 function startSnake(){
   clearInterval(snakeTimer);snake=[{x:9,y:9},{x:8,y:9},{x:7,y:9}];snakeDir={x:1,y:0};nextSnakeDir={x:1,y:0};snakeScore=0;spawnFood();snakeRunning=true;
   document.getElementById("snakeScore").textContent=0;document.getElementById("snakeStatus").textContent="MAIN";snakeTimer=setInterval(stepSnake,110);drawSnake();
