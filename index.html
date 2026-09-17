@@ -34,8 +34,6 @@ background-size:18px 18px,23px 23px,auto;border-left:3px solid var(--ink);border
 h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line-height:1.7;margin:0}
 .section-title{display:flex;align-items:center;justify-content:space-between;margin:15px 14px 9px;font-size:15px;font-weight:700}
 .section-title span:first-child{border-bottom:3px solid var(--ink)}
-
-/* BANNER */
 .banner-wrap{padding:0 14px;display:flex;flex-direction:column;gap:11px}
 .home-video-box{border:3px solid var(--ink);box-shadow:var(--shadow);overflow:hidden;background:#111;position:relative}
 .home-video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#111}
@@ -49,7 +47,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .banner-dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px;z-index:6}
 .banner-dot{width:10px;height:10px;padding:0;border:2px solid var(--ink);background:#fff;cursor:pointer;border-radius:50%}
 .banner-dot.active{background:var(--red)}
-
 .store{padding:0 14px 100px}.search{display:flex;align-items:center;gap:8px;border:3px solid var(--ink);background:#fff8dd;padding:8px 10px;box-shadow:3px 3px 0 var(--ink);margin-bottom:15px}
 .search input{border:0;outline:0;background:transparent;width:100%;font-size:12px;color:var(--ink)}
 .products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
@@ -61,7 +58,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .empty{grid-column:1/-1;border:3px solid var(--ink);padding:20px;text-align:center;background:var(--cream);font-size:11px}
 .store-footer{margin:25px 0 20px;padding:16px 10px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);text-align:center;font-size:9px;line-height:1.7}
 .store-footer strong{display:block;font-size:11px;margin-bottom:4px}
-
 .detail-page{min-height:100dvh;padding-bottom:95px}.detail-top{position:sticky;top:0;z-index:60;padding:10px}.detail-title{font-size:13px;font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .detail-content{width:100%}.detail-gallery{width:100%;background:#111;border-bottom:3px solid var(--ink);position:relative;overflow:hidden}
 .detail-slides{display:flex;transition:transform .3s ease;touch-action:pan-y}.detail-slide{min-width:100%;aspect-ratio:1/1;background:#222}.detail-slide img{width:100%;height:100%;object-fit:cover;display:block}
@@ -74,7 +70,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .detail-actions{position:fixed;z-index:70;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);padding:10px;display:grid;grid-template-columns:1fr 1.25fr;gap:8px;border-top:3px solid var(--ink);background:#fff0bf}
 .action-cart,.action-buy,.checkout-btn,.wa-button{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:12px 5px;font-size:10px;font-weight:700}
 .action-cart{background:var(--yellow)}.action-buy{background:var(--red);color:#fff}
-
 .cart-page{padding-bottom:100px}.cart-list{padding:0 14px}.cart-item{display:grid;grid-template-columns:72px 1fr 42px;gap:10px;align-items:center;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:10px;margin-bottom:11px}
 .cart-img{width:72px;height:72px;object-fit:cover;border:2px solid var(--ink)}.cart-name{font-size:11px;font-weight:700;line-height:1.35}.cart-price{margin-top:5px;font-size:10px;font-weight:700}
 .qty{display:flex;align-items:center;gap:4px;margin-top:7px}.qty button{width:26px;height:26px;border:2px solid var(--ink);background:var(--yellow);display:grid;place-items:center;font-weight:700;font-size:12px}.qty span{min-width:24px;text-align:center;font-size:10px;font-weight:700}
@@ -82,7 +77,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .cart-remove .material-symbols-rounded{font-size:22px;color:#fff;line-height:1}
 .cart-total{margin:17px 14px;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:14px;display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:700}
 .checkout-btn{margin:0 14px;width:calc(100% - 28px);background:var(--red);color:#fff}
-
 .checkout-page{min-height:100dvh;padding-bottom:35px}.checkout-body{padding:14px}.payment-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:14px;text-align:center}
 .payment-title{font-size:17px;font-weight:700;margin-bottom:10px}.qr{width:min(100%,300px);aspect-ratio:1/1;object-fit:contain;background:#fff;border:3px solid var(--ink);display:block;margin:0 auto 12px}
 .payment-note{font-size:9px;line-height:1.7}.order-summary{margin-top:15px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:13px}
@@ -90,31 +84,25 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .summary-total{margin-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:700}.checkout-instruction{margin-top:15px;border:3px solid var(--ink);background:var(--blue);box-shadow:4px 4px 0 var(--ink);padding:13px;font-size:10px;line-height:1.7}
 .checkout-instruction strong{display:block;font-size:12px;margin-bottom:7px}.wa-button{width:100%;margin-top:15px;background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:14px;font-size:11px}
 .thanks{text-align:center;margin:25px 0 5px;font-size:11px;line-height:1.7}.thanks strong{display:block;font-size:15px}
-
 .info-grid{padding:0 14px 100px;display:grid;gap:10px}.info-card{border:3px solid var(--ink);background:#ffbd34;box-shadow:4px 4px 0 var(--ink);padding:13px;display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
 .info-card:nth-child(2){background:var(--blue)}.info-card:nth-child(3){background:#80d83d}.info-card:nth-child(4){background:#ff7367}
 .info-card .icon{width:42px;height:42px;border:2px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.info-name{font-weight:700;font-size:12px}.info-hint{font-size:9px;margin-top:4px}
-
 .feature-grid{padding:0 14px 100px;display:grid;gap:11px}.feature-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;display:flex;align-items:center;gap:12px;text-align:left;width:100%}
 .feature-card.game{background:var(--green)}.feature-card.converter{background:var(--blue)}.feature-card.music{background:var(--yellow)}.feature-card .feature-icon{width:48px;height:48px;border:3px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.feature-name{font-weight:700;font-size:12px}.feature-hint{font-size:9px;line-height:1.5;margin-top:4px}
-
 .ai-page,.game-page,.converter-page,.music-page{padding-bottom:30px}.tool-body{padding:14px}
 .ai-panel{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);overflow:hidden}.ai-head{display:flex;align-items:center;gap:8px;padding:10px;background:var(--blue);border-bottom:3px solid var(--ink);font-weight:700;font-size:12px}
 .ai-log{min-height:380px;max-height:55dvh;overflow:auto;padding:15px;background:#fff8dd}.msg{margin:10px 0;padding:9px 11px;border:2px solid var(--ink);width:fit-content;max-width:90%;font-size:10px;line-height:1.55;position:relative}
 .msg.bot{background:#fff;border-radius:2px 12px 12px 2px;clip-path:polygon(0 0,100% 0,100% 86%,88% 100%,0 100%)}.msg.user{margin-left:auto;background:var(--green);clip-path:polygon(0 0,100% 0,100% 100%,12% 100%,0 86%)}
 .ai-row{display:flex;gap:6px;padding:10px;border-top:3px solid var(--ink);background:#fff0bf}.ai-row input{flex:1;border:2px solid var(--ink);background:#fff;padding:8px;font-size:10px;outline:none}.ai-row button{border:2px solid var(--ink);background:var(--yellow);padding:7px 9px;font-weight:700;font-size:10px}
-
 .typing-dragon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px}
 .typing-dragon svg{width:26px;height:26px;animation:spinDragon 1.4s linear infinite}
 .typing-dragon svg .tail{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-dasharray:22 45;animation:dragonTail 1.4s ease-in-out infinite}
 .typing-dragon svg .head{fill:var(--green);stroke:var(--ink);stroke-width:1.5}
 @keyframes spinDragon{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @keyframes dragonTail{0%,100%{stroke-dasharray:22 45}50%{stroke-dasharray:40 45}}
-
 .game-wrap{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:8px}.game-head{display:flex;justify-content:space-between;color:var(--ink);font-size:10px;padding:5px 2px 8px}
 .snake-canvas{width:100%;aspect-ratio:1/1;display:block;background:#fff8dd;border:2px solid var(--ink);touch-action:none}
 .game-controls{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.game-controls button{height:42px;border:3px solid var(--ink);background:var(--yellow);font-weight:700}.game-controls .empty-control{visibility:hidden}.game-help{margin-top:10px;border:3px solid var(--ink);background:var(--cream);padding:10px;font-size:9px;line-height:1.6}
-
 .game-center-grid{padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
 .game-center-grid.with-nav{padding-bottom:100px}
 .game-center-card{position:relative;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:.12s ease;overflow:hidden}
@@ -132,7 +120,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .game-center-card:nth-child(4n+2) .game-icon{background:var(--blue)}
 .game-center-card:nth-child(4n+3) .game-icon{background:var(--yellow)}
 .game-center-card:nth-child(4n+4) .game-icon{background:var(--red)}
-
 .music-list-page{padding:14px;display:flex;flex-direction:column;gap:10px}
 .music-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.12s}
 .music-card:hover{transform:translate(-1px,-1px)}
@@ -146,26 +133,20 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .music-controls .ctrl-row{display:flex;justify-content:center;gap:10px}
 .music-controls .ctrl-row button{width:50px;height:50px;border:3px solid var(--ink);background:var(--yellow);display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink)}
 .music-controls .ctrl-row button.play-btn{background:var(--green);width:60px;height:60px}
-
 .converter-box{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:13px}.dropzone{border:3px dashed var(--ink);background:#fff8dd;padding:20px 12px;text-align:center}.dropzone .material-symbols-rounded{font-size:38px}.dropzone-title{font-size:12px;font-weight:700;margin-top:7px}.dropzone-hint{font-size:9px;line-height:1.5;margin-top:5px}
 .file-input{display:none}.choose-file{display:inline-block;margin-top:12px;border:3px solid var(--ink);background:var(--yellow);box-shadow:3px 3px 0 var(--ink);padding:10px 13px;font-size:10px;font-weight:700;cursor:pointer}
 .file-preview{margin-top:12px;display:none}.preview-media{width:100%;max-height:300px;object-fit:contain;background:#111;border:3px solid var(--ink);display:block}.file-meta{font-size:9px;margin-top:6px;line-height:1.5}
 .upload-btn{width:100%;margin-top:12px;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:13px;font-size:11px;font-weight:700}.progress{height:16px;border:3px solid var(--ink);background:#fff;margin-top:10px;display:none}.progress-bar{height:100%;width:0;background:var(--blue);transition:.2s}.result-box{margin-top:12px;border:3px solid var(--ink);background:#fff;padding:10px;display:none}.result-box input{width:100%;border:2px solid var(--ink);padding:8px;font-size:9px}.copy-btn{margin-top:7px;width:100%;border:2px solid var(--ink);background:var(--yellow);padding:9px;font-size:10px;font-weight:700}
-
 .admin-chat{margin:0 14px 100px}.admin-chat button{width:100%;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:13px;font-weight:700;font-size:11px}
 .nav{position:fixed;z-index:90;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);display:grid;grid-template-columns:repeat(4,1fr);border:3px solid var(--ink);border-bottom:0;background:#fff0bf}
 .nav button{position:relative;border:0;border-right:2px solid var(--ink);padding:8px 4px;background:transparent;font-size:8px;font-weight:700}.nav button:last-child{border-right:0}.nav .material-symbols-rounded{display:block;font-size:23px;margin-bottom:2px}.nav button.active{background:var(--green)}
 @media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
 @media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
-
 /* ===== ANIME STREAMING ===== */
 .anime-page{padding-bottom:30px}
 .anime-search{display:flex;gap:8px;margin-bottom:12px}
 .anime-search input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:12px;outline:none}
 .anime-search button{border:3px solid var(--ink);background:var(--yellow);padding:10px 14px;font-weight:700;box-shadow:3px 3px 0 var(--ink)}
-.genre-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.genre-chip{border:2px solid var(--ink);background:var(--cream);padding:5px 10px;font-size:9px;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--ink);white-space:nowrap}
-.genre-chip.active{background:var(--green)}
 .anime-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .anime-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:6px;cursor:pointer;transition:.12s}
 .anime-card:hover{transform:translate(-1px,-1px)}
@@ -188,14 +169,10 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .episode-item{border:2px solid var(--ink);background:var(--cream);padding:8px 4px;font-size:9px;font-weight:700;cursor:pointer;text-align:center;transition:.1s}
 .episode-item:hover{background:var(--yellow)}
 .episode-item.active{background:var(--green)}
-.server-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.server-btn{border:2px solid var(--ink);background:var(--cream);padding:6px 10px;font-size:9px;font-weight:700;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
-.server-btn.active{background:var(--green)}
 </style>
 </head>
 <body>
 <div class="app">
-
 <!-- HOME -->
 <main id="home" class="page active">
   <div class="topbar">
@@ -204,13 +181,11 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="header-spacer"></div>
     <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="headerCartCount">0</span></button>
   </div>
-
   <section class="hero"><div class="paint-card">
     <div class="badge"><span class="material-symbols-rounded">auto_awesome</span>WELCOME</div>
     <h1>Digital stuff,<br>dibikin simpel.</h1>
     <p>Pilih produk yang kamu butuhkan. Lihat detailnya, masukkan ke keranjang, atau langsung beli sekarang.</p>
   </div></section>
-
   <div class="section-title"><span>STORE PREVIEW</span><span class="material-symbols-rounded">arrow_forward</span></div>
   <div class="banner-wrap">
     <div class="home-video-box">
@@ -224,7 +199,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
       <div class="banner-dots" id="bannerDots"></div>
     </div>
   </div>
-
   <div class="section-title"><span>FITUR STORE</span></div>
   <section class="feature-grid">
     <button class="feature-card" onclick="showPage('aiPage')">
@@ -244,11 +218,9 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
       <div><div class="feature-name">NONTON ANIME</div><div class="feature-hint">Streaming anime sub Indo langsung di website.</div></div>
     </button>
   </section>
-
   <div class="section-title"><span>CHAT ADMIN</span></div>
   <div class="admin-chat"><button type="button" onclick="chatAdmin()"><span class="material-symbols-rounded" style="font-size:16px">support_agent</span> CHAT ADMIN</button></div>
 </main>
-
 <!-- STORE -->
 <main id="store" class="page">
   <div class="topbar">
@@ -264,7 +236,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="store-footer"><strong>VOLKA STORE</strong>Produk digital • Pelayanan cepat • Pemesanan via WhatsApp<br>© 2026 VOLKA STORE. All rights reserved.</div>
   </section>
 </main>
-
 <!-- INFO -->
 <main id="info" class="page">
   <div class="topbar"><div class="logo"><span class="material-symbols-rounded">info</span></div><div><div class="top-title">INFO</div><div class="top-sub">TEMUKAN KAMI</div></div></div>
@@ -279,7 +250,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <a class="info-card" id="saweria" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">volunteer_activism</span></div><div><div class="info-name">Saweria</div><div class="info-hint">Dukung creator</div></div></a>
   </section>
 </main>
-
 <!-- AI PAGE -->
 <main id="aiPage" class="page ai-page">
   <div class="topbar">
@@ -292,7 +262,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="ai-row"><input id="aiInput" placeholder="Tulis pertanyaan..." maxlength="500"><button type="button" onclick="askAI()">KIRIM</button></div>
   </div></div>
 </main>
-
 <!-- MUSIC PAGE -->
 <main id="musicPage" class="page music-page">
   <div class="topbar">
@@ -309,7 +278,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     </div>
   </div>
 </main>
-
 <!-- GAME CENTER -->
 <main id="gameCenter" class="page">
   <div class="topbar">
@@ -320,7 +288,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
   <div class="game-center-grid with-nav" id="gameCenterGrid"></div>
 </main>
-
 <!-- GAME PLAY -->
 <main id="gamePlay" class="page game-page">
   <div class="topbar">
@@ -329,7 +296,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
   <div class="tool-body"><div class="game-wrap" id="gamePlayBody"></div></div>
 </main>
-
 <!-- SNAKE -->
 <main id="gamePage" class="page game-page">
   <div class="topbar">
@@ -349,7 +315,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     </div>
   </div>
 </main>
-
 <!-- ANIME STREAMING -->
 <main id="animePage" class="page anime-page">
   <div class="topbar">
@@ -365,7 +330,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div id="animeDetailWrap"></div>
   </div>
 </main>
-
 <!-- PRODUCT DETAIL -->
 <main id="productDetail" class="page detail-page">
   <div class="detail-top"><button class="back-btn" onclick="closeProductDetail()"><span class="material-symbols-rounded">arrow_back</span></button><div class="detail-title" id="detailHeaderName">DETAIL PRODUK</div></div>
@@ -375,14 +339,12 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
   <div class="detail-actions"><button class="action-cart" onclick="addCurrentProductToCart()"><span class="material-symbols-rounded">add_shopping_cart</span> TAMBAH KERANJANG</button><button class="action-buy" onclick="buyCurrentProductNow()"><span class="material-symbols-rounded">shopping_cart_checkout</span> BELI SEKARANG</button></div>
 </main>
-
 <!-- CART -->
 <main id="cart" class="page cart-page">
   <div class="topbar"><button class="back-btn" onclick="showPage('store')"><span class="material-symbols-rounded">arrow_back</span></button><div><div class="top-title">KERANJANG</div><div class="top-sub">PRODUK YANG KAMU PILIH</div></div></div>
   <div class="cart-list" id="cartList"></div><div class="cart-total" id="cartTotal"></div>
   <button class="checkout-btn" onclick="goCheckout()"><span class="material-symbols-rounded">payments</span> LANJUT KE PEMBAYARAN</button>
 </main>
-
 <!-- CHECKOUT -->
 <main id="checkout" class="page checkout-page">
   <div class="checkout-head"><button class="back-btn" onclick="backFromCheckout()"><span class="material-symbols-rounded">arrow_back</span></button><div><div class="top-title">PEMBAYARAN</div><div class="top-sub">SELESAIKAN PESANAN KAMU</div></div></div>
@@ -394,7 +356,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div class="thanks">Terima kasih sudah berbelanja di<strong>VOLKA STORE</strong></div>
   </div>
 </main>
-
 <nav class="nav" id="mainNav">
   <button type="button" class="active" onclick="showPage('home',this)"><span class="material-symbols-rounded">home</span>HOME</button>
   <button type="button" onclick="showPage('store',this)"><span class="material-symbols-rounded">store</span>STORE</button>
@@ -402,7 +363,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <button type="button" onclick="showPage('info',this)"><span class="material-symbols-rounded">info</span>INFO</button>
 </nav>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 const CONFIG={
@@ -453,13 +413,11 @@ const CONFIG={
     {id:"connect4",name:"Connect 4",desc:"Hubungkan 4",icon:"circle",playable:true}
   ]
 };
-
 let cart=JSON.parse(localStorage.getItem("volka_cart")||"[]");
 let currentProductIndex=-1,currentGalleryIndex=0,previousPage="store",checkoutSource="cart",checkoutItems=[],detailTouchX=0;
 let bannerIndex=0,bannerTimer=null,snakeTimer=null,snakeRunning=false,snake=[],snakeDir={x:1,y:0},nextSnakeDir={x:1,y:0},food={x:5,y:5},snakeScore=0;
 let currentMusic=null,currentMusicIndex=-1,currentGameCleanup=null;
 let videoSoundOn=false;
-
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function formatRupiah(n){return"Rp"+Number(n||0).toLocaleString("id-ID")}
 function discountPercent(oldPrice,price){return oldPrice&&oldPrice>price?Math.round(((oldPrice-price)/oldPrice)*100)+"% OFF":""}
@@ -494,7 +452,6 @@ function startBanners(){
   setTimeout(set,800);clearInterval(bannerTimer);bannerTimer=setInterval(set,3500);
 }
 function goBanner(i){bannerIndex=i;const img=document.getElementById("homeBanner");img.src=CONFIG.banners[i];document.querySelectorAll(".banner-dot").forEach((d,j)=>d.classList.toggle("active",j===i))}
-
 function toggleVideoSound(){
   const v=document.getElementById("homeVideo");
   const btn=document.getElementById("videoSoundBtn");
@@ -512,7 +469,6 @@ function toggleVideoSound(){
     icon.textContent="volume_off";
   }
 }
-
 function renderMusicPage(){
   const list=document.getElementById("musicListPage");
   if(!list)return;
@@ -535,7 +491,6 @@ function togglePlayMusic(){
 }
 function nextMusic(){if(!CONFIG.musics.length)return;const n=(currentMusicIndex+1)%CONFIG.musics.length;playMusic(n)}
 function prevMusic(){if(!CONFIG.musics.length)return;const n=(currentMusicIndex-1+CONFIG.musics.length)%CONFIG.musics.length;playMusic(n)}
-
 function openProductDetail(index){
   const p=CONFIG.products[index];if(!p)return;currentProductIndex=index;currentGalleryIndex=0;
   previousPage=document.getElementById("store").classList.contains("active")?"store":"home";
@@ -556,7 +511,6 @@ function goProductImage(i){currentGalleryIndex=i;updateProductGallery()}
 function closeProductDetail(){showPage(previousPage)}
 document.getElementById("detailSlides").addEventListener("touchstart",e=>detailTouchX=e.touches[0].clientX,{passive:true});
 document.getElementById("detailSlides").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-detailTouchX;if(Math.abs(dx)>40)moveProductImage(dx<0?1:-1)},{passive:true});
-
 function addToCart(index,qty=1){const p=CONFIG.products[index];if(!p)return;const ex=cart.find(x=>x.productIndex===index);if(ex)ex.qty+=qty;else cart.push({productIndex:index,qty});saveCart()}
 function addCurrentProductToCart(){if(currentProductIndex<0)return;addToCart(currentProductIndex);alert("Produk berhasil ditambahkan ke keranjang.")}
 function changeQty(index,delta){const item=cart.find(x=>x.productIndex===index);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
@@ -590,12 +544,10 @@ function chatOrderToAdmin(){
   window.open(`https://wa.me/${wa}?text=${encodeURIComponent("Halo Admin VOLKA STORE 👋\n\n"+order.text+"\n\nMohon dicek dan diproses. Terima kasih.")}`,"_blank");
 }
 function chatAdmin(){window.open(`https://wa.me/${CONFIG.adminWA}?text=${encodeURIComponent("Halo Admin VOLKA STORE, saya mau bertanya tentang produk/store.")}`,"_blank")}
-
 document.getElementById("waChannel").href=CONFIG.links.waChannel;
 document.getElementById("tiktok").href=CONFIG.links.tiktok;
 document.getElementById("xSocial").href=CONFIG.links.xSocial;
 document.getElementById("saweria").href=CONFIG.links.saweria;
-
 /* AI */
 function typingDragonSvg(){
   return `<span class="typing-dragon"><svg viewBox="0 0 30 30"><circle class="tail" cx="15" cy="15" r="10"/><circle class="head" cx="15" cy="5" r="3"/></svg></span>`;
@@ -610,79 +562,79 @@ async function askAI(){
   log.scrollTop=log.scrollHeight;
 }
 document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
-
 /* ============================================================
-   ANIME STREAMING - wajik-anime-api (otakudesu)
+   ANIME STREAMING - Otakudesu API (Railway)
+   Public API: https://otakudesu-api-production.up.railway.app
+   CORS Proxy: https://corsproxy.io/? (auto-bypass)
    ============================================================ */
-const ANIME_API = "https://wajik-anime-api-chi-lac.vercel.app";
-const ANIME_SOURCE = "otakudesu";
-
+const ANIME_API = "https://otakudesu-api-production.up.railway.app";
+const CORS_PROXY = "https://corsproxy.io/?";
 let animeHomeLoaded = false;
 let currentAnimeId = null;
 let currentAnimeTitle = "";
 let currentEpisodeList = [];
 let hlsInstance = null;
-
+// Fetch dengan CORS proxy + timeout + retry
 async function animeFetch(path, retries) {
   retries = retries === undefined ? 2 : retries;
   let lastErr = null;
   for (let i = 0; i <= retries; i++) {
     try {
       const controller = new AbortController();
-      const t = setTimeout(function(){ controller.abort(); }, 15000);
-      const res = await fetch(ANIME_API + path, { signal: controller.signal });
+      const t = setTimeout(function(){ controller.abort(); }, 20000);
+      // Pakai CORS proxy untuk bypass CORS
+      const url = CORS_PROXY + encodeURIComponent(ANIME_API + path);
+      const res = await fetch(url, { signal: controller.signal });
       clearTimeout(t);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const json = await res.json();
       return json;
     } catch (e) {
       lastErr = e;
-      if (i < retries) await new Promise(function (r) { setTimeout(r, 800); });
+      if (i < retries) await new Promise(function (r) { setTimeout(r, 1000); });
     }
   }
   throw lastErr || new Error("Gagal fetch");
 }
-
 function setAnimeStatus(html, type) {
   const results = document.getElementById("animeResults");
   if (!results) return;
   const cls = type === "error" ? "anime-error" : (type === "loading" ? "anime-loading" : "anime-empty");
   results.innerHTML = '<div class="' + cls + '">' + html + '</div>';
 }
-
 function loadingHtml(msg) {
   return '<span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>' + escapeHtml(msg || "Memuat...");
 }
-
 function errorHtml(msg, retryFn) {
   const fn = retryFn || "loadAnimeHome()";
   return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' +
     escapeHtml(msg || "Terjadi kesalahan.") +
     '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>';
 }
-
-// Fungsi untuk halaman awal (fallback)
 async function loadAnimeHome() {
-  setAnimeStatus(loadingHtml("Memuat daftar anime Sub Indo..."), "loading");
+  setAnimeStatus(loadingHtml("Memuat daftar anime..."), "loading");
   document.getElementById("animeDetailWrap").innerHTML = "";
-  // Karena endpoint /home & /ongoing mungkin belum stabil, kita tampilkan pesan panduan.
-  setAnimeStatus("Silakan ketik judul anime di kolom pencarian di atas untuk mulai menonton.");
+  try {
+    const res = await animeFetch("/api/home");
+    const list = res.data || [];
+    renderAnimeGrid(list);
+  } catch (e) {
+    setAnimeStatus(errorHtml("Gagal memuat data. Silakan ketik judul anime di kolom pencarian."), "error");
+  }
 }
-
 async function searchAnime() {
   const q = document.getElementById("animeSearchInput").value.trim();
   closeAnimeDetail();
   if (!q) { loadAnimeHome(); return; }
   setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
   try {
-    const res = await animeFetch("/" + ANIME_SOURCE + "/search?q=" + encodeURIComponent(q));
-    const list = (res.data && res.data.animeList) ? res.data.animeList : [];
+    const res = await animeFetch("/api/search/" + encodeURIComponent(q));
+    const list = res.data || [];
     renderAnimeGrid(list);
   } catch (e) {
-    setAnimeStatus(errorHtml("Gagal mencari anime.", "loadAnimeHome()"), "error");
+    setAnimeStatus(errorHtml("Gagal mencari anime. Coba kata kunci lain."), "error");
   }
 }
-
 function renderAnimeGrid(list) {
   const results = document.getElementById("animeResults");
   if (!list || !list.length) {
@@ -690,24 +642,20 @@ function renderAnimeGrid(list) {
     return;
   }
   results.innerHTML = list.map(function (a) {
-    const animeId = a.animeId || a.id || "";
-    const title = a.title || "Tanpa judul";
-    const poster = a.poster || a.image || "";
-    const score = a.score || "";
+    const animeId = a.endpoint || a.id || "";
+    const title = a.title || a.judul || "Tanpa judul";
+    const poster = a.thumb || a.image || a.poster || "";
     return '<div class="anime-card" onclick="openAnimeDetail(\'' + String(animeId).replace(/'/g, "\\'") + '\')">' +
       '<img src="' + escapeHtml(poster) + '" alt="" loading="lazy" onerror="this.style.opacity=\'.2\'">' +
       '<div class="anime-title">' + escapeHtml(title) + '</div>' +
-      '<div class="anime-meta">' + escapeHtml(score) + '</div>' +
       '</div>';
   }).join("");
 }
-
 function closeAnimeDetail() {
   document.getElementById("animeResults").innerHTML = "";
   document.getElementById("animeDetailWrap").innerHTML = "";
   closeAnimePlayer();
 }
-
 async function openAnimeDetail(animeId) {
   currentAnimeId = animeId;
   const wrap = document.getElementById("animeDetailWrap");
@@ -716,18 +664,16 @@ async function openAnimeDetail(animeId) {
   closeAnimePlayer();
   wrap.innerHTML = '<div class="anime-detail">' + loadingHtml("Memuat detail & episode...") + '</div>';
   window.scrollTo({ top: 0, behavior: "smooth" });
-
   try {
-    const res = await animeFetch("/" + ANIME_SOURCE + "/anime/" + encodeURIComponent(animeId));
+    const res = await animeFetch("/api/anime/" + encodeURIComponent(animeId));
     const data = res.data || {};
-    const title = data.title || "Anime";
+    const title = data.title || data.judul || "Anime";
     currentAnimeTitle = title;
-    const poster = data.poster || data.image || "";
+    const poster = data.thumb || data.image || "";
     let desc = data.synopsis || data.description || "";
     if (desc.length > 500) desc = desc.slice(0, 500) + "...";
     const episodes = data.episodeList || data.episodes || [];
     currentEpisodeList = episodes;
-
     wrap.innerHTML =
       '<div class="anime-detail">' +
         (poster ? '<img src="' + escapeHtml(poster) + '" alt="" onerror="this.style.display=\'none\'">' : "") +
@@ -746,13 +692,11 @@ async function openAnimeDetail(animeId) {
           '<div id="videoStatus" class="video-status loading">Menyiapkan pemutar...</div>' +
         '</div>' +
       '</div>';
-
     if (episodes.length) renderEpisodeList(episodes);
   } catch (e) {
-    wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail anime.", "openAnimeDetail('" + String(animeId).replace(/'/g, "\\'") + "')") + '</div>';
+    wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail anime.") + '</div>';
   }
 }
-
 function renderEpisodeList(episodes) {
   const el = document.getElementById("episodeListInline");
   if (!el) return;
@@ -763,14 +707,12 @@ function renderEpisodeList(episodes) {
     return '<div class="episode-item" data-ep="' + escapeHtml(String(epId)) + '" onclick="playEpisode(\'' + String(epId).replace(/'/g, "\\'") + '\',' + Number(num) + ',\'' + safeTitle + '\')">EP ' + escapeHtml(String(num)) + '</div>';
   }).join("");
 }
-
 function setVideoStatus(msg, type) {
   const el = document.getElementById("videoStatus");
   if (!el) return;
   el.className = "video-status " + (type || "");
   el.innerHTML = msg;
 }
-
 async function playEpisode(episodeId, epNum, animeTitle) {
   const playerWrap = document.getElementById("animePlayerWrap");
   if (!playerWrap) return;
@@ -782,7 +724,6 @@ async function playEpisode(episodeId, epNum, animeTitle) {
   playerWrap.scrollIntoView({ behavior: "smooth", block: "start" });
   await loadEpisodeSource(episodeId);
 }
-
 async function loadEpisodeSource(episodeId) {
   const video = document.getElementById("animeVideo");
   if (!video) return;
@@ -791,11 +732,10 @@ async function loadEpisodeSource(episodeId) {
   video.removeAttribute("src");
   video.load();
   setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Memuat video Episode...', "loading");
-
   try {
-    const res = await animeFetch("/" + ANIME_SOURCE + "/episode/" + encodeURIComponent(episodeId));
+    const res = await animeFetch("/api/episode/" + encodeURIComponent(episodeId));
     const data = res.data || {};
-    const streams = data.streams || data.stream || [];
+    const streams = data.streams || data.stream || data.links || [];
     if (!streams.length) throw new Error("Tidak ada sumber video");
     const chosen = streams[0];
     const url = chosen.url || chosen.link || chosen.streamUrl || "";
@@ -806,7 +746,6 @@ async function loadEpisodeSource(episodeId) {
     setVideoStatus('❌ Gagal memuat video.<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-weight:700;font-size:10px" onclick="loadEpisodeSource(\'' + episodeId.replace(/'/g, "\\'") + '\')">COBA LAGI</button>', "error");
   }
 }
-
 function attachAndPlayVideo(video, url) {
   return new Promise(function (resolve, reject) {
     const isM3U8 = /\.m3u8(\?|$)/i.test(url);
@@ -827,10 +766,9 @@ function attachAndPlayVideo(video, url) {
     } else {
       video.src = url; video.play().catch(function(){});
     }
-    setTimeout(function () { if (video.readyState < 2) reject(new Error("Timeout")); }, 15000);
+    setTimeout(function () { if (video.readyState < 2) reject(new Error("Timeout")); }, 20000);
   });
 }
-
 function closeAnimePlayer() {
   if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
   const video = document.getElementById("animeVideo");
@@ -838,11 +776,9 @@ function closeAnimePlayer() {
   const wrap = document.getElementById("animePlayerWrap");
   if (wrap) wrap.style.display = "none";
 }
-
 document.getElementById("animeSearchInput").addEventListener("keydown", function (e) {
   if (e.key === "Enter") searchAnime();
 });
-
 /* ============================================================
    GAME CENTER
    ============================================================ */
@@ -873,10 +809,8 @@ function openGame(id){
   showPage("gamePlay");
   setTimeout(()=>{const fn=GAMES[id];if(fn)currentGameCleanup=fn(body)||null;else body.innerHTML='<div class="empty">Game belum tersedia.</div>';},50);
 }
-
 /* ================= GAMES ================= */
 const GAMES={};
-
 GAMES.tictactoe=function(body){
   body.innerHTML=`<div class="game-head"><span>STATUS: <b id="tttStatus">GILIRAN X</b></span><span>SKOR: <b id="tttScore">0 - 0</b></span></div>
   <div id="tttBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
@@ -906,7 +840,6 @@ GAMES.tictactoe=function(body){
   render();
   return ()=>{delete window.tttReset;delete window.tttNewGame};
 };
-
 GAMES.memory=function(body){
   const icons=["star","favorite","bolt","cloud","anchor","rocket_launch","pets","cake"];
   const deck=[...icons,...icons].sort(()=>Math.random()-.5);
@@ -939,7 +872,6 @@ GAMES.memory=function(body){
   };
   return ()=>{};
 };
-
 GAMES.simon=function(body){
   const colors=["var(--red)","var(--green)","var(--blue)","var(--yellow)"];
   body.innerHTML=`<div class="game-head"><span>LEVEL: <b id="simonLevel">0</b></span><span>SKOR: <b id="simonScore">0</b></span></div>
@@ -974,7 +906,6 @@ GAMES.simon=function(body){
   document.getElementById("simonStart").onclick=()=>{simonReset();next()};
   return ()=>{};
 };
-
 GAMES.reaction=function(body){
   body.innerHTML=`<div class="game-head"><span>BEST: <b id="reactBest">-</b></span><span>STATUS: <b id="reactStatus">KLIK MULAI</b></span></div>
   <div id="reactArea" style="height:280px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px;cursor:pointer;text-align:center;padding:10px">KLIK UNTUK MULAI</div>
@@ -992,7 +923,6 @@ GAMES.reaction=function(body){
   };
   return ()=>{clearTimeout(timeout)};
 };
-
 GAMES.whack=function(body){
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="whackTime">30</b>s</span><span>SKOR: <b id="whackScore">0</b></span></div>
   <div id="whackBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
@@ -1017,7 +947,6 @@ GAMES.whack=function(body){
   };
   return ()=>{clearInterval(moleTimer);clearInterval(countTimer)};
 };
-
 GAMES.guess=function(body){
   body.innerHTML=`<div class="game-head"><span>PERCOBAAN: <b id="guessTries">0</b></span><span id="guessHint">TEBAK 1-100</span></div>
   <div style="display:flex;gap:6px;margin-top:8px"><input id="guessInput" type="number" min="1" max="100" placeholder="1-100" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="guessCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">TEBAK</button></div>
@@ -1034,7 +963,6 @@ GAMES.guess=function(body){
   window.guessReset=()=>{target=Math.floor(Math.random()*100)+1;tries=0;document.getElementById("guessTries").textContent=0;document.getElementById("guessHint").textContent="TEBAK 1-100";document.getElementById("guessInput").value=""};
   return ()=>{delete window.guessCheck;delete window.guessReset};
 };
-
 GAMES.math=function(body){
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="mathTime">30</b>s</span><span>SKOR: <b id="mathScore">0</b></span></div>
   <div id="mathQ" style="border:3px solid var(--ink);background:var(--cream);padding:25px;text-align:center;font-size:28px;font-weight:700;margin-top:8px">?</div>
@@ -1060,7 +988,6 @@ GAMES.math=function(body){
   document.getElementById("mathInput").addEventListener("keydown",e=>{if(e.key==="Enter")mathCheck()});
   return ()=>{clearInterval(ct);delete window.mathCheck};
 };
-
 GAMES.color=function(body){
   const palette=["#ff4b3e","#80d83d","#54b9e8","#ffbf32","#ff7367","#a855f7"];
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="colScore">0</b></span><span id="colHint">KLIK WARNA YANG SAMA</span></div>
@@ -1081,7 +1008,6 @@ GAMES.color=function(body){
   }
   round();return ()=>{};
 };
-
 GAMES.typing=function(body){
   const words=["volka","store","digital","produk","keranjang","pembayaran","whatsapp","website","desain","premium","musik","game","banner","admin","chat"];
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="typeTime">30</b>s</span><span>WPM: <b id="typeWpm">0</b></span></div>
@@ -1100,7 +1026,6 @@ GAMES.typing=function(body){
   };
   return ()=>{clearInterval(ct)};
 };
-
 GAMES.rps=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="rpsP">0</b></span><span>CPU: <b id="rpsC">0</b></span></div>
   <div id="rpsShow" style="border:3px solid var(--ink);background:var(--cream);padding:20px;text-align:center;font-size:14px;margin-top:8px">PILIH SENJATA</div>
@@ -1121,7 +1046,6 @@ GAMES.rps=function(body){
   });
   return ()=>{};
 };
-
 GAMES.flappy=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="flapScore">0</b></span><span>BEST: <b id="flapBest">0</b></span></div>
   <canvas id="flapCanvas" class="snake-canvas" width="320" height="420" style="aspect-ratio:3/4"></canvas>
@@ -1153,7 +1077,6 @@ GAMES.flappy=function(body){
   reset();ctx.fillStyle="#54b9e8";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.breakout=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="brkScore">0</b></span><span>NYAWA: <b id="brkLife">3</b></span></div>
   <canvas id="brkCanvas" class="snake-canvas" width="320" height="360" style="aspect-ratio:8/9"></canvas>
@@ -1185,7 +1108,6 @@ GAMES.breakout=function(body){
   reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.pong=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="pongP">0</b></span><span>CPU: <b id="pongC">0</b></span></div>
   <canvas id="pongCanvas" class="snake-canvas" width="320" height="320"></canvas>
@@ -1214,7 +1136,6 @@ GAMES.pong=function(body){
   raf=requestAnimationFrame(loop);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES["2048"]=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="g2048Score">0</b></span><span>BEST: <b id="g2048Best">0</b></span></div>
   <div id="g2048Board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#c9bd9c;padding:6px;border:3px solid var(--ink)"></div>
@@ -1262,7 +1183,6 @@ GAMES["2048"]=function(body){
   document.addEventListener("keydown",keyHandler);
   return ()=>{document.removeEventListener("keydown",keyHandler);delete window.g2048Move};
 };
-
 GAMES.minesweeper=function(body){
   body.innerHTML=`<div class="game-head"><span>MINE: <b id="minesLeft">10</b></span><span id="minesStatus">MAIN</span></div>
   <div id="minesBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px"></div>
@@ -1307,7 +1227,6 @@ GAMES.minesweeper=function(body){
   render();
   return ()=>{};
 };
-
 GAMES.hangman=function(body){
   const words=["VOLKA","STORE","DIGITAL","PRODUK","WEBSITE","DESAIN","PREMIUM","BANNER","ADMIN"];
   body.innerHTML=`<div class="game-head"><span>SALAH: <b id="hangWrong">0</b>/6</span><span id="hangStatus">TEBAK KATA</span></div>
@@ -1330,7 +1249,6 @@ GAMES.hangman=function(body){
   renderWord();renderLetters();
   return ()=>{};
 };
-
 GAMES.quiz=function(body){
   const questions=[
     {q:"Ibu kota Indonesia adalah?",opts:["Jakarta","Bandung","Surabaya","Medan"],a:0},
@@ -1358,7 +1276,6 @@ GAMES.quiz=function(body){
   render();
   return ()=>{};
 };
-
 GAMES.sudoku=function(body){
   body.innerHTML=`<div class="game-head"><span id="sudokuStatus">ISI 1-4, TIDAK BOLEH SAMA DI BARIS/KOLOM/KOTAK</span></div>
   <div id="sudokuBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--ink);padding:3px;margin-top:8px"></div>
@@ -1383,7 +1300,6 @@ GAMES.sudoku=function(body){
   render();
   return ()=>{delete window.sudokuInput};
 };
-
 GAMES.runner=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="runScore">0</b></span><span>BEST: <b id="runBest">0</b></span></div>
   <canvas id="runCanvas" class="snake-canvas" width="320" height="200" style="aspect-ratio:8/5"></canvas>
@@ -1416,7 +1332,6 @@ GAMES.runner=function(body){
   reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.space=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="spaceScore">0</b></span><span>NYAWA: <b id="spaceLife">3</b></span></div>
   <canvas id="spaceCanvas" class="snake-canvas" width="300" height="380" style="aspect-ratio:15/19"></canvas>
@@ -1452,7 +1367,6 @@ GAMES.space=function(body){
   raf=requestAnimationFrame(loop);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
-
 GAMES.puzzle=function(body){
   body.innerHTML=`<div class="game-head"><span>GERAKAN: <b id="puzMoves">0</b></span><span id="puzStatus">GESER UNTUK MENYUSUN 1-8</span></div>
   <div id="puzBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px"></div>
@@ -1473,7 +1387,6 @@ GAMES.puzzle=function(body){
   shuffle();render();
   return ()=>{};
 };
-
 GAMES.connect4=function(body){
   body.innerHTML=`<div class="game-head"><span id="c4Status">GILIRAN: MERAH</span></div>
   <div id="c4Board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:#3a6fa5;padding:6px;border:3px solid var(--ink);margin-top:8px"></div>
@@ -1516,7 +1429,6 @@ GAMES.connect4=function(body){
   render();
   return ()=>{};
 };
-
 /* SNAKE */
 function startSnake(){
   clearInterval(snakeTimer);snake=[{x:9,y:9},{x:8,y:9},{x:7,y:9}];snakeDir={x:1,y:0};nextSnakeDir={x:1,y:0};snakeScore=0;spawnFood();snakeRunning=true;
@@ -1564,7 +1476,6 @@ document.addEventListener("keydown",e=>{
   const map={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]};
   if(map[e.key]&&document.getElementById("gamePage").classList.contains("active")){e.preventDefault();setSnakeDirection(...map[e.key])}
 });
-
 renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
 </script>
 </body>
