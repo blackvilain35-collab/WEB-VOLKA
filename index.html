@@ -91,9 +91,11 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .summary-total{margin-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:700}.checkout-instruction{margin-top:15px;border:3px solid var(--ink);background:var(--blue);box-shadow:4px 4px 0 var(--ink);padding:13px;font-size:10px;line-height:1.7}
 .checkout-instruction strong{display:block;font-size:12px;margin-bottom:7px}.wa-button{width:100%;margin-top:15px;background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:14px;font-size:11px}
 .thanks{text-align:center;margin:25px 0 5px;font-size:11px;line-height:1.7}.thanks strong{display:block;font-size:15px}
-.info-grid{padding:0 14px 100px;display:grid;gap:10px}.info-card{border:3px solid var(--ink);background:#ffbd34;box-shadow:4px 4px 0 var(--ink);padding:13px;display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
-.info-card:nth-child(2){background:var(--blue)}.info-card:nth-child(3){background:#80d83d}.info-card:nth-child(4){background:#ff7367}
-.info-card .icon{width:42px;height:42px;border:2px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.info-name{font-weight:700;font-size:12px}.info-hint{font-size:9px;margin-top:4px}
+.info-grid{padding:0 14px 100px;display:grid;gap:10px}.info-card{position:relative;border:3px solid var(--ink);background:#ffbd34;box-shadow:4px 4px 0 var(--ink);padding:13px;display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);cursor:pointer}
+.info-card:nth-child(2){background:var(--blue)}.info-card:nth-child(3){background:#80d83d}.info-card:nth-child(4){background:#ff7367}.info-card:nth-child(5){background:#a855f7;color:#fff}
+.info-card .icon{position:relative;width:42px;height:42px;border:2px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.info-name{font-weight:700;font-size:12px}.info-hint{font-size:9px;margin-top:4px}
+.notif-badge{position:absolute;top:-8px;right:-8px;min-width:22px;height:22px;padding:0 5px;border:2px solid var(--ink);background:var(--red);color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center;border-radius:50%;line-height:1;z-index:3}
+.notif-badge.hidden{display:none}
 .feature-grid{padding:0 14px 100px;display:grid;gap:11px}.feature-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;display:flex;align-items:center;gap:12px;text-align:left;width:100%}
 .feature-card.game{background:var(--green)}.feature-card.converter{background:var(--blue)}.feature-card.music{background:var(--yellow)}.feature-card .feature-icon{width:48px;height:48px;border:3px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.feature-name{font-weight:700;font-size:12px}.feature-hint{font-size:9px;line-height:1.5;margin-top:4px}
 .ai-page,.game-page,.converter-page,.music-page{padding-bottom:30px}.tool-body{padding:14px}
@@ -143,6 +145,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .admin-chat{margin:0 14px 100px}.admin-chat button{width:100%;border:3px solid var(--ink);background:var(--green);box-shadow:4px 4px 0 var(--ink);padding:13px;font-weight:700;font-size:11px}
 .nav{position:fixed;z-index:90;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);display:grid;grid-template-columns:repeat(4,1fr);border:3px solid var(--ink);border-bottom:0;background:#fff0bf}
 .nav button{position:relative;border:0;border-right:2px solid var(--ink);padding:8px 4px;background:transparent;font-size:8px;font-weight:700}.nav button:last-child{border-right:0}.nav .material-symbols-rounded{display:block;font-size:23px;margin-bottom:2px}.nav button.active{background:var(--green)}
+.nav .nav-notif{position:absolute;top:2px;right:6px;min-width:18px;height:18px;padding:0 4px;border:2px solid var(--ink);background:var(--red);color:#fff;font-size:8px;font-weight:700;display:grid;place-items:center;border-radius:50%;line-height:1;z-index:5}
+.nav .nav-notif.hidden{display:none}
 @media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
 @media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
 
@@ -264,6 +268,40 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .manage-item .del .material-symbols-rounded{font-size:16px;color:#fff}
 .profile-hint{font-size:9px;color:#666;line-height:1.5;margin-top:8px;text-align:center;font-style:italic}
 
+/* ===== ADMIN PANEL ===== */
+.admin-panel-page{padding-bottom:30px}
+.admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat-card{border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);padding:10px;text-align:center}
+.stat-card:nth-child(1){background:var(--blue)}
+.stat-card:nth-child(2){background:var(--red);color:#fff}
+.stat-card:nth-child(3){background:var(--green)}
+.stat-num{font-size:22px;font-weight:700;line-height:1}
+.stat-label{font-size:8px;font-weight:700;letter-spacing:.5px;margin-top:5px}
+.admin-section{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:12px;margin-bottom:14px}
+.admin-section-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:2px dashed #999}
+.admin-section-title .material-symbols-rounded{font-size:18px}
+.admin-form{display:grid;gap:6px}
+.admin-form input{border:3px solid var(--ink);background:#fff8dd;padding:9px;font-size:11px;outline:none;font-family:inherit}
+.admin-form input:focus{background:#fff}
+.admin-form button{border:3px solid var(--ink);background:var(--green);box-shadow:2px 2px 0 var(--ink);padding:9px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.admin-form button .material-symbols-rounded{font-size:16px}
+.admin-hint{font-size:9px;color:#666;line-height:1.5;margin-top:8px;font-style:italic}
+.admin-search{display:flex;align-items:center;gap:8px;border:3px solid var(--ink);background:#fff8dd;padding:8px 10px;box-shadow:2px 2px 0 var(--ink);margin-bottom:10px}
+.admin-search input{border:0;outline:0;background:transparent;width:100%;font-size:11px;color:var(--ink)}
+.admin-user-list{display:grid;gap:6px;max-height:60vh;overflow-y:auto}
+.admin-user-item{display:flex;gap:10px;align-items:center;border:2px solid var(--ink);background:#fff8dd;padding:8px;font-size:10px}
+.admin-user-avatar{width:38px;height:38px;border:2px solid var(--ink);background:var(--blue);display:grid;place-items:center;flex:none}
+.admin-user-avatar .material-symbols-rounded{font-size:22px;color:#fff}
+.admin-user-avatar.admin{background:var(--red)}
+.admin-user-info{flex:1;min-width:0}
+.admin-user-name{font-weight:700;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-user-role{font-size:8px;margin-top:3px;display:inline-block;padding:2px 7px;border:2px solid var(--ink);background:var(--green);border-radius:8px;font-weight:700;letter-spacing:.3px}
+.admin-user-role.admin{background:var(--red);color:#fff}
+.admin-user-del{width:34px;height:34px;flex:none;border:2px solid var(--ink);background:var(--red);color:#fff;box-shadow:2px 2px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer}
+.admin-user-del .material-symbols-rounded{font-size:16px;color:#fff}
+.admin-user-del:disabled{opacity:.35;cursor:not-allowed}
+.admin-empty{padding:16px;text-align:center;font-size:10px;color:#666;font-style:italic}
+
 /* ===== CUSTOM MODAL ===== */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(2px)}
 .modal-overlay.show{display:flex}
@@ -287,25 +325,42 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .modal-btn.danger .material-symbols-rounded{color:#fff}
 .modal-btn .material-symbols-rounded{font-size:15px}
 
-/* ===== SPLASH FULL SCREEN ===== */
-.splash-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;opacity:0;transition:opacity .4s ease;overflow:hidden}
+/* ===== SPLASH THEME (no video) ===== */
+.splash-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#0d0d0d;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;opacity:0;transition:opacity .45s ease;overflow:hidden}
 .splash-overlay.show{display:flex;opacity:1}
 .splash-overlay.fade-out{opacity:0}
-
-/* Full-screen video wrapper */
-.splash-video-wrap{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;overflow:hidden}
-.splash-video-wrap video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#000;display:block}
-
-/* Fallback kalau video error */
-.splash-fallback{display:none;position:absolute;top:0;left:0;width:100%;height:100%;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 40%,#2a2a2a 0%,#000 70%);z-index:1;padding:30px;text-align:center}
-.splash-fallback.show{display:flex}
-.splash-fallback .big{font-size:38px;font-weight:700;letter-spacing:5px;color:var(--green);text-shadow:4px 4px 0 var(--red),-2px -2px 0 var(--blue);animation:pulse 1.4s ease-in-out infinite;line-height:1.1}
-.splash-fallback .small{font-size:11px;margin-top:14px;letter-spacing:3px;color:var(--cream)}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-
-/* Watermark transparan */
-.splash-watermark{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.35);z-index:6;text-shadow:2px 2px 0 rgba(0,0,0,.8),0 0 8px rgba(128,216,61,.4);padding:0 16px;pointer-events:none;user-select:none}
-.splash-watermark .volka{color:rgba(128,216,61,.6)}
+.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:
+  radial-gradient(circle at 20% 20%,rgba(128,216,61,.15) 0%,transparent 45%),
+  radial-gradient(circle at 80% 80%,rgba(255,75,62,.15) 0%,transparent 45%),
+  radial-gradient(circle at 50% 50%,#1a1a1a 0%,#000 100%);
+  z-index:1}
+.splash-grid{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.08;z-index:2;
+  background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:gridMove 20s linear infinite}
+@keyframes gridMove{from{background-position:0 0}to{background-position:40px 40px}}
+.splash-content{position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:30px;text-align:center;animation:splashIn .8s cubic-bezier(.2,.8,.3,1.2)}
+@keyframes splashIn{from{transform:scale(.6) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.splash-logo-wrap{position:relative;display:flex;align-items:center;justify-content:center;animation:logoFloat 3s ease-in-out infinite}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+.splash-v-badge{position:relative;width:140px;height:140px;border:4px solid var(--cream);background:linear-gradient(135deg,#171717 0%,#2a2a2a 100%);display:grid;place-items:center;box-shadow:0 0 40px rgba(128,216,61,.4),0 0 80px rgba(255,75,62,.3),8px 8px 0 rgba(128,216,61,.9);border-radius:8px;animation:glowPulse 2.4s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 40px rgba(128,216,61,.4),0 0 80px rgba(255,75,62,.3),8px 8px 0 rgba(128,216,61,.9)}50%{box-shadow:0 0 60px rgba(128,216,61,.7),0 0 120px rgba(255,75,62,.5),8px 8px 0 rgba(255,75,62,.9)}}
+.splash-v-text{font-family:"Space Mono",monospace;font-size:80px;font-weight:700;color:var(--green);text-shadow:4px 4px 0 var(--red),-3px -3px 0 var(--blue);line-height:1;letter-spacing:2px;position:relative;z-index:2}
+.splash-wings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:260px;height:160px;pointer-events:none;z-index:1;animation:wingSway 1.6s ease-in-out infinite}
+@keyframes wingSway{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.08)}}
+.splash-wings path{fill:url(#wingGrad);stroke:var(--cream);stroke-width:1.5;opacity:.95}
+.splash-title{font-family:"Space Mono",monospace;font-size:32px;font-weight:700;color:var(--cream);letter-spacing:6px;text-shadow:3px 3px 0 var(--red),-1px -1px 0 var(--blue);line-height:1;animation:titleShine 2.4s ease-in-out infinite}
+@keyframes titleShine{0%,100%{text-shadow:3px 3px 0 var(--red),-1px -1px 0 var(--blue)}50%{text-shadow:3px 3px 0 var(--blue),-1px -1px 0 var(--red)}}
+.splash-sub{font-family:"Space Mono",monospace;font-size:10px;font-weight:700;color:var(--green);letter-spacing:3px;margin-top:-6px}
+.splash-loading{display:flex;gap:8px;margin-top:6px}
+.splash-dot{width:10px;height:10px;border:2px solid var(--cream);background:var(--yellow);border-radius:50%;animation:dotJump 1.2s ease-in-out infinite}
+.splash-dot:nth-child(1){animation-delay:0s}
+.splash-dot:nth-child(2){animation-delay:.15s;background:var(--green)}
+.splash-dot:nth-child(3){animation-delay:.3s;background:var(--red)}
+.splash-dot:nth-child(4){animation-delay:.45s;background:var(--blue)}
+@keyframes dotJump{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-12px);opacity:1}}
+.splash-watermark{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.35);z-index:6;text-shadow:2px 2px 0 rgba(0,0,0,.8),0 0 8px rgba(128,216,61,.4);padding:0 16px;pointer-events:none;user-select:none}
+.splash-watermark .volka{color:rgba(128,216,61,.7)}
 </style>
 </head>
 <body>
@@ -389,6 +444,13 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <a class="info-card" id="tiktok" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">music_note</span></div><div><div class="info-name">TikTok</div><div class="info-hint">Video & konten store</div></div></a>
     <a class="info-card" id="xSocial" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">alternate_email</span></div><div><div class="info-name">X</div><div class="info-hint">Update singkat</div></div></a>
     <a class="info-card" id="saweria" target="_blank" rel="noopener"><div class="icon"><span class="material-symbols-rounded">volunteer_activism</span></div><div><div class="info-name">Saweria</div><div class="info-hint">Dukung creator</div></div></a>
+    <div class="info-card hidden" id="adminPanelCard" onclick="openAdminPanel()">
+      <div class="icon">
+        <span class="material-symbols-rounded">admin_panel_settings</span>
+        <span class="notif-badge hidden" id="adminNotifBadge">0</span>
+      </div>
+      <div><div class="info-name">Admin Panel</div><div class="info-hint">Kelola user & akun • <span id="adminUserCountInline">0</span> user</div></div>
+    </div>
   </section>
 </main>
 
@@ -475,6 +537,37 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <div><div class="top-title">PROFIL</div><div class="top-sub">AKUN KAMU</div></div>
   </div>
   <div class="tool-body" id="profileBody"></div>
+</main>
+
+<main id="adminPanelPage" class="page admin-panel-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('info')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div><div class="top-title">ADMIN PANEL</div><div class="top-sub">KELOLA USER & AKUN</div></div>
+  </div>
+  <div class="tool-body">
+    <div class="admin-stats">
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">TOTAL USER</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAdmin">0</div><div class="stat-label">ADMIN</div></div>
+      <div class="stat-card"><div class="stat-num" id="statMember">0</div><div class="stat-label">MEMBER</div></div>
+    </div>
+    <div class="admin-section">
+      <div class="admin-section-title"><span class="material-symbols-rounded">person_add</span> TAMBAH / UBAH JADI ADMIN</div>
+      <div class="admin-form">
+        <input id="addAdminUsername" placeholder="Username" autocapitalize="none">
+        <input id="addAdminPassword" type="password" placeholder="Password (kalau user baru)">
+        <button onclick="addAdminFromPanel()"><span class="material-symbols-rounded">save</span> SIMPAN ADMIN</button>
+      </div>
+      <div class="admin-hint">Kalau username sudah ada → role diubah jadi admin. Kalau belum ada → akun admin baru dibuat.</div>
+    </div>
+    <div class="admin-section">
+      <div class="admin-section-title"><span class="material-symbols-rounded">group</span> DAFTAR USER</div>
+      <div class="admin-search">
+        <span class="material-symbols-rounded">search</span>
+        <input id="adminSearchInput" placeholder="Cari username..." oninput="renderAdminUsers()" autocapitalize="none">
+      </div>
+      <div id="adminUserList" class="admin-user-list"></div>
+    </div>
+  </div>
 </main>
 
 <main id="addProductPage" class="page">
@@ -633,7 +726,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <button type="button" class="active" onclick="showPage('home',this)"><span class="material-symbols-rounded">home</span>HOME</button>
   <button type="button" onclick="showPage('store',this)"><span class="material-symbols-rounded">store</span>STORE</button>
   <button type="button" onclick="showPage('gameCenter',this)"><span class="material-symbols-rounded">sports_esports</span>GAME</button>
-  <button type="button" onclick="showPage('info',this)"><span class="material-symbols-rounded">info</span>INFO</button>
+  <button type="button" onclick="showPage('info',this)"><span class="material-symbols-rounded">info</span>INFO<span class="nav-notif hidden" id="navInfoNotif">0</span></button>
 </nav>
 </div>
 
@@ -651,13 +744,34 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </div>
 
-<!-- SPLASH SCREEN FULL -->
+<!-- SPLASH SCREEN (THEME, NO VIDEO) -->
 <div class="splash-overlay" id="splashOverlay">
-  <div class="splash-video-wrap">
-    <video id="splashVideo" src="splash.mp4" muted playsinline preload="auto"></video>
-    <div class="splash-fallback" id="splashFallback">
-      <div class="big">VOLKA STORE</div>
-      <div class="small">LOADING...</div>
+  <div class="splash-bg"></div>
+  <div class="splash-grid"></div>
+  <div class="splash-content">
+    <div class="splash-logo-wrap">
+      <svg class="splash-wings" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ff4b3e"/>
+            <stop offset="50%" stop-color="#a855f7"/>
+            <stop offset="100%" stop-color="#171717"/>
+          </linearGradient>
+        </defs>
+        <path d="M130,80 Q90,20 30,25 Q60,50 65,65 Q40,60 10,60 Q55,85 85,90 Q60,95 40,110 Q85,105 115,95 Z"/>
+        <path d="M130,80 Q170,20 230,25 Q200,50 195,65 Q220,60 250,60 Q205,85 175,90 Q200,95 220,110 Q175,105 145,95 Z"/>
+      </svg>
+      <div class="splash-v-badge">
+        <div class="splash-v-text">V</div>
+      </div>
+    </div>
+    <div class="splash-title">VOLKA STORE</div>
+    <div class="splash-sub">DIGITAL GOODS • SIMPLE • FAST</div>
+    <div class="splash-loading">
+      <span class="splash-dot"></span>
+      <span class="splash-dot"></span>
+      <span class="splash-dot"></span>
+      <span class="splash-dot"></span>
     </div>
   </div>
   <div class="splash-watermark">POWERED BY: <span class="volka">VOLKA</span></div>
@@ -666,7 +780,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 /* ============================================================
-   CUSTOM MODAL (pengganti alert & confirm)
+   CUSTOM MODAL
    ============================================================ */
 let _modalCallback = null;
 function showModal(opts) {
@@ -682,7 +796,6 @@ function showModal(opts) {
   iconSymbol.textContent = type === "error" ? "error" : type === "warn" ? "warning" : type === "success" ? "check_circle" : "info";
   title.textContent = opts.title || "INFO";
   msg.textContent = opts.message || "";
-
   actions.innerHTML = "";
 
   if (opts.buttons && opts.buttons.length) {
@@ -720,12 +833,7 @@ function themedAlert(message, type, title) {
       type: type || "info",
       title: title || "INFORMASI",
       message: message,
-      buttons: [{
-        label: "OKE",
-        icon: "check",
-        style: "primary",
-        onClick: function() { resolve(true); }
-      }],
+      buttons: [{ label: "OKE", icon: "check", style: "primary", onClick: function() { resolve(true); } }],
       onClose: function() { resolve(true); }
     });
   });
@@ -750,72 +858,26 @@ document.getElementById("customModal").addEventListener("click", function(e) {
 });
 
 /* ============================================================
-   SPLASH SCREEN FULL (tunggu video habis baru masuk)
+   SPLASH SCREEN (TEMA, TANPA VIDEO)
    ============================================================ */
 function showSplash(callback) {
   const overlay = document.getElementById("splashOverlay");
-  const video = document.getElementById("splashVideo");
-  const fallback = document.getElementById("splashFallback");
-
   overlay.classList.remove("fade-out");
   overlay.classList.add("show");
-  fallback.classList.remove("show");
 
   let finished = false;
-  let videoPlayed = false;
-  let fallbackTimer = null;
-  let safetyTimer = null;
-
   function finish() {
     if (finished) return;
     finished = true;
-    if (fallbackTimer) clearTimeout(fallbackTimer);
-    if (safetyTimer) clearTimeout(safetyTimer);
-    try { video.pause(); } catch (e) {}
     overlay.classList.add("fade-out");
     setTimeout(function() {
       overlay.classList.remove("show");
       overlay.classList.remove("fade-out");
-      try { video.currentTime = 0; } catch (e) {}
       if (typeof callback === "function") callback();
-    }, 450);
+    }, 500);
   }
-
-  // Reset video
-  try {
-    video.currentTime = 0;
-    video.style.display = "block";
-  } catch (e) {}
-
-  // === Video habis → langsung masuk dashboard ===
-  video.onended = finish;
-
-  // === Video error / file tidak ada ===
-  video.onerror = function() {
-    if (!videoPlayed) {
-      video.style.display = "none";
-      fallback.classList.add("show");
-      fallbackTimer = setTimeout(finish, 3000);
-    }
-  };
-
-  // Coba play video
-  const p = video.play();
-  if (p && p.then) {
-    p.then(function() {
-      videoPlayed = true;
-    }).catch(function() {
-      // Autoplay diblokir / file tidak ada → fallback 3 detik
-      video.style.display = "none";
-      fallback.classList.add("show");
-      fallbackTimer = setTimeout(finish, 3000);
-    });
-  } else {
-    videoPlayed = true;
-  }
-
-  // Safety: kalau video nge-hang lebih dari 5 menit, paksa selesai
-  safetyTimer = setTimeout(finish, 300000);
+  // Durasi splash: 3.2 detik
+  setTimeout(finish, 3200);
 }
 
 /* ============================================================
@@ -827,6 +889,15 @@ const HARDCODED_ADMIN = { username: "VOLZ", password: "08292012", role: "admin" 
 let currentUser = null;
 let keylistUsers = [];
 let localUsers = [];
+let userOverrides = {}; // { username_lower: { role: "admin" } }
+let deletedUsers = []; // [username_lower]
+
+function loadUserOverrides() {
+  try { userOverrides = JSON.parse(localStorage.getItem("volka_user_overrides") || "{}"); } catch(e) { userOverrides = {}; }
+  try { deletedUsers = JSON.parse(localStorage.getItem("volka_deleted_users") || "[]"); } catch(e) { deletedUsers = []; }
+}
+function saveUserOverrides() { localStorage.setItem("volka_user_overrides", JSON.stringify(userOverrides)); }
+function saveDeletedUsers() { localStorage.setItem("volka_deleted_users", JSON.stringify(deletedUsers)); }
 
 function parseKeylist(text) {
   text = String(text || "").trim();
@@ -876,8 +947,10 @@ function loadLocalData() {
   currentUser = null;
   try { currentUser = JSON.parse(localStorage.getItem("volka_user") || "null"); } catch (e) {}
   try { localUsers = JSON.parse(localStorage.getItem("volka_users") || "[]"); } catch (e) { localUsers = []; }
+  loadUserOverrides();
 }
 function saveLocalUsers() { localStorage.setItem("volka_users", JSON.stringify(localUsers)); }
+
 function getAllUsers() {
   const list = [HARDCODED_ADMIN].concat(keylistUsers).concat(localUsers);
   const seen = {};
@@ -886,14 +959,20 @@ function getAllUsers() {
     if (!u || !u.username) return;
     const k = String(u.username).toLowerCase();
     if (seen[k]) return;
+    if (deletedUsers.indexOf(k) !== -1) return; // user dihapus
     seen[k] = true;
-    out.push(u);
+    const copy = { username: u.username, password: u.password, role: String(u.role || "member").toLowerCase() };
+    if (userOverrides[k] && userOverrides[k].role) copy.role = userOverrides[k].role;
+    out.push(copy);
   });
   return out;
 }
 function findUser(username) {
   const k = String(username || "").toLowerCase();
   return getAllUsers().find(function(u) { return String(u.username).toLowerCase() === k; });
+}
+function isHardcodedAdmin(username) {
+  return String(username || "").toLowerCase() === HARDCODED_ADMIN.username.toLowerCase();
 }
 
 /* PROFILE PHOTO */
@@ -992,12 +1071,8 @@ async function submitLogin() {
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
 
-  // Sembunyikan halaman dulu biar splash bersih
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-
-  showSplash(function() {
-    showPage("home");
-  });
+  showSplash(function() { showPage("home"); });
 }
 async function submitRegister() {
   const u = (document.getElementById("regUsername").value || "").trim();
@@ -1020,10 +1095,7 @@ async function submitRegister() {
   document.getElementById("regConfirm").value = "";
 
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-
-  showSplash(function() {
-    showPage("home");
-  });
+  showSplash(function() { showPage("home"); });
 }
 async function doLogout() {
   const ok = await themedConfirm("Yakin mau keluar dari akun?", { okLabel: "KELUAR", okStyle: "danger" });
@@ -1052,6 +1124,29 @@ function updateAuthUI() {
     if (isAdmin) btn.classList.remove("hidden");
     else btn.classList.add("hidden");
   });
+  // Admin panel card
+  const adminCard = document.getElementById("adminPanelCard");
+  if (adminCard) {
+    if (isAdmin) adminCard.classList.remove("hidden");
+    else adminCard.classList.add("hidden");
+  }
+  // Notif badge
+  updateAdminNotifBadge();
+}
+function updateAdminNotifBadge() {
+  const isAdmin = currentUser && currentUser.role === "admin";
+  const total = getAllUsers().length;
+  const badgeInfo = document.getElementById("adminNotifBadge");
+  const badgeNav = document.getElementById("navInfoNotif");
+  const inlineCount = document.getElementById("adminUserCountInline");
+  if (inlineCount) inlineCount.textContent = total;
+  if (isAdmin) {
+    if (badgeInfo) { badgeInfo.textContent = total; badgeInfo.classList.remove("hidden"); }
+    if (badgeNav) { badgeNav.textContent = total; badgeNav.classList.remove("hidden"); }
+  } else {
+    if (badgeInfo) badgeInfo.classList.add("hidden");
+    if (badgeNav) badgeNav.classList.add("hidden");
+  }
 }
 function openProfile() {
   if (currentUser) { renderProfile(); showPage("profilePage"); }
@@ -1103,11 +1198,145 @@ function renderProfile() {
       '<div class="profile-row"><span class="label">Role</span><span class="value">' + currentUser.role + '</span></div>' +
       '<div class="profile-row"><span class="label">Status</span><span class="value">Aktif</span></div>' +
       '<div class="profile-actions">' +
+        (isAdmin ? '<button class="auth-btn warn" onclick="openAdminPanel()"><span class="material-symbols-rounded">admin_panel_settings</span> ADMIN PANEL</button>' : '') +
         (isAdmin ? '<button class="auth-btn warn" onclick="openAddProduct()"><span class="material-symbols-rounded">add_box</span> TAMBAH PRODUK</button>' : '') +
         '<button class="auth-btn danger" onclick="doLogout()"><span class="material-symbols-rounded">logout</span> KELUAR</button>' +
       '</div>' +
     '</div>' +
     (manageHtml ? '<div class="profile-card" style="margin-top:0"><div style="font-size:12px;font-weight:700;margin-bottom:8px">' + (isAdmin ? 'KELOLA PRODUK' : '') + '</div>' + manageHtml + '</div>' : '');
+}
+
+/* ============================================================
+   ADMIN PANEL
+   ============================================================ */
+function openAdminPanel() {
+  if (!currentUser || currentUser.role !== "admin") {
+    themedAlert("Hanya admin yang bisa membuka panel ini.", "error", "AKSES DITOLAK");
+    return;
+  }
+  // Reset form
+  const uInp = document.getElementById("addAdminUsername");
+  const pInp = document.getElementById("addAdminPassword");
+  const sInp = document.getElementById("adminSearchInput");
+  if (uInp) uInp.value = "";
+  if (pInp) pInp.value = "";
+  if (sInp) sInp.value = "";
+  renderAdminStats();
+  renderAdminUsers();
+  showPage("adminPanelPage");
+}
+function renderAdminStats() {
+  const users = getAllUsers();
+  const total = users.length;
+  const admins = users.filter(u => String(u.role).toLowerCase() === "admin").length;
+  const members = total - admins;
+  const st = document.getElementById("statTotal");
+  const sa = document.getElementById("statAdmin");
+  const sm = document.getElementById("statMember");
+  if (st) st.textContent = total;
+  if (sa) sa.textContent = admins;
+  if (sm) sm.textContent = members;
+}
+function renderAdminUsers() {
+  const list = document.getElementById("adminUserList");
+  if (!list) return;
+  const q = (document.getElementById("adminSearchInput")?.value || "").toLowerCase().trim();
+  const users = getAllUsers().filter(u => u.username.toLowerCase().includes(q));
+  if (!users.length) {
+    list.innerHTML = '<div class="admin-empty">Tidak ada user ditemukan.</div>';
+    return;
+  }
+  list.innerHTML = users.map(function(u) {
+    const isAdmin = String(u.role).toLowerCase() === "admin";
+    const isProtected = isHardcodedAdmin(u.username);
+    const roleClass = isAdmin ? "admin-user-role admin" : "admin-user-role";
+    const avatarCls = isAdmin ? "admin-user-avatar admin" : "admin-user-avatar";
+    const avatarIcon = isAdmin ? "shield_person" : "person";
+    const delDisabled = isProtected ? ' disabled title="User utama, tidak bisa dihapus"' : '';
+    const delOnclick = isProtected ? '' : ' onclick="deleteUserFromPanel(\'' + escapeHtml(u.username).replace(/'/g, "\\'") + '\')"';
+    const protectHint = isProtected ? ' <span style="font-size:8px;color:#666;font-style:italic">(protected)</span>' : '';
+    return '<div class="admin-user-item">' +
+      '<div class="' + avatarCls + '"><span class="material-symbols-rounded">' + avatarIcon + '</span></div>' +
+      '<div class="admin-user-info">' +
+        '<div class="admin-user-name">' + escapeHtml(u.username) + protectHint + '</div>' +
+        '<span class="' + roleClass + '">' + u.role.toUpperCase() + '</span>' +
+      '</div>' +
+      '<button class="admin-user-del"' + delDisabled + delOnclick + '><span class="material-symbols-rounded">delete</span></button>' +
+      '</div>';
+  }).join("");
+}
+async function deleteUserFromPanel(username) {
+  if (!currentUser || currentUser.role !== "admin") return;
+  if (isHardcodedAdmin(username)) {
+    themedAlert("User utama (VOLZ) tidak bisa dihapus.", "error", "TIDAK BISA");
+    return;
+  }
+  const ok = await themedConfirm('Hapus user "' + username + '"?\n\nUser ini tidak akan bisa login lagi.', { okLabel: "HAPUS", okStyle: "danger", title: "HAPUS USER" });
+  if (!ok) return;
+  const k = String(username).toLowerCase();
+  // Hapus dari localUsers
+  const before = localUsers.length;
+  localUsers = localUsers.filter(function(u){ return String(u.username).toLowerCase() !== k; });
+  if (localUsers.length !== before) saveLocalUsers();
+  // Tambahkan ke deletedUsers (biar keylist pun bisa dihapus)
+  if (deletedUsers.indexOf(k) === -1) {
+    deletedUsers.push(k);
+    saveDeletedUsers();
+  }
+  // Hapus override role
+  if (userOverrides[k]) { delete userOverrides[k]; saveUserOverrides(); }
+  // Hapus foto profil
+  removeProfilePhoto(k);
+  // Kalau user yang dihapus adalah user yang sedang login → auto logout
+  if (currentUser && String(currentUser.username).toLowerCase() === k) {
+    currentUser = null;
+    localStorage.removeItem("volka_user");
+    updateAuthUI();
+    showPage("loginPage");
+    themedAlert("Akun kamu telah dihapus oleh admin.", "warn", "AKUN DIHAPUS");
+    return;
+  }
+  renderAdminStats();
+  renderAdminUsers();
+  updateAuthUI();
+  themedAlert('User "' + username + '" berhasil dihapus.', "success", "BERHASIL");
+}
+async function addAdminFromPanel() {
+  if (!currentUser || currentUser.role !== "admin") return;
+  const u = (document.getElementById("addAdminUsername").value || "").trim();
+  const p = (document.getElementById("addAdminPassword").value || "");
+  if (!u) { themedAlert("Username wajib diisi.", "error"); return; }
+  const k = u.toLowerCase();
+  const existing = findUser(u);
+
+  if (existing) {
+    // Ubah role user yang sudah ada jadi admin
+    const ok = await themedConfirm('Ubah "' + existing.username + '" jadi ADMIN?', { okLabel: "UBAH", okStyle: "primary", type: "info" });
+    if (!ok) return;
+    // Simpan override
+    userOverrides[k] = { role: "admin" };
+    saveUserOverrides();
+    // Kalau user tersebut di localUsers, ubah juga
+    const lu = localUsers.find(x => String(x.username).toLowerCase() === k);
+    if (lu) { lu.role = "admin"; saveLocalUsers(); }
+    document.getElementById("addAdminUsername").value = "";
+    document.getElementById("addAdminPassword").value = "";
+    renderAdminStats(); renderAdminUsers(); updateAuthUI();
+    themedAlert('"' + existing.username + '" sekarang jadi ADMIN.', "success", "BERHASIL");
+  } else {
+    // Buat akun admin baru
+    if (!p || p.length < 6) { themedAlert("Password minimal 6 karakter untuk user baru.", "error"); return; }
+    const newAdmin = { username: u, password: p, role: "admin" };
+    localUsers.push(newAdmin);
+    saveLocalUsers();
+    // Hapus dari deletedUsers kalau ada
+    const di = deletedUsers.indexOf(k);
+    if (di !== -1) { deletedUsers.splice(di, 1); saveDeletedUsers(); }
+    document.getElementById("addAdminUsername").value = "";
+    document.getElementById("addAdminPassword").value = "";
+    renderAdminStats(); renderAdminUsers(); updateAuthUI();
+    themedAlert('Admin baru "' + u + '" berhasil dibuat.', "success", "BERHASIL");
+  }
 }
 
 /* ============================================================
@@ -1291,15 +1520,20 @@ function showPage(id,btn=null){
     themedAlert("Fitur Nonton Anime khusus ADMIN.\nRole kamu: " + (currentUser ? currentUser.role : "belum login"), "error", "AKSES DITOLAK");
     id = currentUser ? "home" : "loginPage";
   }
+  if (id === "adminPanelPage" && (!currentUser || currentUser.role !== "admin")) {
+    themedAlert("Hanya ADMIN yang bisa membuka Admin Panel.", "error", "AKSES DITOLAK");
+    id = currentUser ? "home" : "loginPage";
+  }
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   const page=document.getElementById(id);if(!page)return;page.classList.add("active");
-  if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage"].includes(id))hideBottomNav();else showBottomNav();
+  if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage","adminPanelPage"].includes(id))hideBottomNav();else showBottomNav();
   if(btn){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="gamePage")drawSnake();
   if(id==="gameCenter")renderGameCenter();
   if(id==="musicPage")renderMusicPage();
   if(id==="animePage"){ renderSourceChips(); renderGenreChips(); if(!animeHomeLoaded) loadAnimeHome(); }
+  if(id==="adminPanelPage"){ renderAdminStats(); renderAdminUsers(); }
 }
 function openAnimeFeature() {
   if (!currentUser) { showPage("loginPage"); return; }
@@ -2715,6 +2949,7 @@ loadLocalData();
 loadCustomProducts();
 fetchKeylist().then(function(){
   updateAuthUI();
+  // Kalau user yang login sekarang sudah dihapus / tidak ada lagi
   if (currentUser && !findUser(currentUser.username)) {
     currentUser = null;
     localStorage.removeItem("volka_user");
@@ -2733,7 +2968,6 @@ renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter()
 updateAuthUI();
 
 /* ============ SPLASH SELALU MUNCUL SAAT BUKA / REFRESH ============ */
-// Sembunyikan semua halaman dulu biar splash kelihatan bersih
 document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
 
 showSplash(function() {
