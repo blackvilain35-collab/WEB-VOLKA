@@ -146,7 +146,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 @media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
 @media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
 
-/* ANIME STREAMING */
+/* ANIME */
 .anime-page{padding-bottom:30px}
 .anime-search{display:flex;gap:8px;margin-bottom:14px}
 .anime-search input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:12px;outline:none}
@@ -190,22 +190,19 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .episode-item{border:2px solid var(--ink);background:var(--cream);padding:8px 4px;font-size:9px;font-weight:700;cursor:pointer;text-align:center;transition:.1s;display:flex;align-items:center;justify-content:center;gap:2px}
 .episode-item:hover{background:var(--yellow)}
 .episode-item.active{background:var(--green)}
-.episode-item .material-symbols-rounded{font-size:12px}
 .player-controls{margin-top:10px;display:grid;gap:6px}
 .player-row-2{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:6px}
 .player-btn{border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);padding:9px 4px;font-size:9px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;transition:.1s;cursor:pointer}
 .player-btn .material-symbols-rounded{font-size:20px}
 .player-btn:hover{transform:translate(-1px,-1px)}
 .player-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.player-btn.prev{background:var(--blue);color:#fff}
-.player-btn.next{background:var(--blue);color:#fff}
-.player-btn.back{background:var(--red);color:#fff}
+.player-btn.prev,.player-btn.next{background:var(--blue);color:#fff}
 .player-btn.close-btn{background:#ddd}
 .player-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .player-info{border:3px solid var(--ink);background:#fff0bf;padding:8px 10px;font-size:9px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
 .player-info .material-symbols-rounded{font-size:14px}
 
-/* AUTH PAGES */
+/* AUTH */
 .auth-page{padding-bottom:30px}
 .auth-wrap{padding:20px 14px;display:flex;justify-content:center;align-items:flex-start;min-height:calc(100dvh - 70px)}
 .auth-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:20px;width:100%;max-width:400px}
@@ -266,6 +263,42 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .manage-item .del{width:34px;height:34px;flex:none;border:2px solid var(--ink);background:var(--red);color:#fff;box-shadow:2px 2px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer}
 .manage-item .del .material-symbols-rounded{font-size:16px;color:#fff}
 .profile-hint{font-size:9px;color:#666;line-height:1.5;margin-top:8px;text-align:center;font-style:italic}
+
+/* ===== CUSTOM MODAL ===== */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(2px)}
+.modal-overlay.show{display:flex}
+.modal-box{border:3px solid var(--ink);background:var(--cream);box-shadow:6px 6px 0 var(--ink);padding:18px;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;animation:modalIn .22s ease;position:relative}
+@keyframes modalIn{from{transform:scale(.85) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px dashed #999}
+.modal-icon{width:44px;height:44px;border:3px solid var(--ink);display:grid;place-items:center;flex:none;box-shadow:2px 2px 0 var(--ink)}
+.modal-icon.info{background:var(--blue)}
+.modal-icon.warn{background:var(--yellow)}
+.modal-icon.error{background:var(--red)}
+.modal-icon.success{background:var(--green)}
+.modal-icon .material-symbols-rounded{font-size:24px}
+.modal-icon.error .material-symbols-rounded{color:#fff}
+.modal-title{font-size:14px;font-weight:700;line-height:1.2;text-transform:uppercase}
+.modal-msg{font-size:11px;line-height:1.65;margin-bottom:18px;white-space:pre-line;color:var(--ink)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.modal-btn{border:3px solid var(--ink);background:var(--yellow);box-shadow:3px 3px 0 var(--ink);padding:10px 18px;font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.1s}
+.modal-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.modal-btn.primary{background:var(--green)}
+.modal-btn.danger{background:var(--red);color:#fff}
+.modal-btn.danger .material-symbols-rounded{color:#fff}
+.modal-btn .material-symbols-rounded{font-size:15px}
+
+/* ===== SPLASH ===== */
+.splash-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#111;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:18px;opacity:0;transition:opacity .35s ease}
+.splash-overlay.show{display:flex;opacity:1}
+.splash-overlay.fade-out{opacity:0}
+.splash-video-wrap{border:3px solid var(--ink);background:#000;box-shadow:6px 6px 0 var(--cream);max-width:min(90vw,500px);overflow:hidden;position:relative}
+.splash-video-wrap video{display:block;width:100%;max-height:70dvh;object-fit:contain;background:#000}
+.splash-fallback{display:none;padding:30px 20px;text-align:center;color:var(--cream);font-family:"Space Mono",monospace}
+.splash-fallback .big{font-size:28px;font-weight:700;letter-spacing:3px;color:var(--green);text-shadow:3px 3px 0 var(--red);animation:pulse 1.4s ease-in-out infinite}
+.splash-fallback .small{font-size:10px;margin-top:10px;letter-spacing:2px}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.splash-loader{border:3px solid var(--ink);background:var(--cream);color:var(--ink);padding:9px 18px;font-size:10px;font-weight:700;box-shadow:4px 4px 0 var(--cream);display:flex;align-items:center;gap:8px}
+.splash-loader .material-symbols-rounded{font-size:18px;animation:spinDragon 1.2s linear infinite}
 </style>
 </head>
 <body>
@@ -599,8 +632,181 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 
 <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
 
+<!-- CUSTOM MODAL -->
+<div class="modal-overlay" id="customModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-icon info" id="modalIcon"><span class="material-symbols-rounded" id="modalIconSymbol">info</span></div>
+      <div class="modal-title" id="modalTitle">INFO</div>
+    </div>
+    <div class="modal-msg" id="modalMsg">-</div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<!-- SPLASH SCREEN -->
+<div class="splash-overlay" id="splashOverlay">
+  <div class="splash-video-wrap">
+    <video id="splashVideo" src="splash.mp4" muted playsinline preload="auto"></video>
+    <div class="splash-fallback" id="splashFallback">
+      <div class="big">VOLKA STORE</div>
+      <div class="small">LOADING DASHBOARD...</div>
+    </div>
+  </div>
+  <div class="splash-loader">
+    <span class="material-symbols-rounded">autorenew</span> MEMUAT DASHBOARD...
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
+/* ============================================================
+   CUSTOM MODAL (pengganti alert & confirm)
+   ============================================================ */
+let _modalCallback = null;
+function showModal(opts) {
+  const overlay = document.getElementById("customModal");
+  const icon = document.getElementById("modalIcon");
+  const iconSymbol = document.getElementById("modalIconSymbol");
+  const title = document.getElementById("modalTitle");
+  const msg = document.getElementById("modalMsg");
+  const actions = document.getElementById("modalActions");
+
+  const type = opts.type || "info";
+  icon.className = "modal-icon " + type;
+  iconSymbol.textContent = type === "error" ? "error" : type === "warn" ? "warning" : type === "success" ? "check_circle" : "info";
+  title.textContent = opts.title || "INFO";
+  msg.textContent = opts.message || "";
+
+  actions.innerHTML = "";
+
+  if (opts.buttons && opts.buttons.length) {
+    opts.buttons.forEach(function(btn) {
+      const b = document.createElement("button");
+      b.className = "modal-btn " + (btn.style || "");
+      b.innerHTML = (btn.icon ? '<span class="material-symbols-rounded">' + btn.icon + '</span>' : "") + (btn.label || "OK");
+      b.onclick = function() {
+        hideModal();
+        if (typeof btn.onClick === "function") btn.onClick();
+      };
+      actions.appendChild(b);
+    });
+  } else {
+    const ok = document.createElement("button");
+    ok.className = "modal-btn primary";
+    ok.innerHTML = '<span class="material-symbols-rounded">check</span>OKE';
+    ok.onclick = function() {
+      hideModal();
+      if (typeof opts.onClose === "function") opts.onClose();
+    };
+    actions.appendChild(ok);
+  }
+
+  overlay.classList.add("show");
+  _modalCallback = opts.onClose || null;
+}
+function hideModal() {
+  document.getElementById("customModal").classList.remove("show");
+  _modalCallback = null;
+}
+function themedAlert(message, type, title) {
+  return new Promise(function(resolve) {
+    showModal({
+      type: type || "info",
+      title: title || "INFORMASI",
+      message: message,
+      buttons: [{
+        label: "OKE",
+        icon: "check",
+        style: "primary",
+        onClick: function() { resolve(true); }
+      }],
+      onClose: function() { resolve(true); }
+    });
+  });
+}
+function themedConfirm(message, opts) {
+  opts = opts || {};
+  return new Promise(function(resolve) {
+    showModal({
+      type: opts.type || "warn",
+      title: opts.title || "KONFIRMASI",
+      message: message,
+      buttons: [
+        { label: opts.cancelLabel || "BATAL", icon: "close", style: "", onClick: function() { resolve(false); } },
+        { label: opts.okLabel || "YA", icon: opts.okIcon || "check", style: opts.okStyle || "danger", onClick: function() { resolve(true); } }
+      ],
+      onClose: function() { resolve(false); }
+    });
+  });
+}
+// Klik overlay untuk close
+document.getElementById("customModal").addEventListener("click", function(e) {
+  if (e.target === this) hideModal();
+});
+
+/* ============================================================
+   SPLASH SCREEN
+   ============================================================ */
+function showSplash(callback) {
+  const overlay = document.getElementById("splashOverlay");
+  const video = document.getElementById("splashVideo");
+  const fallback = document.getElementById("splashFallback");
+  overlay.classList.remove("fade-out");
+  overlay.classList.add("show");
+
+  let finished = false;
+  let videoPlayed = false;
+  let fallbackTimer = null;
+
+  function finish() {
+    if (finished) return;
+    finished = true;
+    if (fallbackTimer) clearTimeout(fallbackTimer);
+    try { video.pause(); } catch (e) {}
+    overlay.classList.add("fade-out");
+    setTimeout(function() {
+      overlay.classList.remove("show");
+      overlay.classList.remove("fade-out");
+      if (typeof callback === "function") callback();
+    }, 400);
+  }
+
+  // Reset video
+  try {
+    video.currentTime = 0;
+    video.style.display = "block";
+    fallback.style.display = "none";
+  } catch (e) {}
+
+  // Coba play video
+  video.onended = finish;
+  video.onerror = function() {
+    // Video gagal → pakai fallback
+    if (!videoPlayed) {
+      video.style.display = "none";
+      fallback.style.display = "block";
+      fallbackTimer = setTimeout(finish, 2200);
+    }
+  };
+  const p = video.play();
+  if (p && p.then) {
+    p.then(function() { videoPlayed = true; })
+     .catch(function() {
+       // Autoplay diblokir atau file gak ada → fallback
+       video.style.display = "none";
+       fallback.style.display = "block";
+       fallbackTimer = setTimeout(finish, 2200);
+     });
+  } else {
+    // Kalau browser gak support promise
+    videoPlayed = true;
+  }
+
+  // Safety: kalau video gak ended dalam 6 detik, paksa finish
+  setTimeout(finish, 6000);
+}
+
 /* ============================================================
    AUTH SYSTEM
    ============================================================ */
@@ -643,7 +849,6 @@ function parseKeylist(text) {
   });
   return users;
 }
-
 async function fetchKeylist() {
   try {
     const res = await fetch(KEYLIST_URL + (KEYLIST_URL.indexOf("?") === -1 ? "?t=" + Date.now() : ""));
@@ -656,15 +861,12 @@ async function fetchKeylist() {
     keylistUsers = [];
   }
 }
-
 function loadLocalData() {
   currentUser = null;
   try { currentUser = JSON.parse(localStorage.getItem("volka_user") || "null"); } catch (e) {}
   try { localUsers = JSON.parse(localStorage.getItem("volka_users") || "[]"); } catch (e) { localUsers = []; }
 }
-
 function saveLocalUsers() { localStorage.setItem("volka_users", JSON.stringify(localUsers)); }
-
 function getAllUsers() {
   const list = [HARDCODED_ADMIN].concat(keylistUsers).concat(localUsers);
   const seen = {};
@@ -678,13 +880,12 @@ function getAllUsers() {
   });
   return out;
 }
-
 function findUser(username) {
   const k = String(username || "").toLowerCase();
   return getAllUsers().find(function(u) { return String(u.username).toLowerCase() === k; });
 }
 
-/* ============ PROFILE PHOTO ============ */
+/* PROFILE PHOTO */
 function getProfilePhotos() {
   try { return JSON.parse(localStorage.getItem("volka_profile_photos") || "{}"); }
   catch (e) { return {}; }
@@ -700,7 +901,7 @@ function saveProfilePhoto(username, dataUrl) {
     localStorage.setItem("volka_profile_photos", JSON.stringify(all));
     return true;
   } catch (e) {
-    alert("Gagal menyimpan foto (storage penuh). Coba foto yang lebih kecil.");
+    themedAlert("Gagal menyimpan foto (storage penuh). Coba foto yang lebih kecil.", "error", "GAGAL SIMPAN");
     return false;
   }
 }
@@ -718,8 +919,8 @@ function triggerAvatarUpload() {
 document.getElementById("avatarFileInput").addEventListener("change", function(e) {
   const file = e.target.files && e.target.files[0];
   if (!file) return;
-  if (!file.type.startsWith("image/")) { alert("File harus berupa gambar."); return; }
-  if (file.size > 3 * 1024 * 1024) { alert("Ukuran foto maksimal 3MB."); return; }
+  if (!file.type.startsWith("image/")) { themedAlert("File harus berupa gambar.", "error"); return; }
+  if (file.size > 3 * 1024 * 1024) { themedAlert("Ukuran foto maksimal 3MB.", "error"); return; }
   const reader = new FileReader();
   reader.onload = function(ev) {
     const img = new Image();
@@ -742,15 +943,16 @@ document.getElementById("avatarFileInput").addEventListener("change", function(e
   };
   reader.readAsDataURL(file);
 });
-function deleteAvatarPhoto() {
+async function deleteAvatarPhoto() {
   if (!currentUser) return;
-  if (!confirm("Hapus foto profil?")) return;
+  const ok = await themedConfirm("Hapus foto profil?", { okLabel: "HAPUS", okStyle: "danger" });
+  if (!ok) return;
   removeProfilePhoto(currentUser.username);
   renderProfile();
   updateAuthUI();
 }
 
-/* ============ AUTH UI ============ */
+/* AUTH UI */
 function togglePwd(inputId, btn) {
   const inp = document.getElementById(inputId);
   if (!inp) return;
@@ -766,7 +968,7 @@ function showAuthError(id, msg) {
   setTimeout(function(){ el.classList.remove("show"); }, 4000);
 }
 
-function submitLogin() {
+async function submitLogin() {
   const u = (document.getElementById("loginUsername").value || "").trim();
   const p = document.getElementById("loginPassword").value || "";
   if (!u || !p) { showAuthError("loginError", "Username dan password wajib diisi."); return; }
@@ -778,13 +980,16 @@ function submitLogin() {
   updateAuthUI();
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
-  showPage("home");
-}
 
-function submitRegister() {
+  // ==== SPLASH SCREEN ====
+  showSplash(function() {
+    showPage("home");
+  });
+}
+async function submitRegister() {
   const u = (document.getElementById("regUsername").value || "").trim();
-  const p = document.getElementById("regPassword").value || "";
-  const c = document.getElementById("regConfirm").value || "";
+  const p = (document.getElementById("regPassword").value || "");
+  const c = (document.getElementById("regConfirm").value || "");
   if (u.length < 3) { showAuthError("registerError", "Username minimal 3 karakter."); return; }
   if (p.length < 6) { showAuthError("registerError", "Password minimal 6 karakter."); return; }
   if (p !== c) { showAuthError("registerError", "Konfirmasi password tidak cocok."); return; }
@@ -800,17 +1005,19 @@ function submitRegister() {
   document.getElementById("regUsername").value = "";
   document.getElementById("regPassword").value = "";
   document.getElementById("regConfirm").value = "";
-  setTimeout(function(){ showPage("home"); }, 900);
-}
 
-function doLogout() {
-  if (!confirm("Yakin mau keluar dari akun?")) return;
+  showSplash(function() {
+    showPage("home");
+  });
+}
+async function doLogout() {
+  const ok = await themedConfirm("Yakin mau keluar dari akun?", { okLabel: "KELUAR", okStyle: "danger" });
+  if (!ok) return;
   currentUser = null;
   localStorage.removeItem("volka_user");
   updateAuthUI();
   showPage("loginPage");
 }
-
 function updateAuthUI() {
   document.querySelectorAll(".profile-btn").forEach(function(btn) {
     const photo = currentUser ? getProfilePhoto(currentUser.username) : "";
@@ -825,25 +1032,16 @@ function updateAuthUI() {
       btn.title = "Login";
     }
   });
-
   const isAdmin = currentUser && currentUser.role === "admin";
   document.querySelectorAll(".admin-add-btn").forEach(function(btn) {
     if (isAdmin) btn.classList.remove("hidden");
     else btn.classList.add("hidden");
   });
-
-  // Update nav - kalau belum login, nav tetep muncul? Ya, tapi halaman akan redirect
 }
-
 function openProfile() {
-  if (currentUser) {
-    renderProfile();
-    showPage("profilePage");
-  } else {
-    showPage("loginPage");
-  }
+  if (currentUser) { renderProfile(); showPage("profilePage"); }
+  else { showPage("loginPage"); }
 }
-
 function renderProfile() {
   const body = document.getElementById("profileBody");
   if (!body) return;
@@ -852,7 +1050,6 @@ function renderProfile() {
   const roleClass = isAdmin ? "role-badge admin" : "role-badge";
   const pw = "•".repeat(8);
   const photo = getProfilePhoto(currentUser.username);
-
   const avatarInner = photo
     ? '<img src="' + photo + '" alt="">'
     : '<span class="material-symbols-rounded">' + (isAdmin ? "shield_person" : "person") + '</span>';
@@ -876,11 +1073,8 @@ function renderProfile() {
 
   body.innerHTML =
     '<div class="profile-card">' +
-      '<div class="profile-avatar">' +
-        avatarInner +
-        '<div class="avatar-edit" onclick="triggerAvatarUpload()" title="Ganti foto profil">' +
-          '<span class="material-symbols-rounded">photo_camera</span>' +
-        '</div>' +
+      '<div class="profile-avatar">' + avatarInner +
+        '<div class="avatar-edit" onclick="triggerAvatarUpload()" title="Ganti foto profil"><span class="material-symbols-rounded">photo_camera</span></div>' +
       '</div>' +
       '<p class="avatar-hint">Tap ikon kamera untuk ganti foto dari galeri</p>' +
       '<div class="avatar-actions">' +
@@ -902,17 +1096,14 @@ function renderProfile() {
 }
 
 /* ============================================================
-   CUSTOM PRODUCTS (ADMIN)
+   CUSTOM PRODUCTS
    ============================================================ */
 let customProducts = [];
 let PRODUCTS = [];
 let deletedProductNames = [];
-
 function loadCustomProducts() {
-  try { customProducts = JSON.parse(localStorage.getItem("volka_custom_products") || "[]"); }
-  catch (e) { customProducts = []; }
-  try { deletedProductNames = JSON.parse(localStorage.getItem("volka_deleted_products") || "[]"); }
-  catch (e) { deletedProductNames = []; }
+  try { customProducts = JSON.parse(localStorage.getItem("volka_custom_products") || "[]"); } catch (e) { customProducts = []; }
+  try { deletedProductNames = JSON.parse(localStorage.getItem("volka_deleted_products") || "[]"); } catch (e) { deletedProductNames = []; }
   refreshProducts();
 }
 function saveCustomProducts() { localStorage.setItem("volka_custom_products", JSON.stringify(customProducts)); }
@@ -921,10 +1112,9 @@ function refreshProducts() {
   const configProducts = CONFIG.products.filter(function(p){ return deletedProductNames.indexOf(p.name) === -1; });
   PRODUCTS = configProducts.concat(customProducts);
 }
-
 function openAddProduct() {
   if (!currentUser || currentUser.role !== "admin") {
-    alert("Hanya admin yang bisa menambah produk.");
+    themedAlert("Hanya admin yang bisa menambah produk.", "error");
     return;
   }
   document.getElementById("addProdName").value = "";
@@ -940,14 +1130,14 @@ function openAddProduct() {
 function addPhotoInput(val) {
   const wrap = document.getElementById("photoInputs");
   if (!wrap) return;
-  if (wrap.children.length >= 8) { alert("Maksimal 8 foto."); return; }
+  if (wrap.children.length >= 8) { themedAlert("Maksimal 8 foto.", "warn"); return; }
   const row = document.createElement("div");
   row.className = "photo-input-row";
   row.innerHTML =
     '<input type="url" placeholder="https://files.catbox.moe/xxxx.jpg" value="' + escapeHtml(val || "") + '">' +
     '<button class="remove-photo" type="button"><span class="material-symbols-rounded">close</span></button>';
   row.querySelector(".remove-photo").onclick = function() {
-    if (wrap.children.length <= 1) { alert("Minimal 1 foto."); return; }
+    if (wrap.children.length <= 1) { themedAlert("Minimal 1 foto.", "warn"); return; }
     row.remove();
   };
   wrap.appendChild(row);
@@ -971,46 +1161,38 @@ function saveProduct() {
   if (!desc) { showAuthError("addProdError", "Deskripsi wajib diisi."); return; }
   if (!wa) { showAuthError("addProdError", "Nomor WA wajib diisi."); return; }
 
-  const newProduct = {
-    name: name,
-    description: desc,
-    image: gallery[0],
-    gallery: gallery,
-    oldPrice: oldPrice || price,
-    price: price,
-    wa: wa
-  };
-  customProducts.push(newProduct);
+  customProducts.push({
+    name: name, description: desc, image: gallery[0], gallery: gallery,
+    oldPrice: oldPrice || price, price: price, wa: wa
+  });
   saveCustomProducts();
   refreshProducts();
   renderProducts();
-  alert("Produk berhasil ditambahkan!");
+  themedAlert("Produk berhasil ditambahkan!", "success", "BERHASIL");
   showPage("store");
 }
-function deleteCustomProduct(index) {
-  if (!confirm("Hapus produk ini?")) return;
+async function deleteCustomProduct(index) {
+  const ok = await themedConfirm("Hapus produk ini?", { okLabel: "HAPUS", okStyle: "danger" });
+  if (!ok) return;
   customProducts.splice(index, 1);
   saveCustomProducts();
   refreshProducts();
   renderProducts();
   renderProfile();
 }
-
-/* DELETE dari card (admin) */
-function deleteProductFromCard(evt, index) {
+async function deleteProductFromCard(evt, index) {
   if (evt) evt.stopPropagation();
   if (!currentUser || currentUser.role !== "admin") return;
   const p = PRODUCTS[index];
   if (!p) return;
-  if (!confirm('Hapus produk "' + p.name + '" dari store?')) return;
+  const ok = await themedConfirm('Hapus produk "' + p.name + '" dari store?', { okLabel: "HAPUS", okStyle: "danger", title: "HAPUS PRODUK" });
+  if (!ok) return;
 
-  // Cek custom dulu
   const customIdx = customProducts.findIndex(function(cp){ return cp.name === p.name; });
   if (customIdx >= 0) {
     customProducts.splice(customIdx, 1);
     saveCustomProducts();
   } else {
-    // Produk dari CONFIG, tambahkan ke deleted list
     if (deletedProductNames.indexOf(p.name) === -1) {
       deletedProductNames.push(p.name);
       saveDeletedProducts();
@@ -1087,20 +1269,13 @@ function hideBottomNav(){document.getElementById("mainNav").style.display="none"
 function showBottomNav(){document.getElementById("mainNav").style.display="grid"}
 
 function showPage(id,btn=null){
-  // === AUTH GATE ===
   const publicPages = ["loginPage", "registerPage"];
-  if (!currentUser && publicPages.indexOf(id) === -1) {
-    id = "loginPage";
-  }
-  if (currentUser && publicPages.indexOf(id) !== -1) {
-    id = "home";
-  }
-  // === ANIME PAGE KHUSUS ADMIN ===
+  if (!currentUser && publicPages.indexOf(id) === -1) { id = "loginPage"; }
+  if (currentUser && publicPages.indexOf(id) !== -1) { id = "home"; }
   if (id === "animePage" && (!currentUser || currentUser.role !== "admin")) {
-    alert("⛔ Halaman Nonton Anime khusus ADMIN.");
+    themedAlert("Fitur Nonton Anime khusus ADMIN.\nRole kamu: " + (currentUser ? currentUser.role : "belum login"), "error", "AKSES DITOLAK");
     id = currentUser ? "home" : "loginPage";
   }
-
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   const page=document.getElementById(id);if(!page)return;page.classList.add("active");
   if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage"].includes(id))hideBottomNav();else showBottomNav();
@@ -1111,23 +1286,25 @@ function showPage(id,btn=null){
   if(id==="musicPage")renderMusicPage();
   if(id==="animePage"){ renderSourceChips(); renderGenreChips(); if(!animeHomeLoaded) loadAnimeHome(); }
 }
-
 function openAnimeFeature() {
   if (!currentUser) { showPage("loginPage"); return; }
   if (currentUser.role !== "admin") {
-    alert("⛔ Fitur Nonton Anime khusus ADMIN.\nRole kamu: " + currentUser.role);
+    themedAlert("Fitur Nonton Anime khusus ADMIN.\nRole kamu: " + currentUser.role, "error", "AKSES DITOLAK");
     return;
   }
   showPage("animePage");
 }
-
 function productCard(p,index){
   const d=discountPercent(p.oldPrice,p.price);
   const isAdmin = currentUser && currentUser.role === "admin";
   const delBtn = isAdmin
     ? '<button class="product-del" onclick="deleteProductFromCard(event, ' + index + ')" title="Hapus produk"><span class="material-symbols-rounded">delete</span></button>'
     : '';
-  return `<article class="product" onclick="openProductDetail(${index})">${delBtn}<img class="product-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.opacity='.25'"><div class="product-name">${escapeHtml(p.name)}</div><div class="product-price"><div class="old">${formatRupiah(p.oldPrice)}</div><div class="new">${formatRupiah(p.price)}</div>${d?`<span class="discount">${d}</span>`:""}</div></article>`;
+  return '<article class="product" onclick="openProductDetail(' + index + ')">' + delBtn +
+    '<img class="product-img" src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" loading="lazy" onerror="this.style.opacity=\'.25\'">' +
+    '<div class="product-name">' + escapeHtml(p.name) + '</div>' +
+    '<div class="product-price"><div class="old">' + formatRupiah(p.oldPrice) + '</div><div class="new">' + formatRupiah(p.price) + '</div>' +
+    (d ? '<span class="discount">' + d + '</span>' : '') + '</div></article>';
 }
 function renderProducts(){
   const q=(document.getElementById("search")?.value||"").toLowerCase().trim(),el=document.getElementById("products");
@@ -1137,7 +1314,7 @@ function renderProducts(){
 function startBanners(){
   const img=document.getElementById("homeBanner"),dots=document.getElementById("bannerDots");
   if(!img||!dots)return;
-  dots.innerHTML=CONFIG.banners.map((_,i)=>`<button class="banner-dot ${i===0?"active":""}" onclick="goBanner(${i})"></button>`).join("");
+  dots.innerHTML=CONFIG.banners.map((_,i)=>'<button class="banner-dot ' + (i===0?"active":"") + '" onclick="goBanner(' + i + ')"></button>').join("");
   const set=()=>{img.style.opacity="0";setTimeout(()=>{img.src=CONFIG.banners[bannerIndex];img.style.opacity="1";dots.querySelectorAll(".banner-dot").forEach((d,i)=>d.classList.toggle("active",i===bannerIndex));bannerIndex=(bannerIndex+1)%CONFIG.banners.length},300)};
   setTimeout(set,800);clearInterval(bannerTimer);bannerTimer=setInterval(set,3500);
 }
@@ -1162,7 +1339,7 @@ function toggleVideoSound(){
 function renderMusicPage(){
   const list=document.getElementById("musicListPage");
   if(!list)return;
-  list.innerHTML=CONFIG.musics.map((m,i)=>`<div class="music-card ${i===currentMusicIndex?"active":""}" onclick="playMusic(${i})"><div class="music-icon"><span class="material-symbols-rounded">${i===currentMusicIndex&&currentMusic&&!currentMusic.paused?"pause":"play_arrow"}</span></div><div class="music-info"><div class="music-name">${escapeHtml(m.title)}</div><div class="music-status">${i===currentMusicIndex&&currentMusic&&!currentMusic.paused?"Sedang diputar...":"Klik untuk memutar"}</div></div></div>`).join("");
+  list.innerHTML=CONFIG.musics.map((m,i)=>'<div class="music-card ' + (i===currentMusicIndex?"active":"") + '" onclick="playMusic(' + i + ')"><div class="music-icon"><span class="material-symbols-rounded">' + (i===currentMusicIndex&&currentMusic&&!currentMusic.paused?"pause":"play_arrow") + '</span></div><div class="music-info"><div class="music-name">' + escapeHtml(m.title) + '</div><div class="music-status">' + (i===currentMusicIndex&&currentMusic&&!currentMusic.paused?"Sedang diputar...":"Klik untuk memutar") + '</div></div></div>').join("");
   document.getElementById("nowPlaying").textContent=currentMusicIndex>=0?CONFIG.musics[currentMusicIndex].title:"Tidak ada musik diputar";
   document.getElementById("playIcon").textContent=currentMusic&&!currentMusic.paused?"pause":"play_arrow";
 }
@@ -1170,7 +1347,7 @@ function playMusic(i){
   if(currentMusic){currentMusic.pause();currentMusic.currentTime=0}
   currentMusicIndex=i;
   currentMusic=new Audio(CONFIG.musics[i].file);
-  currentMusic.play().catch(()=>alert("File musik tidak ditemukan: "+CONFIG.musics[i].file));
+  currentMusic.play().catch(()=>themedAlert("File musik tidak ditemukan: "+CONFIG.musics[i].file,"error"));
   currentMusic.onended=()=>nextMusic();
   renderMusicPage();
 }
@@ -1191,8 +1368,8 @@ function openProductDetail(index){
 }
 function buildProductGallery(p){
   const gallery=p.gallery?.length?p.gallery:[p.image],slides=document.getElementById("detailSlides"),dots=document.getElementById("galleryDots");
-  slides.innerHTML=gallery.map((src,i)=>`<div class="detail-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(p.name)} ${i+1}" onerror="this.style.opacity='.25'"></div>`).join("");
-  dots.innerHTML=gallery.map((_,i)=>`<button class="gallery-dot ${i===0?"active":""}" onclick="goProductImage(${i})"></button>`).join("");
+  slides.innerHTML=gallery.map((src,i)=>'<div class="detail-slide"><img src="' + escapeHtml(src) + '" alt="' + escapeHtml(p.name) + ' ' + (i+1) + '" onerror="this.style.opacity=\'.25\'"></div>').join("");
+  dots.innerHTML=gallery.map((_,i)=>'<button class="gallery-dot ' + (i===0?"active":"") + '" onclick="goProductImage(' + i + ')"></button>').join("");
   updateProductGallery();
 }
 function updateProductGallery(){document.getElementById("detailSlides").style.transform=`translateX(-${currentGalleryIndex*100}%)`;[...document.getElementById("galleryDots").children].forEach((d,i)=>d.classList.toggle("active",i===currentGalleryIndex))}
@@ -1202,7 +1379,7 @@ function closeProductDetail(){showPage(previousPage)}
 document.getElementById("detailSlides").addEventListener("touchstart",e=>detailTouchX=e.touches[0].clientX,{passive:true});
 document.getElementById("detailSlides").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-detailTouchX;if(Math.abs(dx)>40)moveProductImage(dx<0?1:-1)},{passive:true});
 function addToCart(index,qty=1){const p=PRODUCTS[index];if(!p)return;const ex=cart.find(x=>x.productIndex===index);if(ex)ex.qty+=qty;else cart.push({productIndex:index,qty});saveCart()}
-function addCurrentProductToCart(){if(currentProductIndex<0)return;addToCart(currentProductIndex);alert("Produk berhasil ditambahkan ke keranjang.")}
+function addCurrentProductToCart(){if(currentProductIndex<0)return;addToCart(currentProductIndex);themedAlert("Produk berhasil ditambahkan ke keranjang.","success","BERHASIL")}
 function changeQty(index,delta){const item=cart.find(x=>x.productIndex===index);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
 function removeFromCart(index){cart=cart.filter(x=>x.productIndex!==index);saveCart();renderCart()}
 function getCartTotal(){return cart.reduce((t,i)=>t+(PRODUCTS[i.productIndex]?PRODUCTS[i.productIndex].price*i.qty:0),0)}
@@ -1211,15 +1388,15 @@ function updateCartCount(){["headerCartCount","storeCartCount","gameCartCount"].
 function renderCart(){
   const list=document.getElementById("cartList");
   if(!cart.length){list.innerHTML='<div class="empty"><span class="material-symbols-rounded" style="font-size:35px">shopping_cart</span><br>Keranjang masih kosong.</div>';document.getElementById("cartTotal").innerHTML="<span>Total</span><span>Rp0</span>";return}
-  list.innerHTML=cart.map(item=>{const p=PRODUCTS[item.productIndex];if(!p)return"";return `<div class="cart-item"><img class="cart-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}"><div><div class="cart-name">${escapeHtml(p.name)}</div><div class="cart-price">${formatRupiah(p.price)}</div><div class="qty"><button onclick="changeQty(${item.productIndex},-1)">−</button><span>${item.qty}</span><button onclick="changeQty(${item.productIndex},1)">+</button></div></div><button class="cart-remove" onclick="removeFromCart(${item.productIndex})" aria-label="Hapus"><span class="material-symbols-rounded">delete</span></button></div>`}).join("");
+  list.innerHTML=cart.map(item=>{const p=PRODUCTS[item.productIndex];if(!p)return"";return '<div class="cart-item"><img class="cart-img" src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '"><div><div class="cart-name">' + escapeHtml(p.name) + '</div><div class="cart-price">' + formatRupiah(p.price) + '</div><div class="qty"><button onclick="changeQty(' + item.productIndex + ',-1)">−</button><span>' + item.qty + '</span><button onclick="changeQty(' + item.productIndex + ',1)">+</button></div></div><button class="cart-remove" onclick="removeFromCart(' + item.productIndex + ')" aria-label="Hapus"><span class="material-symbols-rounded">delete</span></button></div>'}).join("");
   document.getElementById("cartTotal").innerHTML=`<span>TOTAL</span><span>${formatRupiah(getCartTotal())}</span>`;
 }
 function openCart(){renderCart();showPage("cart")}
 function buyCurrentProductNow(){if(currentProductIndex<0)return;checkoutSource="buyNow";checkoutItems=[{productIndex:currentProductIndex,qty:1}];renderCheckout();showPage("checkout")}
-function goCheckout(){if(!cart.length){alert("Keranjang masih kosong.");return}checkoutSource="cart";checkoutItems=cart.map(i=>({productIndex:i.productIndex,qty:i.qty}));renderCheckout();showPage("checkout")}
+function goCheckout(){if(!cart.length){themedAlert("Keranjang masih kosong.","warn");return}checkoutSource="cart";checkoutItems=cart.map(i=>({productIndex:i.productIndex,qty:i.qty}));renderCheckout();showPage("checkout")}
 function backFromCheckout(){showPage(checkoutSource==="buyNow"?"productDetail":"cart")}
 function renderCheckout(){
-  document.getElementById("checkoutSummary").innerHTML=checkoutItems.map(i=>{const p=PRODUCTS[i.productIndex];if(!p)return"";return `<div class="summary-row"><span>${escapeHtml(p.name)} × ${i.qty}</span><strong>${formatRupiah(p.price*i.qty)}</strong></div>`}).join("");
+  document.getElementById("checkoutSummary").innerHTML=checkoutItems.map(i=>{const p=PRODUCTS[i.productIndex];if(!p)return"";return '<div class="summary-row"><span>' + escapeHtml(p.name) + ' × ' + i.qty + '</span><strong>' + formatRupiah(p.price*i.qty) + '</strong></div>'}).join("");
   document.getElementById("checkoutTotal").textContent=formatRupiah(checkoutItems.reduce((s,i)=>{const p=PRODUCTS[i.productIndex];return s+(p?p.price*i.qty:0)},0));
 }
 function buildOrderText(){
@@ -1240,7 +1417,7 @@ document.getElementById("xSocial").href=CONFIG.links.xSocial;
 document.getElementById("saweria").href=CONFIG.links.saweria;
 
 function typingDragonSvg(){
-  return `<span class="typing-dragon"><svg viewBox="0 0 30 30"><circle class="tail" cx="15" cy="15" r="10"/><circle class="head" cx="15" cy="5" r="3"/></svg></span>`;
+  return '<span class="typing-dragon"><svg viewBox="0 0 30 30"><circle class="tail" cx="15" cy="15" r="10"/><circle class="head" cx="15" cy="5" r="3"/></svg></span>';
 }
 async function askAI(){
   const input=document.getElementById("aiInput"),log=document.getElementById("aiLog"),q=input.value.trim();if(!q)return;
@@ -1257,33 +1434,16 @@ document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="En
    ANIME STREAMING
    ============================================================ */
 const ANIME_API = "https://wajik-anime-api-production-4c0e.up.railway.app";
-
 const ANIME_GENRES = [
-  {name:"Semua", value:""},
-  {name:"Action", value:"action"},
-  {name:"Adventure", value:"adventure"},
-  {name:"Comedy", value:"comedy"},
-  {name:"Drama", value:"drama"},
-  {name:"Fantasy", value:"fantasy"},
-  {name:"Horror", value:"horror"},
-  {name:"Isekai", value:"isekai"},
-  {name:"Magic", value:"magic"},
-  {name:"Mecha", value:"mecha"},
-  {name:"Music", value:"music"},
-  {name:"Mystery", value:"mystery"},
-  {name:"Psychological", value:"psychological"},
-  {name:"Romance", value:"romance"},
-  {name:"School", value:"school"},
-  {name:"Sci-Fi", value:"sci-fi"},
-  {name:"Seinen", value:"seinen"},
-  {name:"Shoujo", value:"shoujo"},
-  {name:"Shounen", value:"shounen"},
-  {name:"Slice of Life", value:"slice-of-life"},
-  {name:"Sports", value:"sports"},
-  {name:"Supernatural", value:"supernatural"},
-  {name:"Thriller", value:"thriller"}
+  {name:"Semua", value:""},{name:"Action", value:"action"},{name:"Adventure", value:"adventure"},
+  {name:"Comedy", value:"comedy"},{name:"Drama", value:"drama"},{name:"Fantasy", value:"fantasy"},
+  {name:"Horror", value:"horror"},{name:"Isekai", value:"isekai"},{name:"Magic", value:"magic"},
+  {name:"Mecha", value:"mecha"},{name:"Music", value:"music"},{name:"Mystery", value:"mystery"},
+  {name:"Psychological", value:"psychological"},{name:"Romance", value:"romance"},{name:"School", value:"school"},
+  {name:"Sci-Fi", value:"sci-fi"},{name:"Seinen", value:"seinen"},{name:"Shoujo", value:"shoujo"},
+  {name:"Shounen", value:"shounen"},{name:"Slice of Life", value:"slice-of-life"},{name:"Sports", value:"sports"},
+  {name:"Supernatural", value:"supernatural"},{name:"Thriller", value:"thriller"}
 ];
-
 const ANIME_SOURCES = {
   oploverz: {
     key: "oploverz", label: "Oploverz", icon: "movie",
@@ -1407,7 +1567,6 @@ const ANIME_SOURCES = {
     }
   }
 };
-
 const SOURCE_ORDER = ["oploverz", "kuramanime", "otakudesu"];
 let currentSource = "oploverz";
 let currentGenre = "";
@@ -1448,8 +1607,7 @@ function loadingHtml(msg) {
 }
 function errorHtml(msg, retryFn) {
   const fn = retryFn || "loadAnimeHome()";
-  return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' +
-    escapeHtml(msg || "Terjadi kesalahan.") +
+  return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' + escapeHtml(msg || "Terjadi kesalahan.") +
     '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>';
 }
 function renderSourceChips() {
@@ -1458,8 +1616,7 @@ function renderSourceChips() {
   el.innerHTML = SOURCE_ORDER.map(function(key) {
     const s = ANIME_SOURCES[key];
     return '<div class="source-chip' + (key === currentSource ? ' active' : '') + '" onclick="switchSource(\'' + key + '\')">' +
-      '<span class="material-symbols-rounded">' + s.icon + '</span>' + s.label +
-      '</div>';
+      '<span class="material-symbols-rounded">' + s.icon + '</span>' + s.label + '</div>';
   }).join("");
 }
 function renderGenreChips() {
@@ -1471,12 +1628,8 @@ function renderGenreChips() {
 }
 function switchSource(key) {
   if (!ANIME_SOURCES[key]) return;
-  currentSource = key;
-  currentGenre = "";
-  renderSourceChips();
-  renderGenreChips();
-  closeAnimeDetail();
-  loadAnimeHome();
+  currentSource = key; currentGenre = "";
+  renderSourceChips(); renderGenreChips(); closeAnimeDetail(); loadAnimeHome();
 }
 async function loadAnimeHome() {
   setAnimeStatus(loadingHtml("Memuat dari " + ANIME_SOURCES[currentSource].label + "..."), "loading");
@@ -1542,11 +1695,11 @@ async function searchAnime() {
       if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
     } catch (e) { continue; }
   }
-  setAnimeStatus('Anime "' + escapeHtml(q) + '" tidak ditemukan di semua sumber. Coba kata kunci lain.');
+  setAnimeStatus('Anime "' + escapeHtml(q) + '" tidak ditemukan di semua sumber.');
 }
 function renderAnimeGrid(list, source) {
   const results = document.getElementById("animeResults");
-  if (!list || !list.length) { setAnimeStatus("Anime tidak ditemukan. Coba kata kunci atau genre lain."); return; }
+  if (!list || !list.length) { setAnimeStatus("Anime tidak ditemukan."); return; }
   results.innerHTML = list.map(function (a) {
     const card = source.normalizeCard(a);
     animeCache[card.cacheKey] = card;
@@ -1557,12 +1710,9 @@ function renderAnimeGrid(list, source) {
     const safePoster = escapeHtml(poster);
     const safeKey = String(card.cacheKey).replace(/'/g, "\\'");
     return '<div class="anime-card" onclick="openAnimeDetail(\'' + safeKey + '\')">' +
-      '<div class="anime-poster-wrap">' +
-        '<span class="anime-poster-title">' + safeTitle + '</span>' +
-        (safePoster ? '<img src="' + safePoster + '" alt="" loading="lazy" onerror="this.className=\'broken\'">' : '') +
-      '</div>' +
-      '<div class="anime-title">' + safeTitle + '</div>' +
-      '</div>';
+      '<div class="anime-poster-wrap"><span class="anime-poster-title">' + safeTitle + '</span>' +
+      (safePoster ? '<img src="' + safePoster + '" alt="" loading="lazy" onerror="this.className=\'broken\'">' : '') +
+      '</div><div class="anime-title">' + safeTitle + '</div></div>';
   }).join("");
 }
 function backToAnimeList() { closeAnimeDetail(); loadAnimeHome(); }
@@ -1570,20 +1720,16 @@ function closeAnimeDetail() {
   document.getElementById("animeResults").innerHTML = "";
   document.getElementById("animeDetailWrap").innerHTML = "";
   closeAnimePlayer();
-  currentEpisodeList = [];
-  currentEpisodeIndex = -1;
-  currentAnimeCtx = null;
+  currentEpisodeList = []; currentEpisodeIndex = -1; currentAnimeCtx = null;
 }
 async function openAnimeDetail(cacheKey) {
   const anime = animeCache[cacheKey];
-  if (!anime) { alert("Data anime tidak ditemukan. Coba refresh."); return; }
+  if (!anime) { themedAlert("Data anime tidak ditemukan. Coba refresh.","error"); return; }
   currentAnimeCtx = anime;
   const source = ANIME_SOURCES[currentSource];
   const wrap = document.getElementById("animeDetailWrap");
   const results = document.getElementById("animeResults");
-  results.innerHTML = "";
-  closeAnimePlayer();
-  currentEpisodeIndex = -1;
+  results.innerHTML = ""; closeAnimePlayer(); currentEpisodeIndex = -1;
   wrap.innerHTML = '<div class="anime-detail">' + loadingHtml("Memuat detail & episode dari " + source.label + "...") + '</div>';
   window.scrollTo({ top: 0, behavior: "smooth" });
   try {
@@ -1595,53 +1741,28 @@ async function openAnimeDetail(cacheKey) {
     let desc = info.synopsis || "";
     if (desc.length > 500) desc = desc.slice(0, 500) + "...";
     const genres = info.genres || [];
-    const genresHtml = genres.length
-      ? '<div class="anime-genre-tags">' + genres.map(function(g){ return '<span class="anime-genre-tag">' + escapeHtml(g) + '</span>'; }).join("") + '</div>'
-      : "";
+    const genresHtml = genres.length ? '<div class="anime-genre-tags">' + genres.map(function(g){ return '<span class="anime-genre-tag">' + escapeHtml(g) + '</span>'; }).join("") + '</div>' : "";
     wrap.innerHTML =
       '<div class="anime-detail">' +
         '<button class="back-btn" onclick="backToAnimeList()" style="margin-bottom:10px;width:auto;padding:8px 14px;display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;">' +
-          '<span class="material-symbols-rounded">arrow_back</span>' +
-          '<span style="font-size:10px;font-weight:700;">KEMBALI KE DAFTAR</span>' +
-        '</button>' +
+          '<span class="material-symbols-rounded">arrow_back</span><span style="font-size:10px;font-weight:700;">KEMBALI KE DAFTAR</span></button>' +
         '<div style="font-size:9px;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;background:var(--blue);color:#fff;padding:3px 8px;border:2px solid var(--ink);border-radius:10px;font-weight:700;">' +
-          '<span class="material-symbols-rounded" style="font-size:12px">' + source.icon + '</span>' + source.label +
-        '</div>' +
+          '<span class="material-symbols-rounded" style="font-size:12px">' + source.icon + '</span>' + source.label + '</div>' +
         (poster ? '<img src="' + escapeHtml(poster) + '" alt="" onerror="this.style.display=\'none\'">' : "") +
-        '<h2>' + escapeHtml(info.title) + '</h2>' +
-        genresHtml +
+        '<h2>' + escapeHtml(info.title) + '</h2>' + genresHtml +
         '<div class="anime-desc">' + escapeHtml(desc) + '</div>' +
         '<div style="clear:both;margin-top:12px"><strong style="font-size:11px">DAFTAR EPISODE (' + info.episodes.length + ')</strong></div>' +
-        (info.episodes.length
-          ? '<div class="episode-list" id="episodeListInline"></div>'
-          : '<div class="anime-empty" style="margin-top:10px">Belum ada episode tersedia.</div>') +
+        (info.episodes.length ? '<div class="episode-list" id="episodeListInline"></div>' : '<div class="anime-empty" style="margin-top:10px">Belum ada episode tersedia.</div>') +
         '<div id="animePlayerWrap" style="display:none;margin-top:14px">' +
-          '<div class="anime-player-header">' +
-            '<span class="material-symbols-rounded" style="font-size:18px">smart_display</span>' +
-            '<div class="anime-player-title" id="playerAnimeTitle"></div>' +
-          '</div>' +
+          '<div class="anime-player-header"><span class="material-symbols-rounded" style="font-size:18px">smart_display</span><div class="anime-player-title" id="playerAnimeTitle"></div></div>' +
           '<div id="animeVideoBox" class="anime-video" style="overflow:hidden;position:relative;"></div>' +
-          '<div class="video-status" id="videoStatus">' +
-            '<span class="material-symbols-rounded">info</span>' +
-            '<span>Pilih episode di atas untuk mulai menonton.</span>' +
-          '</div>' +
-          '<div class="player-controls">' +
-            '<div class="player-row-2">' +
-              '<button class="player-btn prev" id="btnPrevEp" onclick="playPrevEpisode()">' +
-                '<span class="material-symbols-rounded">skip_previous</span>EP SEBELUM' +
-              '</button>' +
-              '<button class="player-btn close-btn" onclick="closeAnimePlayerOnly()">' +
-                '<span class="material-symbols-rounded">close</span>TUTUP' +
-              '</button>' +
-              '<button class="player-btn next" id="btnNextEp" onclick="playNextEpisode()">' +
-                '<span class="material-symbols-rounded">skip_next</span>EP LANJUT' +
-              '</button>' +
-            '</div>' +
-          '</div>' +
-          '<div class="player-info">' +
-            '<span class="material-symbols-rounded">info</span>' +
-            '<span id="playerInfoText">-</span>' +
-          '</div>' +
+          '<div class="video-status" id="videoStatus"><span class="material-symbols-rounded">info</span><span>Pilih episode di atas untuk mulai menonton.</span></div>' +
+          '<div class="player-controls"><div class="player-row-2">' +
+            '<button class="player-btn prev" id="btnPrevEp" onclick="playPrevEpisode()"><span class="material-symbols-rounded">skip_previous</span>EP SEBELUM</button>' +
+            '<button class="player-btn close-btn" onclick="closeAnimePlayerOnly()"><span class="material-symbols-rounded">close</span>TUTUP</button>' +
+            '<button class="player-btn next" id="btnNextEp" onclick="playNextEpisode()"><span class="material-symbols-rounded">skip_next</span>EP LANJUT</button>' +
+          '</div></div>' +
+          '<div class="player-info"><span class="material-symbols-rounded">info</span><span id="playerInfoText">-</span></div>' +
         '</div>' +
       '</div>';
     if (info.episodes.length) renderEpisodeList(info.episodes);
@@ -1690,17 +1811,17 @@ async function playEpisode(episodeId, epNum, idx) {
 }
 function playPrevEpisode() {
   if (currentEpisodeIndex <= 0) return;
-  const targetIdx = currentEpisodeIndex - 1;
-  const ep = currentEpisodeList[targetIdx];
+  const t = currentEpisodeIndex - 1;
+  const ep = currentEpisodeList[t];
   if (!ep) return;
-  playEpisode(ep.id, ep.number || (targetIdx + 1), targetIdx);
+  playEpisode(ep.id, ep.number || (t + 1), t);
 }
 function playNextEpisode() {
   if (currentEpisodeIndex >= currentEpisodeList.length - 1) return;
-  const targetIdx = currentEpisodeIndex + 1;
-  const ep = currentEpisodeList[targetIdx];
+  const t = currentEpisodeIndex + 1;
+  const ep = currentEpisodeList[t];
   if (!ep) return;
-  playEpisode(ep.id, ep.number || (targetIdx + 1), targetIdx);
+  playEpisode(ep.id, ep.number || (t + 1), t);
 }
 async function loadEpisodeSource(episodeId) {
   const box = document.getElementById("animeVideoBox");
@@ -1781,10 +1902,9 @@ function renderGameCenter(){
   grid.innerHTML=CONFIG.games.map(g=>{
     if(g.playable){
       const action=g.action||`openGame('${g.id}')`;
-      return `<div class="game-center-card playable"><div class="game-icon"><span class="material-symbols-rounded">${g.icon}</span></div><div class="game-name">${escapeHtml(g.name)}</div><div class="game-desc">${escapeHtml(g.desc)}</div><button class="play-btn" onclick="${action}"><span class="material-symbols-rounded">play_arrow</span>MAIN</button></div>`;
-    }else{
-      return `<div class="game-center-card coming-soon"><span class="soon-badge">SOON</span><div class="game-icon"><span class="material-symbols-rounded">${g.icon}</span></div><div class="game-name">${escapeHtml(g.name)}</div><div class="game-desc">${escapeHtml(g.desc)}</div></div>`;
+      return '<div class="game-center-card playable"><div class="game-icon"><span class="material-symbols-rounded">' + g.icon + '</span></div><div class="game-name">' + escapeHtml(g.name) + '</div><div class="game-desc">' + escapeHtml(g.desc) + '</div><button class="play-btn" onclick="' + action + '"><span class="material-symbols-rounded">play_arrow</span>MAIN</button></div>';
     }
+    return '<div class="game-center-card coming-soon"><span class="soon-badge">SOON</span><div class="game-icon"><span class="material-symbols-rounded">' + g.icon + '</span></div><div class="game-name">' + escapeHtml(g.name) + '</div><div class="game-desc">' + escapeHtml(g.desc) + '</div></div>';
   }).join("");
 }
 function openSnakeGame(){showPage("gamePage");drawSnake()}
@@ -1800,11 +1920,23 @@ function openGame(id){
   body.innerHTML="";
   if(currentGameCleanup){try{currentGameCleanup()}catch(e){}currentGameCleanup=null}
   showPage("gamePlay");
-  setTimeout(()=>{const fn=GAMES[id];if(fn)currentGameCleanup=fn(body)||null;else body.innerHTML='<div class="empty">Game belum tersedia.</div>';},50);
+  setTimeout(function(){
+    try {
+      const fn=GAMES[id];
+      if(fn) currentGameCleanup=fn(body)||null;
+      else body.innerHTML='<div class="empty">Game belum tersedia.</div>';
+    } catch (err) {
+      console.error("Game error:", err);
+      body.innerHTML='<div class="empty">⚠️ Game ini sedang error. Coba lagi nanti.</div>';
+    }
+  },50);
 }
 
-/* GAMES */
+/* ============================================================
+   GAMES
+   ============================================================ */
 const GAMES={};
+
 GAMES.tictactoe=function(body){
   body.innerHTML=`<div class="game-head"><span>STATUS: <b id="tttStatus">GILIRAN X</b></span><span>SKOR: <b id="tttScore">0 - 0</b></span></div>
   <div id="tttBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
@@ -1812,7 +1944,7 @@ GAMES.tictactoe=function(body){
   const boardEl=document.getElementById("tttBoard");
   const cells=Array(9).fill("");
   let turn="X",done=false,scoreX=0,scoreO=0;
-  boardEl.innerHTML=cells.map((_,i)=>`<button data-i="${i}" style="height:90px;border:3px solid var(--ink);background:var(--cream);font-size:32px;font-weight:700"></button>`).join("");
+  boardEl.innerHTML=cells.map((_,i)=>'<button data-i="' + i + '" style="height:90px;border:3px solid var(--ink);background:var(--cream);font-size:32px;font-weight:700"></button>').join("");
   function render(){
     boardEl.querySelectorAll("button").forEach((b,i)=>{b.textContent=cells[i];b.style.background=cells[i]==="X"?"var(--green)":cells[i]==="O"?"var(--blue)":"var(--cream)"});
     document.getElementById("tttStatus").textContent=done?"SELESAI":("GILIRAN "+turn);
@@ -1834,6 +1966,7 @@ GAMES.tictactoe=function(body){
   render();
   return ()=>{delete window.tttReset;delete window.tttNewGame};
 };
+
 GAMES.memory=function(body){
   const icons=["star","favorite","bolt","cloud","anchor","rocket_launch","pets","cake"];
   const deck=[...icons,...icons].sort(()=>Math.random()-.5);
@@ -1841,7 +1974,7 @@ GAMES.memory=function(body){
   <div id="memBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
   <div class="game-controls" style="grid-template-columns:1fr"><button onclick="openGame('memory')">ULANG</button></div>`;
   const board=document.getElementById("memBoard");
-  board.innerHTML=deck.map((_,i)=>`<button data-i="${i}" style="height:70px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center"><span class="material-symbols-rounded" style="font-size:26px;opacity:0">star</span></button>`).join("");
+  board.innerHTML=deck.map((_,i)=>'<button data-i="' + i + '" style="height:70px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center"><span class="material-symbols-rounded" style="font-size:26px;opacity:0">star</span></button>').join("");
   let flipped=[],matched=0,moves=0,lock=false;
   board.onclick=e=>{
     const b=e.target.closest("button");if(!b||lock)return;const i=+b.dataset.i;
@@ -1855,7 +1988,7 @@ GAMES.memory=function(body){
         board.querySelector(`[data-i="${a}"]`).dataset.done=1;board.querySelector(`[data-i="${c}"]`).dataset.done=1;
         board.querySelector(`[data-i="${a}"]`).style.background="var(--green)";board.querySelector(`[data-i="${c}"]`).style.background="var(--green)";
         matched++;document.getElementById("memMatch").textContent=matched+"/8";flipped=[];lock=false;
-        if(matched===8)setTimeout(()=>alert("SELESAI! Moves: "+moves),200);
+        if(matched===8)setTimeout(()=>themedAlert("SELESAI! Moves: "+moves,"success","MENANG"),200);
       }else{
         setTimeout(()=>{
           [a,c].forEach(k=>{const el=board.querySelector(`[data-i="${k}"]`);el.querySelector("span").style.opacity="0";el.style.background="var(--blue)"});
@@ -1866,6 +1999,7 @@ GAMES.memory=function(body){
   };
   return ()=>{};
 };
+
 GAMES.simon=function(body){
   const colors=["var(--red)","var(--green)","var(--blue)","var(--yellow)"];
   body.innerHTML=`<div class="game-head"><span>LEVEL: <b id="simonLevel">0</b></span><span>SKOR: <b id="simonScore">0</b></span></div>
@@ -1873,16 +2007,18 @@ GAMES.simon=function(body){
   <div class="game-controls" style="grid-template-columns:1fr"><button id="simonStart">MULAI</button></div>
   <div class="game-help">Perhatikan urutan warna yang menyala, lalu tekan dengan urutan yang sama.</div>`;
   const board=document.getElementById("simonBoard");
-  board.innerHTML=colors.map((c,i)=>`<button data-i="${i}" style="height:110px;border:3px solid var(--ink);background:${c};opacity:.5"></button>`).join("");
-  let seq=[],input=[],level=0,score=0,playing=false;
+  board.innerHTML=colors.map((c,i)=>'<button data-i="' + i + '" style="height:110px;border:3px solid var(--ink);background:' + c + ';opacity:.5"></button>').join("");
+  let seq=[],input=[],level=0,score=0,playing=false,stopped=false;
   function flash(i,dur=350){
-    const b=board.querySelector(`[data-i="${i}"]`);b.style.opacity="1";b.style.transform="scale(.95)";
-    setTimeout(()=>{b.style.opacity=".5";b.style.transform="scale(1)"},dur);
+    const b=board.querySelector(`[data-i="${i}"]`);if(!b)return;b.style.opacity="1";b.style.transform="scale(.95)";
+    setTimeout(()=>{if(b){b.style.opacity=".5";b.style.transform="scale(1)"}},dur);
   }
   async function playSeq(){
     playing=false;board.querySelectorAll("button").forEach(b=>b.style.pointerEvents="none");
     await new Promise(r=>setTimeout(r,500));
-    for(const i of seq){flash(i);await new Promise(r=>setTimeout(r,550))}
+    if(stopped)return;
+    for(const i of seq){if(stopped)return;flash(i);await new Promise(r=>setTimeout(r,550))}
+    if(stopped)return;
     input=[];playing=true;board.querySelectorAll("button").forEach(b=>b.style.pointerEvents="auto");
   }
   function next(){
@@ -1893,13 +2029,14 @@ GAMES.simon=function(body){
     const b=e.target.closest("button");if(!b||!playing)return;const i=+b.dataset.i;
     flash(i,200);input.push(i);
     const idx=input.length-1;
-    if(input[idx]!==seq[idx]){playing=false;setTimeout(()=>{alert("GAME OVER! Skor: "+score);simonReset()},200);return}
+    if(input[idx]!==seq[idx]){playing=false;setTimeout(()=>{themedAlert("GAME OVER! Skor: "+score,"error","GAME OVER");simonReset()},200);return}
     if(input.length===seq.length){score++;document.getElementById("simonScore").textContent=score;playing=false;setTimeout(next,700)}
   };
   function simonReset(){seq=[];input=[];level=0;score=0;document.getElementById("simonLevel").textContent=0;document.getElementById("simonScore").textContent=0;playing=false}
   document.getElementById("simonStart").onclick=()=>{simonReset();next()};
-  return ()=>{};
+  return ()=>{stopped=true;playing=false};
 };
+
 GAMES.reaction=function(body){
   body.innerHTML=`<div class="game-head"><span>BEST: <b id="reactBest">-</b></span><span>STATUS: <b id="reactStatus">KLIK MULAI</b></span></div>
   <div id="reactArea" style="height:280px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px;cursor:pointer;text-align:center;padding:10px">KLIK UNTUK MULAI</div>
@@ -1917,16 +2054,17 @@ GAMES.reaction=function(body){
   };
   return ()=>{clearTimeout(timeout)};
 };
+
 GAMES.whack=function(body){
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="whackTime">30</b>s</span><span>SKOR: <b id="whackScore">0</b></span></div>
   <div id="whackBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
   <div class="game-controls" style="grid-template-columns:1fr"><button id="whackStart">MULAI</button></div>`;
   const board=document.getElementById("whackBoard");
-  board.innerHTML=Array(9).fill(0).map((_,i)=>`<button data-i="${i}" style="height:80px;border:3px solid var(--ink);background:var(--cream);font-size:32px"></button>`).join("");
+  board.innerHTML=Array(9).fill(0).map((_,i)=>'<button data-i="' + i + '" style="height:80px;border:3px solid var(--ink);background:var(--cream);font-size:32px"></button>').join("");
   let score=0,time=30,running=false,moleTimer=null,countTimer=null,currentMole=-1;
   function showMole(){
-    if(currentMole>=0)board.querySelector(`[data-i="${currentMole}"]`).textContent="";
-    currentMole=Math.floor(Math.random()*9);board.querySelector(`[data-i="${currentMole}"]`).textContent="🐭";
+    if(currentMole>=0){const el=board.querySelector(`[data-i="${currentMole}"]`);if(el)el.textContent=""}
+    currentMole=Math.floor(Math.random()*9);const el=board.querySelector(`[data-i="${currentMole}"]`);if(el)el.textContent="🐭";
   }
   board.onclick=e=>{
     const b=e.target.closest("button");if(!b||!running)return;
@@ -1937,10 +2075,11 @@ GAMES.whack=function(body){
     document.getElementById("whackScore").textContent=0;document.getElementById("whackTime").textContent=30;
     board.querySelectorAll("button").forEach(b=>b.textContent="");
     showMole();moleTimer=setInterval(showMole,800);
-    countTimer=setInterval(()=>{time--;document.getElementById("whackTime").textContent=time;if(time<=0){clearInterval(moleTimer);clearInterval(countTimer);running=false;board.querySelectorAll("button").forEach(b=>b.textContent="");alert("WAKTU HABIS! Skor: "+score)}},1000);
+    countTimer=setInterval(()=>{time--;document.getElementById("whackTime").textContent=time;if(time<=0){clearInterval(moleTimer);clearInterval(countTimer);running=false;board.querySelectorAll("button").forEach(b=>b.textContent="");themedAlert("WAKTU HABIS! Skor: "+score,"info","SELESAI")}},1000);
   };
   return ()=>{clearInterval(moleTimer);clearInterval(countTimer)};
 };
+
 GAMES.guess=function(body){
   body.innerHTML=`<div class="game-head"><span>PERCOBAAN: <b id="guessTries">0</b></span><span id="guessHint">TEBAK 1-100</span></div>
   <div style="display:flex;gap:6px;margin-top:8px"><input id="guessInput" type="number" min="1" max="100" placeholder="1-100" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="guessCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">TEBAK</button></div>
@@ -1957,6 +2096,7 @@ GAMES.guess=function(body){
   window.guessReset=()=>{target=Math.floor(Math.random()*100)+1;tries=0;document.getElementById("guessTries").textContent=0;document.getElementById("guessHint").textContent="TEBAK 1-100";document.getElementById("guessInput").value=""};
   return ()=>{delete window.guessCheck;delete window.guessReset};
 };
+
 GAMES.math=function(body){
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="mathTime">30</b>s</span><span>SKOR: <b id="mathScore">0</b></span></div>
   <div id="mathQ" style="border:3px solid var(--ink);background:var(--cream);padding:25px;text-align:center;font-size:28px;font-weight:700;margin-top:8px">?</div>
@@ -1977,11 +2117,12 @@ GAMES.math=function(body){
   };
   document.getElementById("mathStart").onclick=()=>{
     score=0;time=30;running=true;document.getElementById("mathScore").textContent=0;document.getElementById("mathTime").textContent=30;
-    newQ();clearInterval(ct);ct=setInterval(()=>{time--;document.getElementById("mathTime").textContent=time;if(time<=0){clearInterval(ct);running=false;alert("WAKTU HABIS! Skor: "+score)}},1000);
+    newQ();clearInterval(ct);ct=setInterval(()=>{time--;document.getElementById("mathTime").textContent=time;if(time<=0){clearInterval(ct);running=false;themedAlert("WAKTU HABIS! Skor: "+score,"info","SELESAI")}},1000);
   };
   document.getElementById("mathInput").addEventListener("keydown",e=>{if(e.key==="Enter")mathCheck()});
   return ()=>{clearInterval(ct);delete window.mathCheck};
 };
+
 GAMES.color=function(body){
   const palette=["#ff4b3e","#80d83d","#54b9e8","#ffbf32","#ff7367","#a855f7"];
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="colScore">0</b></span><span id="colHint">KLIK WARNA YANG SAMA</span></div>
@@ -1994,7 +2135,7 @@ GAMES.color=function(body){
     document.getElementById("colTarget").style.background=target;
     const opts=[...palette].sort(()=>Math.random()-.5).slice(0,6);
     if(!opts.includes(target))opts[0]=target;
-    document.getElementById("colOpts").innerHTML=opts.sort(()=>Math.random()-.5).map(c=>`<button data-c="${c}" style="height:60px;border:3px solid var(--ink);background:${c}"></button>`).join("");
+    document.getElementById("colOpts").innerHTML=opts.sort(()=>Math.random()-.5).map(c=>'<button data-c="' + c + '" style="height:60px;border:3px solid var(--ink);background:' + c + '"></button>').join("");
     document.getElementById("colOpts").querySelectorAll("button").forEach(b=>b.onclick=()=>{
       if(b.dataset.c===target){score++;document.getElementById("colScore").textContent=score;round()}
       else{score=0;document.getElementById("colScore").textContent=0;document.getElementById("colHint").textContent="SALAH! SKOR RESET";round()}
@@ -2002,6 +2143,7 @@ GAMES.color=function(body){
   }
   round();return ()=>{};
 };
+
 GAMES.typing=function(body){
   const words=["volka","store","digital","produk","keranjang","pembayaran","whatsapp","website","desain","premium","musik","game","banner","admin","chat"];
   body.innerHTML=`<div class="game-head"><span>WAKTU: <b id="typeTime">30</b>s</span><span>WPM: <b id="typeWpm">0</b></span></div>
@@ -2016,10 +2158,11 @@ GAMES.typing=function(body){
   });
   document.getElementById("typeStart").onclick=()=>{
     correct=0;time=30;running=true;document.getElementById("typeWpm").textContent=0;document.getElementById("typeTime").textContent=30;newWord();
-    clearInterval(ct);ct=setInterval(()=>{time--;document.getElementById("typeTime").textContent=time;if(time<=0){clearInterval(ct);running=false;alert("WAKTU HABIS! WPM: "+Math.round(correct*2))}},1000);
+    clearInterval(ct);ct=setInterval(()=>{time--;document.getElementById("typeTime").textContent=time;if(time<=0){clearInterval(ct);running=false;themedAlert("WAKTU HABIS! WPM: "+Math.round(correct*2),"info","SELESAI")}},1000);
   };
-  return ()=>{clearInterval(ct)};
+  return ()=>{clearInterval(ct);running=false};
 };
+
 GAMES.rps=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="rpsP">0</b></span><span>CPU: <b id="rpsC">0</b></span></div>
   <div id="rpsShow" style="border:3px solid var(--ink);background:var(--cream);padding:20px;text-align:center;font-size:14px;margin-top:8px">PILIH SENJATA</div>
@@ -2040,6 +2183,7 @@ GAMES.rps=function(body){
   });
   return ()=>{};
 };
+
 GAMES.flappy=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="flapScore">0</b></span><span>BEST: <b id="flapBest">0</b></span></div>
   <canvas id="flapCanvas" class="snake-canvas" width="320" height="420" style="aspect-ratio:3/4"></canvas>
@@ -2071,65 +2215,116 @@ GAMES.flappy=function(body){
   reset();ctx.fillStyle="#54b9e8";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
+
+/* ============ FIXED: BREAKOUT ============ */
 GAMES.breakout=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="brkScore">0</b></span><span>NYAWA: <b id="brkLife">3</b></span></div>
   <canvas id="brkCanvas" class="snake-canvas" width="320" height="360" style="aspect-ratio:8/9"></canvas>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="brkLeft">◀</button><button id="brkStart">START</button><button id="brkRight">▶</button></div>`;
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="brkLeft">◀</button><button id="brkStart">START</button><button id="brkRight">▶</button></div>
+  <div class="game-help">Gerakkan paddle pakai tombol ◀ ▶ untuk memantulkan bola.</div>`;
   const c=document.getElementById("brkCanvas"),ctx=c.getContext("2d");
-  let paddleX=c.width/2-30,ballX=c.width/2,ballY=c.height-40,vx=2.4,vy=-2.4,bricks=[],score=0,life=3,running=false,raf=null,move=0;
+  let paddleX=c.width/2-30,ballX=c.width/2,ballY=c.height-40,vx=2.4,vy=-2.4,bricks=[],score=0,life=3,running=false,raf=null,move=0,stopped=false;
   function buildBricks(){bricks=[];for(let r=0;r<4;r++)for(let col=0;col<7;col++)bricks.push({x:col*44+8,y:r*20+30,w:38,h:14,alive:true})}
-  function reset(){paddleX=c.width/2-30;ballX=c.width/2;ballY=c.height-40;vx=2.4;vy=-2.4;score=0;life=3;document.getElementById("brkScore").textContent=0;document.getElementById("brkLife").textContent=3;buildBricks()}
+  function reset(){paddleX=c.width/2-30;ballX=c.width/2;ballY=c.height-40;vx=2.4;vy=-2.4;score=0;life=3;
+    const s=document.getElementById("brkScore");if(s)s.textContent=0;
+    const l=document.getElementById("brkLife");if(l)l.textContent=3;
+    buildBricks()}
   function loop(){
-    if(!running)return;
+    if(!running||stopped)return;
     paddleX+=move*4;paddleX=Math.max(0,Math.min(c.width-70,paddleX));
     ballX+=vx;ballY+=vy;
     if(ballX<6||ballX>c.width-6)vx*=-1;
     if(ballY<6)vy*=-1;
     if(ballY>c.height-24&&ballX>paddleX&&ballX<paddleX+70)vy=-Math.abs(vy);
-    bricks.forEach(b=>{if(b.alive&&ballX>b.x&&ballX<b.x+b.w&&ballY>b.y&&ballY<b.y+b.h){b.alive=false;vy*=-1;score+=10;document.getElementById("brkScore").textContent=score}});
-    if(ballY>c.height){life--;document.getElementById("brkLife").textContent=life;if(life<=0){running=false;alert("GAME OVER! Skor: "+score);return}ballX=c.width/2;ballY=c.height-40;vx=2.4;vy=-2.4}
-    if(bricks.every(b=>!b.alive)){running=false;alert("MENANG! Skor: "+score);return}
+    bricks.forEach(b=>{if(b.alive&&ballX>b.x&&ballX<b.x+b.w&&ballY>b.y&&ballY<b.y+b.h){b.alive=false;vy*=-1;score+=10;const s=document.getElementById("brkScore");if(s)s.textContent=score}});
+    if(ballY>c.height){life--;const l=document.getElementById("brkLife");if(l)l.textContent=life;if(life<=0){running=false;themedAlert("GAME OVER! Skor: "+score,"error","GAME OVER");return}ballX=c.width/2;ballY=c.height-40;vx=2.4;vy=-2.4}
+    if(bricks.every(b=>!b.alive)){running=false;themedAlert("MENANG! Skor: "+score,"success","MENANG");return}
     ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
     ctx.fillStyle="#80d83d";bricks.forEach(b=>{if(b.alive){ctx.fillRect(b.x,b.y,b.w,b.h);ctx.strokeStyle="#171717";ctx.strokeRect(b.x,b.y,b.w,b.h)}});
     ctx.fillStyle="#ffbf32";ctx.fillRect(paddleX,c.height-16,70,10);ctx.strokeStyle="#171717";ctx.strokeRect(paddleX,c.height-16,70,10);
     ctx.beginPath();ctx.arc(ballX,ballY,6,0,Math.PI*2);ctx.fillStyle="#ff4b3e";ctx.fill();ctx.stroke();
     raf=requestAnimationFrame(loop);
   }
-  document.getElementById("brkStart").onclick=()=>{reset();running=true;raf=requestAnimationFrame(loop)};
-  document.getElementById("brkLeft").onmousedown=document.getElementById("brkLeft").ontouchstart=()=>move=-1;
-  document.getElementById("brkRight").onmousedown=document.getElementById("brkRight").ontouchstart=()=>move=1;
-  ["mouseup","touchend","mouseleave"].forEach(ev=>{document.getElementById("brkLeft").addEventListener(ev,()=>move=0);document.getElementById("brkRight").addEventListener(ev,()=>move=0)});
+  const startBtn=document.getElementById("brkStart");
+  const leftBtn=document.getElementById("brkLeft");
+  const rightBtn=document.getElementById("brkRight");
+  const onLeftDown=(e)=>{e.preventDefault();move=-1};
+  const onRightDown=(e)=>{e.preventDefault();move=1};
+  const onUp=()=>{move=0};
+  startBtn.onclick=()=>{reset();running=true;stopped=false;raf=requestAnimationFrame(loop)};
+  leftBtn.addEventListener("mousedown",onLeftDown);
+  leftBtn.addEventListener("touchstart",onLeftDown,{passive:false});
+  rightBtn.addEventListener("mousedown",onRightDown);
+  rightBtn.addEventListener("touchstart",onRightDown,{passive:false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev){
+    leftBtn.addEventListener(ev,onUp);
+    rightBtn.addEventListener(ev,onUp);
+  });
   reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
-  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+  return ()=>{
+    stopped=true;running=false;if(raf)cancelAnimationFrame(raf);
+    leftBtn.removeEventListener("mousedown",onLeftDown);
+    leftBtn.removeEventListener("touchstart",onLeftDown);
+    rightBtn.removeEventListener("mousedown",onRightDown);
+    rightBtn.removeEventListener("touchstart",onRightDown);
+    ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev){
+      leftBtn.removeEventListener(ev,onUp);
+      rightBtn.removeEventListener(ev,onUp);
+    });
+  };
 };
+
+/* ============ FIXED: PONG ============ */
 GAMES.pong=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="pongP">0</b></span><span>CPU: <b id="pongC">0</b></span></div>
   <canvas id="pongCanvas" class="snake-canvas" width="320" height="320"></canvas>
   <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="pongUp">▲</button><button id="pongDown">▼</button></div>
   <div class="game-help">Gerakkan raket kamu (kiri) dengan tombol. CPU otomatis di kanan.</div>`;
   const c=document.getElementById("pongCanvas"),ctx=c.getContext("2d");
-  let py=130,cy=130,bx=160,by=160,bvx=3,bvy=2.2,scoreP=0,scoreC=0,running=true,raf=null,move=0;
+  let py=130,cy=130,bx=160,by=160,bvx=3,bvy=2.2,scoreP=0,scoreC=0,running=true,raf=null,move=0,stopped=false;
   function loop(){
+    if(stopped||!running)return;
     py+=move*4;py=Math.max(0,Math.min(c.height-60,py));
     cy+=(by-30-cy)*0.06;cy=Math.max(0,Math.min(c.height-60,cy));
     bx+=bvx;by+=bvy;
     if(by<4||by>c.height-4)bvy*=-1;
     if(bx<16&&by>py&&by<py+60)bvx=Math.abs(bvx);
     if(bx>c.width-16&&by>cy&&by<cy+60)bvx=-Math.abs(bvx);
-    if(bx<0){scoreC++;document.getElementById("pongC").textContent=scoreC;bx=160;by=160}
-    if(bx>c.width){scoreP++;document.getElementById("pongP").textContent=scoreP;bx=160;by=160}
+    if(bx<0){scoreC++;const e=document.getElementById("pongC");if(e)e.textContent=scoreC;bx=160;by=160}
+    if(bx>c.width){scoreP++;const e=document.getElementById("pongP");if(e)e.textContent=scoreP;bx=160;by=160}
     ctx.fillStyle="#171717";ctx.fillRect(0,0,c.width,c.height);
     ctx.fillStyle="#80d83d";ctx.fillRect(6,py,10,60);
     ctx.fillStyle="#ff4b3e";ctx.fillRect(c.width-16,cy,10,60);
     ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(bx,by,6,0,Math.PI*2);ctx.fill();
-    if(running)raf=requestAnimationFrame(loop);
+    raf=requestAnimationFrame(loop);
   }
-  document.getElementById("pongUp").onmousedown=document.getElementById("pongUp").ontouchstart=()=>move=-1;
-  document.getElementById("pongDown").onmousedown=document.getElementById("pongDown").ontouchstart=()=>move=1;
-  ["mouseup","touchend","mouseleave"].forEach(ev=>{document.getElementById("pongUp").addEventListener(ev,()=>move=0);document.getElementById("pongDown").addEventListener(ev,()=>move=0)});
+  const upBtn=document.getElementById("pongUp");
+  const downBtn=document.getElementById("pongDown");
+  const onUpDown=(e)=>{e.preventDefault();move=-1};
+  const onDownDown=(e)=>{e.preventDefault();move=1};
+  const onUp=()=>{move=0};
+  upBtn.addEventListener("mousedown",onUpDown);
+  upBtn.addEventListener("touchstart",onUpDown,{passive:false});
+  downBtn.addEventListener("mousedown",onDownDown);
+  downBtn.addEventListener("touchstart",onDownDown,{passive:false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev){
+    upBtn.addEventListener(ev,onUp);
+    downBtn.addEventListener(ev,onUp);
+  });
   raf=requestAnimationFrame(loop);
-  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+  return ()=>{
+    stopped=true;running=false;if(raf)cancelAnimationFrame(raf);
+    upBtn.removeEventListener("mousedown",onUpDown);
+    upBtn.removeEventListener("touchstart",onUpDown);
+    downBtn.removeEventListener("mousedown",onDownDown);
+    downBtn.removeEventListener("touchstart",onDownDown);
+    ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev){
+      upBtn.removeEventListener(ev,onUp);
+      downBtn.removeEventListener(ev,onUp);
+    });
+  };
 };
+
 GAMES["2048"]=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="g2048Score">0</b></span><span>BEST: <b id="g2048Best">0</b></span></div>
   <div id="g2048Board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#c9bd9c;padding:6px;border:3px solid var(--ink)"></div>
@@ -2142,7 +2337,7 @@ GAMES["2048"]=function(body){
   const colors={0:"#e4d9bb",2:"#fff3c9",4:"#ffe6a0",8:"#ffbf32",16:"#ff9f43",32:"#ff7367",64:"#ff4b3e",128:"#80d83d",256:"#54b9e8",512:"#a855f7",1024:"#171717",2048:"#ffd700"};
   function addTile(){const empty=grid.map((v,i)=>v===0?i:-1).filter(i=>i>=0);if(!empty.length)return;const i=empty[Math.floor(Math.random()*empty.length)];grid[i]=Math.random()<0.9?2:4}
   function render(){
-    document.getElementById("g2048Board").innerHTML=grid.map(v=>`<div style="height:64px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:${v>512?12:16}px;background:${colors[v]||"#171717"};color:${v<=8?"#171717":"#fff"}">${v||""}</div>`).join("");
+    document.getElementById("g2048Board").innerHTML=grid.map(v=>'<div style="height:64px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:' + (v>512?12:16) + 'px;background:' + (colors[v]||"#171717") + ';color:' + (v<=8?"#171717":"#fff") + '">' + (v||"") + '</div>').join("");
     document.getElementById("g2048Score").textContent=score;
     if(score>best){best=score;localStorage.setItem("g2048_best",best);document.getElementById("g2048Best").textContent=best}
   }
@@ -2153,7 +2348,7 @@ GAMES["2048"]=function(body){
     return arr;
   }
   window.g2048Move=function(dir){
-    let g=[...grid],changed=false;
+    let changed=false;
     function getRow(i,rev){let r=[grid[i*4],grid[i*4+1],grid[i*4+2],grid[i*4+3]];return rev?r.reverse():r}
     function getCol(i,rev){let c=[grid[i],grid[i+4],grid[i+8],grid[i+12]];return rev?c.reverse():c}
     let newGrid=Array(16).fill(0);
@@ -2169,7 +2364,7 @@ GAMES["2048"]=function(body){
     if(changed&&grid.every(v=>v!==0)){
       let stuck=true;
       for(let i=0;i<16;i++){if(grid[i]===0)stuck=false}
-      if(stuck)setTimeout(()=>alert("GAME OVER! Skor: "+score),100);
+      if(stuck)setTimeout(()=>themedAlert("GAME OVER! Skor: "+score,"error","GAME OVER"),100);
     }
   };
   addTile();addTile();render();
@@ -2177,6 +2372,7 @@ GAMES["2048"]=function(body){
   document.addEventListener("keydown",keyHandler);
   return ()=>{document.removeEventListener("keydown",keyHandler);delete window.g2048Move};
 };
+
 GAMES.minesweeper=function(body){
   body.innerHTML=`<div class="game-head"><span>MINE: <b id="minesLeft">10</b></span><span id="minesStatus">MAIN</span></div>
   <div id="minesBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px"></div>
@@ -2221,6 +2417,7 @@ GAMES.minesweeper=function(body){
   render();
   return ()=>{};
 };
+
 GAMES.hangman=function(body){
   const words=["VOLKA","STORE","DIGITAL","PRODUK","WEBSITE","DESAIN","PREMIUM","BANNER","ADMIN"];
   body.innerHTML=`<div class="game-head"><span>SALAH: <b id="hangWrong">0</b>/6</span><span id="hangStatus">TEBAK KATA</span></div>
@@ -2232,7 +2429,7 @@ GAMES.hangman=function(body){
   function renderWord(){document.getElementById("hangWord").textContent=word.split("").map(l=>guessed.includes(l)?l:"_").join(" ")}
   function renderLetters(){
     const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    document.getElementById("hangLetters").innerHTML=letters.map(l=>`<button data-l="${l}" ${guessed.includes(l)?"disabled":""} style="height:32px;border:2px solid var(--ink);background:${guessed.includes(l)?"#ccc":"var(--yellow)"};font-weight:700;font-size:10px">${l}</button>`).join("");
+    document.getElementById("hangLetters").innerHTML=letters.map(l=>'<button data-l="' + l + '" ' + (guessed.includes(l)?"disabled":"") + ' style="height:32px;border:2px solid var(--ink);background:' + (guessed.includes(l)?"#ccc":"var(--yellow)") + ';font-weight:700;font-size:10px">' + l + '</button>').join("");
     document.getElementById("hangLetters").querySelectorAll("button").forEach(b=>b.onclick=()=>{
       if(over)return;const l=b.dataset.l;guessed.push(l);
       if(!word.includes(l)){wrong++;document.getElementById("hangWrong").textContent=wrong;if(wrong>=6){over=true;document.getElementById("hangStatus").textContent="KALAH! Kata: "+word}}
@@ -2243,6 +2440,7 @@ GAMES.hangman=function(body){
   renderWord();renderLetters();
   return ()=>{};
 };
+
 GAMES.quiz=function(body){
   const questions=[
     {q:"Ibu kota Indonesia adalah?",opts:["Jakarta","Bandung","Surabaya","Medan"],a:0},
@@ -2260,7 +2458,7 @@ GAMES.quiz=function(body){
     const cur=questions[idx];
     document.getElementById("quizNum").textContent=idx+1;
     document.getElementById("quizQ").textContent=cur.q;
-    document.getElementById("quizOpts").innerHTML=cur.opts.map((o,i)=>`<button data-i="${i}" style="border:3px solid var(--ink);background:var(--cream);padding:12px;font-size:11px;font-weight:700;text-align:left">${escapeHtml(o)}</button>`).join("");
+    document.getElementById("quizOpts").innerHTML=cur.opts.map((o,i)=>'<button data-i="' + i + '" style="border:3px solid var(--ink);background:var(--cream);padding:12px;font-size:11px;font-weight:700;text-align:left">' + escapeHtml(o) + '</button>').join("");
     document.getElementById("quizOpts").querySelectorAll("button").forEach(b=>b.onclick=()=>{
       const i=+b.dataset.i;
       if(i===cur.a){score++;document.getElementById("quizScore").textContent=score;b.style.background="var(--green)"}else b.style.background="var(--red)";
@@ -2270,6 +2468,7 @@ GAMES.quiz=function(body){
   render();
   return ()=>{};
 };
+
 GAMES.sudoku=function(body){
   body.innerHTML=`<div class="game-head"><span id="sudokuStatus">ISI 1-4, TIDAK BOLEH SAMA DI BARIS/KOLOM/KOTAK</span></div>
   <div id="sudokuBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--ink);padding:3px;margin-top:8px"></div>
@@ -2283,7 +2482,7 @@ GAMES.sudoku=function(body){
   let selected=-1;
   const boardEl=document.getElementById("sudokuBoard");
   function render(){
-    boardEl.innerHTML=puzzle.map((v,i)=>`<button data-i="${i}" style="height:56px;border:2px solid #888;background:${fixed[i]?"#e4d9bb":(i===selected?"var(--yellow)":"#fff8dd")};font-size:20px;font-weight:700">${v||""}</button>`).join("");
+    boardEl.innerHTML=puzzle.map((v,i)=>'<button data-i="' + i + '" style="height:56px;border:2px solid #888;background:' + (fixed[i]?"#e4d9bb":(i===selected?"var(--yellow)":"#fff8dd")) + ';font-size:20px;font-weight:700">' + (v||"") + '</button>').join("");
     boardEl.querySelectorAll("button").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(!fixed[i]){selected=i;render()}});
   }
   window.sudokuInput=function(v){
@@ -2294,6 +2493,7 @@ GAMES.sudoku=function(body){
   render();
   return ()=>{delete window.sudokuInput};
 };
+
 GAMES.runner=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="runScore">0</b></span><span>BEST: <b id="runBest">0</b></span></div>
   <canvas id="runCanvas" class="snake-canvas" width="320" height="200" style="aspect-ratio:8/5"></canvas>
@@ -2317,7 +2517,7 @@ GAMES.runner=function(body){
     ctx.strokeStyle="#171717";ctx.beginPath();ctx.moveTo(0,groundY+20);ctx.lineTo(c.width,groundY+20);ctx.stroke();
     ctx.fillStyle="#ff4b3e";obstacles.forEach(o=>ctx.fillRect(o.x,groundY,16,20));
     ctx.fillStyle="#80d83d";ctx.fillRect(20,y-20,20,20);
-    if(dead){running=false;const fs=Math.floor(score/5);if(fs>best){best=fs;localStorage.setItem("run_best",best);document.getElementById("runBest").textContent=best}alert("GAME OVER! Skor: "+fs);return}
+    if(dead){running=false;const fs=Math.floor(score/5);if(fs>best){best=fs;localStorage.setItem("run_best",best);document.getElementById("runBest").textContent=best}themedAlert("GAME OVER! Skor: "+fs,"error","GAME OVER");return}
     raf=requestAnimationFrame(loop);
   }
   function jump(){if(!running){reset();running=true;raf=requestAnimationFrame(loop)}if(y>=groundY)vy=-10}
@@ -2326,24 +2526,28 @@ GAMES.runner=function(body){
   reset();ctx.fillStyle="#fff8dd";ctx.fillRect(0,0,c.width,c.height);
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
+
+/* ============ FIXED: SPACE SHOOTER ============ */
 GAMES.space=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="spaceScore">0</b></span><span>NYAWA: <b id="spaceLife">3</b></span></div>
   <canvas id="spaceCanvas" class="snake-canvas" width="300" height="380" style="aspect-ratio:15/19"></canvas>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="spaceLeft">◀</button><button id="spaceFire">TEMBAK</button><button id="spaceRight">▶</button></div>`;
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="spaceLeft">◀</button><button id="spaceFire">TEMBAK</button><button id="spaceRight">▶</button></div>
+  <div class="game-help">Gerakkan pesawat pakai ◀ ▶ dan tembak musuh pakai tombol TEMBAK.</div>`;
   const c=document.getElementById("spaceCanvas"),ctx=c.getContext("2d");
-  let shipX=c.width/2,bullets=[],enemies=[],score=0,life=3,running=true,raf=null,move=0,spawnT=0;
+  let shipX=c.width/2,bullets=[],enemies=[],score=0,life=3,running=true,raf=null,move=0,spawnT=0,stopped=false;
   function loop(){
+    if(stopped||!running)return;
     shipX+=move*4;shipX=Math.max(15,Math.min(c.width-15,shipX));
     bullets.forEach(b=>b.y-=6);bullets=bullets.filter(b=>b.y>0);
     spawnT++;if(spawnT>50){spawnT=0;enemies.push({x:20+Math.random()*(c.width-40),y:-10})}
     enemies.forEach(e=>e.y+=1.5);
     enemies=enemies.filter(e=>{
-      if(e.y>c.height){life--;document.getElementById("spaceLife").textContent=life;return false}
+      if(e.y>c.height){life--;const el=document.getElementById("spaceLife");if(el)el.textContent=life;return false}
       return true;
     });
     bullets.forEach(b=>{
       enemies.forEach(e=>{
-        if(!e.dead&&Math.abs(b.x-e.x)<14&&Math.abs(b.y-e.y)<14){e.dead=true;b.dead=true;score+=10;document.getElementById("spaceScore").textContent=score}
+        if(!e.dead&&Math.abs(b.x-e.x)<14&&Math.abs(b.y-e.y)<14){e.dead=true;b.dead=true;score+=10;const el=document.getElementById("spaceScore");if(el)el.textContent=score}
       });
     });
     enemies=enemies.filter(e=>!e.dead);bullets=bullets.filter(b=>!b.dead);
@@ -2351,16 +2555,38 @@ GAMES.space=function(body){
     ctx.fillStyle="#ffbf32";bullets.forEach(b=>ctx.fillRect(b.x-2,b.y-6,4,10));
     ctx.fillStyle="#ff4b3e";enemies.forEach(e=>{ctx.beginPath();ctx.arc(e.x,e.y,12,0,Math.PI*2);ctx.fill()});
     ctx.fillStyle="#80d83d";ctx.beginPath();ctx.moveTo(shipX,c.height-30);ctx.lineTo(shipX-14,c.height-8);ctx.lineTo(shipX+14,c.height-8);ctx.closePath();ctx.fill();
-    if(life<=0){running=false;alert("GAME OVER! Skor: "+score);return}
-    if(running)raf=requestAnimationFrame(loop);
+    if(life<=0){running=false;themedAlert("GAME OVER! Skor: "+score,"error","GAME OVER");return}
+    raf=requestAnimationFrame(loop);
   }
-  document.getElementById("spaceLeft").onmousedown=document.getElementById("spaceLeft").ontouchstart=()=>move=-1;
-  document.getElementById("spaceRight").onmousedown=document.getElementById("spaceRight").ontouchstart=()=>move=1;
-  ["mouseup","touchend","mouseleave"].forEach(ev=>{document.getElementById("spaceLeft").addEventListener(ev,()=>move=0);document.getElementById("spaceRight").addEventListener(ev,()=>move=0)});
-  document.getElementById("spaceFire").onclick=()=>bullets.push({x:shipX,y:c.height-30});
+  const leftBtn=document.getElementById("spaceLeft");
+  const rightBtn=document.getElementById("spaceRight");
+  const fireBtn=document.getElementById("spaceFire");
+  const onLeftDown=(e)=>{e.preventDefault();move=-1};
+  const onRightDown=(e)=>{e.preventDefault();move=1};
+  const onUp=()=>{move=0};
+  leftBtn.addEventListener("mousedown",onLeftDown);
+  leftBtn.addEventListener("touchstart",onLeftDown,{passive:false});
+  rightBtn.addEventListener("mousedown",onRightDown);
+  rightBtn.addEventListener("touchstart",onRightDown,{passive:false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev){
+    leftBtn.addEventListener(ev,onUp);
+    rightBtn.addEventListener(ev,onUp);
+  });
+  fireBtn.onclick=()=>{if(!stopped&&running)bullets.push({x:shipX,y:c.height-30})};
   raf=requestAnimationFrame(loop);
-  return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
+  return ()=>{
+    stopped=true;running=false;if(raf)cancelAnimationFrame(raf);
+    leftBtn.removeEventListener("mousedown",onLeftDown);
+    leftBtn.removeEventListener("touchstart",onLeftDown);
+    rightBtn.removeEventListener("mousedown",onRightDown);
+    rightBtn.removeEventListener("touchstart",onRightDown);
+    ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev){
+      leftBtn.removeEventListener(ev,onUp);
+      rightBtn.removeEventListener(ev,onUp);
+    });
+  };
 };
+
 GAMES.puzzle=function(body){
   body.innerHTML=`<div class="game-head"><span>GERAKAN: <b id="puzMoves">0</b></span><span id="puzStatus">GESER UNTUK MENYUSUN 1-8</span></div>
   <div id="puzBoard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px"></div>
@@ -2369,7 +2595,7 @@ GAMES.puzzle=function(body){
   function shuffle(){for(let i=0;i<200;i++){const empty=tiles.indexOf(0);const neighbors=getNeighbors(empty);const swap=neighbors[Math.floor(Math.random()*neighbors.length)];[tiles[empty],tiles[swap]]=[tiles[swap],tiles[empty]]}}
   function getNeighbors(i){const r=Math.floor(i/3),cCol=i%3,res=[];if(r>0)res.push(i-3);if(r<2)res.push(i+3);if(cCol>0)res.push(i-1);if(cCol<2)res.push(i+1);return res}
   function render(){
-    document.getElementById("puzBoard").innerHTML=tiles.map((t,i)=>`<button data-i="${i}" style="height:80px;border:3px solid var(--ink);background:${t===0?"transparent":"var(--cream)"};font-size:24px;font-weight:700;box-shadow:${t===0?"none":"3px 3px 0 var(--ink)"}">${t||""}</button>`).join("");
+    document.getElementById("puzBoard").innerHTML=tiles.map((t,i)=>'<button data-i="' + i + '" style="height:80px;border:3px solid var(--ink);background:' + (t===0?"transparent":"var(--cream)") + ';font-size:24px;font-weight:700;box-shadow:' + (t===0?"none":"3px 3px 0 var(--ink)") + '">' + (t||"") + '</button>').join("");
     document.getElementById("puzMoves").textContent=moves;
     document.getElementById("puzBoard").querySelectorAll("button").forEach(b=>b.onclick=()=>{
       const i=+b.dataset.i;const empty=tiles.indexOf(0);
@@ -2381,6 +2607,7 @@ GAMES.puzzle=function(body){
   shuffle();render();
   return ()=>{};
 };
+
 GAMES.connect4=function(body){
   body.innerHTML=`<div class="game-head"><span id="c4Status">GILIRAN: MERAH</span></div>
   <div id="c4Board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:#3a6fa5;padding:6px;border:3px solid var(--ink);margin-top:8px"></div>
@@ -2423,6 +2650,7 @@ GAMES.connect4=function(body){
   render();
   return ()=>{};
 };
+
 function startSnake(){
   clearInterval(snakeTimer);snake=[{x:9,y:9},{x:8,y:9},{x:7,y:9}];snakeDir={x:1,y:0};nextSnakeDir={x:1,y:0};snakeScore=0;spawnFood();snakeRunning=true;
   document.getElementById("snakeScore").textContent=0;document.getElementById("snakeStatus").textContent="MAIN";snakeTimer=setInterval(stepSnake,110);drawSnake();
@@ -2470,7 +2698,7 @@ document.addEventListener("keydown",e=>{
   if(map[e.key]&&document.getElementById("gamePage").classList.contains("active")){e.preventDefault();setSnakeDirection(...map[e.key])}
 });
 
-/* INIT */
+/* ============ INIT ============ */
 loadLocalData();
 loadCustomProducts();
 fetchKeylist().then(function(){
@@ -2492,11 +2720,14 @@ fetchKeylist().then(function(){
 renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
 updateAuthUI();
 
-// ==== INITIAL PAGE ====
+// ==== INITIAL PAGE + SPLASH ====
 if (!currentUser) {
   showPage("loginPage");
 } else {
-  showPage("home");
+  // Auto-login → tampilkan splash dulu
+  showSplash(function() {
+    showPage("home");
+  });
 }
 </script>
 </body>
