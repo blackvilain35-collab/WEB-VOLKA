@@ -303,10 +303,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .splash-fallback .small{font-size:11px;margin-top:14px;letter-spacing:3px;color:var(--cream)}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
-/* Loader di bawah */
-.splash-loader{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);border:3px solid var(--ink);background:var(--cream);color:var(--ink);padding:9px 18px;font-size:10px;font-weight:700;box-shadow:4px 4px 0 var(--green);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
-.splash-loader .material-symbols-rounded{font-size:18px;animation:spinDragon 1.2s linear infinite}
-
 /* Watermark transparan */
 .splash-watermark{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.35);z-index:6;text-shadow:2px 2px 0 rgba(0,0,0,.8),0 0 8px rgba(128,216,61,.4);padding:0 16px;pointer-events:none;user-select:none}
 .splash-watermark .volka{color:rgba(128,216,61,.6)}
@@ -661,11 +657,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <video id="splashVideo" src="splash.mp4" muted playsinline preload="auto"></video>
     <div class="splash-fallback" id="splashFallback">
       <div class="big">VOLKA STORE</div>
-      <div class="small">LOADING DASHBOARD...</div>
+      <div class="small">LOADING...</div>
     </div>
-  </div>
-  <div class="splash-loader">
-    <span class="material-symbols-rounded">autorenew</span> MEMUAT DASHBOARD...
   </div>
   <div class="splash-watermark">POWERED BY: <span class="volka">VOLKA</span></div>
 </div>
@@ -757,7 +750,7 @@ document.getElementById("customModal").addEventListener("click", function(e) {
 });
 
 /* ============================================================
-   SPLASH SCREEN FULL (durasi mengikuti video)
+   SPLASH SCREEN FULL (tunggu video habis baru masuk)
    ============================================================ */
 function showSplash(callback) {
   const overlay = document.getElementById("splashOverlay");
@@ -788,35 +781,41 @@ function showSplash(callback) {
     }, 450);
   }
 
+  // Reset video
   try {
     video.currentTime = 0;
     video.style.display = "block";
   } catch (e) {}
 
+  // === Video habis → langsung masuk dashboard ===
   video.onended = finish;
 
+  // === Video error / file tidak ada ===
   video.onerror = function() {
     if (!videoPlayed) {
       video.style.display = "none";
       fallback.classList.add("show");
-      fallbackTimer = setTimeout(finish, 2200);
+      fallbackTimer = setTimeout(finish, 3000);
     }
   };
 
+  // Coba play video
   const p = video.play();
   if (p && p.then) {
     p.then(function() {
       videoPlayed = true;
     }).catch(function() {
+      // Autoplay diblokir / file tidak ada → fallback 3 detik
       video.style.display = "none";
       fallback.classList.add("show");
-      fallbackTimer = setTimeout(finish, 2200);
+      fallbackTimer = setTimeout(finish, 3000);
     });
   } else {
     videoPlayed = true;
   }
 
-  safetyTimer = setTimeout(finish, 60000);
+  // Safety: kalau video nge-hang lebih dari 5 menit, paksa selesai
+  safetyTimer = setTimeout(finish, 300000);
 }
 
 /* ============================================================
@@ -993,6 +992,9 @@ async function submitLogin() {
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
 
+  // Sembunyikan halaman dulu biar splash bersih
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+
   showSplash(function() {
     showPage("home");
   });
@@ -1016,6 +1018,8 @@ async function submitRegister() {
   document.getElementById("regUsername").value = "";
   document.getElementById("regPassword").value = "";
   document.getElementById("regConfirm").value = "";
+
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
 
   showSplash(function() {
     showPage("home");
@@ -2728,14 +2732,17 @@ fetchKeylist().then(function(){
 renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
 updateAuthUI();
 
-// ==== INITIAL PAGE + SPLASH ====
-if (!currentUser) {
-  showPage("loginPage");
-} else {
-  showSplash(function() {
+/* ============ SPLASH SELALU MUNCUL SAAT BUKA / REFRESH ============ */
+// Sembunyikan semua halaman dulu biar splash kelihatan bersih
+document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+
+showSplash(function() {
+  if (!currentUser) {
+    showPage("loginPage");
+  } else {
     showPage("home");
-  });
-}
+  }
+});
 </script>
 </body>
 </html>
