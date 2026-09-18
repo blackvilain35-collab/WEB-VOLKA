@@ -99,16 +99,49 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .feature-grid{padding:0 14px 100px;display:grid;gap:11px}.feature-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;display:flex;align-items:center;gap:12px;text-align:left;width:100%}
 .feature-card.game{background:var(--green)}.feature-card.converter{background:var(--blue)}.feature-card.music{background:var(--yellow)}.feature-card .feature-icon{width:48px;height:48px;border:3px solid var(--ink);background:#fff3c9;display:grid;place-items:center;flex:none}.feature-name{font-weight:700;font-size:12px}.feature-hint{font-size:9px;line-height:1.5;margin-top:4px}
 .ai-page,.game-page,.converter-page,.music-page{padding-bottom:30px}.tool-body{padding:14px}
-.ai-panel{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);overflow:hidden}.ai-head{display:flex;align-items:center;gap:8px;padding:10px;background:var(--blue);border-bottom:3px solid var(--ink);font-weight:700;font-size:12px}
-.ai-log{min-height:380px;max-height:55dvh;overflow:auto;padding:15px;background:#fff8dd}.msg{margin:10px 0;padding:9px 11px;border:2px solid var(--ink);width:fit-content;max-width:90%;font-size:10px;line-height:1.55;position:relative}
-.msg.bot{background:#fff;border-radius:2px 12px 12px 2px;clip-path:polygon(0 0,100% 0,100% 86%,88% 100%,0 100%)}.msg.user{margin-left:auto;background:var(--green);clip-path:polygon(0 0,100% 0,100% 100%,12% 100%,0 86%)}
-.ai-row{display:flex;gap:6px;padding:10px;border-top:3px solid var(--ink);background:#fff0bf}.ai-row input{flex:1;border:2px solid var(--ink);background:#fff;padding:8px;font-size:10px;outline:none}.ai-row button{border:2px solid var(--ink);background:var(--yellow);padding:7px 9px;font-weight:700;font-size:10px}
-.typing-dragon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px}
-.typing-dragon svg{width:26px;height:26px;animation:spinDragon 1.4s linear infinite}
-.typing-dragon svg .tail{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-dasharray:22 45;animation:dragonTail 1.4s ease-in-out infinite}
-.typing-dragon svg .head{fill:var(--green);stroke:var(--ink);stroke-width:1.5}
-@keyframes spinDragon{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes dragonTail{0%,100%{stroke-dasharray:22 45}50%{stroke-dasharray:40 45}}
+
+/* ============ CHAT GLOBAL ============ */
+.chat-page{padding-bottom:0}
+.chat-container{display:flex;flex-direction:column;height:calc(100dvh - 68px);background:#fff8dd;position:relative;overflow:hidden}
+.chat-messages{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.chat-empty{text-align:center;color:#666;font-size:10px;padding:40px 20px;font-style:italic;line-height:1.8}
+.chat-empty .material-symbols-rounded{font-size:38px;display:block;margin:0 auto 8px;opacity:.4}
+.chat-msg{display:flex;gap:8px;align-items:flex-end;max-width:86%;position:relative;transition:transform .18s ease;will-change:transform;touch-action:pan-y}
+.chat-msg.own{margin-left:auto;flex-direction:row-reverse}
+.chat-msg.swiping{transition:none}
+.chat-avatar{width:34px;height:34px;border:2px solid var(--ink);background:var(--blue);display:grid;place-items:center;flex:none;overflow:hidden;box-shadow:2px 2px 0 var(--ink)}
+.chat-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.chat-avatar .material-symbols-rounded{font-size:20px;color:#fff}
+.chat-msg.own .chat-avatar{background:var(--green)}
+.chat-bubble{background:#fff;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);padding:8px 10px;font-size:11px;line-height:1.5;position:relative;min-width:70px;max-width:100%;border-radius:3px 12px 12px 12px}
+.chat-msg.own .chat-bubble{background:var(--green);border-radius:12px 3px 12px 12px}
+.chat-name{font-size:9px;font-weight:700;color:var(--red);margin-bottom:3px;display:block}
+.chat-msg.own .chat-name{color:#0a4d0a}
+.chat-text{white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.chat-time{font-size:8px;color:#666;text-align:right;margin-top:5px;display:flex;align-items:center;justify-content:flex-end;gap:3px}
+.chat-msg.own .chat-time{color:#0a4d0a}
+.chat-time .material-symbols-rounded{font-size:11px}
+.chat-reply-preview{background:rgba(0,0,0,.07);border-left:3px solid var(--red);padding:5px 8px;margin-bottom:6px;font-size:9px;line-height:1.4;border-radius:3px;cursor:pointer}
+.chat-reply-preview .who{font-weight:700;color:var(--red);display:block;margin-bottom:2px;font-size:8px}
+.chat-reply-preview .txt{color:#555;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:190px;display:block}
+.chat-reply-bar{display:flex;gap:8px;align-items:center;padding:8px 10px;border-top:2px solid var(--ink);background:#ffd06a}
+.chat-reply-content{flex:1;min-width:0;border-left:3px solid var(--red);padding-left:8px}
+.chat-reply-label{font-size:9px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px}
+.chat-reply-text{font-size:10px;color:#444;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+.chat-reply-cancel{width:34px;height:34px;flex:none;border:2px solid var(--ink);background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:2px 2px 0 var(--ink);padding:0;cursor:pointer}
+.chat-reply-cancel .material-symbols-rounded{color:#fff;font-size:18px}
+.chat-input-row{display:flex;gap:6px;padding:10px;border-top:3px solid var(--ink);background:#fff0bf}
+.chat-input-row input{flex:1;border:3px solid var(--ink);background:#fff;padding:11px;font-size:11px;outline:none;font-family:inherit;color:var(--ink);min-width:0}
+.chat-input-row input:focus{background:#fffff0}
+.chat-input-row button{border:3px solid var(--ink);background:var(--green);box-shadow:2px 2px 0 var(--ink);padding:0 14px;font-weight:700;display:grid;place-items:center;cursor:pointer}
+.chat-input-row button .material-symbols-rounded{font-size:20px}
+.chat-date-sep{text-align:center;font-size:9px;color:#666;margin:8px 0;font-style:italic}
+.chat-msg .swipe-reply-icon{position:absolute;left:-40px;top:50%;transform:translateY(-50%) scale(.5);width:30px;height:30px;border:2px solid var(--ink);background:var(--yellow);display:grid;place-items:center;opacity:0;transition:opacity .15s,transform .15s;border-radius:50%;pointer-events:none}
+.chat-msg.swiping .swipe-reply-icon,.chat-msg.swipe-ready .swipe-reply-icon{opacity:1;transform:translateY(-50%) scale(1)}
+.chat-msg.own .swipe-reply-icon{left:auto;right:-40px}
+.chat-msg.swipe-ready{background:rgba(128,216,61,.15);border-radius:8px}
+.chat-msg .swipe-reply-icon .material-symbols-rounded{font-size:16px}
+
 .game-wrap{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:8px}.game-head{display:flex;justify-content:space-between;color:var(--ink);font-size:10px;padding:5px 2px 8px}
 .snake-canvas{width:100%;aspect-ratio:1/1;display:block;background:#fff8dd;border:2px solid var(--ink);touch-action:none}
 .game-controls{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.game-controls button{height:42px;border:3px solid var(--ink);background:var(--yellow);font-weight:700}.game-controls .empty-control{visibility:hidden}.game-help{margin-top:10px;border:3px solid var(--ink);background:var(--cream);padding:10px;font-size:9px;line-height:1.6}
@@ -395,9 +428,9 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
   <div class="section-title"><span>FITUR STORE</span></div>
   <section class="feature-grid">
-    <button class="feature-card" onclick="showPage('aiPage')">
-      <div class="feature-icon"><span class="material-symbols-rounded">smart_toy</span></div>
-      <div><div class="feature-name">VOLKA AI</div><div class="feature-hint">Buka halaman chat AI saat tombol ditekan.</div></div>
+    <button class="feature-card" onclick="showPage('globalChatPage')">
+      <div class="feature-icon"><span class="material-symbols-rounded">forum</span></div>
+      <div><div class="feature-name">CHAT GLOBAL</div><div class="feature-hint">Ngobrol bareng semua member & admin.</div></div>
     </button>
     <button class="feature-card game" onclick="showPage('gameCenter')">
       <div class="feature-icon"><span class="material-symbols-rounded">sports_esports</span></div>
@@ -551,7 +584,16 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
       <div class="stat-card"><div class="stat-num" id="statMember">0</div><div class="stat-label">MEMBER</div></div>
     </div>
     <div class="admin-section">
-      <div class="admin-section-title"><span class="material-symbols-rounded">person_add</span> TAMBAH / UBAH JADI ADMIN</div>
+      <div class="admin-section-title"><span class="material-symbols-rounded">person_add</span> BUAT AKUN BARU</div>
+      <div class="admin-form">
+        <input id="createUsername" placeholder="Username (min 3 huruf)" autocapitalize="none">
+        <input id="createPassword" type="password" placeholder="Password (min 6 karakter)">
+        <button onclick="createAccountFromPanel()"><span class="material-symbols-rounded">person_add</span> BUAT AKUN</button>
+      </div>
+      <div class="admin-hint">Setelah klik BUAT AKUN → kamu akan ditanya mau role MEMBER atau ADMIN.</div>
+    </div>
+    <div class="admin-section">
+      <div class="admin-section-title"><span class="material-symbols-rounded">manage_accounts</span> TAMBAH / UBAH JADI ADMIN</div>
       <div class="admin-form">
         <input id="addAdminUsername" placeholder="Username" autocapitalize="none">
         <input id="addAdminPassword" type="password" placeholder="Password (kalau user baru)">
@@ -612,16 +654,27 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
-<main id="aiPage" class="page ai-page">
+<main id="globalChatPage" class="page chat-page">
   <div class="topbar">
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
-    <div><div class="top-title">VOLKA AI</div><div class="top-sub">ASISTEN STORE</div></div>
+    <div><div class="top-title">CHAT GLOBAL</div><div class="top-sub">NGOBROL BARENG SEMUA USER</div></div>
+    <div class="header-spacer"></div>
+    <button class="header-btn" onclick="renderGlobalChat(true)" title="Refresh"><span class="material-symbols-rounded">refresh</span></button>
   </div>
-  <div class="tool-body"><div class="ai-panel">
-    <div class="ai-head"><span class="material-symbols-rounded">smart_toy</span>VOLKA AI</div>
-    <div class="ai-log" id="aiLog"><div class="msg bot">Halo! Saya VOLKA AI. Ada yang ingin ditanyakan tentang produk atau store?</div></div>
-    <div class="ai-row"><input id="aiInput" placeholder="Tulis pertanyaan..." maxlength="500"><button type="button" onclick="askAI()">KIRIM</button></div>
-  </div></div>
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-reply-bar hidden" id="chatReplyBar">
+      <div class="chat-reply-content">
+        <div class="chat-reply-label">Membalas <span id="chatReplyUser">-</span></div>
+        <div class="chat-reply-text" id="chatReplyText">-</div>
+      </div>
+      <button class="chat-reply-cancel" type="button" onclick="cancelChatReply()"><span class="material-symbols-rounded">close</span></button>
+    </div>
+    <div class="chat-input-row">
+      <input id="chatInput" placeholder="Tulis pesan..." maxlength="500" autocomplete="off">
+      <button type="button" onclick="sendGlobalMessage()"><span class="material-symbols-rounded">send</span></button>
+    </div>
+  </div>
 </main>
 
 <main id="musicPage" class="page music-page">
@@ -876,7 +929,6 @@ function showSplash(callback) {
       if (typeof callback === "function") callback();
     }, 500);
   }
-  // Durasi splash: 3.2 detik
   setTimeout(finish, 3200);
 }
 
@@ -889,8 +941,8 @@ const HARDCODED_ADMIN = { username: "VOLZ", password: "08292012", role: "admin" 
 let currentUser = null;
 let keylistUsers = [];
 let localUsers = [];
-let userOverrides = {}; // { username_lower: { role: "admin" } }
-let deletedUsers = []; // [username_lower]
+let userOverrides = {};
+let deletedUsers = [];
 
 function loadUserOverrides() {
   try { userOverrides = JSON.parse(localStorage.getItem("volka_user_overrides") || "{}"); } catch(e) { userOverrides = {}; }
@@ -959,7 +1011,7 @@ function getAllUsers() {
     if (!u || !u.username) return;
     const k = String(u.username).toLowerCase();
     if (seen[k]) return;
-    if (deletedUsers.indexOf(k) !== -1) return; // user dihapus
+    if (deletedUsers.indexOf(k) !== -1) return;
     seen[k] = true;
     const copy = { username: u.username, password: u.password, role: String(u.role || "member").toLowerCase() };
     if (userOverrides[k] && userOverrides[k].role) copy.role = userOverrides[k].role;
@@ -1124,13 +1176,11 @@ function updateAuthUI() {
     if (isAdmin) btn.classList.remove("hidden");
     else btn.classList.add("hidden");
   });
-  // Admin panel card
   const adminCard = document.getElementById("adminPanelCard");
   if (adminCard) {
     if (isAdmin) adminCard.classList.remove("hidden");
     else adminCard.classList.add("hidden");
   }
-  // Notif badge
   updateAdminNotifBadge();
 }
 function updateAdminNotifBadge() {
@@ -1214,12 +1264,15 @@ function openAdminPanel() {
     themedAlert("Hanya admin yang bisa membuka panel ini.", "error", "AKSES DITOLAK");
     return;
   }
-  // Reset form
   const uInp = document.getElementById("addAdminUsername");
   const pInp = document.getElementById("addAdminPassword");
+  const cuInp = document.getElementById("createUsername");
+  const cpInp = document.getElementById("createPassword");
   const sInp = document.getElementById("adminSearchInput");
   if (uInp) uInp.value = "";
   if (pInp) pInp.value = "";
+  if (cuInp) cuInp.value = "";
+  if (cpInp) cpInp.value = "";
   if (sInp) sInp.value = "";
   renderAdminStats();
   renderAdminUsers();
@@ -1274,20 +1327,15 @@ async function deleteUserFromPanel(username) {
   const ok = await themedConfirm('Hapus user "' + username + '"?\n\nUser ini tidak akan bisa login lagi.', { okLabel: "HAPUS", okStyle: "danger", title: "HAPUS USER" });
   if (!ok) return;
   const k = String(username).toLowerCase();
-  // Hapus dari localUsers
   const before = localUsers.length;
   localUsers = localUsers.filter(function(u){ return String(u.username).toLowerCase() !== k; });
   if (localUsers.length !== before) saveLocalUsers();
-  // Tambahkan ke deletedUsers (biar keylist pun bisa dihapus)
   if (deletedUsers.indexOf(k) === -1) {
     deletedUsers.push(k);
     saveDeletedUsers();
   }
-  // Hapus override role
   if (userOverrides[k]) { delete userOverrides[k]; saveUserOverrides(); }
-  // Hapus foto profil
   removeProfilePhoto(k);
-  // Kalau user yang dihapus adalah user yang sedang login → auto logout
   if (currentUser && String(currentUser.username).toLowerCase() === k) {
     currentUser = null;
     localStorage.removeItem("volka_user");
@@ -1310,13 +1358,10 @@ async function addAdminFromPanel() {
   const existing = findUser(u);
 
   if (existing) {
-    // Ubah role user yang sudah ada jadi admin
     const ok = await themedConfirm('Ubah "' + existing.username + '" jadi ADMIN?', { okLabel: "UBAH", okStyle: "primary", type: "info" });
     if (!ok) return;
-    // Simpan override
     userOverrides[k] = { role: "admin" };
     saveUserOverrides();
-    // Kalau user tersebut di localUsers, ubah juga
     const lu = localUsers.find(x => String(x.username).toLowerCase() === k);
     if (lu) { lu.role = "admin"; saveLocalUsers(); }
     document.getElementById("addAdminUsername").value = "";
@@ -1324,12 +1369,10 @@ async function addAdminFromPanel() {
     renderAdminStats(); renderAdminUsers(); updateAuthUI();
     themedAlert('"' + existing.username + '" sekarang jadi ADMIN.', "success", "BERHASIL");
   } else {
-    // Buat akun admin baru
     if (!p || p.length < 6) { themedAlert("Password minimal 6 karakter untuk user baru.", "error"); return; }
     const newAdmin = { username: u, password: p, role: "admin" };
     localUsers.push(newAdmin);
     saveLocalUsers();
-    // Hapus dari deletedUsers kalau ada
     const di = deletedUsers.indexOf(k);
     if (di !== -1) { deletedUsers.splice(di, 1); saveDeletedUsers(); }
     document.getElementById("addAdminUsername").value = "";
@@ -1337,6 +1380,42 @@ async function addAdminFromPanel() {
     renderAdminStats(); renderAdminUsers(); updateAuthUI();
     themedAlert('Admin baru "' + u + '" berhasil dibuat.', "success", "BERHASIL");
   }
+}
+async function createAccountFromPanel() {
+  if (!currentUser || currentUser.role !== "admin") return;
+  const u = (document.getElementById("createUsername").value || "").trim();
+  const p = (document.getElementById("createPassword").value || "");
+  if (u.length < 3) { themedAlert("Username minimal 3 karakter.", "error"); return; }
+  if (p.length < 6) { themedAlert("Password minimal 6 karakter.", "error"); return; }
+  if (findUser(u)) { themedAlert("Username sudah dipakai.", "error"); return; }
+
+  const choice = await new Promise(function(resolve) {
+    showModal({
+      type: "info",
+      title: "PILIH ROLE AKUN",
+      message: 'Akun "' + u + '" mau dibuat sebagai apa?',
+      buttons: [
+        { label: "BATAL",  icon: "close",         style: "",       onClick: function(){ resolve(null); } },
+        { label: "MEMBER", icon: "person",        style: "warn",   onClick: function(){ resolve("member"); } },
+        { label: "ADMIN",  icon: "shield_person", style: "danger", onClick: function(){ resolve("admin"); } }
+      ],
+      onClose: function(){ resolve(null); }
+    });
+  });
+  if (!choice) return;
+
+  localUsers.push({ username: u, password: p, role: choice });
+  saveLocalUsers();
+  const k = u.toLowerCase();
+  const di = deletedUsers.indexOf(k);
+  if (di !== -1) { deletedUsers.splice(di, 1); saveDeletedUsers(); }
+
+  document.getElementById("createUsername").value = "";
+  document.getElementById("createPassword").value = "";
+  renderAdminStats();
+  renderAdminUsers();
+  updateAuthUI();
+  themedAlert('Akun ' + choice.toUpperCase() + ' "' + u + '" berhasil dibuat.', "success", "BERHASIL");
 }
 
 /* ============================================================
@@ -1526,7 +1605,7 @@ function showPage(id,btn=null){
   }
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   const page=document.getElementById(id);if(!page)return;page.classList.add("active");
-  if(["productDetail","checkout","aiPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage","adminPanelPage"].includes(id))hideBottomNav();else showBottomNav();
+  if(["productDetail","checkout","globalChatPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage","adminPanelPage"].includes(id))hideBottomNav();else showBottomNav();
   if(btn){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="gamePage")drawSnake();
@@ -1534,6 +1613,7 @@ function showPage(id,btn=null){
   if(id==="musicPage")renderMusicPage();
   if(id==="animePage"){ renderSourceChips(); renderGenreChips(); if(!animeHomeLoaded) loadAnimeHome(); }
   if(id==="adminPanelPage"){ renderAdminStats(); renderAdminUsers(); }
+  if(id==="globalChatPage"){ loadGlobalMessages(); renderGlobalChat(true); }
 }
 function openAnimeFeature() {
   if (!currentUser) { showPage("loginPage"); return; }
@@ -1665,19 +1745,252 @@ document.getElementById("tiktok").href=CONFIG.links.tiktok;
 document.getElementById("xSocial").href=CONFIG.links.xSocial;
 document.getElementById("saweria").href=CONFIG.links.saweria;
 
-function typingDragonSvg(){
-  return '<span class="typing-dragon"><svg viewBox="0 0 30 30"><circle class="tail" cx="15" cy="15" r="10"/><circle class="head" cx="15" cy="5" r="3"/></svg></span>';
+/* ============================================================
+   CHAT GLOBAL
+   ============================================================ */
+let globalMessages = [];
+let chatReplyTargetId = null;
+
+function loadGlobalMessages() {
+  try { globalMessages = JSON.parse(localStorage.getItem("volka_global_chat") || "[]"); }
+  catch (e) { globalMessages = []; }
 }
-async function askAI(){
-  const input=document.getElementById("aiInput"),log=document.getElementById("aiLog"),q=input.value.trim();if(!q)return;
-  log.innerHTML+=`<div class="msg user">${escapeHtml(q)}</div>`;input.value="";
-  const id="typing-"+Date.now();
-  log.innerHTML+=`<div class="msg bot" id="${id}">${typingDragonSvg()}</div>`;log.scrollTop=log.scrollHeight;
-  await new Promise(r=>setTimeout(r,900));
-  const el=document.getElementById(id);if(el)el.innerHTML="Untuk pertanyaan produk, silakan cek Store atau chat Admin VOLKA STORE.";
-  log.scrollTop=log.scrollHeight;
+function saveGlobalMessages() {
+  try {
+    localStorage.setItem("volka_global_chat", JSON.stringify(globalMessages));
+    return true;
+  } catch (e) {
+    themedAlert("Gagal menyimpan pesan (storage penuh).", "error");
+    return false;
+  }
 }
-document.getElementById("aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")askAI()});
+function genMsgId() {
+  return "msg-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+}
+function formatChatTime(ts) {
+  const d = new Date(ts);
+  return String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+}
+function formatChatDate(ts) {
+  const d = new Date(ts);
+  const today = new Date();
+  const yest = new Date(); yest.setDate(today.getDate() - 1);
+  if (d.toDateString() === today.toDateString()) return "Hari ini";
+  if (d.toDateString() === yest.toDateString()) return "Kemarin";
+  return d.toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
+}
+function renderGlobalChat(scrollToBottom) {
+  const list = document.getElementById("chatMessages");
+  if (!list) return;
+  loadGlobalMessages();
+
+  if (!globalMessages.length) {
+    list.innerHTML = '<div class="chat-empty"><span class="material-symbols-rounded">forum</span>Belum ada pesan.<br>Jadilah yang pertama ngobrol!</div>';
+    return;
+  }
+
+  const sorted = globalMessages.slice().sort(function(a,b){ return a.time - b.time; });
+  let lastDate = "";
+  let html = "";
+  sorted.forEach(function(m) {
+    const dateLabel = formatChatDate(m.time);
+    if (dateLabel !== lastDate) {
+      html += '<div class="chat-date-sep">' + dateLabel + '</div>';
+      lastDate = dateLabel;
+    }
+    const isOwn = currentUser && String(currentUser.username).toLowerCase() === String(m.username).toLowerCase();
+    const photo = getProfilePhoto(m.username);
+    const avatarInner = photo
+      ? '<img src="' + photo + '" alt="">'
+      : '<span class="material-symbols-rounded">' + (isOwn ? "account_circle" : "person") + '</span>';
+
+    let replyHtml = "";
+    if (m.replyTo && m.replyTo.username) {
+      replyHtml =
+        '<div class="chat-reply-preview">' +
+          '<span class="who">' + escapeHtml(m.replyTo.username) + '</span>' +
+          '<span class="txt">' + escapeHtml(m.replyTo.text || "") + '</span>' +
+        '</div>';
+    }
+
+    html +=
+      '<div class="chat-msg' + (isOwn ? " own" : "") + '" data-id="' + escapeHtml(m.id) + '">' +
+        '<div class="swipe-reply-icon"><span class="material-symbols-rounded">reply</span></div>' +
+        '<div class="chat-avatar">' + avatarInner + '</div>' +
+        '<div class="chat-bubble">' +
+          '<span class="chat-name">' + escapeHtml(m.username) + '</span>' +
+          replyHtml +
+          '<div class="chat-text">' + escapeHtml(m.text).replace(/\n/g, "<br>") + '</div>' +
+          '<div class="chat-time">' + formatChatTime(m.time) + '</div>' +
+        '</div>' +
+      '</div>';
+  });
+
+  list.innerHTML = html;
+  if (scrollToBottom !== false) {
+    setTimeout(function() { list.scrollTop = list.scrollHeight; }, 30);
+  }
+}
+function sendGlobalMessage() {
+  if (!currentUser) { themedAlert("Login dulu.", "error"); return; }
+  const input = document.getElementById("chatInput");
+  const text = (input.value || "").trim();
+  if (!text) return;
+
+  const msg = {
+    id: genMsgId(),
+    username: currentUser.username,
+    text: text,
+    time: Date.now(),
+    replyTo: null
+  };
+
+  if (chatReplyTargetId) {
+    const target = globalMessages.find(function(x){ return x.id === chatReplyTargetId; });
+    if (target) {
+      msg.replyTo = {
+        id: target.id,
+        username: target.username,
+        text: (target.text || "").slice(0, 80)
+      };
+    }
+    cancelChatReply();
+  }
+
+  globalMessages.push(msg);
+  if (!saveGlobalMessages()) return;
+  input.value = "";
+  renderGlobalChat(true);
+  input.focus();
+}
+function setChatReply(msgId) {
+  const msg = globalMessages.find(function(x){ return x.id === msgId; });
+  if (!msg) return;
+  chatReplyTargetId = msgId;
+  const bar = document.getElementById("chatReplyBar");
+  const userEl = document.getElementById("chatReplyUser");
+  const textEl = document.getElementById("chatReplyText");
+  if (userEl) userEl.textContent = msg.username;
+  if (textEl) textEl.textContent = (msg.text || "").slice(0, 80);
+  if (bar) bar.classList.remove("hidden");
+  const input = document.getElementById("chatInput");
+  if (input) input.focus();
+}
+function cancelChatReply() {
+  chatReplyTargetId = null;
+  const bar = document.getElementById("chatReplyBar");
+  if (bar) bar.classList.add("hidden");
+}
+
+/* Swipe kanan = balas */
+(function setupChatSwipe() {
+  const container = document.getElementById("chatMessages");
+  if (!container) return;
+  let startX = 0, startY = 0, currentEl = null, isSwiping = false, movedX = 0;
+
+  container.addEventListener("touchstart", function(e) {
+    const el = e.target.closest(".chat-msg");
+    if (!el) return;
+    const t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    currentEl = el; isSwiping = false; movedX = 0;
+  }, { passive: true });
+
+  container.addEventListener("touchmove", function(e) {
+    if (!currentEl) return;
+    const t = e.touches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    if (!isSwiping) {
+      if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) && dx > 0) {
+        isSwiping = true;
+        currentEl.classList.add("swiping");
+      } else if (Math.abs(dy) > 10) {
+        currentEl = null; return;
+      }
+    }
+    if (isSwiping) {
+      movedX = Math.min(dx, 70);
+      currentEl.style.transform = "translateX(" + movedX + "px)";
+      currentEl.classList.toggle("swipe-ready", movedX > 45);
+    }
+  }, { passive: true });
+
+  container.addEventListener("touchend", function() {
+    if (!currentEl) return;
+    const el = currentEl;
+    const dx = movedX;
+    el.classList.remove("swiping");
+    el.style.transform = "";
+    if (dx > 45 && el.dataset.id) {
+      el.classList.add("swipe-ready");
+      setTimeout(function(){ el.classList.remove("swipe-ready"); }, 400);
+      setChatReply(el.dataset.id);
+      if (navigator.vibrate) navigator.vibrate(20);
+    } else {
+      el.classList.remove("swipe-ready");
+    }
+    currentEl = null; isSwiping = false; movedX = 0;
+  });
+
+  /* Mouse drag buat testing desktop */
+  let mouseEl = null, mouseStartX = 0, mouseSwiping = false;
+  container.addEventListener("mousedown", function(e) {
+    const el = e.target.closest(".chat-msg");
+    if (!el) return;
+    mouseEl = el; mouseStartX = e.clientX; mouseSwiping = false;
+  });
+  container.addEventListener("mousemove", function(e) {
+    if (!mouseEl) return;
+    const dx = e.clientX - mouseStartX;
+    if (dx > 20 && !mouseSwiping) { mouseSwiping = true; mouseEl.classList.add("swiping"); }
+    if (mouseSwiping) {
+      mouseEl.style.transform = "translateX(" + Math.min(dx, 70) + "px)";
+      mouseEl.classList.toggle("swipe-ready", dx > 45);
+    }
+  });
+  const mouseEnd = function() {
+    if (!mouseEl) return;
+    const el = mouseEl;
+    const had = el.classList.contains("swipe-ready");
+    el.classList.remove("swiping", "swipe-ready");
+    el.style.transform = "";
+    if (had && el.dataset.id) setChatReply(el.dataset.id);
+    mouseEl = null; mouseSwiping = false;
+  };
+  container.addEventListener("mouseup", mouseEnd);
+  container.addEventListener("mouseleave", mouseEnd);
+})();
+
+/* Sinkron antar tab */
+window.addEventListener("storage", function(e) {
+  if (e.key === "volka_global_chat") {
+    loadGlobalMessages();
+    const page = document.getElementById("globalChatPage");
+    if (page && page.classList.contains("active")) renderGlobalChat(true);
+  }
+  if (e.key === "volka_users" || e.key === "volka_user_overrides" || e.key === "volka_deleted_users") {
+    loadLocalData(); updateAuthUI();
+  }
+});
+
+/* Auto refresh tiap 5 detik saat halaman chat aktif */
+setInterval(function() {
+  const page = document.getElementById("globalChatPage");
+  if (page && page.classList.contains("active")) {
+    const before = globalMessages.length;
+    loadGlobalMessages();
+    if (globalMessages.length !== before) renderGlobalChat(true);
+  }
+}, 5000);
+
+/* Enter buat kirim */
+document.getElementById("chatInput")?.addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendGlobalMessage();
+  }
+});
 
 /* ============================================================
    ANIME STREAMING
@@ -2947,9 +3260,9 @@ document.addEventListener("keydown",e=>{
 /* ============ INIT ============ */
 loadLocalData();
 loadCustomProducts();
+loadGlobalMessages();
 fetchKeylist().then(function(){
   updateAuthUI();
-  // Kalau user yang login sekarang sudah dihapus / tidak ada lagi
   if (currentUser && !findUser(currentUser.username)) {
     currentUser = null;
     localStorage.removeItem("volka_user");
