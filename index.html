@@ -136,6 +136,10 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .chat-input-row button{border:3px solid var(--ink);background:var(--green);box-shadow:2px 2px 0 var(--ink);padding:0 14px;font-weight:700;display:grid;place-items:center;cursor:pointer}
 .chat-input-row button .material-symbols-rounded{font-size:20px}
 .chat-date-sep{text-align:center;font-size:9px;color:#666;margin:8px 0;font-style:italic}
+.chat-status-bar{padding:6px 12px;font-size:9px;text-align:center;border-bottom:2px solid var(--ink);background:#fff0bf;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px}
+.chat-status-bar .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink)}
+.chat-status-bar .dot.online{background:var(--green)}
+.chat-status-bar .dot.offline{background:var(--red)}
 .chat-msg .swipe-reply-icon{position:absolute;left:-40px;top:50%;transform:translateY(-50%) scale(.5);width:30px;height:30px;border:2px solid var(--ink);background:var(--yellow);display:grid;place-items:center;opacity:0;transition:opacity .15s,transform .15s;border-radius:50%;pointer-events:none}
 .chat-msg.swiping .swipe-reply-icon,.chat-msg.swipe-ready .swipe-reply-icon{opacity:1;transform:translateY(-50%) scale(1)}
 .chat-msg.own .swipe-reply-icon{left:auto;right:-40px}
@@ -358,7 +362,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .modal-btn.danger .material-symbols-rounded{color:#fff}
 .modal-btn .material-symbols-rounded{font-size:15px}
 
-/* ===== SPLASH THEME (no video) ===== */
+/* ===== SPLASH THEME ===== */
 .splash-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#0d0d0d;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;opacity:0;transition:opacity .45s ease;overflow:hidden}
 .splash-overlay.show{display:flex;opacity:1}
 .splash-overlay.fade-out{opacity:0}
@@ -659,9 +663,13 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
     <div><div class="top-title">CHAT GLOBAL</div><div class="top-sub">NGOBROL BARENG SEMUA USER</div></div>
     <div class="header-spacer"></div>
-    <button class="header-btn" onclick="renderGlobalChat(true)" title="Refresh"><span class="material-symbols-rounded">refresh</span></button>
+    <button class="header-btn" onclick="manualRefreshChat()" title="Refresh"><span class="material-symbols-rounded">refresh</span></button>
   </div>
   <div class="chat-container">
+    <div class="chat-status-bar" id="chatStatusBar">
+      <span class="dot offline" id="chatStatusDot"></span>
+      <span id="chatStatusText">Menghubungkan...</span>
+    </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-reply-bar hidden" id="chatReplyBar">
       <div class="chat-reply-content">
@@ -785,7 +793,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 
 <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
 
-<!-- CUSTOM MODAL -->
 <div class="modal-overlay" id="customModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -797,7 +804,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </div>
 
-<!-- SPLASH SCREEN (THEME, NO VIDEO) -->
 <div class="splash-overlay" id="splashOverlay">
   <div class="splash-bg"></div>
   <div class="splash-grid"></div>
@@ -832,6 +838,12 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
+/* ============================================================
+   FIREBASE REALTIME DATABASE
+   ============================================================ */
+const FIREBASE_DB_URL = "https://volka-store-default-rtdb.asia-southeast1.firebasedatabase.app";
+const FIREBASE_CHAT_PATH = "/chat";
+
 /* ============================================================
    CUSTOM MODAL
    ============================================================ */
@@ -911,13 +923,12 @@ document.getElementById("customModal").addEventListener("click", function(e) {
 });
 
 /* ============================================================
-   SPLASH SCREEN (TEMA, TANPA VIDEO)
+   SPLASH SCREEN
    ============================================================ */
 function showSplash(callback) {
   const overlay = document.getElementById("splashOverlay");
   overlay.classList.remove("fade-out");
   overlay.classList.add("show");
-
   let finished = false;
   function finish() {
     if (finished) return;
@@ -1122,7 +1133,6 @@ async function submitLogin() {
   updateAuthUI();
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
-
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   showSplash(function() { showPage("home"); });
 }
@@ -1145,7 +1155,6 @@ async function submitRegister() {
   document.getElementById("regUsername").value = "";
   document.getElementById("regPassword").value = "";
   document.getElementById("regConfirm").value = "";
-
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   showSplash(function() { showPage("home"); });
 }
@@ -1613,7 +1622,13 @@ function showPage(id,btn=null){
   if(id==="musicPage")renderMusicPage();
   if(id==="animePage"){ renderSourceChips(); renderGenreChips(); if(!animeHomeLoaded) loadAnimeHome(); }
   if(id==="adminPanelPage"){ renderAdminStats(); renderAdminUsers(); }
-  if(id==="globalChatPage"){ loadGlobalMessages(); renderGlobalChat(true); }
+  if(id==="globalChatPage"){
+    renderGlobalChat(true);
+    refreshGlobalChat(true);
+    startChatPolling();
+  } else {
+    stopChatPolling();
+  }
 }
 function openAnimeFeature() {
   if (!currentUser) { showPage("loginPage"); return; }
@@ -1746,24 +1761,13 @@ document.getElementById("xSocial").href=CONFIG.links.xSocial;
 document.getElementById("saweria").href=CONFIG.links.saweria;
 
 /* ============================================================
-   CHAT GLOBAL
+   CHAT GLOBAL — FIREBASE REALTIME DATABASE (REST API)
    ============================================================ */
 let globalMessages = [];
 let chatReplyTargetId = null;
+let chatPollingTimer = null;
+let chatLastFetchOK = false;
 
-function loadGlobalMessages() {
-  try { globalMessages = JSON.parse(localStorage.getItem("volka_global_chat") || "[]"); }
-  catch (e) { globalMessages = []; }
-}
-function saveGlobalMessages() {
-  try {
-    localStorage.setItem("volka_global_chat", JSON.stringify(globalMessages));
-    return true;
-  } catch (e) {
-    themedAlert("Gagal menyimpan pesan (storage penuh).", "error");
-    return false;
-  }
-}
 function genMsgId() {
   return "msg-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
 }
@@ -1779,17 +1783,80 @@ function formatChatDate(ts) {
   if (d.toDateString() === yest.toDateString()) return "Kemarin";
   return d.toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
 }
+
+/* Cache lokal (fallback kalau offline) */
+function loadGlobalMessagesCache() {
+  try { globalMessages = JSON.parse(localStorage.getItem("volka_global_chat") || "[]"); }
+  catch (e) { globalMessages = []; }
+}
+function saveGlobalMessagesCache() {
+  try { localStorage.setItem("volka_global_chat", JSON.stringify(globalMessages)); } catch(e){}
+}
+
+/* Firebase REST API */
+async function fetchMessagesFromFirebase() {
+  try {
+    const res = await fetch(FIREBASE_DB_URL + FIREBASE_CHAT_PATH + ".json");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data) return [];
+    const arr = Object.values(data);
+    arr.sort((a, b) => (a.time || 0) - (b.time || 0));
+    return arr;
+  } catch (e) {
+    console.warn("Firebase fetch gagal:", e.message);
+    return null;
+  }
+}
+async function pushMessageToFirebase(msg) {
+  const res = await fetch(FIREBASE_DB_URL + FIREBASE_CHAT_PATH + "/" + msg.id + ".json", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(msg)
+  });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  return await res.json();
+}
+function setChatStatus(ok, text) {
+  const dot = document.getElementById("chatStatusDot");
+  const txt = document.getElementById("chatStatusText");
+  if (dot) dot.className = "dot " + (ok ? "online" : "offline");
+  if (txt) txt.textContent = text || (ok ? "Terhubung • Real-time" : "Tidak terhubung • Pakai cache lokal");
+}
+
+async function refreshGlobalChat(isInitial) {
+  const messages = await fetchMessagesFromFirebase();
+  if (messages === null) {
+    chatLastFetchOK = false;
+    setChatStatus(false);
+    if (isInitial) { loadGlobalMessagesCache(); renderGlobalChat(true); }
+    return false;
+  }
+  chatLastFetchOK = true;
+  setChatStatus(true);
+  const before = JSON.stringify(globalMessages);
+  globalMessages = messages;
+  const after = JSON.stringify(globalMessages);
+  saveGlobalMessagesCache();
+  if (isInitial || before !== after) {
+    renderGlobalChat(true);
+  }
+  return true;
+}
+function manualRefreshChat() {
+  refreshGlobalChat(false);
+}
+
 function renderGlobalChat(scrollToBottom) {
   const list = document.getElementById("chatMessages");
   if (!list) return;
-  loadGlobalMessages();
 
   if (!globalMessages.length) {
     list.innerHTML = '<div class="chat-empty"><span class="material-symbols-rounded">forum</span>Belum ada pesan.<br>Jadilah yang pertama ngobrol!</div>';
     return;
   }
 
-  const sorted = globalMessages.slice().sort(function(a,b){ return a.time - b.time; });
+  const sorted = globalMessages.slice().sort(function(a,b){ return (a.time||0) - (b.time||0); });
   let lastDate = "";
   let html = "";
   sorted.forEach(function(m) {
@@ -1831,7 +1898,8 @@ function renderGlobalChat(scrollToBottom) {
     setTimeout(function() { list.scrollTop = list.scrollHeight; }, 30);
   }
 }
-function sendGlobalMessage() {
+
+async function sendGlobalMessage() {
   if (!currentUser) { themedAlert("Login dulu.", "error"); return; }
   const input = document.getElementById("chatInput");
   const text = (input.value || "").trim();
@@ -1857,11 +1925,18 @@ function sendGlobalMessage() {
     cancelChatReply();
   }
 
-  globalMessages.push(msg);
-  if (!saveGlobalMessages()) return;
   input.value = "";
+
+  /* Optimistic update */
+  globalMessages.push(msg);
   renderGlobalChat(true);
-  input.focus();
+  saveGlobalMessagesCache();
+
+  try {
+    await pushMessageToFirebase(msg);
+  } catch (e) {
+    themedAlert("Gagal kirim ke server: " + e.message + "\nPesan tetap tersimpan lokal.", "warn");
+  }
 }
 function setChatReply(msgId) {
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
@@ -1880,6 +1955,21 @@ function cancelChatReply() {
   chatReplyTargetId = null;
   const bar = document.getElementById("chatReplyBar");
   if (bar) bar.classList.add("hidden");
+}
+
+/* Polling real-time */
+function startChatPolling() {
+  stopChatPolling();
+  chatPollingTimer = setInterval(function() {
+    const page = document.getElementById("globalChatPage");
+    if (page && page.classList.contains("active")) {
+      refreshGlobalChat(false);
+    }
+  }, 2500);
+}
+function stopChatPolling() {
+  if (chatPollingTimer) clearInterval(chatPollingTimer);
+  chatPollingTimer = null;
 }
 
 /* Swipe kanan = balas */
@@ -1933,7 +2023,6 @@ function cancelChatReply() {
     currentEl = null; isSwiping = false; movedX = 0;
   });
 
-  /* Mouse drag buat testing desktop */
   let mouseEl = null, mouseStartX = 0, mouseSwiping = false;
   container.addEventListener("mousedown", function(e) {
     const el = e.target.closest(".chat-msg");
@@ -1962,29 +2051,6 @@ function cancelChatReply() {
   container.addEventListener("mouseleave", mouseEnd);
 })();
 
-/* Sinkron antar tab */
-window.addEventListener("storage", function(e) {
-  if (e.key === "volka_global_chat") {
-    loadGlobalMessages();
-    const page = document.getElementById("globalChatPage");
-    if (page && page.classList.contains("active")) renderGlobalChat(true);
-  }
-  if (e.key === "volka_users" || e.key === "volka_user_overrides" || e.key === "volka_deleted_users") {
-    loadLocalData(); updateAuthUI();
-  }
-});
-
-/* Auto refresh tiap 5 detik saat halaman chat aktif */
-setInterval(function() {
-  const page = document.getElementById("globalChatPage");
-  if (page && page.classList.contains("active")) {
-    const before = globalMessages.length;
-    loadGlobalMessages();
-    if (globalMessages.length !== before) renderGlobalChat(true);
-  }
-}, 5000);
-
-/* Enter buat kirim */
 document.getElementById("chatInput")?.addEventListener("keydown", function(e) {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
@@ -3260,7 +3326,7 @@ document.addEventListener("keydown",e=>{
 /* ============ INIT ============ */
 loadLocalData();
 loadCustomProducts();
-loadGlobalMessages();
+loadGlobalMessagesCache();
 fetchKeylist().then(function(){
   updateAuthUI();
   if (currentUser && !findUser(currentUser.username)) {
@@ -3280,7 +3346,6 @@ fetchKeylist().then(function(){
 renderProducts();updateCartCount();startBanners();drawSnake();renderGameCenter();
 updateAuthUI();
 
-/* ============ SPLASH SELALU MUNCUL SAAT BUKA / REFRESH ============ */
 document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
 
 showSplash(function() {
