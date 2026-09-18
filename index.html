@@ -287,18 +287,29 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .modal-btn.danger .material-symbols-rounded{color:#fff}
 .modal-btn .material-symbols-rounded{font-size:15px}
 
-/* ===== SPLASH ===== */
-.splash-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#111;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:18px;opacity:0;transition:opacity .35s ease}
+/* ===== SPLASH FULL SCREEN ===== */
+.splash-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;opacity:0;transition:opacity .4s ease;overflow:hidden}
 .splash-overlay.show{display:flex;opacity:1}
 .splash-overlay.fade-out{opacity:0}
-.splash-video-wrap{border:3px solid var(--ink);background:#000;box-shadow:6px 6px 0 var(--cream);max-width:min(90vw,500px);overflow:hidden;position:relative}
-.splash-video-wrap video{display:block;width:100%;max-height:70dvh;object-fit:contain;background:#000}
-.splash-fallback{display:none;padding:30px 20px;text-align:center;color:var(--cream);font-family:"Space Mono",monospace}
-.splash-fallback .big{font-size:28px;font-weight:700;letter-spacing:3px;color:var(--green);text-shadow:3px 3px 0 var(--red);animation:pulse 1.4s ease-in-out infinite}
-.splash-fallback .small{font-size:10px;margin-top:10px;letter-spacing:2px}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.splash-loader{border:3px solid var(--ink);background:var(--cream);color:var(--ink);padding:9px 18px;font-size:10px;font-weight:700;box-shadow:4px 4px 0 var(--cream);display:flex;align-items:center;gap:8px}
+
+/* Full-screen video wrapper */
+.splash-video-wrap{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;overflow:hidden}
+.splash-video-wrap video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#000;display:block}
+
+/* Fallback kalau video error */
+.splash-fallback{display:none;position:absolute;top:0;left:0;width:100%;height:100%;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 40%,#2a2a2a 0%,#000 70%);z-index:1;padding:30px;text-align:center}
+.splash-fallback.show{display:flex}
+.splash-fallback .big{font-size:38px;font-weight:700;letter-spacing:5px;color:var(--green);text-shadow:4px 4px 0 var(--red),-2px -2px 0 var(--blue);animation:pulse 1.4s ease-in-out infinite;line-height:1.1}
+.splash-fallback .small{font-size:11px;margin-top:14px;letter-spacing:3px;color:var(--cream)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+/* Loader di bawah */
+.splash-loader{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);border:3px solid var(--ink);background:var(--cream);color:var(--ink);padding:9px 18px;font-size:10px;font-weight:700;box-shadow:4px 4px 0 var(--green);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
 .splash-loader .material-symbols-rounded{font-size:18px;animation:spinDragon 1.2s linear infinite}
+
+/* Watermark transparan */
+.splash-watermark{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.35);z-index:6;text-shadow:2px 2px 0 rgba(0,0,0,.8),0 0 8px rgba(128,216,61,.4);padding:0 16px;pointer-events:none;user-select:none}
+.splash-watermark .volka{color:rgba(128,216,61,.6)}
 </style>
 </head>
 <body>
@@ -644,7 +655,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </div>
 
-<!-- SPLASH SCREEN -->
+<!-- SPLASH SCREEN FULL -->
 <div class="splash-overlay" id="splashOverlay">
   <div class="splash-video-wrap">
     <video id="splashVideo" src="splash.mp4" muted playsinline preload="auto"></video>
@@ -656,6 +667,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <div class="splash-loader">
     <span class="material-symbols-rounded">autorenew</span> MEMUAT DASHBOARD...
   </div>
+  <div class="splash-watermark">POWERED BY: <span class="volka">VOLKA</span></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -740,71 +752,71 @@ function themedConfirm(message, opts) {
     });
   });
 }
-// Klik overlay untuk close
 document.getElementById("customModal").addEventListener("click", function(e) {
   if (e.target === this) hideModal();
 });
 
 /* ============================================================
-   SPLASH SCREEN
+   SPLASH SCREEN FULL (durasi mengikuti video)
    ============================================================ */
 function showSplash(callback) {
   const overlay = document.getElementById("splashOverlay");
   const video = document.getElementById("splashVideo");
   const fallback = document.getElementById("splashFallback");
+
   overlay.classList.remove("fade-out");
   overlay.classList.add("show");
+  fallback.classList.remove("show");
 
   let finished = false;
   let videoPlayed = false;
   let fallbackTimer = null;
+  let safetyTimer = null;
 
   function finish() {
     if (finished) return;
     finished = true;
     if (fallbackTimer) clearTimeout(fallbackTimer);
+    if (safetyTimer) clearTimeout(safetyTimer);
     try { video.pause(); } catch (e) {}
     overlay.classList.add("fade-out");
     setTimeout(function() {
       overlay.classList.remove("show");
       overlay.classList.remove("fade-out");
+      try { video.currentTime = 0; } catch (e) {}
       if (typeof callback === "function") callback();
-    }, 400);
+    }, 450);
   }
 
-  // Reset video
   try {
     video.currentTime = 0;
     video.style.display = "block";
-    fallback.style.display = "none";
   } catch (e) {}
 
-  // Coba play video
   video.onended = finish;
+
   video.onerror = function() {
-    // Video gagal → pakai fallback
     if (!videoPlayed) {
       video.style.display = "none";
-      fallback.style.display = "block";
+      fallback.classList.add("show");
       fallbackTimer = setTimeout(finish, 2200);
     }
   };
+
   const p = video.play();
   if (p && p.then) {
-    p.then(function() { videoPlayed = true; })
-     .catch(function() {
-       // Autoplay diblokir atau file gak ada → fallback
-       video.style.display = "none";
-       fallback.style.display = "block";
-       fallbackTimer = setTimeout(finish, 2200);
-     });
+    p.then(function() {
+      videoPlayed = true;
+    }).catch(function() {
+      video.style.display = "none";
+      fallback.classList.add("show");
+      fallbackTimer = setTimeout(finish, 2200);
+    });
   } else {
-    // Kalau browser gak support promise
     videoPlayed = true;
   }
 
-  // Safety: kalau video gak ended dalam 6 detik, paksa finish
-  setTimeout(finish, 6000);
+  safetyTimer = setTimeout(finish, 60000);
 }
 
 /* ============================================================
@@ -981,7 +993,6 @@ async function submitLogin() {
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
 
-  // ==== SPLASH SCREEN ====
   showSplash(function() {
     showPage("home");
   });
@@ -2216,7 +2227,6 @@ GAMES.flappy=function(body){
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
 
-/* ============ FIXED: BREAKOUT ============ */
 GAMES.breakout=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="brkScore">0</b></span><span>NYAWA: <b id="brkLife">3</b></span></div>
   <canvas id="brkCanvas" class="snake-canvas" width="320" height="360" style="aspect-ratio:8/9"></canvas>
@@ -2274,7 +2284,6 @@ GAMES.breakout=function(body){
   };
 };
 
-/* ============ FIXED: PONG ============ */
 GAMES.pong=function(body){
   body.innerHTML=`<div class="game-head"><span>KAMU: <b id="pongP">0</b></span><span>CPU: <b id="pongC">0</b></span></div>
   <canvas id="pongCanvas" class="snake-canvas" width="320" height="320"></canvas>
@@ -2527,7 +2536,6 @@ GAMES.runner=function(body){
   return ()=>{running=false;if(raf)cancelAnimationFrame(raf)};
 };
 
-/* ============ FIXED: SPACE SHOOTER ============ */
 GAMES.space=function(body){
   body.innerHTML=`<div class="game-head"><span>SKOR: <b id="spaceScore">0</b></span><span>NYAWA: <b id="spaceLife">3</b></span></div>
   <canvas id="spaceCanvas" class="snake-canvas" width="300" height="380" style="aspect-ratio:15/19"></canvas>
@@ -2724,7 +2732,6 @@ updateAuthUI();
 if (!currentUser) {
   showPage("loginPage");
 } else {
-  // Auto-login → tampilkan splash dulu
   showSplash(function() {
     showPage("home");
   });
