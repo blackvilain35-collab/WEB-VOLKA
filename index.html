@@ -137,6 +137,15 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .chat-input-row button{border:3px solid var(--ink);background:var(--green);box-shadow:2px 2px 0 var(--ink);padding:0 14px;font-weight:700;display:grid;place-items:center;cursor:pointer}
 .chat-input-row button .material-symbols-rounded{font-size:20px}
 .chat-date-sep{text-align:center;font-size:9px;color:#666;margin:8px 0;font-style:italic}
+.chat-pinned-bar{display:flex;gap:8px;align-items:center;padding:9px 12px;background:#ffe08a;border-bottom:2px solid var(--ink);position:relative}
+.chat-pinned-bar .pinned-bar-content{flex:1;min-width:0}
+.chat-pinned-bar .pinned-bar-label{font-size:8px;font-weight:700;color:var(--red);letter-spacing:1px;display:flex;align-items:center;gap:4px}
+.chat-pinned-bar .pinned-bar-label .material-symbols-rounded{font-size:12px}
+.chat-pinned-bar .pinned-bar-text{font-size:10px;line-height:1.4;margin-top:3px;color:var(--ink);word-break:break-word;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.chat-pinned-bar .pinned-bar-text b{color:var(--red)}
+.chat-pinned-bar .pinned-bar-time{font-size:8px;color:#666;margin-top:2px}
+.chat-pinned-bar .pinned-bar-close{width:32px;height:32px;flex:none;border:2px solid var(--ink);background:var(--red);color:#fff;box-shadow:2px 2px 0 var(--ink);display:grid;place-items:center;padding:0;cursor:pointer}
+.chat-pinned-bar .pinned-bar-close .material-symbols-rounded{color:#fff;font-size:16px}
 .chat-status-bar{padding:6px 12px;font-size:9px;text-align:center;border-bottom:2px solid var(--ink);background:#fff0bf;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px}
 .chat-status-bar .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink)}
 .chat-status-bar .dot.online{background:var(--green)}
@@ -648,7 +657,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
     <div><div class="top-title">CHAT GLOBAL</div><div class="top-sub">NGOBROL BARENG SEMUA USER</div></div>
     <div class="header-spacer"></div>
-    <button class="header-btn hidden" id="chatSavedBtn" onclick="openSavedMessages()" title="Pesan Tersimpan"><span class="material-symbols-rounded">bookmarks</span></button>
     <button class="header-btn" onclick="manualRefreshChat()" title="Refresh"><span class="material-symbols-rounded">refresh</span></button>
   </div>
   <div class="chat-container">
@@ -656,6 +664,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
       <span class="dot offline" id="chatStatusDot"></span>
       <span id="chatStatusText">Menghubungkan...</span>
     </div>
+    <div class="chat-pinned-bar hidden" id="pinnedBar"></div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-reply-bar hidden" id="chatReplyBar">
       <div class="chat-reply-content">
@@ -828,7 +837,7 @@ const FIREBASE_DB_URL = "https://volka-store-default-rtdb.asia-southeast1.fireba
 const FIREBASE_CHAT_PATH = "/chat";
 const FIREBASE_USERS_PATH = "/users";
 const FIREBASE_PHOTOS_PATH = "/profile_photos";
-const FIREBASE_SAVED_PATH = "/saved_messages";
+const FIREBASE_PIN_PATH = "/pinned_message";
 
 const BAD_WORDS = [
   "anjing","anjg","anjir","anjay","anjrot","anjeng","bangsat","bgst","bangst","bangke",
@@ -1209,8 +1218,6 @@ function updateAuthUI() {
   });
   const adminCard = document.getElementById("adminPanelCard");
   if (adminCard) { if (isAdmin) adminCard.classList.remove("hidden"); else adminCard.classList.add("hidden"); }
-  const chatSavedBtn = document.getElementById("chatSavedBtn");
-  if (chatSavedBtn) { if (isAdmin) chatSavedBtn.classList.remove("hidden"); else chatSavedBtn.classList.add("hidden"); }
   updateAdminNotifBadge();
   updateChatNotifBadge();
 }
@@ -1768,11 +1775,13 @@ function setChatStatus(ok, text){
 }
 async function refreshGlobalChat(isInitial){
   await refreshPhotosFromFirebase();
+  await refreshPinnedMessage();
   const messages = await fetchMessagesFromFirebase();
   if (messages === null) {
     chatLastFetchOK = false;
     setChatStatus(false);
     if (isInitial) { loadGlobalMessagesCache(); renderGlobalChat(true); }
+    renderPinnedBar();
     return false;
   }
   chatLastFetchOK = true;
@@ -1782,6 +1791,7 @@ async function refreshGlobalChat(isInitial){
   const after = JSON.stringify(globalMessages);
   saveGlobalMessagesCache();
   updateChatNotifBadge();
+  renderPinnedBar();
   if (isInitial || before !== after) renderGlobalChat(true);
   return true;
 }
@@ -1972,8 +1982,10 @@ document.getElementById("chatInput")?.addEventListener("keydown", function(e) {
 });
 
 /* ============================================================
-   CHAT: HAPUS & SIMPAN PESAN (WhatsApp-style)
+   CHAT: HAPUS, SEMATKAN, AUTO-CLEAR (WhatsApp-style)
    ============================================================ */
+let pinnedMessage = null;
+
 async function deleteGlobalMessage(msgId) {
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
   if (!msg) return;
@@ -1985,6 +1997,11 @@ async function deleteGlobalMessage(msgId) {
   try {
     const res = await fetch(FIREBASE_DB_URL + FIREBASE_CHAT_PATH + "/" + encodeURIComponent(msgId) + ".json", { method: "DELETE" });
     if (!res.ok) throw new Error("HTTP " + res.status);
+    if (pinnedMessage && pinnedMessage.id === msgId) {
+      await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", { method: "DELETE" });
+      pinnedMessage = null;
+      renderPinnedBar();
+    }
     globalMessages = globalMessages.filter(function(x){ return x.id !== msgId; });
     renderGlobalChat(false);
     saveGlobalMessagesCache();
@@ -1992,51 +2009,88 @@ async function deleteGlobalMessage(msgId) {
     themedAlert("Gagal hapus: " + e.message, "error", "GAGAL");
   }
 }
-async function saveGlobalMessage(msgId) {
-  if (!currentUser || currentUser.role !== "admin") { themedAlert("Fitur simpan pesan khusus admin.", "error", "AKSES DITOLAK"); return; }
+
+async function refreshPinnedMessage() {
+  try {
+    const res = await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json");
+    if (!res.ok) { pinnedMessage = null; return; }
+    const data = await res.json();
+    pinnedMessage = (data && data.id) ? data : null;
+  } catch (e) { pinnedMessage = null; }
+}
+
+async function pinGlobalMessage(msgId) {
+  if (!currentUser || currentUser.role !== "admin") { themedAlert("Fitur sematkan khusus admin.", "error", "AKSES DITOLAK"); return; }
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
   if (!msg) return;
   try {
     const payload = {
       id: msg.id, username: msg.username, text: msg.text, time: msg.time,
-      savedBy: currentUser.username, savedAt: Date.now()
+      pinnedBy: currentUser.username, pinnedAt: Date.now()
     };
-    const res = await fetch(FIREBASE_DB_URL + FIREBASE_SAVED_PATH + "/" + encodeURIComponent(msgId) + ".json", {
+    const res = await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
     });
     if (!res.ok) throw new Error("HTTP " + res.status);
-    themedAlert("Pesan disimpan ke daftar bookmark.", "success", "TERSIMPAN");
+    pinnedMessage = payload;
+    renderPinnedBar();
+    themedAlert("Pesan berhasil disematkan di atas chat.", "success", "TERSEMAT");
   } catch (e) {
-    themedAlert("Gagal simpan: " + e.message, "error", "GAGAL");
+    themedAlert("Gagal semat: " + e.message + "\n\nCek Firebase Rules — pastikan '.read' & '.write' true.", "error", "GAGAL");
   }
 }
-async function openSavedMessages() {
+
+async function unpinGlobalMessage() {
   if (!currentUser || currentUser.role !== "admin") { themedAlert("Fitur ini khusus admin.", "error", "AKSES DITOLAK"); return; }
+  const ok = await themedConfirm("Lepas sematan pesan ini dari atas chat?", { okLabel: "LEPAS", okStyle: "danger" });
+  if (!ok) return;
   try {
-    const res = await fetch(FIREBASE_DB_URL + FIREBASE_SAVED_PATH + ".json");
+    const res = await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", { method: "DELETE" });
     if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    if (!data || Object.keys(data).length === 0) { themedAlert("Belum ada pesan yang disimpan.", "info", "PESAN TERSIMPAN"); return; }
-    const saved = Object.values(data).sort(function(a,b){ return (b.savedAt || 0) - (a.savedAt || 0); }).slice(0, 20);
-    const preview = saved.map(function(s) {
-      const d = new Date(s.time || s.savedAt);
-      const tgl = d.toLocaleString("id-ID", {day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"});
-      return "📌 " + s.username + " • " + tgl + "\n" + (s.text || "").slice(0, 100);
-    }).join("\n\n─────────\n\n");
-    showModal({
-      type: "success", title: "PESAN TERSIMPAN (" + saved.length + ")", message: preview,
-      buttons: [{ label: "TUTUP", icon: "check", style: "primary" }]
-    });
-  } catch (e) { themedAlert("Gagal load: " + e.message, "error", "GAGAL"); }
+    pinnedMessage = null;
+    renderPinnedBar();
+    themedAlert("Sematan dilepas.", "success", "BERHASIL");
+  } catch (e) {
+    themedAlert("Gagal lepas: " + e.message, "error", "GAGAL");
+  }
 }
+
+function renderPinnedBar() {
+  const bar = document.getElementById("pinnedBar");
+  if (!bar) return;
+  if (!pinnedMessage || !pinnedMessage.text) {
+    bar.classList.add("hidden");
+    bar.innerHTML = "";
+    return;
+  }
+  const isAdmin = currentUser && currentUser.role === "admin";
+  const d = new Date(pinnedMessage.time || pinnedMessage.pinnedAt || Date.now());
+  const tgl = d.toLocaleString("id-ID", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+  bar.classList.remove("hidden");
+  bar.innerHTML =
+    '<div class="pinned-bar-content">' +
+      '<div class="pinned-bar-label"><span class="material-symbols-rounded">push_pin</span> PESAN DISEMATKAN</div>' +
+      '<div class="pinned-bar-text"><b>' + escapeHtml(pinnedMessage.username || "-") + '</b>: ' + escapeHtml((pinnedMessage.text || "").slice(0, 150)) + '</div>' +
+      '<div class="pinned-bar-time">' + tgl + '</div>' +
+    '</div>' +
+    (isAdmin ? '<button class="pinned-bar-close" onclick="unpinGlobalMessage()" title="Lepas sematan"><span class="material-symbols-rounded">close</span></button>' : '');
+}
+
 function showMessageActions(msgId) {
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
   if (!msg) return;
   const isOwn = currentUser && String(currentUser.username).toLowerCase() === String(msg.username).toLowerCase();
   const isAdmin = currentUser && currentUser.role === "admin";
   const canDelete = isOwn || isAdmin;
+  const isAlreadyPinned = pinnedMessage && pinnedMessage.id === msgId;
   const buttons = [{ label: "BATAL", icon: "close", style: "", onClick: function(){} }];
-  if (isAdmin) buttons.push({ label: "SIMPAN", icon: "bookmark_add", style: "warn", onClick: function() { saveGlobalMessage(msgId); } });
+  if (isAdmin) {
+    if (isAlreadyPinned) {
+      buttons.push({ label: "LEPAS SEMAT", icon: "push_pin", style: "warn", onClick: function() { unpinGlobalMessage(); } });
+    } else {
+      buttons.push({ label: "SEMATKAN", icon: "push_pin", style: "warn", onClick: function() { pinGlobalMessage(msgId); } });
+    }
+  }
   if (canDelete) buttons.push({ label: "HAPUS", icon: "delete", style: "danger", onClick: function() { deleteGlobalMessage(msgId); } });
   showModal({
     type: "info", title: "AKSI PESAN",
@@ -2044,6 +2098,52 @@ function showMessageActions(msgId) {
     buttons: buttons
   });
 }
+
+/* ============================================================
+   AUTO-CLEAR CHAT JAM 12 MALAM (00:00)
+   ============================================================ */
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function getLastClearDate() {
+  return localStorage.getItem("volka_last_chat_clear") || "";
+}
+function setLastClearDate(d) {
+  localStorage.setItem("volka_last_chat_clear", d);
+}
+async function clearAllChats() {
+  try {
+    await fetch(FIREBASE_DB_URL + FIREBASE_CHAT_PATH + ".json", { method: "DELETE" });
+    await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", { method: "DELETE" });
+    globalMessages = [];
+    pinnedMessage = null;
+    saveGlobalMessagesCache();
+    renderPinnedBar();
+    if (document.getElementById("globalChatPage")?.classList.contains("active")) {
+      renderGlobalChat(true);
+    }
+    updateChatNotifBadge();
+    return true;
+  } catch (e) {
+    console.warn("Auto clear gagal:", e.message);
+    return false;
+  }
+}
+async function checkAndAutoClearChat() {
+  if (!currentUser) return;
+  const today = todayStr();
+  const last = getLastClearDate();
+  if (!last) { setLastClearDate(today); return; }
+  if (last === today) return;
+  await clearAllChats();
+  setLastClearDate(today);
+}
+function startAutoClearScheduler() {
+  checkAndAutoClearChat();
+  setInterval(checkAndAutoClearChat, 60000);
+}
+
 (function setupChatLongPress() {
   const container = document.getElementById("chatMessages");
   if (!container) return;
@@ -3366,6 +3466,7 @@ drawSnake();
 renderGameCenter();
 updateAuthUI();
 startChatBgPoller();
+startAutoClearScheduler();
 
 /* Background refresh user list biar user baru dari device lain ke-detek */
 setInterval(async function() {
