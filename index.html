@@ -13,6 +13,7 @@
   --paper:#f7e7b7;--ink:#171717;--muted:#625d4f;--green:#80d83d;
   --red:#ff4b3e;--yellow:#ffbf32;--blue:#54b9e8;--cream:#fff3c9;
   --shadow:5px 5px 0 var(--ink);
+  --spotify-green:#1db954;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -175,14 +176,6 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .game-center-card:nth-child(4n+2) .game-icon{background:var(--blue)}
 .game-center-card:nth-child(4n+3) .game-icon{background:var(--yellow)}
 .game-center-card:nth-child(4n+4) .game-icon{background:var(--red)}
-.music-list-page{padding:14px;display:flex;flex-direction:column;gap:10px}
-.music-card{border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.12s}
-.music-card:hover{transform:translate(-1px,-1px)}
-.music-card.active{background:var(--green)}
-.music-card .music-icon{width:44px;height:44px;border:3px solid var(--ink);background:var(--yellow);display:grid;place-items:center;flex:none}
-.music-card .music-info{flex:1}
-.music-card .music-name{font-size:12px;font-weight:700}
-.music-card .music-status{font-size:9px;margin-top:3px;color:#555}
 .music-controls{margin:14px;border:3px solid var(--ink);background:var(--cream);box-shadow:4px 4px 0 var(--ink);padding:14px;text-align:center}
 .music-controls .now-playing{font-size:11px;font-weight:700;margin-bottom:10px}
 .music-controls .ctrl-row{display:flex;justify-content:center;gap:10px}
@@ -195,6 +188,79 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .nav .nav-notif.hidden{display:none}
 @media(max-width:520px){body{background:var(--paper)}.app{width:100%;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}}
 @media(min-width:521px){body{padding:20px 0}.app{min-height:calc(100dvh - 40px)}.nav{bottom:20px}.detail-actions{bottom:20px}}
+
+/* ===== MUSIC PAGE (DARK SPOTIFY) ===== */
+.music-page{background:#121212!important;color:#fff!important}
+.music-page .topbar{background:#121212!important;border-bottom:1px solid #282828!important;color:#fff}
+.music-page .topbar .top-title,.music-page .topbar .top-sub{color:#fff}
+.music-page .back-btn{background:#181818;border:0;box-shadow:none;color:#fff}
+.music-page .tool-body{background:#121212;min-height:calc(100dvh - 68px)}
+.music-search{display:flex;align-items:center;gap:8px;background:#242424;border-radius:30px;padding:10px 14px;margin-bottom:16px}
+.music-search .material-symbols-rounded{color:#b3b3b3;font-size:22px}
+.music-search input{flex:1;border:0;outline:0;background:transparent;font-size:14px;color:#fff;min-width:0}
+.music-search input::placeholder{color:#b3b3b3}
+.music-search button{border:0;background:transparent;color:#1db954;padding:4px;cursor:pointer;display:grid;place-items:center}
+.music-results{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.music-result-card{display:flex;align-items:center;gap:12px;padding:8px;border-radius:6px;cursor:pointer;transition:.15s}
+.music-result-card:hover{background:#1a1a1a}
+.music-result-card.playing{background:#1a1a1a}
+.music-result-card img{width:52px;height:52px;object-fit:cover;border-radius:4px;flex:none;background:#333}
+.music-result-info{flex:1;min-width:0}
+.music-result-title{font-size:14px;font-weight:500;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.music-result-card.playing .music-result-title{color:#1db954}
+.music-result-artist{font-size:12px;color:#b3b3b3;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.music-result-card .material-symbols-rounded{color:#1db954;font-size:26px}
+.music-loading{text-align:center;padding:30px;font-size:13px;color:#b3b3b3}
+.music-empty{text-align:center;padding:30px;font-size:13px;color:#b3b3b3;background:#181818;border-radius:8px}
+.music-section-title{font-size:18px;font-weight:700;color:#fff;margin:18px 0 12px}
+
+/* ===== FULL SPOTIFY PLAYER PAGE ===== */
+.spotify-player-page{
+  background:linear-gradient(180deg,#1e4d3a 0%,#0a1a14 55%,#000 100%);
+  color:#fff;display:none;min-height:100dvh;
+  flex-direction:column;overflow:hidden;
+}
+.spotify-player-page.active{display:flex}
+.sp-header{display:flex;align-items:center;gap:12px;padding:14px 16px 8px;flex:none}
+.sp-back{width:40px;height:40px;border:0;background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer}
+.sp-back .material-symbols-rounded{font-size:30px}
+.sp-header-info{flex:1;text-align:center}
+.sp-header-sub{font-size:9px;opacity:.7;text-transform:uppercase;letter-spacing:.6px}
+.sp-header-title{font-size:12px;font-weight:700;margin-top:2px}
+.sp-more{width:40px;height:40px;border:0;background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer}
+.sp-body{flex:1;display:flex;flex-direction:column;padding:12px 20px 6px;overflow-y:auto;min-height:0}
+.sp-album-wrap{width:100%;aspect-ratio:1/1;margin-bottom:20px;display:flex;align-items:center;justify-content:center;flex:none}
+.sp-album{width:100%;height:100%;object-fit:cover;border-radius:8px;box-shadow:0 12px 48px rgba(0,0,0,.7);background:#222}
+.sp-lyric-line{font-size:19px;font-weight:700;line-height:1.3;margin-bottom:16px;min-height:26px;transition:.3s;color:#fff}
+.sp-song-info{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sp-song-text{flex:1;min-width:0}
+.sp-song-title{font-size:22px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff;transition:.2s}
+.sp-song-title.playing{color:#1db954}
+.sp-song-artist{font-size:14px;opacity:.7;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-check{color:#1db954;font-size:26px;flex:none}
+.sp-progress{margin-bottom:10px}
+.sp-progress input[type="range"]{width:100%;-webkit-appearance:none;height:4px;background:#555;border-radius:2px;outline:none;padding:0}
+.sp-progress input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;background:#fff;border-radius:50%;cursor:pointer;box-shadow:0 0 6px rgba(0,0,0,.5)}
+.sp-progress input[type="range"]::-moz-range-thumb{width:12px;height:12px;background:#fff;border:0;border-radius:50%;cursor:pointer}
+.sp-times{display:flex;justify-content:space-between;font-size:11px;opacity:.7;margin-top:6px}
+.sp-controls{display:flex;align-items:center;justify-content:space-between;margin:4px 0 12px;padding:0 4px;flex:none}
+.sp-ctrl-btn{width:48px;height:48px;border:0;background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer}
+.sp-ctrl-btn .material-symbols-rounded{font-size:30px}
+.sp-ctrl-btn.sp-shuffle{color:#fff;position:relative}
+.sp-ctrl-btn.sp-shuffle.active{color:#1db954}
+.sp-ctrl-btn.sp-shuffle.active::after{content:"";position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:#1db954;border-radius:50%}
+.sp-play-btn{width:70px;height:70px;border-radius:50%;background:#fff;color:#000;border:0;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.5);transition:.15s}
+.sp-play-btn:active{transform:scale(.95)}
+.sp-play-btn .material-symbols-rounded{font-size:42px;font-weight:900}
+.sp-bottom-row{display:flex;justify-content:space-between;align-items:center;padding:6px 4px 8px;opacity:.75;flex:none}
+.sp-bottom-btn{width:40px;height:40px;border:0;background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer}
+.sp-bottom-btn .material-symbols-rounded{font-size:20px}
+.sp-lyrics-preview{background:#14241d;border-top:1px solid rgba(255,255,255,.08);padding:14px 20px 20px;max-height:36vh;display:flex;flex-direction:column;flex:none}
+.sp-lyrics-title{font-size:13px;font-weight:700;margin-bottom:10px;flex:none}
+.sp-lyrics-content{overflow-y:auto;flex:1;font-size:14px;line-height:1.9;scroll-behavior:smooth;padding-right:6px}
+.sp-lyrics-content p{margin:6px 0;color:rgba(255,255,255,.5);transition:.3s}
+.sp-lyrics-content p.active{color:#fff;font-weight:700;font-size:15.5px}
+
 .anime-page{padding-bottom:30px}
 .anime-search{display:flex;gap:8px;margin-bottom:14px}
 .anime-search input{flex:1;border:3px solid var(--ink);background:#fff8dd;padding:10px;font-size:12px;outline:none}
@@ -242,13 +308,12 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .player-row-2{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:6px}
 .player-btn{border:3px solid var(--ink);background:var(--cream);box-shadow:3px 3px 0 var(--ink);padding:9px 4px;font-size:9px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;transition:.1s;cursor:pointer}
 .player-btn .material-symbols-rounded{font-size:20px}
-.player-btn:hover{transform:translate(-1px,-1px)}
-.player-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .player-btn.prev,.player-btn.next{background:var(--blue);color:#fff}
 .player-btn.close-btn{background:#ddd}
 .player-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .player-info{border:3px solid var(--ink);background:#fff0bf;padding:8px 10px;font-size:9px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
 .player-info .material-symbols-rounded{font-size:14px}
+
 .auth-page{padding-bottom:30px}
 .auth-wrap{padding:20px 14px;display:flex;justify-content:center;align-items:flex-start;min-height:calc(100dvh - 70px)}
 .auth-card{border:3px solid var(--ink);background:var(--cream);box-shadow:5px 5px 0 var(--ink);padding:20px;width:100%;max-width:400px}
@@ -436,7 +501,7 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
     </button>
     <button class="feature-card music" onclick="showPage('musicPage')">
       <div class="feature-icon"><span class="material-symbols-rounded">music_note</span></div>
-      <div><div class="feature-name">MUSIC PLAYER</div><div class="feature-hint">Dengarkan musik favoritmu.</div></div>
+      <div><div class="feature-name">MUSIC PLAYER</div><div class="feature-hint">Streaming lagu + lirik Spotify-style.</div></div>
     </button>
     <button class="feature-card converter" onclick="openAnimeFeature()">
       <div class="feature-icon"><span class="material-symbols-rounded">movie</span></div>
@@ -680,18 +745,80 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   </div>
 </main>
 
+<!-- ===================== MUSIC PAGE (SPOTIFY DARK) ===================== -->
 <main id="musicPage" class="page music-page">
   <div class="topbar">
     <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
-    <div><div class="top-title">MUSIC PLAYER</div><div class="top-sub">PUTAR MUSIK FAVORITMU</div></div>
+    <div><div class="top-title">MUSIC PLAYER</div><div class="top-sub">STREAMING • PENCARIAN • LIRIK</div></div>
   </div>
-  <div class="music-list-page" id="musicListPage"></div>
-  <div class="music-controls">
-    <div class="now-playing" id="nowPlaying">Tidak ada musik diputar</div>
-    <div class="ctrl-row">
-      <button onclick="prevMusic()"><span class="material-symbols-rounded">skip_previous</span></button>
-      <button class="play-btn" onclick="togglePlayMusic()"><span class="material-symbols-rounded" id="playIcon">play_arrow</span></button>
-      <button onclick="nextMusic()"><span class="material-symbols-rounded">skip_next</span></button>
+  <div class="tool-body">
+    <div class="music-search">
+      <span class="material-symbols-rounded">search</span>
+      <input id="musicSearchInput" placeholder="Cari lagu atau artis..." autocomplete="off">
+      <button type="button" onclick="searchMusic()"><span class="material-symbols-rounded">search</span></button>
+    </div>
+    <div class="music-section-title">Trending Indonesia</div>
+    <div id="musicResults" class="music-results">
+      <div class="music-loading">Memuat trending...</div>
+    </div>
+    <div class="music-controls">
+      <div class="now-playing" id="nowPlaying">Belum ada musik diputar</div>
+      <div class="music-progress-wrap">
+        <input type="range" id="musicSeek" min="0" max="100" value="0" step="0.1">
+        <div class="music-time"><span id="musicCurrentTime">0:00</span><span id="musicDuration">0:00</span></div>
+      </div>
+      <div class="ctrl-row">
+        <button onclick="prevMusic()"><span class="material-symbols-rounded">skip_previous</span></button>
+        <button class="play-btn" onclick="togglePlayMusic()"><span class="material-symbols-rounded" id="playIcon">play_arrow</span></button>
+        <button onclick="nextMusic()"><span class="material-symbols-rounded">skip_next</span></button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== SPOTIFY FULL PLAYER ===================== -->
+<main id="musicPlayerPage" class="page spotify-player-page">
+  <div class="sp-header">
+    <button class="sp-back" onclick="closeMusicPlayer()"><span class="material-symbols-rounded">keyboard_arrow_down</span></button>
+    <div class="sp-header-info">
+      <div class="sp-header-sub">Memainkan dari Playlist</div>
+      <div class="sp-header-title" id="spPlaylistName">Hasil Pencarian</div>
+    </div>
+    <button class="sp-more"><span class="material-symbols-rounded">more_vert</span></button>
+  </div>
+  <div class="sp-body">
+    <div class="sp-album-wrap">
+      <img id="spAlbumArt" class="sp-album" src="" alt="">
+    </div>
+    <div class="sp-lyric-line" id="spLyricLine"></div>
+    <div class="sp-song-info">
+      <div class="sp-song-text">
+        <div class="sp-song-title playing" id="spSongTitle">-</div>
+        <div class="sp-song-artist" id="spSongArtist">-</div>
+      </div>
+      <span class="material-symbols-rounded sp-check" id="spCheck">check_circle</span>
+    </div>
+    <div class="sp-progress">
+      <input type="range" id="spSeek" min="0" max="100" value="0" step="0.1">
+      <div class="sp-times"><span id="spCurTime">0:00</span><span id="spDurTime">0:00</span></div>
+    </div>
+    <div class="sp-controls">
+      <button class="sp-ctrl-btn sp-shuffle" id="spShuffleBtn" onclick="toggleShuffle()"><span class="material-symbols-rounded">shuffle</span></button>
+      <button class="sp-ctrl-btn" onclick="prevMusic()"><span class="material-symbols-rounded">skip_previous</span></button>
+      <button class="sp-play-btn" onclick="togglePlayMusic()"><span class="material-symbols-rounded" id="spPlayIcon">play_arrow</span></button>
+      <button class="sp-ctrl-btn" onclick="nextMusic()"><span class="material-symbols-rounded">skip_next</span></button>
+      <button class="sp-ctrl-btn"><span class="material-symbols-rounded">schedule</span></button>
+    </div>
+    <div class="sp-bottom-row">
+      <button class="sp-bottom-btn"><span class="material-symbols-rounded">devices</span></button>
+      <button class="sp-bottom-btn"><span class="material-symbols-rounded">share</span></button>
+      <button class="sp-bottom-btn"><span class="material-symbols-rounded">queue_music</span></button>
+    </div>
+  </div>
+  <div class="sp-lyrics-preview">
+    <div class="sp-lyrics-title">Pratinjau lirik</div>
+    <div class="sp-lyrics-content" id="spLyricsContent">
+      <p style="text-align:center;opacity:.5">Pilih lagu untuk melihat lirik</p>
     </div>
   </div>
 </main>
@@ -853,7 +980,6 @@ const BAD_WORDS = [
   "cock","cunt","bastard","whore","slut","nigger","nigga","faggot","retard",
   "wtf","stfu","kys","motherfucker"
 ];
-
 function censorBadWords(text) {
   if (!text) return text;
   let result = String(text);
@@ -1530,13 +1656,6 @@ const CONFIG = {
     saweria: "https://saweria.co/username"
   },
   banners: ["banner1.png", "banner2.png", "banner3.png"],
-  musics: [
-    { title: "Apa Kabar Mantan", file: "musik1.mp3" },
-    { title: "Musik 2", file: "musik2.mp3" },
-    { title: "Musik 3", file: "musik3.mp3" },
-    { title: "Musik 4", file: "musik4.mp3" },
-    { title: "Musik 5", file: "musik5.mp3" }
-  ],
   products: [
     { name: "Alight Motion Premium", description: `Akses Alight Motion Premium.\nBisa menggunakan akun dari buyer ataupun admin.\nDetail, proses aktivasi, dan ketentuan penggunaan akan dijelaskan oleh admin setelah pembayaran.`, image: "https://files.catbox.moe/snwgh0.jpeg", gallery: ["https://files.catbox.moe/snwgh0.jpeg","https://files.catbox.moe/wadrke.jpg","https://files.catbox.moe/46wo3p.jpg"], oldPrice: 10000, price: 7000, wa: "584167367544" },
     { name: "Font Desain Siap Pakai", description: `1 PACK berisi 10 font keren.\nRekomendasi dari admin Volz\nCocok untuk desain, poster, GFX, konten sosial media, dan kebutuhan editing lainnya.\n#Font Khusus alight motion Saja.`, image: "https://files.catbox.moe/tdwbcf.jpg", gallery: ["https://files.catbox.moe/tdwbcf.jpg","https://files.catbox.moe/ooolq8.jpg"], oldPrice: 5000, price: 2000, wa: "584167367544" },
@@ -1573,7 +1692,7 @@ const CONFIG = {
 let cart = JSON.parse(localStorage.getItem("volka_cart") || "[]");
 let currentProductIndex = -1, currentGalleryIndex = 0, previousPage = "store", checkoutSource = "cart", checkoutItems = [], detailTouchX = 0;
 let bannerIndex = 0, bannerTimer = null, snakeTimer = null, snakeRunning = false, snake = [], snakeDir = {x:1,y:0}, nextSnakeDir = {x:1,y:0}, food = {x:5,y:5}, snakeScore = 0;
-let currentMusic = null, currentMusicIndex = -1, currentGameCleanup = null;
+let currentGameCleanup = null;
 let videoSoundOn = false;
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
@@ -1597,12 +1716,12 @@ function showPage(id, btn = null){
   }
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   const page = document.getElementById(id); if (!page) return; page.classList.add("active");
-  if (["productDetail","checkout","globalChatPage","gamePage","animePage","gamePlay","musicPage","loginPage","registerPage","profilePage","addProductPage","adminPanelPage"].includes(id)) hideBottomNav(); else showBottomNav();
+  if (["productDetail","checkout","globalChatPage","gamePage","animePage","gamePlay","musicPage","musicPlayerPage","loginPage","registerPage","profilePage","addProductPage","adminPanelPage"].includes(id)) hideBottomNav(); else showBottomNav();
   if (btn) { document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active")); btn.classList.add("active"); }
   window.scrollTo({top: 0, behavior: "smooth"});
   if (id === "gamePage") drawSnake();
   if (id === "gameCenter") renderGameCenter();
-  if (id === "musicPage") renderMusicPage();
+  if (id === "musicPage") { const el = document.getElementById("musicResults"); if (el && !el.dataset.loaded) loadTrendingMusic(); }
   if (id === "animePage") { renderSourceChips(); renderGenreChips(); if (!animeHomeLoaded) loadAnimeHome(); }
   if (id === "adminPanelPage") { renderAdminStats(); renderAdminUsers(); startAdminPanelPolling(); }
   else { stopAdminPanelPolling(); }
@@ -1653,28 +1772,6 @@ function toggleVideoSound(){
   if (videoSoundOn) { v.volume = 1; const p = v.play(); if (p && p.catch) p.catch(() => {}); btn.classList.remove("off"); btn.classList.add("on"); icon.textContent = "volume_up"; }
   else { btn.classList.remove("on"); btn.classList.add("off"); icon.textContent = "volume_off"; }
 }
-function renderMusicPage(){
-  const list = document.getElementById("musicListPage");
-  if (!list) return;
-  list.innerHTML = CONFIG.musics.map((m, i) => '<div class="music-card ' + (i === currentMusicIndex ? "active" : "") + '" onclick="playMusic(' + i + ')"><div class="music-icon"><span class="material-symbols-rounded">' + (i === currentMusicIndex && currentMusic && !currentMusic.paused ? "pause" : "play_arrow") + '</span></div><div class="music-info"><div class="music-name">' + escapeHtml(m.title) + '</div><div class="music-status">' + (i === currentMusicIndex && currentMusic && !currentMusic.paused ? "Sedang diputar..." : "Klik untuk memutar") + '</div></div></div>').join("");
-  document.getElementById("nowPlaying").textContent = currentMusicIndex >= 0 ? CONFIG.musics[currentMusicIndex].title : "Tidak ada musik diputar";
-  document.getElementById("playIcon").textContent = currentMusic && !currentMusic.paused ? "pause" : "play_arrow";
-}
-function playMusic(i){
-  if (currentMusic) { currentMusic.pause(); currentMusic.currentTime = 0; }
-  currentMusicIndex = i;
-  currentMusic = new Audio(CONFIG.musics[i].file);
-  currentMusic.play().catch(() => themedAlert("File musik tidak ditemukan: " + CONFIG.musics[i].file, "error"));
-  currentMusic.onended = () => nextMusic();
-  renderMusicPage();
-}
-function togglePlayMusic(){
-  if (!currentMusic) { if (CONFIG.musics.length) playMusic(0); return; }
-  if (currentMusic.paused) currentMusic.play(); else currentMusic.pause();
-  renderMusicPage();
-}
-function nextMusic(){if (!CONFIG.musics.length) return; const n = (currentMusicIndex + 1) % CONFIG.musics.length; playMusic(n);}
-function prevMusic(){if (!CONFIG.musics.length) return; const n = (currentMusicIndex - 1 + CONFIG.musics.length) % CONFIG.musics.length; playMusic(n);}
 function openProductDetail(index){
   const p = PRODUCTS[index]; if (!p) return; currentProductIndex = index; currentGalleryIndex = 0;
   previousPage = document.getElementById("store").classList.contains("active") ? "store" : "home";
@@ -1740,6 +1837,9 @@ document.getElementById("tiktok").href = CONFIG.links.tiktok;
 document.getElementById("xSocial").href = CONFIG.links.xSocial;
 document.getElementById("saweria").href = CONFIG.links.saweria;
 
+/* ============================================================
+   CHAT GLOBAL
+   ============================================================ */
 let globalMessages = [];
 let chatReplyTargetId = null;
 let chatPollingTimer = null;
@@ -1866,7 +1966,6 @@ function startChatPolling(){
   }, 2500);
 }
 function stopChatPolling(){if (chatPollingTimer) clearInterval(chatPollingTimer); chatPollingTimer = null;}
-
 function getLastReadChatTime(){
   if (!currentUser) return 0;
   try { const all = JSON.parse(localStorage.getItem("volka_chat_last_read") || "{}"); return all[String(currentUser.username).toLowerCase()] || 0; }
@@ -1950,42 +2049,15 @@ function stopChatBgPoller(){if (chatBgPollerTimer) clearInterval(chatBgPollerTim
     } else el.classList.remove("swipe-ready");
     currentEl = null; isSwiping = false; movedX = 0;
   });
-  let mouseEl = null, mouseStartX = 0, mouseSwiping = false;
-  container.addEventListener("mousedown", function(e) {
-    const el = e.target.closest(".chat-msg");
-    if (!el) return;
-    mouseEl = el; mouseStartX = e.clientX; mouseSwiping = false;
-  });
-  container.addEventListener("mousemove", function(e) {
-    if (!mouseEl) return;
-    const dx = e.clientX - mouseStartX;
-    if (dx > 20 && !mouseSwiping) { mouseSwiping = true; mouseEl.classList.add("swiping"); }
-    if (mouseSwiping) {
-      mouseEl.style.transform = "translateX(" + Math.min(dx, 70) + "px)";
-      mouseEl.classList.toggle("swipe-ready", dx > 45);
-    }
-  });
-  const mouseEnd = function() {
-    if (!mouseEl) return;
-    const el = mouseEl;
-    const had = el.classList.contains("swipe-ready");
-    el.classList.remove("swiping", "swipe-ready");
-    el.style.transform = "";
-    if (had && el.dataset.id) setChatReply(el.dataset.id);
-    mouseEl = null; mouseSwiping = false;
-  };
-  container.addEventListener("mouseup", mouseEnd);
-  container.addEventListener("mouseleave", mouseEnd);
 })();
 document.getElementById("chatInput")?.addEventListener("keydown", function(e) {
   if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendGlobalMessage(); }
 });
 
 /* ============================================================
-   CHAT: HAPUS, SEMATKAN, AUTO-CLEAR (WhatsApp-style)
+   CHAT: HAPUS, SEMATKAN, AUTO-CLEAR
    ============================================================ */
 let pinnedMessage = null;
-
 async function deleteGlobalMessage(msgId) {
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
   if (!msg) return;
@@ -2005,11 +2077,8 @@ async function deleteGlobalMessage(msgId) {
     globalMessages = globalMessages.filter(function(x){ return x.id !== msgId; });
     renderGlobalChat(false);
     saveGlobalMessagesCache();
-  } catch (e) {
-    themedAlert("Gagal hapus: " + e.message, "error", "GAGAL");
-  }
+  } catch (e) { themedAlert("Gagal hapus: " + e.message, "error", "GAGAL"); }
 }
-
 async function refreshPinnedMessage() {
   try {
     const res = await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json");
@@ -2018,16 +2087,12 @@ async function refreshPinnedMessage() {
     pinnedMessage = (data && data.id) ? data : null;
   } catch (e) { pinnedMessage = null; }
 }
-
 async function pinGlobalMessage(msgId) {
   if (!currentUser || currentUser.role !== "admin") { themedAlert("Fitur sematkan khusus admin.", "error", "AKSES DITOLAK"); return; }
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
   if (!msg) return;
   try {
-    const payload = {
-      id: msg.id, username: msg.username, text: msg.text, time: msg.time,
-      pinnedBy: currentUser.username, pinnedAt: Date.now()
-    };
+    const payload = { id: msg.id, username: msg.username, text: msg.text, time: msg.time, pinnedBy: currentUser.username, pinnedAt: Date.now() };
     const res = await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
     });
@@ -2035,11 +2100,8 @@ async function pinGlobalMessage(msgId) {
     pinnedMessage = payload;
     renderPinnedBar();
     themedAlert("Pesan berhasil disematkan di atas chat.", "success", "TERSEMAT");
-  } catch (e) {
-    themedAlert("Gagal semat: " + e.message + "\n\nCek Firebase Rules — pastikan '.read' & '.write' true.", "error", "GAGAL");
-  }
+  } catch (e) { themedAlert("Gagal semat: " + e.message, "error", "GAGAL"); }
 }
-
 async function unpinGlobalMessage() {
   if (!currentUser || currentUser.role !== "admin") { themedAlert("Fitur ini khusus admin.", "error", "AKSES DITOLAK"); return; }
   const ok = await themedConfirm("Lepas sematan pesan ini dari atas chat?", { okLabel: "LEPAS", okStyle: "danger" });
@@ -2050,19 +2112,12 @@ async function unpinGlobalMessage() {
     pinnedMessage = null;
     renderPinnedBar();
     themedAlert("Sematan dilepas.", "success", "BERHASIL");
-  } catch (e) {
-    themedAlert("Gagal lepas: " + e.message, "error", "GAGAL");
-  }
+  } catch (e) { themedAlert("Gagal lepas: " + e.message, "error", "GAGAL"); }
 }
-
 function renderPinnedBar() {
   const bar = document.getElementById("pinnedBar");
   if (!bar) return;
-  if (!pinnedMessage || !pinnedMessage.text) {
-    bar.classList.add("hidden");
-    bar.innerHTML = "";
-    return;
-  }
+  if (!pinnedMessage || !pinnedMessage.text) { bar.classList.add("hidden"); bar.innerHTML = ""; return; }
   const isAdmin = currentUser && currentUser.role === "admin";
   const d = new Date(pinnedMessage.time || pinnedMessage.pinnedAt || Date.now());
   const tgl = d.toLocaleString("id-ID", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
@@ -2075,7 +2130,6 @@ function renderPinnedBar() {
     '</div>' +
     (isAdmin ? '<button class="pinned-bar-close" onclick="unpinGlobalMessage()" title="Lepas sematan"><span class="material-symbols-rounded">close</span></button>' : '');
 }
-
 function showMessageActions(msgId) {
   const msg = globalMessages.find(function(x){ return x.id === msgId; });
   if (!msg) return;
@@ -2085,70 +2139,16 @@ function showMessageActions(msgId) {
   const isAlreadyPinned = pinnedMessage && pinnedMessage.id === msgId;
   const buttons = [{ label: "BATAL", icon: "close", style: "", onClick: function(){} }];
   if (isAdmin) {
-    if (isAlreadyPinned) {
-      buttons.push({ label: "LEPAS SEMAT", icon: "push_pin", style: "warn", onClick: function() { unpinGlobalMessage(); } });
-    } else {
-      buttons.push({ label: "SEMATKAN", icon: "push_pin", style: "warn", onClick: function() { pinGlobalMessage(msgId); } });
-    }
+    if (isAlreadyPinned) buttons.push({ label: "LEPAS SEMAT", icon: "push_pin", style: "warn", onClick: function() { unpinGlobalMessage(); } });
+    else buttons.push({ label: "SEMATKAN", icon: "push_pin", style: "warn", onClick: function() { pinGlobalMessage(msgId); } });
   }
   if (canDelete) buttons.push({ label: "HAPUS", icon: "delete", style: "danger", onClick: function() { deleteGlobalMessage(msgId); } });
-  showModal({
-    type: "info", title: "AKSI PESAN",
-    message: "Dari: " + msg.username + "\n\n\"" + (msg.text || "").slice(0, 180) + "\"",
-    buttons: buttons
-  });
+  showModal({ type: "info", title: "AKSI PESAN", message: "Dari: " + msg.username + "\n\n\"" + (msg.text || "").slice(0, 180) + "\"", buttons: buttons });
 }
-
-/* ============================================================
-   AUTO-CLEAR CHAT JAM 12 MALAM (00:00)
-   ============================================================ */
-function todayStr() {
-  const d = new Date();
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-}
-function getLastClearDate() {
-  return localStorage.getItem("volka_last_chat_clear") || "";
-}
-function setLastClearDate(d) {
-  localStorage.setItem("volka_last_chat_clear", d);
-}
-async function clearAllChats() {
-  try {
-    await fetch(FIREBASE_DB_URL + FIREBASE_CHAT_PATH + ".json", { method: "DELETE" });
-    await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", { method: "DELETE" });
-    globalMessages = [];
-    pinnedMessage = null;
-    saveGlobalMessagesCache();
-    renderPinnedBar();
-    if (document.getElementById("globalChatPage")?.classList.contains("active")) {
-      renderGlobalChat(true);
-    }
-    updateChatNotifBadge();
-    return true;
-  } catch (e) {
-    console.warn("Auto clear gagal:", e.message);
-    return false;
-  }
-}
-async function checkAndAutoClearChat() {
-  if (!currentUser) return;
-  const today = todayStr();
-  const last = getLastClearDate();
-  if (!last) { setLastClearDate(today); return; }
-  if (last === today) return;
-  await clearAllChats();
-  setLastClearDate(today);
-}
-function startAutoClearScheduler() {
-  checkAndAutoClearChat();
-  setInterval(checkAndAutoClearChat, 60000);
-}
-
 (function setupChatLongPress() {
   const container = document.getElementById("chatMessages");
   if (!container) return;
-  let pressTimer = null;
-  let startTime = 0;
+  let pressTimer = null, startTime = 0;
   const startPress = function(e) {
     const el = e.target.closest(".chat-msg");
     if (!el) return;
@@ -2168,14 +2168,34 @@ function startAutoClearScheduler() {
   container.addEventListener("touchend", cancelPress);
   container.addEventListener("touchcancel", cancelPress);
   container.addEventListener("touchmove", cancelPress);
-  container.addEventListener("mousedown", startPress);
-  container.addEventListener("mouseup", cancelPress);
-  container.addEventListener("mouseleave", cancelPress);
 })();
 
-/* ============================================================
-   ADMIN PANEL: AUTO-REFRESH REALTIME (cross-device)
-   ============================================================ */
+function todayStr() { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function getLastClearDate() { return localStorage.getItem("volka_last_chat_clear") || ""; }
+function setLastClearDate(d) { localStorage.setItem("volka_last_chat_clear", d); }
+async function clearAllChats() {
+  try {
+    await fetch(FIREBASE_DB_URL + FIREBASE_CHAT_PATH + ".json", { method: "DELETE" });
+    await fetch(FIREBASE_DB_URL + FIREBASE_PIN_PATH + ".json", { method: "DELETE" });
+    globalMessages = []; pinnedMessage = null;
+    saveGlobalMessagesCache();
+    renderPinnedBar();
+    if (document.getElementById("globalChatPage")?.classList.contains("active")) renderGlobalChat(true);
+    updateChatNotifBadge();
+    return true;
+  } catch (e) { console.warn("Auto clear gagal:", e.message); return false; }
+}
+async function checkAndAutoClearChat() {
+  if (!currentUser) return;
+  const today = todayStr();
+  const last = getLastClearDate();
+  if (!last) { setLastClearDate(today); return; }
+  if (last === today) return;
+  await clearAllChats();
+  setLastClearDate(today);
+}
+function startAutoClearScheduler() { checkAndAutoClearChat(); setInterval(checkAndAutoClearChat, 60000); }
+
 let adminPanelPollerTimer = null;
 function startAdminPanelPolling() {
   stopAdminPanelPolling();
@@ -2188,21 +2208,259 @@ function startAdminPanelPolling() {
     if (ok || pOK) { renderAdminStats(); renderAdminUsers(); updateAuthUI(); }
   }, 8000);
 }
-function stopAdminPanelPolling() {
-  if (adminPanelPollerTimer) clearInterval(adminPanelPollerTimer);
-  adminPanelPollerTimer = null;
+function stopAdminPanelPolling() { if (adminPanelPollerTimer) clearInterval(adminPanelPollerTimer); adminPanelPollerTimer = null; }
+
+/* ============================================================
+   MUSIC PLAYER — JIOSAAVN + LRCLIB (Spotify-style)
+   ============================================================ */
+const JIOSAAVN_BASE = "https://saavn.dev/api";
+let musicQueue = [];
+let currentQueueIndex = -1;
+let currentAudio = null;
+let lyricsSyncInterval = null;
+let isSeeking = false;
+let shuffleOn = false;
+let lyricsLines = [];
+
+async function loadTrendingMusic() {
+  const resultsEl = document.getElementById("musicResults");
+  if (!resultsEl) return;
+  resultsEl.innerHTML = '<div class="music-loading">Memuat trending...</div>';
+  try {
+    const res = await fetch(`${JIOSAAVN_BASE}/search/songs?query=top+indonesia&limit=15`);
+    const data = await res.json();
+    const tracks = data.data?.results || [];
+    if (!tracks.length) { resultsEl.innerHTML = '<div class="music-empty">Belum ada trending.</div>'; return; }
+    musicQueue = tracks;
+    document.getElementById("spPlaylistName").textContent = "Trending Indonesia";
+    resultsEl.dataset.loaded = "1";
+    resultsEl.innerHTML = tracks.map(function(t, i) {
+      const artwork = t.image?.[1]?.url || "";
+      return '<div class="music-result-card" data-idx="' + i + '" onclick="playQueueIndex(' + i + ')">' +
+        (artwork ? '<img src="' + escapeHtml(artwork) + '" alt="" loading="lazy">' : '<div style="width:52px;height:52px;background:#333;border-radius:4px;display:grid;place-items:center;flex:none"><span class="material-symbols-rounded">music_note</span></div>') +
+        '<div class="music-result-info"><div class="music-result-title">' + escapeHtml(t.name || "Untitled") + '</div>' +
+        '<div class="music-result-artist">' + escapeHtml(t.primaryArtists || "Unknown") + '</div></div>' +
+        '<span class="material-symbols-rounded">play_circle</span></div>';
+    }).join("");
+  } catch (e) { resultsEl.innerHTML = '<div class="music-empty">Gagal memuat trending.</div>'; }
 }
 
+async function searchMusic() {
+  const input = document.getElementById("musicSearchInput");
+  const q = (input.value || "").trim();
+  const resultsEl = document.getElementById("musicResults");
+  if (!q) { resultsEl.innerHTML = '<div class="music-empty">Ketik judul lagu atau nama artis dulu.</div>'; return; }
+  resultsEl.innerHTML = '<div class="music-loading">Mencari "' + escapeHtml(q) + '"...</div>';
+  try {
+    const res = await fetch(`${JIOSAAVN_BASE}/search/songs?query=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    const tracks = data.data?.results || [];
+    if (!tracks.length) { resultsEl.innerHTML = '<div class="music-empty">Lagu tidak ditemukan.</div>'; return; }
+    musicQueue = tracks;
+    document.getElementById("spPlaylistName").textContent = "Hasil: " + q;
+    resultsEl.dataset.loaded = "1";
+    resultsEl.innerHTML = tracks.map(function(t, i) {
+      const artwork = t.image?.[1]?.url || "";
+      return '<div class="music-result-card" data-idx="' + i + '" onclick="playQueueIndex(' + i + ')">' +
+        (artwork ? '<img src="' + escapeHtml(artwork) + '" alt="" loading="lazy" onerror="this.style.opacity=\'.3\'">' : '<div style="width:52px;height:52px;background:#333;border-radius:4px;display:grid;place-items:center;flex:none"><span class="material-symbols-rounded">music_note</span></div>') +
+        '<div class="music-result-info"><div class="music-result-title">' + escapeHtml(t.name || "Untitled") + '</div>' +
+        '<div class="music-result-artist">' + escapeHtml(t.primaryArtists || "Unknown") + '</div></div>' +
+        '<span class="material-symbols-rounded">play_circle</span></div>';
+    }).join("");
+  } catch (e) { resultsEl.innerHTML = '<div class="music-empty">Error: ' + escapeHtml(e.message) + '</div>'; }
+}
+
+async function playQueueIndex(idx) {
+  if (!musicQueue[idx]) return;
+  currentQueueIndex = idx;
+  const track = musicQueue[idx];
+
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (lyricsSyncInterval) { clearInterval(lyricsSyncInterval); lyricsSyncInterval = null; }
+
+  document.getElementById("nowPlaying").textContent = (track.name || "Untitled") + " — " + (track.primaryArtists || "Unknown");
+  document.getElementById("playIcon").textContent = "pause";
+  document.getElementById("spSongTitle").textContent = track.name || "Untitled";
+  document.getElementById("spSongArtist").textContent = track.primaryArtists || "Unknown";
+  document.getElementById("spPlayIcon").textContent = "pause";
+  document.getElementById("spCurTime").textContent = "0:00";
+  document.getElementById("spDurTime").textContent = "0:00";
+  document.getElementById("spSeek").value = 0;
+  document.getElementById("spLyricLine").textContent = "";
+  document.getElementById("spLyricsContent").innerHTML = '<p style="text-align:center;opacity:.5">Memuat lirik...</p>';
+  lyricsLines = [];
+
+  const art = track.image?.[2]?.url || track.image?.[1]?.url || track.image?.[0]?.url || "";
+  document.getElementById("spAlbumArt").src = art || "";
+
+  showMusicPlayerPage();
+
+  try {
+    const streamRes = await fetch(`${JIOSAAVN_BASE}/songs/${track.id}`);
+    const streamData = await streamRes.json();
+    const downloadUrls = streamData.data?.[0]?.downloadUrl || [];
+    const best = downloadUrls.find(d => d.quality === "320kbps") || downloadUrls.find(d => d.quality === "160kbps") || downloadUrls[0];
+    const streamUrl = best?.url;
+    if (!streamUrl) throw new Error("Stream URL tidak tersedia");
+
+    currentAudio = new Audio(streamUrl);
+    currentAudio.volume = 0.9;
+    currentAudio.onloadedmetadata = function() {
+      const d = formatTime(currentAudio.duration || 0);
+      document.getElementById("musicDuration").textContent = d;
+      document.getElementById("spDurTime").textContent = d;
+    };
+    currentAudio.ontimeupdate = function() {
+      if (isSeeking) return;
+      const cur = currentAudio.currentTime || 0;
+      const dur = currentAudio.duration || 0;
+      const c = formatTime(cur);
+      document.getElementById("musicCurrentTime").textContent = c;
+      document.getElementById("spCurTime").textContent = c;
+      const pct = dur ? (cur / dur * 100) : 0;
+      document.getElementById("musicSeek").value = pct;
+      document.getElementById("spSeek").value = pct;
+    };
+    currentAudio.onended = function() { nextMusic(); };
+    currentAudio.onerror = function() { themedAlert("Gagal memutar audio.", "error"); };
+
+    await currentAudio.play();
+
+    document.querySelectorAll(".music-result-card").forEach(function(c) { c.classList.remove("playing"); });
+    const active = document.querySelector('.music-result-card[data-idx="' + idx + '"]');
+    if (active) active.classList.add("playing");
+
+    let lyrics = null;
+    try {
+      const lyricsRes = await fetch(`${JIOSAAVN_BASE}/songs/${track.id}/lyrics`);
+      const lyricsData = await lyricsRes.json();
+      if (lyricsData.data?.lyrics) lyrics = { plain: lyricsData.data.lyrics, synced: null };
+    } catch (e) {}
+    if (!lyrics || !lyrics.plain) lyrics = await getLyrics(track.name || "", track.primaryArtists || "");
+    renderSpotifyLyrics(lyrics);
+
+  } catch (e) {
+    console.error("Play error:", e);
+    themedAlert("Gagal memutar: " + e.message, "error");
+    document.getElementById("playIcon").textContent = "play_arrow";
+    document.getElementById("spPlayIcon").textContent = "play_arrow";
+  }
+}
+
+function togglePlayMusic() {
+  if (!currentAudio) { if (musicQueue.length) playQueueIndex(0); return; }
+  if (currentAudio.paused) {
+    currentAudio.play();
+    document.getElementById("playIcon").textContent = "pause";
+    document.getElementById("spPlayIcon").textContent = "pause";
+  } else {
+    currentAudio.pause();
+    document.getElementById("playIcon").textContent = "play_arrow";
+    document.getElementById("spPlayIcon").textContent = "play_arrow";
+  }
+}
+function nextMusic() {
+  if (!musicQueue.length) return;
+  let n;
+  if (shuffleOn && musicQueue.length > 1) { do { n = Math.floor(Math.random() * musicQueue.length); } while (n === currentQueueIndex); }
+  else n = (currentQueueIndex + 1) % musicQueue.length;
+  playQueueIndex(n);
+}
+function prevMusic() { if (!musicQueue.length) return; const n = (currentQueueIndex - 1 + musicQueue.length) % musicQueue.length; playQueueIndex(n); }
+function toggleShuffle() { shuffleOn = !shuffleOn; document.getElementById("spShuffleBtn").classList.toggle("active", shuffleOn); if (navigator.vibrate) navigator.vibrate(15); }
+function formatTime(sec) { if (!sec || isNaN(sec)) return "0:00"; const m = Math.floor(sec / 60); const s = Math.floor(sec % 60); return m + ":" + String(s).padStart(2, "0"); }
+function showMusicPlayerPage() {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("musicPlayerPage").classList.add("active");
+  document.getElementById("mainNav").style.display = "none";
+}
+function closeMusicPlayer() {
+  document.getElementById("musicPlayerPage").classList.remove("active");
+  showPage("musicPage");
+}
+async function getLyrics(title, artist, duration) {
+  try {
+    let url = "https://lrclib.net/api/get?track_name=" + encodeURIComponent(title) + "&artist_name=" + encodeURIComponent(artist || "Unknown");
+    if (duration && duration > 0) url += "&duration=" + Math.round(duration);
+    const res = await fetch(url, { headers: { "X-User-Agent": "VOLKA_STORE v1.0 (https://volkaze.my.id)" } });
+    if (!res.ok) return { plain: null, synced: null };
+    const data = await res.json();
+    return { plain: data.plainLyrics || null, synced: data.syncedLyrics || null };
+  } catch (e) { return { plain: null, synced: null }; }
+}
+function renderSpotifyLyrics(lyrics) {
+  const box = document.getElementById("spLyricsContent");
+  const lineBox = document.getElementById("spLyricLine");
+  if (!box) return;
+  if (!lyrics || (!lyrics.plain && !lyrics.synced)) {
+    box.innerHTML = '<p style="text-align:center;opacity:.5">Lirik tidak tersedia untuk lagu ini.</p>';
+    lineBox.textContent = ""; lyricsLines = []; return;
+  }
+  let lines = [];
+  if (lyrics.synced) {
+    lines = lyrics.synced.split("\n").map(function(l) {
+      const m = l.match(/\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)/);
+      if (!m) return null;
+      return { time: parseInt(m[1], 10) * 60 + parseFloat(m[2]), text: (m[3] || "").trim() };
+    }).filter(function(x) { return x && x.text; });
+    lyricsLines = lines;
+  } else if (lyrics.plain) {
+    lines = lyrics.plain.split("\n").map(function(l) { return { time: -1, text: l.trim() }; }).filter(function(x) { return x.text; });
+    lyricsLines = [];
+  }
+  box.innerHTML = lines.map(function(l, i) { return '<p class="lyric-line" data-idx="' + i + '" data-time="' + (l.time || -1) + '">' + escapeHtml(l.text) + '</p>'; }).join("");
+  if (lyricsLines.length) {
+    if (lyricsSyncInterval) clearInterval(lyricsSyncInterval);
+    lyricsSyncInterval = setInterval(function() {
+      if (!currentAudio) return;
+      const t = currentAudio.currentTime;
+      let activeIdx = -1;
+      for (let i = 0; i < lyricsLines.length; i++) { if (lyricsLines[i].time <= t) activeIdx = i; else break; }
+      if (activeIdx < 0) return;
+      const curLine = lyricsLines[activeIdx].text;
+      if (lineBox.textContent !== curLine) lineBox.textContent = curLine;
+      const allLines = box.querySelectorAll(".lyric-line");
+      allLines.forEach(function(el, i) {
+        if (i === activeIdx) { if (!el.classList.contains("active")) { el.classList.add("active"); el.scrollIntoView({ behavior: "smooth", block: "center" }); } }
+        else el.classList.remove("active");
+      });
+    }, 350);
+  }
+}
+document.addEventListener("DOMContentLoaded", function() {
+  const spSeek = document.getElementById("spSeek");
+  if (spSeek) {
+    spSeek.addEventListener("input", function() { isSeeking = true; });
+    spSeek.addEventListener("change", function() {
+      if (currentAudio && currentAudio.duration) currentAudio.currentTime = (spSeek.value / 100) * currentAudio.duration;
+      isSeeking = false;
+    });
+  }
+  const ms = document.getElementById("musicSeek");
+  if (ms) {
+    ms.addEventListener("input", function() { isSeeking = true; });
+    ms.addEventListener("change", function() {
+      if (currentAudio && currentAudio.duration) currentAudio.currentTime = (ms.value / 100) * currentAudio.duration;
+      isSeeking = false;
+    });
+  }
+  const searchInput = document.getElementById("musicSearchInput");
+  if (searchInput) searchInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); searchMusic(); } });
+});
+
+/* ============================================================
+   ANIME STREAMING
+   ============================================================ */
 const ANIME_API = "https://wajik-anime-api-production-4c0e.up.railway.app";
 const ANIME_GENRES = [
   {name: "Semua", value: ""}, {name: "Action", value: "action"}, {name: "Adventure", value: "adventure"},
   {name: "Comedy", value: "comedy"}, {name: "Drama", value: "drama"}, {name: "Fantasy", value: "fantasy"},
   {name: "Horror", value: "horror"}, {name: "Isekai", value: "isekai"}, {name: "Magic", value: "magic"},
   {name: "Mecha", value: "mecha"}, {name: "Music", value: "music"}, {name: "Mystery", value: "mystery"},
-  {name: "Psychological", value: "psychological"}, {name: "Romance", value: "romance"}, {name: "School", value: "school"},
-  {name: "Sci-Fi", value: "sci-fi"}, {name: "Seinen", value: "seinen"}, {name: "Shoujo", value: "shoujo"},
-  {name: "Shounen", value: "shounen"}, {name: "Slice of Life", value: "slice-of-life"}, {name: "Sports", value: "sports"},
-  {name: "Supernatural", value: "supernatural"}, {name: "Thriller", value: "thriller"}
+  {name: "Romance", value: "romance"}, {name: "School", value: "school"}, {name: "Sci-Fi", value: "sci-fi"},
+  {name: "Seinen", value: "seinen"}, {name: "Shoujo", value: "shoujo"}, {name: "Shounen", value: "shounen"},
+  {name: "Slice of Life", value: "slice-of-life"}, {name: "Sports", value: "sports"}, {name: "Supernatural", value: "supernatural"},
+  {name: "Thriller", value: "thriller"}
 ];
 const ANIME_SOURCES = {
   oploverz: {
@@ -2212,40 +2470,10 @@ const ANIME_SOURCES = {
     search: function(q) { return "/oploverz/search?q=" + encodeURIComponent(q); },
     detailPath: function(anime) { return "/oploverz/anime/" + encodeURIComponent(anime.slug); },
     episodePath: function(ep, anime) { return "/oploverz/episode/" + encodeURIComponent(ep.id); },
-    extractList: function(res) {
-      var list = [];
-      if (res && res.data) {
-        if (Array.isArray(res.data.sectionList)) res.data.sectionList.forEach(function(s){ if (Array.isArray(s.animeList)) list = list.concat(s.animeList); });
-        if (!list.length && Array.isArray(res.data.animeList)) list = res.data.animeList;
-        if (!list.length && Array.isArray(res.data.list)) list = res.data.list;
-      }
-      if (!list.length && res && Array.isArray(res.data)) list = res.data;
-      return list;
-    },
-    normalizeCard: function(a) {
-      var id = a.slug || a.animeId || a.id || "";
-      return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "https://i0.wp.com/oploverz.am/wp-content/uploads/manga-images/thumbnail/" + id + ".jpg" };
-    },
-    extractDetail: function(res) {
-      var root = res.data || {}; var d = root.details || root;
-      var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || [];
-      var eps = rawEps.map(function(ep) {
-        var id = "";
-        if (ep.href) { var m = ep.href.match(/\/([^\/]+)\/?$/); if (m) id = m[1]; }
-        if (!id) id = ep.slug || ep.episodeId || ep.id || "";
-        return { id: id, number: ep.episode || ep.number || 0 };
-      });
-      eps.reverse();
-      var genres = [];
-      if (Array.isArray(d.genres)) genres = d.genres;
-      else if (typeof d.genres === "string") genres = d.genres.split(",").map(function(s){return s.trim();});
-      else if (Array.isArray(d.genreList)) genres = d.genreList;
-      return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: genres, episodes: eps };
-    },
-    extractStream: function(res) {
-      var root = res.data || {}; var d = root.details || root;
-      return d.streamingUrl || d.streamUrl || d.url || "";
-    }
+    extractList: function(res) { var list = []; if (res && res.data) { if (Array.isArray(res.data.sectionList)) res.data.sectionList.forEach(function(s){ if (Array.isArray(s.animeList)) list = list.concat(s.animeList); }); if (!list.length && Array.isArray(res.data.animeList)) list = res.data.animeList; if (!list.length && Array.isArray(res.data.list)) list = res.data.list; } if (!list.length && res && Array.isArray(res.data)) list = res.data; return list; },
+    normalizeCard: function(a) { var id = a.slug || a.animeId || a.id || ""; return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "https://i0.wp.com/oploverz.am/wp-content/uploads/manga-images/thumbnail/" + id + ".jpg" }; },
+    extractDetail: function(res) { var root = res.data || {}; var d = root.details || root; var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || []; var eps = rawEps.map(function(ep) { var id = ""; if (ep.href) { var m = ep.href.match(/\/([^\/]+)\/?$/); if (m) id = m[1]; } if (!id) id = ep.slug || ep.episodeId || ep.id || ""; return { id: id, number: ep.episode || ep.number || 0 }; }); eps.reverse(); var genres = []; if (Array.isArray(d.genres)) genres = d.genres; else if (typeof d.genres === "string") genres = d.genres.split(",").map(function(s){return s.trim();}); return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: genres, episodes: eps }; },
+    extractStream: function(res) { var root = res.data || {}; var d = root.details || root; return d.streamingUrl || d.streamUrl || d.url || ""; }
   },
   kuramanime: {
     key: "kuramanime", label: "Kuramanime", icon: "video_library",
@@ -2254,42 +2482,10 @@ const ANIME_SOURCES = {
     search: function(q) { return "/kuramanime/anime?search=" + encodeURIComponent(q) + "&page=1"; },
     detailPath: function(anime) { return "/kuramanime/anime/" + encodeURIComponent(anime.animeId) + "/" + encodeURIComponent(anime.slug); },
     episodePath: function(ep, anime) { return "/kuramanime/episode/" + encodeURIComponent(anime.animeId) + "/" + encodeURIComponent(anime.slug) + "/" + encodeURIComponent(ep.id); },
-    extractList: function(res) {
-      var list = [];
-      if (res && res.data) {
-        if (Array.isArray(res.data.animeList)) list = res.data.animeList;
-        else if (Array.isArray(res.data.list)) list = res.data.list;
-        else if (Array.isArray(res.data.sectionList)) res.data.sectionList.forEach(function(s){ if (Array.isArray(s.animeList)) list = list.concat(s.animeList); });
-        else if (Array.isArray(res.data.data)) list = res.data.data;
-      }
-      if (!list.length && res && Array.isArray(res.data)) list = res.data;
-      if (!list.length && res && Array.isArray(res.animeList)) list = res.animeList;
-      return list;
-    },
-    normalizeCard: function(a) {
-      var animeId = a.animeId || a.id || "";
-      var slug = a.slug || a.animeSlug || "";
-      return { cacheKey: animeId + "|" + slug, animeId: animeId, slug: slug, title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" };
-    },
-    extractDetail: function(res) {
-      var root = res.data || {}; var d = root.details || root;
-      var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || [];
-      var eps = rawEps.map(function(ep) { return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 }; });
-      eps.reverse();
-      var genres = [];
-      if (Array.isArray(d.genres)) genres = d.genres;
-      else if (typeof d.genres === "string") genres = d.genres.split(",").map(function(s){return s.trim();});
-      return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: genres, episodes: eps };
-    },
-    extractStream: function(res) {
-      var root = res.data || {}; var d = root.details || root;
-      if (d.streamingUrl) return d.streamingUrl;
-      if (d.streamUrl) return d.streamUrl;
-      if (d.url) return d.url;
-      if (Array.isArray(d.servers) && d.servers.length) return d.servers[0].url || d.servers[0].link || "";
-      if (Array.isArray(d.streams) && d.streams.length) return d.streams[0].url || d.streams[0].link || "";
-      return "";
-    }
+    extractList: function(res) { var list = []; if (res && res.data) { if (Array.isArray(res.data.animeList)) list = res.data.animeList; else if (Array.isArray(res.data.list)) list = res.data.list; else if (Array.isArray(res.data.data)) list = res.data.data; } if (!list.length && res && Array.isArray(res.data)) list = res.data; return list; },
+    normalizeCard: function(a) { var animeId = a.animeId || a.id || ""; var slug = a.slug || a.animeSlug || ""; return { cacheKey: animeId + "|" + slug, animeId: animeId, slug: slug, title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" }; },
+    extractDetail: function(res) { var root = res.data || {}; var d = root.details || root; var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || []; var eps = rawEps.map(function(ep) { return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 }; }); eps.reverse(); var genres = []; if (Array.isArray(d.genres)) genres = d.genres; else if (typeof d.genres === "string") genres = d.genres.split(",").map(function(s){return s.trim();}); return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: genres, episodes: eps }; },
+    extractStream: function(res) { var root = res.data || {}; var d = root.details || root; if (d.streamingUrl) return d.streamingUrl; if (d.streamUrl) return d.streamUrl; if (d.url) return d.url; if (Array.isArray(d.servers) && d.servers.length) return d.servers[0].url || d.servers[0].link || ""; return ""; }
   },
   otakudesu: {
     key: "otakudesu", label: "Otakudesu", icon: "video_file",
@@ -2298,31 +2494,10 @@ const ANIME_SOURCES = {
     search: function(q) { return "/otakudesu/search?q=" + encodeURIComponent(q); },
     detailPath: function(anime) { return "/otakudesu/anime/" + encodeURIComponent(anime.slug); },
     episodePath: function(ep, anime) { return "/otakudesu/episode/" + encodeURIComponent(ep.id); },
-    extractList: function(res) {
-      var list = [];
-      if (res && res.data) {
-        if (Array.isArray(res.data.animeList)) list = res.data.animeList;
-        else if (Array.isArray(res.data.list)) list = res.data.list;
-        else if (Array.isArray(res.data.animes)) list = res.data.animes;
-      }
-      if (!list.length && res && Array.isArray(res.data)) list = res.data;
-      return list;
-    },
-    normalizeCard: function(a) {
-      var id = a.slug || a.animeId || a.id || "";
-      return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" };
-    },
-    extractDetail: function(res) {
-      var root = res.data || {}; var d = root.details || root;
-      var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || [];
-      var eps = rawEps.map(function(ep) { return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 }; });
-      eps.reverse();
-      return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: Array.isArray(d.genres) ? d.genres : [], episodes: eps };
-    },
-    extractStream: function(res) {
-      var root = res.data || {}; var d = root.details || root;
-      return d.streamingUrl || d.streamUrl || d.url || "";
-    }
+    extractList: function(res) { var list = []; if (res && res.data) { if (Array.isArray(res.data.animeList)) list = res.data.animeList; else if (Array.isArray(res.data.list)) list = res.data.list; } if (!list.length && res && Array.isArray(res.data)) list = res.data; return list; },
+    normalizeCard: function(a) { var id = a.slug || a.animeId || a.id || ""; return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" }; },
+    extractDetail: function(res) { var root = res.data || {}; var d = root.details || root; var rawEps = root.episodeList || d.episodeList || root.episodes || d.episodes || []; var eps = rawEps.map(function(ep) { return { id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 }; }); eps.reverse(); return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: Array.isArray(d.genres) ? d.genres : [], episodes: eps }; },
+    extractStream: function(res) { var root = res.data || {}; var d = root.details || root; return d.streamingUrl || d.streamUrl || d.url || ""; }
   }
 };
 const SOURCE_ORDER = ["oploverz", "kuramanime", "otakudesu"];
@@ -2347,10 +2522,7 @@ async function animeFetch(path, retries) {
       clearTimeout(t);
       if (!res.ok) throw new Error("HTTP " + res.status);
       return await res.json();
-    } catch (e) {
-      lastErr = e;
-      if (i < retries) await new Promise(function(r){ setTimeout(r, 800); });
-    }
+    } catch (e) { lastErr = e; if (i < retries) await new Promise(function(r){ setTimeout(r, 800); }); }
   }
   throw lastErr || new Error("Gagal fetch");
 }
@@ -2360,50 +2532,28 @@ function setAnimeStatus(html, type) {
   const cls = type === "error" ? "anime-error" : (type === "loading" ? "anime-loading" : "anime-empty");
   results.innerHTML = '<div class="' + cls + '">' + html + '</div>';
 }
-function loadingHtml(msg) {
-  return '<span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>' + escapeHtml(msg || "Memuat...");
-}
-function errorHtml(msg, retryFn) {
-  const fn = retryFn || "loadAnimeHome()";
-  return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' + escapeHtml(msg || "Terjadi kesalahan.") + '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>';
-}
+function loadingHtml(msg) { return '<span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>' + escapeHtml(msg || "Memuat..."); }
+function errorHtml(msg, retryFn) { const fn = retryFn || "loadAnimeHome()"; return '<span class="material-symbols-rounded" style="font-size:24px">error</span><br>' + escapeHtml(msg || "Terjadi kesalahan.") + '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:8px 14px;font-weight:700;font-size:10px" onclick="' + fn + '">COBA LAGI</button>'; }
 function renderSourceChips() {
   const el = document.getElementById("sourceChips");
   if (!el) return;
-  el.innerHTML = SOURCE_ORDER.map(function(key) {
-    const s = ANIME_SOURCES[key];
-    return '<div class="source-chip' + (key === currentSource ? ' active' : '') + '" onclick="switchSource(\'' + key + '\')">' + '<span class="material-symbols-rounded">' + s.icon + '</span>' + s.label + '</div>';
-  }).join("");
+  el.innerHTML = SOURCE_ORDER.map(function(key) { const s = ANIME_SOURCES[key]; return '<div class="source-chip' + (key === currentSource ? ' active' : '') + '" onclick="switchSource(\'' + key + '\')">' + '<span class="material-symbols-rounded">' + s.icon + '</span>' + s.label + '</div>'; }).join("");
 }
 function renderGenreChips() {
   const el = document.getElementById("genreChips");
   if (!el) return;
-  el.innerHTML = ANIME_GENRES.map(function(g) {
-    return '<div class="genre-chip' + (g.value === currentGenre ? ' active' : '') + '" onclick="filterByGenre(\'' + g.value + '\', this)">' + g.name + '</div>';
-  }).join("");
+  el.innerHTML = ANIME_GENRES.map(function(g) { return '<div class="genre-chip' + (g.value === currentGenre ? ' active' : '') + '" onclick="filterByGenre(\'' + g.value + '\', this)">' + g.name + '</div>'; }).join("");
 }
-function switchSource(key) {
-  if (!ANIME_SOURCES[key]) return;
-  currentSource = key; currentGenre = "";
-  renderSourceChips(); renderGenreChips(); closeAnimeDetail(); loadAnimeHome();
-}
+function switchSource(key) { if (!ANIME_SOURCES[key]) return; currentSource = key; currentGenre = ""; renderSourceChips(); renderGenreChips(); closeAnimeDetail(); loadAnimeHome(); }
 async function loadAnimeHome() {
   setAnimeStatus(loadingHtml("Memuat dari " + ANIME_SOURCES[currentSource].label + "..."), "loading");
   document.getElementById("animeDetailWrap").innerHTML = "";
   const source = ANIME_SOURCES[currentSource];
-  try {
-    const res = await animeFetch(source.list());
-    const list = source.extractList(res);
-    if (list.length) { animeHomeLoaded = true; renderAnimeGrid(list, source); return; }
-  } catch (e) { console.warn("Source " + currentSource + " gagal:", e.message); }
+  try { const res = await animeFetch(source.list()); const list = source.extractList(res); if (list.length) { animeHomeLoaded = true; renderAnimeGrid(list, source); return; } } catch (e) {}
   for (let i = 0; i < SOURCE_ORDER.length; i++) {
     const key = SOURCE_ORDER[i];
     if (key === currentSource) continue;
-    try {
-      const res = await animeFetch(ANIME_SOURCES[key].list());
-      const list = ANIME_SOURCES[key].extractList(res);
-      if (list.length) { currentSource = key; renderSourceChips(); animeHomeLoaded = true; renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
-    } catch (e) { continue; }
+    try { const res = await animeFetch(ANIME_SOURCES[key].list()); const list = ANIME_SOURCES[key].extractList(res); if (list.length) { currentSource = key; renderSourceChips(); animeHomeLoaded = true; renderAnimeGrid(list, ANIME_SOURCES[key]); return; } } catch (e) { continue; }
   }
   setAnimeStatus(errorHtml("Semua sumber gagal dimuat. Coba lagi nanti.", "loadAnimeHome()"), "error");
 }
@@ -2415,19 +2565,11 @@ async function filterByGenre(genre, chipEl) {
   setAnimeStatus(loadingHtml("Memuat genre..."), "loading");
   const source = ANIME_SOURCES[currentSource];
   if (!genre) { loadAnimeHome(); return; }
-  try {
-    const res = await animeFetch(source.listByGenre(genre));
-    const list = source.extractList(res);
-    if (list.length) { renderAnimeGrid(list, source); return; }
-  } catch (e) { console.warn("Genre di " + currentSource + " gagal: " + e.message); }
+  try { const res = await animeFetch(source.listByGenre(genre)); const list = source.extractList(res); if (list.length) { renderAnimeGrid(list, source); return; } } catch (e) {}
   for (let i = 0; i < SOURCE_ORDER.length; i++) {
     const key = SOURCE_ORDER[i];
     if (key === currentSource) continue;
-    try {
-      const res = await animeFetch(ANIME_SOURCES[key].listByGenre(genre));
-      const list = ANIME_SOURCES[key].extractList(res);
-      if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
-    } catch (e) { continue; }
+    try { const res = await animeFetch(ANIME_SOURCES[key].listByGenre(genre)); const list = ANIME_SOURCES[key].extractList(res); if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; } } catch (e) { continue; }
   }
   setAnimeStatus("Tidak ada anime genre ini di semua sumber. Coba genre lain.");
 }
@@ -2437,19 +2579,11 @@ async function searchAnime() {
   if (!q) { filterByGenre("", null); return; }
   setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
   const source = ANIME_SOURCES[currentSource];
-  try {
-    const res = await animeFetch(source.search(q));
-    const list = source.extractList(res);
-    if (list.length) { renderAnimeGrid(list, source); return; }
-  } catch (e) { console.warn("Search di " + currentSource + " gagal: " + e.message); }
+  try { const res = await animeFetch(source.search(q)); const list = source.extractList(res); if (list.length) { renderAnimeGrid(list, source); return; } } catch (e) {}
   for (let i = 0; i < SOURCE_ORDER.length; i++) {
     const key = SOURCE_ORDER[i];
     if (key === currentSource) continue;
-    try {
-      const res = await animeFetch(ANIME_SOURCES[key].search(q));
-      const list = ANIME_SOURCES[key].extractList(res);
-      if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; }
-    } catch (e) { continue; }
+    try { const res = await animeFetch(ANIME_SOURCES[key].search(q)); const list = ANIME_SOURCES[key].extractList(res); if (list.length) { currentSource = key; renderSourceChips(); renderAnimeGrid(list, ANIME_SOURCES[key]); return; } } catch (e) { continue; }
   }
   setAnimeStatus('Anime "' + escapeHtml(q) + '" tidak ditemukan di semua sumber.');
 }
@@ -2522,9 +2656,7 @@ async function openAnimeDetail(cacheKey) {
         '</div>' +
       '</div>';
     if (info.episodes.length) renderEpisodeList(info.episodes);
-  } catch (e) {
-    wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail: " + e.message) + '</div>';
-  }
+  } catch (e) { wrap.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat detail: " + e.message) + '</div>'; }
 }
 function renderEpisodeList(episodes) {
   const el = document.getElementById("episodeListInline");
@@ -2535,12 +2667,7 @@ function renderEpisodeList(episodes) {
     return '<div class="episode-item" data-ep="' + escapeHtml(String(epId)) + '" onclick="playEpisode(\'' + String(epId).replace(/'/g, "\\'") + '\',' + Number(num) + ',' + i + ')">EP ' + escapeHtml(String(num)) + '</div>';
   }).join("");
 }
-function setVideoStatus(msg, type) {
-  const el = document.getElementById("videoStatus");
-  if (!el) return;
-  el.className = "video-status " + (type || "");
-  el.innerHTML = msg;
-}
+function setVideoStatus(msg, type) { const el = document.getElementById("videoStatus"); if (!el) return; el.className = "video-status " + (type || ""); el.innerHTML = msg; }
 function updatePlayerInfo() {
   const infoEl = document.getElementById("playerInfoText");
   if (!infoEl) return;
@@ -2565,20 +2692,8 @@ async function playEpisode(episodeId, epNum, idx) {
   playerWrap.scrollIntoView({behavior: "smooth", block: "start"});
   await loadEpisodeSource(episodeId);
 }
-function playPrevEpisode() {
-  if (currentEpisodeIndex <= 0) return;
-  const t = currentEpisodeIndex - 1;
-  const ep = currentEpisodeList[t];
-  if (!ep) return;
-  playEpisode(ep.id, ep.number || (t + 1), t);
-}
-function playNextEpisode() {
-  if (currentEpisodeIndex >= currentEpisodeList.length - 1) return;
-  const t = currentEpisodeIndex + 1;
-  const ep = currentEpisodeList[t];
-  if (!ep) return;
-  playEpisode(ep.id, ep.number || (t + 1), t);
-}
+function playPrevEpisode() { if (currentEpisodeIndex <= 0) return; const t = currentEpisodeIndex - 1; const ep = currentEpisodeList[t]; if (!ep) return; playEpisode(ep.id, ep.number || (t + 1), t); }
+function playNextEpisode() { if (currentEpisodeIndex >= currentEpisodeList.length - 1) return; const t = currentEpisodeIndex + 1; const ep = currentEpisodeList[t]; if (!ep) return; playEpisode(ep.id, ep.number || (t + 1), t); }
 async function loadEpisodeSource(episodeId) {
   const box = document.getElementById("animeVideoBox");
   if (!box || !currentAnimeCtx) return;
@@ -2589,19 +2704,16 @@ async function loadEpisodeSource(episodeId) {
   try {
     const res = await animeFetch(source.episodePath({id: episodeId}, currentAnimeCtx));
     let url = source.extractStream(res);
-    if (!url) { console.log("Response /episode:", res); throw new Error("Tidak ada sumber video"); }
+    if (!url) throw new Error("Tidak ada sumber video");
     const isBlogger = /blogger\.com|video\.g\?|googleusercontent|youtube\.com|youtu\.be/.test(url);
     const isM3U8 = /\.m3u8(\?|$)/i.test(url);
     const isIframeFriendly = isBlogger || /\/embed\//.test(url);
     if (isIframeFriendly) {
       box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border:0;display:block;width:100%;height:100%"></iframe>';
-      setVideoStatus('✅ Sedang memutar. Klik tombol kualitas di dalam video untuk ganti resolusi.', "");
+      setVideoStatus('✅ Sedang memutar.', "");
     } else if (isM3U8 || /\.(mp4|webm|mkv)(\?|$)/i.test(url)) {
       const video = document.createElement('video');
-      video.id = "animeVideo";
-      video.className = "anime-video";
-      video.controls = true;
-      video.playsInline = true;
+      video.id = "animeVideo"; video.className = "anime-video"; video.controls = true; video.playsInline = true;
       video.setAttribute("crossorigin", "anonymous");
       box.appendChild(video);
       await attachAndPlayVideo(video, url);
@@ -2610,9 +2722,7 @@ async function loadEpisodeSource(episodeId) {
       box.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen style="border:0;display:block;width:100%;height:100%"></iframe>';
       setVideoStatus('✅ Sedang memutar.', "");
     }
-  } catch (e) {
-    setVideoStatus('❌ Gagal memuat video: ' + e.message + '<br><br><button style="border:2px solid var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);padding:6px 12px;font-weight:700;font-size:10px" onclick="loadEpisodeSource(\'' + episodeId.replace(/'/g, "\\'") + '\')">COBA LAGI</button>', "error");
-  }
+  } catch (e) { setVideoStatus('❌ Gagal memuat video: ' + e.message, "error"); }
 }
 function attachAndPlayVideo(video, url) {
   return new Promise(function (resolve, reject) {
@@ -2623,8 +2733,7 @@ function attachAndPlayVideo(video, url) {
       if (video.canPlayType("application/vnd.apple.mpegurl")) { video.src = url; video.play().catch(function(){}); }
       else if (window.Hls && window.Hls.isSupported()) {
         hlsInstance = new Hls({enableWorker: true});
-        hlsInstance.loadSource(url);
-        hlsInstance.attachMedia(video);
+        hlsInstance.loadSource(url); hlsInstance.attachMedia(video);
         hlsInstance.on(Hls.Events.MANIFEST_PARSED, function () { video.play().catch(function(){}); });
         hlsInstance.on(Hls.Events.ERROR, function (evt, data) { if (data && data.fatal) reject(new Error("HLS error")); });
       } else { video.src = url; video.play().catch(function(){}); }
@@ -2640,10 +2749,11 @@ function closeAnimePlayerOnly() {
   if (wrap) wrap.style.display = "none";
 }
 function closeAnimePlayer() { closeAnimePlayerOnly(); }
-document.getElementById("animeSearchInput").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") searchAnime();
-});
+document.getElementById("animeSearchInput").addEventListener("keydown", function (e) { if (e.key === "Enter") searchAnime(); });
 
+/* ============================================================
+   GAME CENTER & GAMES
+   ============================================================ */
 function renderGameCenter(){
   const grid = document.getElementById("gameCenterGrid");
   if (!grid) return;
@@ -2656,10 +2766,7 @@ function renderGameCenter(){
   }).join("");
 }
 function openSnakeGame(){showPage("gamePage"); drawSnake();}
-function closeGamePlay(){
-  if (currentGameCleanup) { try { currentGameCleanup(); } catch(e){} currentGameCleanup = null; }
-  showPage("gameCenter");
-}
+function closeGamePlay(){ if (currentGameCleanup) { try { currentGameCleanup(); } catch(e){} currentGameCleanup = null; } showPage("gameCenter"); }
 function openGame(id){
   const g = CONFIG.games.find(x => x.id === id);
   document.getElementById("gamePlayTitle").textContent = g ? g.name : "GAME";
@@ -2669,17 +2776,10 @@ function openGame(id){
   if (currentGameCleanup) { try { currentGameCleanup(); } catch(e){} currentGameCleanup = null; }
   showPage("gamePlay");
   setTimeout(function(){
-    try {
-      const fn = GAMES[id];
-      if (fn) currentGameCleanup = fn(body) || null;
-      else body.innerHTML = '<div class="empty">Game belum tersedia.</div>';
-    } catch (err) {
-      console.error("Game error:", err);
-      body.innerHTML = '<div class="empty">⚠️ Game ini sedang error. Coba lagi nanti.</div>';
-    }
+    try { const fn = GAMES[id]; if (fn) currentGameCleanup = fn(body) || null; else body.innerHTML = '<div class="empty">Game belum tersedia.</div>'; }
+    catch (err) { body.innerHTML = '<div class="empty">⚠️ Game ini sedang error.</div>'; }
   }, 50);
 }
-
 const GAMES = {};
 
 GAMES.tictactoe = function(body){
@@ -2690,22 +2790,9 @@ GAMES.tictactoe = function(body){
   const cells = Array(9).fill("");
   let turn = "X", done = false, scoreX = 0, scoreO = 0;
   boardEl.innerHTML = cells.map((_, i) => '<button data-i="' + i + '" style="height:90px;border:3px solid var(--ink);background:var(--cream);font-size:32px;font-weight:700"></button>').join("");
-  function render(){
-    boardEl.querySelectorAll("button").forEach((b, i) => { b.textContent = cells[i]; b.style.background = cells[i] === "X" ? "var(--green)" : cells[i] === "O" ? "var(--blue)" : "var(--cream)"; });
-    document.getElementById("tttStatus").textContent = done ? "SELESAI" : ("GILIRAN " + turn);
-    document.getElementById("tttScore").textContent = scoreX + " - " + scoreO;
-  }
-  function winner(){
-    const L = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-    for (const [a, b, c] of L) { if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) return cells[a]; }
-    return cells.every(c => c) ? "draw" : null;
-  }
-  boardEl.onclick = e => {
-    const b = e.target.closest("button"); if (!b || done) return; const i = +b.dataset.i; if (cells[i]) return;
-    cells[i] = turn; const w = winner();
-    if (w === "X") { scoreX++; done = true; } else if (w === "O") { scoreO++; done = true; } else if (w === "draw") done = true; else turn = turn === "X" ? "O" : "X";
-    render();
-  };
+  function render(){ boardEl.querySelectorAll("button").forEach((b, i) => { b.textContent = cells[i]; b.style.background = cells[i] === "X" ? "var(--green)" : cells[i] === "O" ? "var(--blue)" : "var(--cream)"; }); document.getElementById("tttStatus").textContent = done ? "SELESAI" : ("GILIRAN " + turn); document.getElementById("tttScore").textContent = scoreX + " - " + scoreO; }
+  function winner(){ const L = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; for (const [a, b, c] of L) { if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) return cells[a]; } return cells.every(c => c) ? "draw" : null; }
+  boardEl.onclick = e => { const b = e.target.closest("button"); if (!b || done) return; const i = +b.dataset.i; if (cells[i]) return; cells[i] = turn; const w = winner(); if (w === "X") { scoreX++; done = true; } else if (w === "O") { scoreO++; done = true; } else if (w === "draw") done = true; else turn = turn === "X" ? "O" : "X"; render(); };
   window.tttReset = () => { for (let i = 0; i < 9; i++) cells[i] = ""; turn = "X"; done = false; render(); };
   window.tttNewGame = () => { scoreX = 0; scoreO = 0; tttReset(); };
   render();
@@ -2734,9 +2821,7 @@ GAMES.memory = function(body){
         board.querySelector(`[data-i="${a}"]`).style.background = "var(--green)"; board.querySelector(`[data-i="${c}"]`).style.background = "var(--green)";
         matched++; document.getElementById("memMatch").textContent = matched + "/8"; flipped = []; lock = false;
         if (matched === 8) setTimeout(() => themedAlert("SELESAI! Moves: " + moves, "success", "MENANG"), 200);
-      } else {
-        setTimeout(() => { [a, c].forEach(k => { const el = board.querySelector(`[data-i="${k}"]`); el.querySelector("span").style.opacity = "0"; el.style.background = "var(--blue)"; }); flipped = []; lock = false; }, 700);
-      }
+      } else { setTimeout(() => { [a, c].forEach(k => { const el = board.querySelector(`[data-i="${k}"]`); el.querySelector("span").style.opacity = "0"; el.style.background = "var(--blue)"; }); flipped = []; lock = false; }, 700); }
     }
   };
   return () => {};
@@ -2746,28 +2831,14 @@ GAMES.simon = function(body){
   const colors = ["var(--red)","var(--green)","var(--blue)","var(--yellow)"];
   body.innerHTML = `<div class="game-head"><span>LEVEL: <b id="simonLevel">0</b></span><span>SKOR: <b id="simonScore">0</b></span></div>
   <div id="simonBoard" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:300px;margin:0 auto"></div>
-  <div class="game-controls" style="grid-template-columns:1fr"><button id="simonStart">MULAI</button></div>
-  <div class="game-help">Perhatikan urutan warna yang menyala, lalu tekan dengan urutan yang sama.</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr"><button id="simonStart">MULAI</button></div>`;
   const board = document.getElementById("simonBoard");
   board.innerHTML = colors.map((c, i) => '<button data-i="' + i + '" style="height:110px;border:3px solid var(--ink);background:' + c + ';opacity:.5"></button>').join("");
   let seq = [], input = [], level = 0, score = 0, playing = false, stopped = false;
   function flash(i, dur = 350) { const b = board.querySelector(`[data-i="${i}"]`); if (!b) return; b.style.opacity = "1"; b.style.transform = "scale(.95)"; setTimeout(() => { if (b) { b.style.opacity = ".5"; b.style.transform = "scale(1)"; } }, dur); }
-  async function playSeq() {
-    playing = false; board.querySelectorAll("button").forEach(b => b.style.pointerEvents = "none");
-    await new Promise(r => setTimeout(r, 500));
-    if (stopped) return;
-    for (const i of seq) { if (stopped) return; flash(i); await new Promise(r => setTimeout(r, 550)); }
-    if (stopped) return;
-    input = []; playing = true; board.querySelectorAll("button").forEach(b => b.style.pointerEvents = "auto");
-  }
+  async function playSeq() { playing = false; board.querySelectorAll("button").forEach(b => b.style.pointerEvents = "none"); await new Promise(r => setTimeout(r, 500)); if (stopped) return; for (const i of seq) { if (stopped) return; flash(i); await new Promise(r => setTimeout(r, 550)); } if (stopped) return; input = []; playing = true; board.querySelectorAll("button").forEach(b => b.style.pointerEvents = "auto"); }
   function next() { seq.push(Math.floor(Math.random() * 4)); level++; document.getElementById("simonLevel").textContent = level; playSeq(); }
-  board.onclick = e => {
-    const b = e.target.closest("button"); if (!b || !playing) return; const i = +b.dataset.i;
-    flash(i, 200); input.push(i);
-    const idx = input.length - 1;
-    if (input[idx] !== seq[idx]) { playing = false; setTimeout(() => { themedAlert("GAME OVER! Skor: " + score, "error", "GAME OVER"); simonReset(); }, 200); return; }
-    if (input.length === seq.length) { score++; document.getElementById("simonScore").textContent = score; playing = false; setTimeout(next, 700); }
-  };
+  board.onclick = e => { const b = e.target.closest("button"); if (!b || !playing) return; const i = +b.dataset.i; flash(i, 200); input.push(i); const idx = input.length - 1; if (input[idx] !== seq[idx]) { playing = false; setTimeout(() => { themedAlert("GAME OVER! Skor: " + score, "error", "GAME OVER"); simonReset(); }, 200); return; } if (input.length === seq.length) { score++; document.getElementById("simonScore").textContent = score; playing = false; setTimeout(next, 700); } };
   function simonReset() { seq = []; input = []; level = 0; score = 0; document.getElementById("simonLevel").textContent = 0; document.getElementById("simonScore").textContent = 0; playing = false; }
   document.getElementById("simonStart").onclick = () => { simonReset(); next(); };
   return () => { stopped = true; playing = false; };
@@ -2776,22 +2847,13 @@ GAMES.simon = function(body){
 GAMES.reaction = function(body){
   body.innerHTML = `<div class="game-head"><span>BEST: <b id="reactBest">-</b></span><span>STATUS: <b id="reactStatus">KLIK MULAI</b></span></div>
   <div id="reactArea" style="height:280px;border:3px solid var(--ink);background:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px;cursor:pointer;text-align:center;padding:10px">KLIK UNTUK MULAI</div>
-  <div class="game-controls" style="grid-template-columns:1fr"><button onclick="openGame('reaction')">ULANG</button></div>
-  <div class="game-help">Tunggu sampai warna berubah menjadi HIJAU, lalu klik secepat mungkin!</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr"><button onclick="openGame('reaction')">ULANG</button></div>`;
   const area = document.getElementById("reactArea");
   let state = "idle", startTime = 0, best = null, timeout = null;
   area.onclick = () => {
-    if (state === "idle") {
-      state = "wait"; area.style.background = "var(--red)"; area.textContent = "TUNGGU..."; document.getElementById("reactStatus").textContent = "TUNGGU...";
-      const delay = 1000 + Math.random() * 3000;
-      timeout = setTimeout(() => { state = "go"; area.style.background = "var(--green)"; area.textContent = "KLIK!"; document.getElementById("reactStatus").textContent = "KLIK SEKARANG!"; startTime = performance.now(); }, delay);
-    } else if (state === "wait") {
-      clearTimeout(timeout); state = "idle"; area.style.background = "var(--blue)"; area.textContent = "TERLALU CEPAT! KLIK UNTUK COBA LAGI"; document.getElementById("reactStatus").textContent = "GAGAL";
-    } else if (state === "go") {
-      const t = Math.round(performance.now() - startTime);
-      state = "idle"; area.style.background = "var(--blue)"; area.textContent = t + " ms — KLIK UNTUK COBA LAGI"; document.getElementById("reactStatus").textContent = t + " MS";
-      if (best === null || t < best) { best = t; document.getElementById("reactBest").textContent = t + " ms"; }
-    }
+    if (state === "idle") { state = "wait"; area.style.background = "var(--red)"; area.textContent = "TUNGGU..."; const delay = 1000 + Math.random() * 3000; timeout = setTimeout(() => { state = "go"; area.style.background = "var(--green)"; area.textContent = "KLIK!"; startTime = performance.now(); }, delay); }
+    else if (state === "wait") { clearTimeout(timeout); state = "idle"; area.style.background = "var(--blue)"; area.textContent = "TERLALU CEPAT! KLIK UNTUK COBA LAGI"; }
+    else if (state === "go") { const t = Math.round(performance.now() - startTime); state = "idle"; area.style.background = "var(--blue)"; area.textContent = t + " ms — KLIK UNTUK COBA LAGI"; if (best === null || t < best) { best = t; document.getElementById("reactBest").textContent = t + " ms"; } }
   };
   return () => { clearTimeout(timeout); };
 };
@@ -2803,23 +2865,9 @@ GAMES.whack = function(body){
   const board = document.getElementById("whackBoard");
   board.innerHTML = Array(9).fill(0).map((_, i) => '<button data-i="' + i + '" style="height:80px;border:3px solid var(--ink);background:var(--cream);font-size:32px"></button>').join("");
   let score = 0, time = 30, running = false, moleTimer = null, countTimer = null, currentMole = -1;
-  function showMole() {
-    if (currentMole >= 0) { const el = board.querySelector(`[data-i="${currentMole}"]`); if (el) el.textContent = ""; }
-    currentMole = Math.floor(Math.random() * 9);
-    const el = board.querySelector(`[data-i="${currentMole}"]`); if (el) el.textContent = "🐭";
-  }
-  board.onclick = e => {
-    const b = e.target.closest("button"); if (!b || !running) return;
-    if (+b.dataset.i === currentMole) { score++; document.getElementById("whackScore").textContent = score; b.textContent = "💥"; currentMole = -1; setTimeout(showMole, 200); }
-  };
-  document.getElementById("whackStart").onclick = () => {
-    clearInterval(moleTimer); clearInterval(countTimer);
-    score = 0; time = 30; running = true; currentMole = -1;
-    document.getElementById("whackScore").textContent = 0; document.getElementById("whackTime").textContent = 30;
-    board.querySelectorAll("button").forEach(b => b.textContent = "");
-    showMole(); moleTimer = setInterval(showMole, 800);
-    countTimer = setInterval(() => { time--; document.getElementById("whackTime").textContent = time; if (time <= 0) { clearInterval(moleTimer); clearInterval(countTimer); running = false; board.querySelectorAll("button").forEach(b => b.textContent = ""); themedAlert("WAKTU HABIS! Skor: " + score, "info", "SELESAI"); } }, 1000);
-  };
+  function showMole() { if (currentMole >= 0) { const el = board.querySelector(`[data-i="${currentMole}"]`); if (el) el.textContent = ""; } currentMole = Math.floor(Math.random() * 9); const el = board.querySelector(`[data-i="${currentMole}"]`); if (el) el.textContent = "🐭"; }
+  board.onclick = e => { const b = e.target.closest("button"); if (!b || !running) return; if (+b.dataset.i === currentMole) { score++; document.getElementById("whackScore").textContent = score; b.textContent = "💥"; currentMole = -1; setTimeout(showMole, 200); } };
+  document.getElementById("whackStart").onclick = () => { clearInterval(moleTimer); clearInterval(countTimer); score = 0; time = 30; running = true; currentMole = -1; document.getElementById("whackScore").textContent = 0; document.getElementById("whackTime").textContent = 30; board.querySelectorAll("button").forEach(b => b.textContent = ""); showMole(); moleTimer = setInterval(showMole, 800); countTimer = setInterval(() => { time--; document.getElementById("whackTime").textContent = time; if (time <= 0) { clearInterval(moleTimer); clearInterval(countTimer); running = false; themedAlert("WAKTU HABIS! Skor: " + score, "info", "SELESAI"); } }, 1000); };
   return () => { clearInterval(moleTimer); clearInterval(countTimer); };
 };
 
@@ -2828,14 +2876,7 @@ GAMES.guess = function(body){
   <div style="display:flex;gap:6px;margin-top:8px"><input id="guessInput" type="number" min="1" max="100" placeholder="1-100" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="guessCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">TEBAK</button></div>
   <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button onclick="guessReset()">GAME BARU</button></div>`;
   let target = Math.floor(Math.random() * 100) + 1, tries = 0;
-  window.guessCheck = () => {
-    const v = +document.getElementById("guessInput").value; if (!v) return;
-    tries++; document.getElementById("guessTries").textContent = tries;
-    const hint = document.getElementById("guessHint");
-    if (v === target) hint.textContent = "BENAR! Angka: " + target + " (" + tries + "x)";
-    else if (v < target) hint.textContent = "TERLALU KECIL ⬆";
-    else hint.textContent = "TERLALU BESAR ⬇";
-  };
+  window.guessCheck = () => { const v = +document.getElementById("guessInput").value; if (!v) return; tries++; document.getElementById("guessTries").textContent = tries; const hint = document.getElementById("guessHint"); if (v === target) hint.textContent = "BENAR! Angka: " + target + " (" + tries + "x)"; else if (v < target) hint.textContent = "TERLALU KECIL ⬆"; else hint.textContent = "TERLALU BESAR ⬇"; };
   window.guessReset = () => { target = Math.floor(Math.random() * 100) + 1; tries = 0; document.getElementById("guessTries").textContent = 0; document.getElementById("guessHint").textContent = "TEBAK 1-100"; document.getElementById("guessInput").value = ""; };
   return () => { delete window.guessCheck; delete window.guessReset; };
 };
@@ -2846,23 +2887,9 @@ GAMES.math = function(body){
   <div style="display:flex;gap:6px;margin-top:10px"><input id="mathInput" type="number" placeholder="Jawaban" style="flex:1;border:3px solid var(--ink);padding:10px;font-size:12px;background:#fff"><button onclick="mathCheck()" style="border:3px solid var(--ink);background:var(--yellow);padding:10px 16px;font-weight:700">OK</button></div>
   <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button id="mathStart">MULAI</button></div>`;
   let a = 0, b = 0, op = "+", ans = 0, score = 0, time = 30, running = false, ct = null;
-  function newQ() {
-    a = Math.floor(Math.random() * 20) + 1; b = Math.floor(Math.random() * 20) + 1;
-    const ops = ["+", "-", "×"]; op = ops[Math.floor(Math.random() * 3)];
-    if (op === "+") ans = a + b; else if (op === "-") ans = a - b; else ans = a * b;
-    document.getElementById("mathQ").textContent = `${a} ${op} ${b} = ?`;
-  }
-  window.mathCheck = () => {
-    if (!running) return;
-    const v = +document.getElementById("mathInput").value;
-    if (v === ans) { score++; document.getElementById("mathScore").textContent = score; document.getElementById("mathInput").value = ""; newQ(); }
-    else document.getElementById("mathInput").value = "";
-  };
-  document.getElementById("mathStart").onclick = () => {
-    score = 0; time = 30; running = true; document.getElementById("mathScore").textContent = 0; document.getElementById("mathTime").textContent = 30;
-    newQ(); clearInterval(ct);
-    ct = setInterval(() => { time--; document.getElementById("mathTime").textContent = time; if (time <= 0) { clearInterval(ct); running = false; themedAlert("WAKTU HABIS! Skor: " + score, "info", "SELESAI"); } }, 1000);
-  };
+  function newQ() { a = Math.floor(Math.random() * 20) + 1; b = Math.floor(Math.random() * 20) + 1; const ops = ["+", "-", "×"]; op = ops[Math.floor(Math.random() * 3)]; if (op === "+") ans = a + b; else if (op === "-") ans = a - b; else ans = a * b; document.getElementById("mathQ").textContent = `${a} ${op} ${b} = ?`; }
+  window.mathCheck = () => { if (!running) return; const v = +document.getElementById("mathInput").value; if (v === ans) { score++; document.getElementById("mathScore").textContent = score; document.getElementById("mathInput").value = ""; newQ(); } else document.getElementById("mathInput").value = ""; };
+  document.getElementById("mathStart").onclick = () => { score = 0; time = 30; running = true; document.getElementById("mathScore").textContent = 0; document.getElementById("mathTime").textContent = 30; newQ(); clearInterval(ct); ct = setInterval(() => { time--; document.getElementById("mathTime").textContent = time; if (time <= 0) { clearInterval(ct); running = false; themedAlert("WAKTU HABIS! Skor: " + score, "info", "SELESAI"); } }, 1000); };
   document.getElementById("mathInput").addEventListener("keydown", e => { if (e.key === "Enter") mathCheck(); });
   return () => { clearInterval(ct); delete window.mathCheck; };
 };
@@ -2880,10 +2907,7 @@ GAMES.color = function(body){
     const opts = [...palette].sort(() => Math.random() - .5).slice(0, 6);
     if (!opts.includes(target)) opts[0] = target;
     document.getElementById("colOpts").innerHTML = opts.sort(() => Math.random() - .5).map(c => '<button data-c="' + c + '" style="height:60px;border:3px solid var(--ink);background:' + c + '"></button>').join("");
-    document.getElementById("colOpts").querySelectorAll("button").forEach(b => b.onclick = () => {
-      if (b.dataset.c === target) { score++; document.getElementById("colScore").textContent = score; round(); }
-      else { score = 0; document.getElementById("colScore").textContent = 0; document.getElementById("colHint").textContent = "SALAH! SKOR RESET"; round(); }
-    });
+    document.getElementById("colOpts").querySelectorAll("button").forEach(b => b.onclick = () => { if (b.dataset.c === target) { score++; document.getElementById("colScore").textContent = score; round(); } else { score = 0; document.getElementById("colScore").textContent = 0; document.getElementById("colHint").textContent = "SALAH! SKOR RESET"; round(); } });
   }
   round(); return () => {};
 };
@@ -2896,32 +2920,22 @@ GAMES.typing = function(body){
   <div class="game-controls" style="grid-template-columns:1fr;margin-top:10px"><button id="typeStart">MULAI</button></div>`;
   let correct = 0, time = 30, running = false, ct = null, current = "";
   function newWord() { current = words[Math.floor(Math.random() * words.length)]; document.getElementById("typeWord").textContent = current; document.getElementById("typeInput").value = ""; document.getElementById("typeInput").focus(); }
-  document.getElementById("typeInput").addEventListener("input", e => {
-    if (!running) return;
-    if (e.target.value === current) { correct++; document.getElementById("typeWpm").textContent = Math.round(correct * 2); newWord(); }
-  });
-  document.getElementById("typeStart").onclick = () => {
-    correct = 0; time = 30; running = true; document.getElementById("typeWpm").textContent = 0; document.getElementById("typeTime").textContent = 30; newWord();
-    clearInterval(ct); ct = setInterval(() => { time--; document.getElementById("typeTime").textContent = time; if (time <= 0) { clearInterval(ct); running = false; themedAlert("WAKTU HABIS! WPM: " + Math.round(correct * 2), "info", "SELESAI"); } }, 1000);
-  };
+  document.getElementById("typeInput").addEventListener("input", e => { if (!running) return; if (e.target.value === current) { correct++; document.getElementById("typeWpm").textContent = Math.round(correct * 2); newWord(); } });
+  document.getElementById("typeStart").onclick = () => { correct = 0; time = 30; running = true; document.getElementById("typeWpm").textContent = 0; document.getElementById("typeTime").textContent = 30; newWord(); clearInterval(ct); ct = setInterval(() => { time--; document.getElementById("typeTime").textContent = time; if (time <= 0) { clearInterval(ct); running = false; themedAlert("WAKTU HABIS! WPM: " + Math.round(correct * 2), "info", "SELESAI"); } }, 1000); };
   return () => { clearInterval(ct); running = false; };
 };
 
 GAMES.rps = function(body){
   body.innerHTML = `<div class="game-head"><span>KAMU: <b id="rpsP">0</b></span><span>CPU: <b id="rpsC">0</b></span></div>
   <div id="rpsShow" style="border:3px solid var(--ink);background:var(--cream);padding:20px;text-align:center;font-size:14px;margin-top:8px">PILIH SENJATA</div>
-  <div class="game-controls" style="grid-template-columns:repeat(3,1fr);margin-top:10px">
-    <button data-c="rock">✊</button><button data-c="paper">✋</button><button data-c="scissors">✌</button>
-  </div>
-  <div class="game-help">Menang: Rock>Scissors, Scissors>Paper, Paper>Rock.</div>`;
+  <div class="game-controls" style="grid-template-columns:repeat(3,1fr);margin-top:10px"><button data-c="rock">✊</button><button data-c="paper">✋</button><button data-c="scissors">✌</button></div>`;
   let p = 0, c = 0;
   const be = ["rock","paper","scissors"];
   body.querySelectorAll("[data-c]").forEach(b => b.onclick = () => {
     const you = b.dataset.c, cpu = be[Math.floor(Math.random() * 3)];
     let res = "SERI";
     if (you === cpu) res = "SERI";
-    else if ((you === "rock" && cpu === "scissors") || (you === "paper" && cpu === "rock") || (you === "scissors" && cpu === "paper")) { res = "MENANG!"; p++; }
-    else { res = "KALAH!"; c++; }
+    else if ((you === "rock" && cpu === "scissors") || (you === "paper" && cpu === "rock") || (you === "scissors" && cpu === "paper")) { res = "MENANG!"; p++; } else { res = "KALAH!"; c++; }
     document.getElementById("rpsShow").textContent = `Kamu: ${you} | CPU: ${cpu} — ${res}`;
     document.getElementById("rpsP").textContent = p; document.getElementById("rpsC").textContent = c;
   });
@@ -2931,8 +2945,7 @@ GAMES.rps = function(body){
 GAMES.flappy = function(body){
   body.innerHTML = `<div class="game-head"><span>SKOR: <b id="flapScore">0</b></span><span>BEST: <b id="flapBest">0</b></span></div>
   <canvas id="flapCanvas" class="snake-canvas" width="320" height="420" style="aspect-ratio:3/4"></canvas>
-  <div class="game-controls" style="grid-template-columns:1fr"><button id="flapBtn">TERBANG / MULAI</button></div>
-  <div class="game-help">Klik tombol atau canvas untuk terbang. Hindari pipa.</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr"><button id="flapBtn">TERBANG / MULAI</button></div>`;
   const c = document.getElementById("flapCanvas"), ctx = c.getContext("2d");
   let bird, pipes, score, best = +(localStorage.getItem("flap_best") || 0), running = false, raf = null;
   document.getElementById("flapBest").textContent = best;
@@ -2955,8 +2968,7 @@ GAMES.flappy = function(body){
     raf = requestAnimationFrame(loop);
   }
   function flap() { if (!running) { reset(); running = true; raf = requestAnimationFrame(loop); } bird.vy = -7.5; }
-  document.getElementById("flapBtn").onclick = flap;
-  c.onclick = flap;
+  document.getElementById("flapBtn").onclick = flap; c.onclick = flap;
   reset(); ctx.fillStyle = "#54b9e8"; ctx.fillRect(0, 0, c.width, c.height);
   return () => { running = false; if (raf) cancelAnimationFrame(raf); };
 };
@@ -2964,12 +2976,11 @@ GAMES.flappy = function(body){
 GAMES.breakout = function(body){
   body.innerHTML = `<div class="game-head"><span>SKOR: <b id="brkScore">0</b></span><span>NYAWA: <b id="brkLife">3</b></span></div>
   <canvas id="brkCanvas" class="snake-canvas" width="320" height="360" style="aspect-ratio:8/9"></canvas>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="brkLeft">◀</button><button id="brkStart">START</button><button id="brkRight">▶</button></div>
-  <div class="game-help">Gerakkan paddle pakai tombol ◀ ▶ untuk memantulkan bola.</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="brkLeft">◀</button><button id="brkStart">START</button><button id="brkRight">▶</button></div>`;
   const c = document.getElementById("brkCanvas"), ctx = c.getContext("2d");
   let paddleX = c.width / 2 - 30, ballX = c.width / 2, ballY = c.height - 40, vx = 2.4, vy = -2.4, bricks = [], score = 0, life = 3, running = false, raf = null, move = 0, stopped = false;
   function buildBricks() { bricks = []; for (let r = 0; r < 4; r++) for (let col = 0; col < 7; col++) bricks.push({x: col * 44 + 8, y: r * 20 + 30, w: 38, h: 14, alive: true}); }
-  function reset() { paddleX = c.width / 2 - 30; ballX = c.width / 2; ballY = c.height - 40; vx = 2.4; vy = -2.4; score = 0; life = 3; const s = document.getElementById("brkScore"); if (s) s.textContent = 0; const l = document.getElementById("brkLife"); if (l) l.textContent = 3; buildBricks(); }
+  function reset() { paddleX = c.width / 2 - 30; ballX = c.width / 2; ballY = c.height - 40; vx = 2.4; vy = -2.4; score = 0; life = 3; document.getElementById("brkScore").textContent = 0; document.getElementById("brkLife").textContent = 3; buildBricks(); }
   function loop() {
     if (!running || stopped) return;
     paddleX += move * 4; paddleX = Math.max(0, Math.min(c.width - 70, paddleX));
@@ -2977,8 +2988,8 @@ GAMES.breakout = function(body){
     if (ballX < 6 || ballX > c.width - 6) vx *= -1;
     if (ballY < 6) vy *= -1;
     if (ballY > c.height - 24 && ballX > paddleX && ballX < paddleX + 70) vy = -Math.abs(vy);
-    bricks.forEach(b => { if (b.alive && ballX > b.x && ballX < b.x + b.w && ballY > b.y && ballY < b.y + b.h) { b.alive = false; vy *= -1; score += 10; const s = document.getElementById("brkScore"); if (s) s.textContent = score; } });
-    if (ballY > c.height) { life--; const l = document.getElementById("brkLife"); if (l) l.textContent = life; if (life <= 0) { running = false; themedAlert("GAME OVER! Skor: " + score, "error", "GAME OVER"); return; } ballX = c.width / 2; ballY = c.height - 40; vx = 2.4; vy = -2.4; }
+    bricks.forEach(b => { if (b.alive && ballX > b.x && ballX < b.x + b.w && ballY > b.y && ballY < b.y + b.h) { b.alive = false; vy *= -1; score += 10; document.getElementById("brkScore").textContent = score; } });
+    if (ballY > c.height) { life--; document.getElementById("brkLife").textContent = life; if (life <= 0) { running = false; themedAlert("GAME OVER! Skor: " + score, "error", "GAME OVER"); return; } ballX = c.width / 2; ballY = c.height - 40; vx = 2.4; vy = -2.4; }
     if (bricks.every(b => !b.alive)) { running = false; themedAlert("MENANG! Skor: " + score, "success", "MENANG"); return; }
     ctx.fillStyle = "#fff8dd"; ctx.fillRect(0, 0, c.width, c.height);
     ctx.fillStyle = "#80d83d";
@@ -2987,34 +2998,22 @@ GAMES.breakout = function(body){
     ctx.beginPath(); ctx.arc(ballX, ballY, 6, 0, Math.PI * 2); ctx.fillStyle = "#ff4b3e"; ctx.fill(); ctx.stroke();
     raf = requestAnimationFrame(loop);
   }
-  const startBtn = document.getElementById("brkStart");
-  const leftBtn = document.getElementById("brkLeft");
-  const rightBtn = document.getElementById("brkRight");
-  const onLeftDown = (e) => { e.preventDefault(); move = -1; };
-  const onRightDown = (e) => { e.preventDefault(); move = 1; };
+  const startBtn = document.getElementById("brkStart"), leftBtn = document.getElementById("brkLeft"), rightBtn = document.getElementById("brkRight");
+  const onLeftDown = e => { e.preventDefault(); move = -1; };
+  const onRightDown = e => { e.preventDefault(); move = 1; };
   const onUp = () => { move = 0; };
   startBtn.onclick = () => { reset(); running = true; stopped = false; raf = requestAnimationFrame(loop); };
-  leftBtn.addEventListener("mousedown", onLeftDown);
-  leftBtn.addEventListener("touchstart", onLeftDown, {passive: false});
-  rightBtn.addEventListener("mousedown", onRightDown);
-  rightBtn.addEventListener("touchstart", onRightDown, {passive: false});
-  ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev) { leftBtn.addEventListener(ev, onUp); rightBtn.addEventListener(ev, onUp); });
+  leftBtn.addEventListener("mousedown", onLeftDown); leftBtn.addEventListener("touchstart", onLeftDown, {passive: false});
+  rightBtn.addEventListener("mousedown", onRightDown); rightBtn.addEventListener("touchstart", onRightDown, {passive: false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(ev => { leftBtn.addEventListener(ev, onUp); rightBtn.addEventListener(ev, onUp); });
   reset(); ctx.fillStyle = "#fff8dd"; ctx.fillRect(0, 0, c.width, c.height);
-  return () => {
-    stopped = true; running = false; if (raf) cancelAnimationFrame(raf);
-    leftBtn.removeEventListener("mousedown", onLeftDown);
-    leftBtn.removeEventListener("touchstart", onLeftDown);
-    rightBtn.removeEventListener("mousedown", onRightDown);
-    rightBtn.removeEventListener("touchstart", onRightDown);
-    ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev) { leftBtn.removeEventListener(ev, onUp); rightBtn.removeEventListener(ev, onUp); });
-  };
+  return () => { stopped = true; running = false; if (raf) cancelAnimationFrame(raf); };
 };
 
 GAMES.pong = function(body){
   body.innerHTML = `<div class="game-head"><span>KAMU: <b id="pongP">0</b></span><span>CPU: <b id="pongC">0</b></span></div>
   <canvas id="pongCanvas" class="snake-canvas" width="320" height="320"></canvas>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="pongUp">▲</button><button id="pongDown">▼</button></div>
-  <div class="game-help">Gerakkan raket kamu (kiri) dengan tombol. CPU otomatis di kanan.</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="pongUp">▲</button><button id="pongDown">▼</button></div>`;
   const c = document.getElementById("pongCanvas"), ctx = c.getContext("2d");
   let py = 130, cy = 130, bx = 160, by = 160, bvx = 3, bvy = 2.2, scoreP = 0, scoreC = 0, running = true, raf = null, move = 0, stopped = false;
   function loop() {
@@ -3025,76 +3024,44 @@ GAMES.pong = function(body){
     if (by < 4 || by > c.height - 4) bvy *= -1;
     if (bx < 16 && by > py && by < py + 60) bvx = Math.abs(bvx);
     if (bx > c.width - 16 && by > cy && by < cy + 60) bvx = -Math.abs(bvx);
-    if (bx < 0) { scoreC++; const e = document.getElementById("pongC"); if (e) e.textContent = scoreC; bx = 160; by = 160; }
-    if (bx > c.width) { scoreP++; const e = document.getElementById("pongP"); if (e) e.textContent = scoreP; bx = 160; by = 160; }
+    if (bx < 0) { scoreC++; document.getElementById("pongC").textContent = scoreC; bx = 160; by = 160; }
+    if (bx > c.width) { scoreP++; document.getElementById("pongP").textContent = scoreP; bx = 160; by = 160; }
     ctx.fillStyle = "#171717"; ctx.fillRect(0, 0, c.width, c.height);
     ctx.fillStyle = "#80d83d"; ctx.fillRect(6, py, 10, 60);
     ctx.fillStyle = "#ff4b3e"; ctx.fillRect(c.width - 16, cy, 10, 60);
     ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI * 2); ctx.fill();
     raf = requestAnimationFrame(loop);
   }
-  const upBtn = document.getElementById("pongUp");
-  const downBtn = document.getElementById("pongDown");
-  const onUpDown = (e) => { e.preventDefault(); move = -1; };
-  const onDownDown = (e) => { e.preventDefault(); move = 1; };
+  const upBtn = document.getElementById("pongUp"), downBtn = document.getElementById("pongDown");
+  const onUpDown = e => { e.preventDefault(); move = -1; };
+  const onDownDown = e => { e.preventDefault(); move = 1; };
   const onUp = () => { move = 0; };
-  upBtn.addEventListener("mousedown", onUpDown);
-  upBtn.addEventListener("touchstart", onUpDown, {passive: false});
-  downBtn.addEventListener("mousedown", onDownDown);
-  downBtn.addEventListener("touchstart", onDownDown, {passive: false});
-  ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev) { upBtn.addEventListener(ev, onUp); downBtn.addEventListener(ev, onUp); });
+  upBtn.addEventListener("mousedown", onUpDown); upBtn.addEventListener("touchstart", onUpDown, {passive: false});
+  downBtn.addEventListener("mousedown", onDownDown); downBtn.addEventListener("touchstart", onDownDown, {passive: false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(ev => { upBtn.addEventListener(ev, onUp); downBtn.addEventListener(ev, onUp); });
   raf = requestAnimationFrame(loop);
-  return () => {
-    stopped = true; running = false; if (raf) cancelAnimationFrame(raf);
-    upBtn.removeEventListener("mousedown", onUpDown);
-    upBtn.removeEventListener("touchstart", onUpDown);
-    downBtn.removeEventListener("mousedown", onDownDown);
-    downBtn.removeEventListener("touchstart", onDownDown);
-    ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev) { upBtn.removeEventListener(ev, onUp); downBtn.removeEventListener(ev, onUp); });
-  };
+  return () => { stopped = true; running = false; if (raf) cancelAnimationFrame(raf); };
 };
 
 GAMES["2048"] = function(body){
   body.innerHTML = `<div class="game-head"><span>SKOR: <b id="g2048Score">0</b></span><span>BEST: <b id="g2048Best">0</b></span></div>
   <div id="g2048Board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#c9bd9c;padding:6px;border:3px solid var(--ink)"></div>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr 1fr">
-    <button onclick="g2048Move('left')">◀</button><button onclick="g2048Move('up')">▲</button><button onclick="g2048Move('down')">▼</button><button onclick="g2048Move('right')">▶</button>
-  </div>
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr 1fr"><button onclick="g2048Move('left')">◀</button><button onclick="g2048Move('up')">▲</button><button onclick="g2048Move('down')">▼</button><button onclick="g2048Move('right')">▶</button></div>
   <div class="game-controls" style="grid-template-columns:1fr;margin-top:6px"><button onclick="openGame('2048')">RESET</button></div>`;
   let grid = Array(16).fill(0), score = 0, best = +(localStorage.getItem("g2048_best") || 0);
   document.getElementById("g2048Best").textContent = best;
   const colors = {0: "#e4d9bb", 2: "#fff3c9", 4: "#ffe6a0", 8: "#ffbf32", 16: "#ff9f43", 32: "#ff7367", 64: "#ff4b3e", 128: "#80d83d", 256: "#54b9e8", 512: "#a855f7", 1024: "#171717", 2048: "#ffd700"};
   function addTile() { const empty = grid.map((v, i) => v === 0 ? i : -1).filter(i => i >= 0); if (!empty.length) return; const i = empty[Math.floor(Math.random() * empty.length)]; grid[i] = Math.random() < 0.9 ? 2 : 4; }
-  function render() {
-    document.getElementById("g2048Board").innerHTML = grid.map(v => '<div style="height:64px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:' + (v > 512 ? 12 : 16) + 'px;background:' + (colors[v] || "#171717") + ';color:' + (v <= 8 ? "#171717" : "#fff") + '">' + (v || "") + '</div>').join("");
-    document.getElementById("g2048Score").textContent = score;
-    if (score > best) { best = score; localStorage.setItem("g2048_best", best); document.getElementById("g2048Best").textContent = best; }
-  }
-  function slideRow(row) {
-    let arr = row.filter(v => v);
-    for (let i = 0; i < arr.length - 1; i++) { if (arr[i] === arr[i + 1]) { arr[i] *= 2; score += arr[i]; arr.splice(i + 1, 1); } }
-    while (arr.length < 4) arr.push(0);
-    return arr;
-  }
+  function render() { document.getElementById("g2048Board").innerHTML = grid.map(v => '<div style="height:64px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:' + (v > 512 ? 12 : 16) + 'px;background:' + (colors[v] || "#171717") + ';color:' + (v <= 8 ? "#171717" : "#fff") + '">' + (v || "") + '</div>').join(""); document.getElementById("g2048Score").textContent = score; if (score > best) { best = score; localStorage.setItem("g2048_best", best); document.getElementById("g2048Best").textContent = best; } }
+  function slideRow(row) { let arr = row.filter(v => v); for (let i = 0; i < arr.length - 1; i++) { if (arr[i] === arr[i + 1]) { arr[i] *= 2; score += arr[i]; arr.splice(i + 1, 1); } } while (arr.length < 4) arr.push(0); return arr; }
   window.g2048Move = function(dir) {
     let changed = false;
     function getRow(i, rev) { let r = [grid[i * 4], grid[i * 4 + 1], grid[i * 4 + 2], grid[i * 4 + 3]]; return rev ? r.reverse() : r; }
     function getCol(i, rev) { let c = [grid[i], grid[i + 4], grid[i + 8], grid[i + 12]]; return rev ? c.reverse() : c; }
     let newGrid = Array(16).fill(0);
-    if (dir === "left" || dir === "right") {
-      for (let r = 0; r < 4; r++) { let row = getRow(r, dir === "right"); let res = slideRow(row); if (dir === "right") res.reverse(); for (let cI = 0; cI < 4; cI++) newGrid[r * 4 + cI] = res[cI]; }
-    } else {
-      for (let cI = 0; cI < 4; cI++) { let col = getCol(cI, dir === "down"); let res = slideRow(col); if (dir === "down") res.reverse(); for (let r = 0; r < 4; r++) newGrid[r * 4 + cI] = res[r]; }
-    }
-    changed = newGrid.some((v, i) => v !== grid[i]);
-    grid = newGrid;
-    if (changed) addTile();
-    render();
-    if (changed && grid.every(v => v !== 0)) {
-      let stuck = true;
-      for (let i = 0; i < 16; i++) { if (grid[i] === 0) stuck = false; }
-      if (stuck) setTimeout(() => themedAlert("GAME OVER! Skor: " + score, "error", "GAME OVER"), 100);
-    }
+    if (dir === "left" || dir === "right") { for (let r = 0; r < 4; r++) { let row = getRow(r, dir === "right"); let res = slideRow(row); if (dir === "right") res.reverse(); for (let cI = 0; cI < 4; cI++) newGrid[r * 4 + cI] = res[cI]; } }
+    else { for (let cI = 0; cI < 4; cI++) { let col = getCol(cI, dir === "down"); let res = slideRow(col); if (dir === "down") res.reverse(); for (let r = 0; r < 4; r++) newGrid[r * 4 + cI] = res[r]; } }
+    changed = newGrid.some((v, i) => v !== grid[i]); grid = newGrid; if (changed) addTile(); render();
   };
   addTile(); addTile(); render();
   const keyHandler = e => { const map = {ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down"}; if (map[e.key]) { e.preventDefault(); g2048Move(map[e.key]); } };
@@ -3105,31 +3072,15 @@ GAMES["2048"] = function(body){
 GAMES.minesweeper = function(body){
   body.innerHTML = `<div class="game-head"><span>MINE: <b id="minesLeft">10</b></span><span id="minesStatus">MAIN</span></div>
   <div id="minesBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px"></div>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="minesFlagBtn">MODE: BUKA</button><button onclick="openGame('minesweeper')">ULANG</button></div>
-  <div class="game-help">Tekan MODE untuk ganti antara buka kotak dan tandai bendera (ranjau).</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr 1fr"><button id="minesFlagBtn">MODE: BUKA</button><button onclick="openGame('minesweeper')">ULANG</button></div>`;
   const size = 8, mines = 10;
   let board = Array(size * size).fill(0), revealed = Array(size * size).fill(false), flagged = Array(size * size).fill(false), flagMode = false, over = false;
   const mineSet = new Set();
   while (mineSet.size < mines) mineSet.add(Math.floor(Math.random() * size * size));
   mineSet.forEach(i => board[i] = -1);
-  for (let i = 0; i < size * size; i++) {
-    if (board[i] === -1) continue;
-    const r = Math.floor(i / size), cCol = i % size;
-    let count = 0;
-    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = r + dr, nc = cCol + dc; if (nr >= 0 && nr < size && nc >= 0 && nc < size && board[nr * size + nc] === -1) count++; }
-    board[i] = count;
-  }
+  for (let i = 0; i < size * size; i++) { if (board[i] === -1) continue; const r = Math.floor(i / size), cCol = i % size; let count = 0; for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = r + dr, nc = cCol + dc; if (nr >= 0 && nr < size && nc >= 0 && nc < size && board[nr * size + nc] === -1) count++; } board[i] = count; }
   const boardEl = document.getElementById("minesBoard");
-  function reveal(i) {
-    if (revealed[i] || flagged[i] || over) return;
-    revealed[i] = true;
-    if (board[i] === -1) { over = true; document.getElementById("minesStatus").textContent = "BOOM! KALAH"; revealAll(); return; }
-    if (board[i] === 0) {
-      const r = Math.floor(i / size), cCol = i % size;
-      for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = r + dr, nc = cCol + dc; if (nr >= 0 && nr < size && nc >= 0 && nc < size) reveal(nr * size + nc); }
-    }
-    checkWin();
-  }
+  function reveal(i) { if (revealed[i] || flagged[i] || over) return; revealed[i] = true; if (board[i] === -1) { over = true; document.getElementById("minesStatus").textContent = "BOOM! KALAH"; revealAll(); return; } if (board[i] === 0) { const r = Math.floor(i / size), cCol = i % size; for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = r + dr, nc = cCol + dc; if (nr >= 0 && nr < size && nc >= 0 && nc < size) reveal(nr * size + nc); } } checkWin(); }
   function checkWin() { if (!over && revealed.filter(Boolean).length === size * size - mines) { over = true; document.getElementById("minesStatus").textContent = "MENANG!"; } }
   function revealAll() { for (let i = 0; i < size * size; i++) revealed[i] = true; render(); }
   function render() {
@@ -3137,7 +3088,7 @@ GAMES.minesweeper = function(body){
     for (let i = 0; i < size * size; i++) {
       const btn = document.createElement("button");
       btn.style.cssText = "height:32px;border:2px solid var(--ink);font-size:10px;font-weight:700;background:" + (revealed[i] ? "#fff8dd" : "var(--yellow)");
-      if (revealed[i]) { btn.textContent = board[i] === -1 ? "💣" : (board[i] || ""); }
+      if (revealed[i]) btn.textContent = board[i] === -1 ? "💣" : (board[i] || "");
       else if (flagged[i]) btn.textContent = "🚩";
       btn.onclick = () => { if (flagMode) { if (!revealed[i]) { flagged[i] = !flagged[i]; document.getElementById("minesLeft").textContent = mines - flagged.filter(Boolean).length; render(); } } else { reveal(i); render(); } };
       boardEl.appendChild(btn);
@@ -3184,24 +3135,12 @@ GAMES.quiz = function(body){
   <div id="quizOpts" style="display:grid;gap:8px;margin-top:10px"></div>`;
   let idx = 0, score = 0;
   function render() {
-    if (idx >= questions.length) {
-      document.getElementById("quizQ").textContent = "SELESAI! Skor akhir: " + score + "/" + questions.length;
-      const optsEl = document.getElementById("quizOpts"); optsEl.innerHTML = "";
-      const again = document.createElement("button"); again.textContent = "MAIN LAGI";
-      again.style.cssText = "border:3px solid var(--ink);background:var(--green);padding:12px;font-weight:700";
-      again.onclick = function () { openGame("quiz"); };
-      optsEl.appendChild(again); return;
-    }
+    if (idx >= questions.length) { document.getElementById("quizQ").textContent = "SELESAI! Skor: " + score + "/" + questions.length; const optsEl = document.getElementById("quizOpts"); optsEl.innerHTML = ""; const again = document.createElement("button"); again.textContent = "MAIN LAGI"; again.style.cssText = "border:3px solid var(--ink);background:var(--green);padding:12px;font-weight:700"; again.onclick = () => openGame("quiz"); optsEl.appendChild(again); return; }
     const cur = questions[idx];
     document.getElementById("quizNum").textContent = idx + 1;
     document.getElementById("quizQ").textContent = cur.q;
     document.getElementById("quizOpts").innerHTML = cur.opts.map((o, i) => '<button data-i="' + i + '" style="border:3px solid var(--ink);background:var(--cream);padding:12px;font-size:11px;font-weight:700;text-align:left">' + escapeHtml(o) + '</button>').join("");
-    document.getElementById("quizOpts").querySelectorAll("button").forEach(b => b.onclick = () => {
-      const i = +b.dataset.i;
-      if (i === cur.a) { score++; document.getElementById("quizScore").textContent = score; b.style.background = "var(--green)"; }
-      else b.style.background = "var(--red)";
-      setTimeout(() => { idx++; render(); }, 500);
-    });
+    document.getElementById("quizOpts").querySelectorAll("button").forEach(b => b.onclick = () => { const i = +b.dataset.i; if (i === cur.a) { score++; document.getElementById("quizScore").textContent = score; b.style.background = "var(--green)"; } else b.style.background = "var(--red)"; setTimeout(() => { idx++; render(); }, 500); });
   }
   render();
   return () => {};
@@ -3210,24 +3149,15 @@ GAMES.quiz = function(body){
 GAMES.sudoku = function(body){
   body.innerHTML = `<div class="game-head"><span id="sudokuStatus">ISI 1-4, TIDAK BOLEH SAMA DI BARIS/KOLOM/KOTAK</span></div>
   <div id="sudokuBoard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--ink);padding:3px;margin-top:8px"></div>
-  <div class="game-controls" style="grid-template-columns:repeat(4,1fr);margin-top:10px">
-    <button onclick="sudokuInput(1)">1</button><button onclick="sudokuInput(2)">2</button><button onclick="sudokuInput(3)">3</button><button onclick="sudokuInput(4)">4</button>
-  </div>
+  <div class="game-controls" style="grid-template-columns:repeat(4,1fr);margin-top:10px"><button onclick="sudokuInput(1)">1</button><button onclick="sudokuInput(2)">2</button><button onclick="sudokuInput(3)">3</button><button onclick="sudokuInput(4)">4</button></div>
   <div class="game-controls" style="grid-template-columns:1fr 1fr;margin-top:6px"><button onclick="sudokuInput(0)">HAPUS</button><button onclick="openGame('sudoku')">ULANG</button></div>`;
   const solution = [1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1];
   let puzzle = solution.map(v => Math.random() < 0.5 ? v : 0);
   const fixed = puzzle.map(v => v !== 0);
   let selected = -1;
   const boardEl = document.getElementById("sudokuBoard");
-  function render() {
-    boardEl.innerHTML = puzzle.map((v, i) => '<button data-i="' + i + '" style="height:56px;border:2px solid #888;background:' + (fixed[i] ? "#e4d9bb" : (i === selected ? "var(--yellow)" : "#fff8dd")) + ';font-size:20px;font-weight:700">' + (v || "") + '</button>').join("");
-    boardEl.querySelectorAll("button").forEach(b => b.onclick = () => { const i = +b.dataset.i; if (!fixed[i]) { selected = i; render(); } });
-  }
-  window.sudokuInput = function (v) {
-    if (selected < 0 || fixed[selected]) return;
-    puzzle[selected] = v; render();
-    if (puzzle.every((val, i) => val === solution[i])) document.getElementById("sudokuStatus").textContent = "SELESAI! BENAR SEMUA 🎉";
-  };
+  function render() { boardEl.innerHTML = puzzle.map((v, i) => '<button data-i="' + i + '" style="height:56px;border:2px solid #888;background:' + (fixed[i] ? "#e4d9bb" : (i === selected ? "var(--yellow)" : "#fff8dd")) + ';font-size:20px;font-weight:700">' + (v || "") + '</button>').join(""); boardEl.querySelectorAll("button").forEach(b => b.onclick = () => { const i = +b.dataset.i; if (!fixed[i]) { selected = i; render(); } }); }
+  window.sudokuInput = function (v) { if (selected < 0 || fixed[selected]) return; puzzle[selected] = v; render(); if (puzzle.every((val, i) => val === solution[i])) document.getElementById("sudokuStatus").textContent = "SELESAI! 🎉"; };
   render();
   return () => { delete window.sudokuInput; };
 };
@@ -3247,10 +3177,8 @@ GAMES.runner = function(body){
     obstacles.forEach(o => o.x -= speed);
     if (obstacles[0].x < -20) obstacles.shift();
     if (obstacles[obstacles.length - 1].x < c.width - 140 + Math.random() * 80) obstacles.push({x: c.width});
-    score++; document.getElementById("runScore").textContent = Math.floor(score / 5);
-    speed = 4 + score / 500;
-    let dead = false;
-    obstacles.forEach(o => { if (o.x < 40 && o.x + 16 > 20 && y > groundY - 20) dead = true; });
+    score++; document.getElementById("runScore").textContent = Math.floor(score / 5); speed = 4 + score / 500;
+    let dead = false; obstacles.forEach(o => { if (o.x < 40 && o.x + 16 > 20 && y > groundY - 20) dead = true; });
     ctx.fillStyle = "#fff8dd"; ctx.fillRect(0, 0, c.width, c.height);
     ctx.strokeStyle = "#171717"; ctx.beginPath(); ctx.moveTo(0, groundY + 20); ctx.lineTo(c.width, groundY + 20); ctx.stroke();
     ctx.fillStyle = "#ff4b3e"; obstacles.forEach(o => ctx.fillRect(o.x, groundY, 16, 20));
@@ -3259,8 +3187,7 @@ GAMES.runner = function(body){
     raf = requestAnimationFrame(loop);
   }
   function jump() { if (!running) { reset(); running = true; raf = requestAnimationFrame(loop); } if (y >= groundY) vy = -10; }
-  document.getElementById("runJump").onclick = jump;
-  c.onclick = jump;
+  document.getElementById("runJump").onclick = jump; c.onclick = jump;
   reset(); ctx.fillStyle = "#fff8dd"; ctx.fillRect(0, 0, c.width, c.height);
   return () => { running = false; if (raf) cancelAnimationFrame(raf); };
 };
@@ -3268,8 +3195,7 @@ GAMES.runner = function(body){
 GAMES.space = function(body){
   body.innerHTML = `<div class="game-head"><span>SKOR: <b id="spaceScore">0</b></span><span>NYAWA: <b id="spaceLife">3</b></span></div>
   <canvas id="spaceCanvas" class="snake-canvas" width="300" height="380" style="aspect-ratio:15/19"></canvas>
-  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="spaceLeft">◀</button><button id="spaceFire">TEMBAK</button><button id="spaceRight">▶</button></div>
-  <div class="game-help">Gerakkan pesawat pakai ◀ ▶ dan tembak musuh pakai tombol TEMBAK.</div>`;
+  <div class="game-controls" style="grid-template-columns:1fr 1fr 1fr"><button id="spaceLeft">◀</button><button id="spaceFire">TEMBAK</button><button id="spaceRight">▶</button></div>`;
   const c = document.getElementById("spaceCanvas"), ctx = c.getContext("2d");
   let shipX = c.width / 2, bullets = [], enemies = [], score = 0, life = 3, running = true, raf = null, move = 0, spawnT = 0, stopped = false;
   function loop() {
@@ -3278,8 +3204,8 @@ GAMES.space = function(body){
     bullets.forEach(b => b.y -= 6); bullets = bullets.filter(b => b.y > 0);
     spawnT++; if (spawnT > 50) { spawnT = 0; enemies.push({x: 20 + Math.random() * (c.width - 40), y: -10}); }
     enemies.forEach(e => e.y += 1.5);
-    enemies = enemies.filter(e => { if (e.y > c.height) { life--; const el = document.getElementById("spaceLife"); if (el) el.textContent = life; return false; } return true; });
-    bullets.forEach(b => { enemies.forEach(e => { if (!e.dead && Math.abs(b.x - e.x) < 14 && Math.abs(b.y - e.y) < 14) { e.dead = true; b.dead = true; score += 10; const el = document.getElementById("spaceScore"); if (el) el.textContent = score; } }); });
+    enemies = enemies.filter(e => { if (e.y > c.height) { life--; document.getElementById("spaceLife").textContent = life; return false; } return true; });
+    bullets.forEach(b => { enemies.forEach(e => { if (!e.dead && Math.abs(b.x - e.x) < 14 && Math.abs(b.y - e.y) < 14) { e.dead = true; b.dead = true; score += 10; document.getElementById("spaceScore").textContent = score; } }); });
     enemies = enemies.filter(e => !e.dead); bullets = bullets.filter(b => !b.dead);
     ctx.fillStyle = "#111"; ctx.fillRect(0, 0, c.width, c.height);
     ctx.fillStyle = "#ffbf32"; bullets.forEach(b => ctx.fillRect(b.x - 2, b.y - 6, 4, 10));
@@ -3288,27 +3214,16 @@ GAMES.space = function(body){
     if (life <= 0) { running = false; themedAlert("GAME OVER! Skor: " + score, "error", "GAME OVER"); return; }
     raf = requestAnimationFrame(loop);
   }
-  const leftBtn = document.getElementById("spaceLeft");
-  const rightBtn = document.getElementById("spaceRight");
-  const fireBtn = document.getElementById("spaceFire");
-  const onLeftDown = (e) => { e.preventDefault(); move = -1; };
-  const onRightDown = (e) => { e.preventDefault(); move = 1; };
+  const leftBtn = document.getElementById("spaceLeft"), rightBtn = document.getElementById("spaceRight"), fireBtn = document.getElementById("spaceFire");
+  const onLeftDown = e => { e.preventDefault(); move = -1; };
+  const onRightDown = e => { e.preventDefault(); move = 1; };
   const onUp = () => { move = 0; };
-  leftBtn.addEventListener("mousedown", onLeftDown);
-  leftBtn.addEventListener("touchstart", onLeftDown, {passive: false});
-  rightBtn.addEventListener("mousedown", onRightDown);
-  rightBtn.addEventListener("touchstart", onRightDown, {passive: false});
-  ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev) { leftBtn.addEventListener(ev, onUp); rightBtn.addEventListener(ev, onUp); });
+  leftBtn.addEventListener("mousedown", onLeftDown); leftBtn.addEventListener("touchstart", onLeftDown, {passive: false});
+  rightBtn.addEventListener("mousedown", onRightDown); rightBtn.addEventListener("touchstart", onRightDown, {passive: false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(ev => { leftBtn.addEventListener(ev, onUp); rightBtn.addEventListener(ev, onUp); });
   fireBtn.onclick = () => { if (!stopped && running) bullets.push({x: shipX, y: c.height - 30}); };
   raf = requestAnimationFrame(loop);
-  return () => {
-    stopped = true; running = false; if (raf) cancelAnimationFrame(raf);
-    leftBtn.removeEventListener("mousedown", onLeftDown);
-    leftBtn.removeEventListener("touchstart", onLeftDown);
-    rightBtn.removeEventListener("mousedown", onRightDown);
-    rightBtn.removeEventListener("touchstart", onRightDown);
-    ["mouseup","mouseleave","touchend","touchcancel"].forEach(function(ev) { leftBtn.removeEventListener(ev, onUp); rightBtn.removeEventListener(ev, onUp); });
-  };
+  return () => { stopped = true; running = false; if (raf) cancelAnimationFrame(raf); };
 };
 
 GAMES.puzzle = function(body){
@@ -3321,10 +3236,7 @@ GAMES.puzzle = function(body){
   function render() {
     document.getElementById("puzBoard").innerHTML = tiles.map((t, i) => '<button data-i="' + i + '" style="height:80px;border:3px solid var(--ink);background:' + (t === 0 ? "transparent" : "var(--cream)") + ';font-size:24px;font-weight:700;box-shadow:' + (t === 0 ? "none" : "3px 3px 0 var(--ink)") + '">' + (t || "") + '</button>').join("");
     document.getElementById("puzMoves").textContent = moves;
-    document.getElementById("puzBoard").querySelectorAll("button").forEach(b => b.onclick = () => {
-      const i = +b.dataset.i; const empty = tiles.indexOf(0);
-      if (getNeighbors(i).includes(empty)) { [tiles[i], tiles[empty]] = [tiles[empty], tiles[i]]; moves++; render(); if (tiles.every((v, idx) => v === ((idx + 1) % 9))) document.getElementById("puzStatus").textContent = "SELESAI! 🎉"; }
-    });
+    document.getElementById("puzBoard").querySelectorAll("button").forEach(b => b.onclick = () => { const i = +b.dataset.i; const empty = tiles.indexOf(0); if (getNeighbors(i).includes(empty)) { [tiles[i], tiles[empty]] = [tiles[empty], tiles[i]]; moves++; render(); if (tiles.every((v, idx) => v === ((idx + 1) % 9))) document.getElementById("puzStatus").textContent = "SELESAI! 🎉"; } });
   }
   shuffle(); render();
   return () => {};
@@ -3338,38 +3250,9 @@ GAMES.connect4 = function(body){
   let grid = Array(cols * rows).fill(0), turn = 1, over = false;
   const boardEl = document.getElementById("c4Board");
   function idx(r, cIdx) { return r * cols + cIdx; }
-  function render() {
-    boardEl.innerHTML = "";
-    for (let r = 0; r < rows; r++) for (let cIdx = 0; cIdx < cols; cIdx++) {
-      const v = grid[idx(r, cIdx)];
-      const cell = document.createElement("button");
-      cell.style.cssText = "height:34px;border-radius:50%;border:2px solid var(--ink);background:" + (v === 0 ? "#fff" : v === 1 ? "var(--red)" : "var(--yellow)");
-      cell.onclick = () => drop(cIdx);
-      boardEl.appendChild(cell);
-    }
-  }
-  function drop(cIdx) {
-    if (over) return;
-    for (let r = rows - 1; r >= 0; r--) {
-      if (grid[idx(r, cIdx)] === 0) {
-        grid[idx(r, cIdx)] = turn;
-        if (checkWin(r, cIdx)) { over = true; document.getElementById("c4Status").textContent = (turn === 1 ? "MERAH" : "KUNING") + " MENANG!"; }
-        else if (grid.every(v => v !== 0)) { over = true; document.getElementById("c4Status").textContent = "SERI!"; }
-        else { turn = turn === 1 ? 2 : 1; document.getElementById("c4Status").textContent = "GILIRAN: " + (turn === 1 ? "MERAH" : "KUNING"); }
-        render(); return;
-      }
-    }
-  }
-  function checkWin(r, cIdx) {
-    const val = grid[idx(r, cIdx)], dirs = [[0, 1], [1, 0], [1, 1], [1, -1]];
-    for (const [dr, dc] of dirs) {
-      let count = 1;
-      for (let s = 1; s < 4; s++) { const nr = r + dr * s, nc = cIdx + dc * s; if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[idx(nr, nc)] !== val) break; count++; }
-      for (let s = 1; s < 4; s++) { const nr = r - dr * s, nc = cIdx - dc * s; if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[idx(nr, nc)] !== val) break; count++; }
-      if (count >= 4) return true;
-    }
-    return false;
-  }
+  function render() { boardEl.innerHTML = ""; for (let r = 0; r < rows; r++) for (let cIdx = 0; cIdx < cols; cIdx++) { const v = grid[idx(r, cIdx)]; const cell = document.createElement("button"); cell.style.cssText = "height:34px;border-radius:50%;border:2px solid var(--ink);background:" + (v === 0 ? "#fff" : v === 1 ? "var(--red)" : "var(--yellow)"); cell.onclick = () => drop(cIdx); boardEl.appendChild(cell); } }
+  function drop(cIdx) { if (over) return; for (let r = rows - 1; r >= 0; r--) { if (grid[idx(r, cIdx)] === 0) { grid[idx(r, cIdx)] = turn; if (checkWin(r, cIdx)) { over = true; document.getElementById("c4Status").textContent = (turn === 1 ? "MERAH" : "KUNING") + " MENANG!"; } else if (grid.every(v => v !== 0)) { over = true; document.getElementById("c4Status").textContent = "SERI!"; } else { turn = turn === 1 ? 2 : 1; document.getElementById("c4Status").textContent = "GILIRAN: " + (turn === 1 ? "MERAH" : "KUNING"); } render(); return; } } }
+  function checkWin(r, cIdx) { const val = grid[idx(r, cIdx)], dirs = [[0, 1], [1, 0], [1, 1], [1, -1]]; for (const [dr, dc] of dirs) { let count = 1; for (let s = 1; s < 4; s++) { const nr = r + dr * s, nc = cIdx + dc * s; if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[idx(nr, nc)] !== val) break; count++; } for (let s = 1; s < 4; s++) { const nr = r - dr * s, nc = cIdx - dc * s; if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[idx(nr, nc)] !== val) break; count++; } if (count >= 4) return true; } return false; }
   render();
   return () => {};
 };
@@ -3389,13 +3272,9 @@ function setSnakeDirection(x, y) { if (x === -snakeDir.x && y === -snakeDir.y) r
 function stepSnake() {
   snakeDir = nextSnakeDir;
   const head = {x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y};
-  if (head.x < 0 || head.y < 0 || head.x >= 18 || head.y >= 18 || snake.some(s => s.x === head.x && s.y === head.y)) {
-    snakeRunning = false; clearInterval(snakeTimer);
-    document.getElementById("snakeStatus").textContent = "GAME OVER"; drawSnake(); return;
-  }
+  if (head.x < 0 || head.y < 0 || head.x >= 18 || head.y >= 18 || snake.some(s => s.x === head.x && s.y === head.y)) { snakeRunning = false; clearInterval(snakeTimer); document.getElementById("snakeStatus").textContent = "GAME OVER"; drawSnake(); return; }
   snake.unshift(head);
-  if (head.x === food.x && head.y === food.y) { snakeScore++; document.getElementById("snakeScore").textContent = snakeScore; spawnFood(); }
-  else snake.pop();
+  if (head.x === food.x && head.y === food.y) { snakeScore++; document.getElementById("snakeScore").textContent = snakeScore; spawnFood(); } else snake.pop();
   drawSnake();
 }
 function drawSnake() {
@@ -3407,26 +3286,10 @@ function drawSnake() {
   for (let i = 0; i <= 18; i++) { ctx.beginPath(); ctx.moveTo(i * cell, 0); ctx.lineTo(i * cell, c.height); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, i * cell); ctx.lineTo(c.width, i * cell); ctx.stroke(); }
   ctx.fillStyle = "#ff4b3e"; ctx.beginPath(); ctx.arc(food.x * cell + cell / 2, food.y * cell + cell / 2, cell / 2 - 2, 0, Math.PI * 2); ctx.fill();
   ctx.strokeStyle = "#171717"; ctx.lineWidth = 2; ctx.stroke();
-  ctx.fillStyle = "rgba(255,255,255,.4)"; ctx.beginPath(); ctx.arc(food.x * cell + cell / 2 - 2, food.y * cell + cell / 2 - 2, cell / 6, 0, Math.PI * 2); ctx.fill();
   snake.forEach((s, i) => {
     const x = s.x * cell, y = s.y * cell;
-    if (i === 0) {
-      ctx.fillStyle = "#80d83d"; ctx.fillRect(x + 2, y + 2, cell - 4, cell - 4);
-      ctx.strokeStyle = "#171717"; ctx.lineWidth = 2; ctx.strokeRect(x + 2, y + 2, cell - 4, cell - 4);
-      ctx.fillStyle = "#171717"; ctx.beginPath(); ctx.arc(x + cell * 0.3, y + cell * 0.35, 2.5, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(x + cell * 0.7, y + cell * 0.35, 2.5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(x + cell * 0.3, y + cell * 0.35, 1, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(x + cell * 0.7, y + cell * 0.35, 1, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#ffbf32";
-      ctx.beginPath(); ctx.moveTo(x + cell * 0.35, y + cell * 0.15); ctx.lineTo(x + cell * 0.25, y - cell * 0.1); ctx.lineTo(x + cell * 0.45, y + cell * 0.1); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(x + cell * 0.65, y + cell * 0.15); ctx.lineTo(x + cell * 0.75, y - cell * 0.1); ctx.lineTo(x + cell * 0.55, y + cell * 0.1); ctx.fill();
-      ctx.strokeStyle = "#ff4b3e"; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(x + cell * 0.5, y + cell * 0.8); ctx.lineTo(x + cell * 0.5, y + cell * 0.95); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(x + cell * 0.5, y + cell * 0.95); ctx.lineTo(x + cell * 0.35, y + cell * 1.05); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(x + cell * 0.5, y + cell * 0.95); ctx.lineTo(x + cell * 0.65, y + cell * 1.05); ctx.stroke();
-    } else {
-      ctx.fillStyle = i % 2 === 0 ? "#80d83d" : "#a8e86a";
-      ctx.fillRect(x + 3, y + 3, cell - 6, cell - 6);
-      ctx.strokeStyle = "#171717"; ctx.lineWidth = 1.5; ctx.strokeRect(x + 3, y + 3, cell - 6, cell - 6);
-    }
+    if (i === 0) { ctx.fillStyle = "#80d83d"; ctx.fillRect(x + 2, y + 2, cell - 4, cell - 4); ctx.strokeStyle = "#171717"; ctx.lineWidth = 2; ctx.strokeRect(x + 2, y + 2, cell - 4, cell - 4); }
+    else { ctx.fillStyle = i % 2 === 0 ? "#80d83d" : "#a8e86a"; ctx.fillRect(x + 3, y + 3, cell - 6, cell - 6); ctx.strokeStyle = "#171717"; ctx.lineWidth = 1.5; ctx.strokeRect(x + 3, y + 3, cell - 6, cell - 6); }
   });
 }
 document.addEventListener("keydown", e => {
@@ -3438,24 +3301,10 @@ loadLocalData();
 loadCustomProducts();
 loadGlobalMessagesCache();
 
-Promise.all([
-  fetchKeylist(),
-  refreshUsersFromFirebase(),
-  refreshPhotosFromFirebase()
-]).then(function() {
+Promise.all([fetchKeylist(), refreshUsersFromFirebase(), refreshPhotosFromFirebase()]).then(function() {
   updateAuthUI();
-  if (currentUser && !findUser(currentUser.username)) {
-    currentUser = null;
-    localStorage.removeItem("volka_user");
-    updateAuthUI();
-  } else if (currentUser) {
-    const u = findUser(currentUser.username);
-    if (u && String(u.role).toLowerCase() !== currentUser.role) {
-      currentUser.role = String(u.role).toLowerCase();
-      localStorage.setItem("volka_user", JSON.stringify(currentUser));
-      updateAuthUI();
-    }
-  }
+  if (currentUser && !findUser(currentUser.username)) { currentUser = null; localStorage.removeItem("volka_user"); updateAuthUI(); }
+  else if (currentUser) { const u = findUser(currentUser.username); if (u && String(u.role).toLowerCase() !== currentUser.role) { currentUser.role = String(u.role).toLowerCase(); localStorage.setItem("volka_user", JSON.stringify(currentUser)); updateAuthUI(); } }
   updateChatNotifBadge();
 });
 
@@ -3468,18 +3317,10 @@ updateAuthUI();
 startChatBgPoller();
 startAutoClearScheduler();
 
-/* Background refresh user list biar user baru dari device lain ke-detek */
 setInterval(async function() {
   if (!currentUser || currentUser.role !== "admin") return;
   const ok = await refreshUsersFromFirebase();
-  if (ok) {
-    updateAdminNotifBadge();
-    const page = document.getElementById("adminPanelPage");
-    if (page && page.classList.contains("active")) {
-      renderAdminStats();
-      renderAdminUsers();
-    }
-  }
+  if (ok) { updateAdminNotifBadge(); const page = document.getElementById("adminPanelPage"); if (page && page.classList.contains("active")) { renderAdminStats(); renderAdminUsers(); } }
 }, 15000);
 
 document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
