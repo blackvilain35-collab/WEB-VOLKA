@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>VOLKA STORE</title>
+<meta name="monetag" content="f7c56ed0820a0341c5b7d64261f7193f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0,0&display=swap" rel="stylesheet">
@@ -312,9 +313,9 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .anime-history-row::-webkit-scrollbar{display:none}
 .anime-history-card{flex:none;width:130px;cursor:pointer;border-radius:10px;overflow:hidden;position:relative;background:var(--wibu-bg2);border:1px solid var(--wibu-border)}
 .anime-history-card img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:#222}
-.anime-history-card .hist-eps{position:absolute;bottom:34px;left:6px;background:rgba(255,75,62,.95);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px}
+.anime-history-card .hist-eps{position:absolute;bottom:52px;left:6px;background:rgba(255,75,62,.95);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;z-index:3}
 .anime-history-card .hist-title{font-size:11px;font-weight:700;padding:8px;color:#fff;line-height:1.3;background:var(--wibu-bg2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:42px}
-.anime-progress-bar{height:3px;background:rgba(255,75,62,.3);position:relative}
+.anime-progress-bar{position:absolute;bottom:42px;left:0;right:0;height:3px;background:rgba(255,75,62,.3);z-index:2}
 .anime-progress-bar-fill{height:100%;background:var(--red);width:0%}
 .anime-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .anime-card{background:var(--wibu-bg2);border:1px solid var(--wibu-border);border-radius:10px;padding:0;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
@@ -349,6 +350,8 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .episode-item.active{background:var(--wibu-blue);color:#fff;border-color:var(--wibu-blue)}
 .episode-item.locked{background:#1a1f2e;color:#4a5568;cursor:not-allowed;position:relative;border-color:#2a3140}
 .episode-item.locked:hover{background:#2a3140;color:#8892a6}
+/* ICON GEMBOK - WAJIB ADA */
+.episode-item.locked::after{content:"🔒";position:absolute;top:2px;right:4px;font-size:10px}
 .player-controls{margin-top:10px;display:grid;gap:6px}
 .player-row-2{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:6px}
 .player-btn{border:1px solid var(--wibu-border);background:var(--wibu-bg3);color:#fff;padding:10px 4px;font-size:10px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border-radius:8px;font-family:inherit}
@@ -698,13 +701,13 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <div class="topbar"><button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button><div class="top-title-wrap"><div class="top-title">NONTON ANIME</div><div class="top-sub">SUB INDO • STREAMING</div></div></div>
   <div class="tool-body">
     <div class="anime-search"><input id="animeSearchInput" type="text" placeholder="Cari judul anime..."><button type="button" onclick="searchAnime()">Cari</button></div>
-    <div class="source-row" id="sourceChips"></div>
+    <!-- source otomatis di latar belakang -->
     <div class="anime-genres" id="genreChips"></div>
     <div id="watchHistorySection" style="display:none">
       <div class="anime-section-title"><span>Terakhir Ditonton</span><span class="more-link" onclick="clearWatchHistory()">Hapus</span></div>
       <div class="anime-history-row" id="watchHistoryRow"></div>
     </div>
-    <div class="anime-section-title"><span>New Update Anime</span><span class="more-link" onclick="loadAnimeHome()"><span class="material-symbols-rounded" style="font-size:14px">refresh</span></span></div>
+    <div class="anime-section-title"><span>New Update Anime</span><span class="more-link" onclick="refreshAnimeList()"><span class="material-symbols-rounded" style="font-size:14px">refresh</span></span></div>
     <div id="animeResults" class="anime-grid"></div>
     <div id="animeDetailWrap"></div>
   </div>
@@ -786,6 +789,34 @@ const FIREBASE_PIN_PATH = "/pinned_message";
 const FIREBASE_STATS_PATH = "/user_stats";
 const FIREBASE_HISTORY_PATH = "/watch_history";
 const AD_URL = "https://otieu.com/4/9755235";
+
+// ===== ADBLOCK DETECTION =====
+let adBlockDetected = false;
+function detectAdBlock() {
+  return new Promise(function(resolve) {
+    try {
+      const bait = document.createElement("div");
+      bait.className = "adsbox ad-banner adsbygoogle sponsored-ad advertisement ad-placement banner_ad";
+      bait.id = "adblock-detector-bait";
+      bait.style.cssText = "position:absolute!important;left:-9999px!important;top:-9999px!important;width:300px!important;height:250px!important;pointer-events:none!important;";
+      bait.innerHTML = "&nbsp;";
+      document.body.appendChild(bait);
+      window.setTimeout(function() {
+        const cs = window.getComputedStyle(bait);
+        const blocked = bait.offsetParent === null ||
+                        bait.offsetHeight === 0 ||
+                        bait.offsetWidth === 0 ||
+                        bait.clientHeight === 0 ||
+                        cs.display === "none" ||
+                        cs.visibility === "hidden" ||
+                        cs.opacity === "0";
+        try { if (bait.parentNode) bait.parentNode.removeChild(bait); } catch(e) {}
+        resolve(blocked);
+      }, 200);
+    } catch (e) { resolve(false); }
+  });
+}
+
 
 const BAD_WORDS = ["anjing","anjg","anjir","anjay","anjrot","anjeng","bangsat","bgst","bangst","bangke","kontol","kntl","kntol","k0ntl","memek","mmk","m3m3k","pepek","peler","pler","titit","titid","jancok","jancuk","jancux","cok","cuk","bajingan","bajing","asu","asw","kampang","kampret","keparat","tai","tahi","taik","setan","sialan","goblok","gblk","g0bl0k","tolol","tll","idiot","bodoh","bego","dungu","sinting","edan","ngehe","monyet","kunyuk","pelacur","lonte","jablay","sundal","bispak","perek","sange","sangean","bokep","bkp","colmek","coli","ngentot","entot","ngewe","ewe","sabu","ganja","narkoba","kimak","pukimak","pantek","pntk","puki","tempik","itil","bejat","jembut","jmbot","jembud","fuck","fck","fuk","shit","bitch","btch","asshole","dick","pussy","cock","cunt","bastard","whore","slut","nigger","nigga","faggot","retard","wtf","stfu","kys","motherfucker"];
 function censorBadWords(text) { if (!text) return text; let r = String(text); BAD_WORDS.forEach(function(w) { const e = w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); const re = new RegExp("\\b" + e + "\\b", "gi"); r = r.replace(re, function(m) { return "*".repeat(m.length); }); }); return r; }
@@ -921,6 +952,24 @@ let adTimer = null;
 async function watchAdForKeys() {
   if (!currentUser) { themedAlert("Login dulu buat nonton iklan.", "warn"); return; }
   if (adInProgress) { themedAlert("Iklan sedang berjalan...", "warn"); return; }
+  setAnimeStatus(loadingHtml("Memeriksa..."), "loading");
+  const isBlocked = await detectAdBlock();
+  adBlockDetected = isBlocked;
+  if (isBlocked) {
+    await themedAlert(
+      "🚫 ADBLOCK TERDETEKSI!\n\n" +
+      "Akun kamu terdeteksi menggunakan AdBlock / pemblokir iklan.\n\n" +
+      "Karena iklan tidak bisa dimuat, kamu TIDAK BISA mendapatkan Key gratis.\n\n" +
+      "Cara mengatasi:\n" +
+      "1. Matikan AdBlock / pemblokir iklan\n" +
+      "2. Whitelist (kecualikan) website ini\n" +
+      "3. Refresh halaman\n\n" +
+      "Terima kasih 🙏",
+      "error",
+      "ADBLOCK AKTIF"
+    );
+    return;
+  }
   adInProgress = true;
   const ok = await themedConfirm("Tonton iklan sampai selesai buat dapet 3 Key.\n\nKlik TONTON buat buka iklan di tab baru.\nSetelah iklan selesai, balik ke sini & klik KLAIM.", { okLabel: "TONTON IKLAN", okIcon: "play_circle", okStyle: "primary", type: "info", title: "REWARDED ADS" });
   if (!ok) { adInProgress = false; return; }
@@ -1258,11 +1307,29 @@ const ANIME_API = "https://wajik-anime-api-production-4c0e.up.railway.app";
 const ANIME_GENRES = [{name:"Semua",value:""},{name:"Action",value:"action"},{name:"Adventure",value:"adventure"},{name:"Comedy",value:"comedy"},{name:"Drama",value:"drama"},{name:"Fantasy",value:"fantasy"},{name:"Horror",value:"horror"},{name:"Isekai",value:"isekai"},{name:"Magic",value:"magic"},{name:"Mecha",value:"mecha"},{name:"Music",value:"music"},{name:"Mystery",value:"mystery"},{name:"Romance",value:"romance"},{name:"School",value:"school"},{name:"Sci-Fi",value:"sci-fi"},{name:"Seinen",value:"seinen"},{name:"Shoujo",value:"shoujo"},{name:"Shounen",value:"shounen"},{name:"Slice of Life",value:"slice-of-life"},{name:"Sports",value:"sports"},{name:"Supernatural",value:"supernatural"},{name:"Thriller",value:"thriller"}];
 const ANIME_SOURCES = {
   oploverz: { key: "oploverz", label: "Oploverz", icon: "movie", list: () => "/oploverz/anime", listByGenre: g => "/oploverz/anime?genre=" + encodeURIComponent(g) + "&page=1", search: q => "/oploverz/search?q=" + encodeURIComponent(q), detailPath: a => "/oploverz/anime/" + encodeURIComponent(a.slug), episodePath: e => "/oploverz/episode/" + encodeURIComponent(e.id), extractList: function(r) { var l = []; if (r && r.data) { if (Array.isArray(r.data.sectionList)) r.data.sectionList.forEach(s => { if (Array.isArray(s.animeList)) l = l.concat(s.animeList); }); if (!l.length && Array.isArray(r.data.animeList)) l = r.data.animeList; if (!l.length && Array.isArray(r.data.list)) l = r.data.list; } if (!l.length && r && Array.isArray(r.data)) l = r.data; return l; }, normalizeCard: a => { var id = a.slug || a.animeId || a.id || ""; return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" }; }, extractDetail: function(r) { var root = r.data || {}, d = root.details || root, raw = root.episodeList || d.episodeList || root.episodes || d.episodes || [], eps = raw.map(ep => { var id = ""; if (ep.href) { var m = ep.href.match(/\/([^\/]+)\/?$/); if (m) id = m[1]; } if (!id) id = ep.slug || ep.episodeId || ep.id || ""; return { id: id, number: ep.episode || ep.number || 0 }; }); eps.reverse(); var g = []; if (Array.isArray(d.genres)) g = d.genres; else if (typeof d.genres === "string") g = d.genres.split(",").map(s => s.trim()); return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: g, episodes: eps }; }, extractStream: r => { var root = r.data || {}, d = root.details || root; return d.streamingUrl || d.streamUrl || d.url || ""; } },
-  kuramanime: { key: "kuramanime", label: "Kuramanime", icon: "video_library", list: () => "/kuramanime/anime", listByGenre: g => "/kuramanime/anime?genre=" + encodeURIComponent(g) + "&page=1", search: q => "/kuramanime/anime?search=" + encodeURIComponent(q) + "&page=1", detailPath: a => "/kuramanime/anime/" + encodeURIComponent(a.animeId) + "/" + encodeURIComponent(a.slug), episodePath: (e, a) => "/kuramanime/episode/" + encodeURIComponent(a.animeId) + "/" + encodeURIComponent(a.slug) + "/" + encodeURIComponent(e.id), extractList: function(r) { var l = []; if (r && r.data) { if (Array.isArray(r.data.animeList)) l = r.data.animeList; else if (Array.isArray(r.data.list)) l = r.data.list; } if (!l.length && r && Array.isArray(r.data)) l = r.data; return l; }, normalizeCard: a => { var anId = a.animeId || a.id || "", sl = a.slug || a.animeSlug || ""; return { cacheKey: anId + "|" + sl, animeId: anId, slug: sl, title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" }; }, extractDetail: function(r) { var root = r.data || {}, d = root.details || root, raw = root.episodeList || d.episodeList || root.episodes || d.episodes || [], eps = raw.map(ep => ({ id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 })); eps.reverse(); var g = []; if (Array.isArray(d.genres)) g = d.genres; return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: g, episodes: eps }; }, extractStream: r => { var root = r.data || {}, d = root.details || root; if (d.streamingUrl) return d.streamingUrl; if (d.streamUrl) return d.streamUrl; if (d.url) return d.url; if (Array.isArray(d.servers) && d.servers.length) return d.servers[0].url || d.servers[0].link || ""; return ""; } },
-  otakudesu: { key: "otakudesu", label: "Otakudesu", icon: "video_file", list: () => "/otakudesu/anime", listByGenre: g => "/otakudesu/genre/" + encodeURIComponent(g), search: q => "/otakudesu/search?q=" + encodeURIComponent(q), detailPath: a => "/otakudesu/anime/" + encodeURIComponent(a.slug), episodePath: e => "/otakudesu/episode/" + encodeURIComponent(e.id), extractList: function(r) { var l = []; if (r && r.data) { if (Array.isArray(r.data.animeList)) l = r.data.animeList; else if (Array.isArray(r.data.list)) l = r.data.list; } if (!l.length && r && Array.isArray(r.data)) l = r.data; return l; }, normalizeCard: a => { var id = a.slug || a.animeId || a.id || ""; return { cacheKey: id, slug: id, animeId: "", title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" }; }, extractDetail: function(r) { var root = r.data || {}, d = root.details || root, raw = root.episodeList || d.episodeList || root.episodes || d.episodes || [], eps = raw.map(ep => ({ id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 })); eps.reverse(); return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: Array.isArray(d.genres) ? d.genres : [], episodes: eps }; }, extractStream: r => { var root = r.data || {}, d = root.details || root; return d.streamingUrl || d.streamUrl || d.url || ""; } }
+  kuramanime: { key: "kuramanime", label: "Kuramanime", icon: "video_library", list: () => "/kuramanime/anime", listByGenre: g => "/kuramanime/anime?genre=" + encodeURIComponent(g) + "&page=1", search: q => "/kuramanime/anime?search=" + encodeURIComponent(q) + "&page=1", detailPath: a => "/kuramanime/anime/" + encodeURIComponent(a.animeId) + "/" + encodeURIComponent(a.slug), episodePath: (e, a) => "/kuramanime/episode/" + encodeURIComponent(a.animeId) + "/" + encodeURIComponent(a.slug) + "/" + encodeURIComponent(e.id), extractList: function(r) { var l = []; if (r && r.data) { if (Array.isArray(r.data.animeList)) l = r.data.animeList; else if (Array.isArray(r.data.list)) l = r.data.list; } if (!l.length && r && Array.isArray(r.data)) l = r.data; return l; }, normalizeCard: a => { var anId = a.animeId || a.id || "", sl = a.slug || a.animeSlug || ""; return { cacheKey: anId + "|" + sl, animeId: anId, slug: sl, title: a.title || a.name || "Tanpa judul", poster: a.poster || a.image || a.thumb || a.cover || "", posterFallback: "" }; }, extractDetail: function(r) { var root = r.data || {}, d = root.details || root, raw = root.episodeList || d.episodeList || root.episodes || d.episodes || [], eps = raw.map(ep => ({ id: ep.episodeId || ep.id || ep.slug || "", number: ep.episode || ep.number || 0 })); eps.reverse(); var g = []; if (Array.isArray(d.genres)) g = d.genres; return { title: d.title || "Anime", poster: d.poster || d.image || d.thumb || "", synopsis: d.synopsis || d.description || d.desc || "", genres: g, episodes: eps }; }, extractStream: r => { var root = r.data || {}, d = root.details || root; if (d.streamingUrl) return d.streamingUrl; if (d.streamUrl) return d.streamUrl; if (d.url) return d.url; if (Array.isArray(d.servers) && d.servers.length) return d.servers[0].url || d.servers[0].link || ""; return ""; } }
 };
-const SOURCE_ORDER = ["oploverz", "kuramanime", "otakudesu"];
-let currentSource = "oploverz", currentGenre = "", animeCache = {}, animeHomeLoaded = false, currentAnimeCtx = null, currentAnimeTitle = "", currentEpisodeList = [], currentEpisodeIndex = -1, hlsInstance = null;
+const SOURCE_ORDER = ["kuramanime", "oploverz"];
+let currentSource = "kuramanime", currentGenre = "", animeCache = {}, animeHomeLoaded = false, currentAnimeCtx = null, currentAnimeTitle = "", currentEpisodeList = [], currentEpisodeIndex = -1, hlsInstance = null;
+const anilistPosterCache = {};
+async function fetchPosterFromAniList(title) {
+  if (!title) return "";
+  const key = String(title).toLowerCase().trim();
+  if (anilistPosterCache[key] !== undefined) return anilistPosterCache[key];
+  const cleanTitle = title.replace(/\s+(S\d+|Season\s*\d+|Part\s*\d+)$/i, "").trim();
+  try {
+    const r = await fetch("https://kitsu.io/api/edge/anime?filter[text]=" + encodeURIComponent(cleanTitle) + "&page[limit]=1");
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    const arr = (d && d.data) || [];
+    const img = (arr[0] && arr[0].attributes && arr[0].attributes.posterImage && (arr[0].attributes.posterImage.large || arr[0].attributes.posterImage.medium)) || "";
+    anilistPosterCache[key] = img;
+    return img;
+  } catch (e) {
+    anilistPosterCache[key] = "";
+    return "";
+  }
+}
 async function animeFetch(p, retries) { retries = retries === undefined ? 2 : retries; let le = null; for (let i = 0; i <= retries; i++) { try { const c = new AbortController(); const t = setTimeout(() => c.abort(), 20000); const r = await fetch(ANIME_API + p, { signal: c.signal }); clearTimeout(t); if (!r.ok) throw new Error("HTTP " + r.status); return await r.json(); } catch (e) { le = e; if (i < retries) await new Promise(r => setTimeout(r, 800)); } } throw le || new Error("Gagal fetch"); }
 function setAnimeStatus(html, type) { const r = document.getElementById("animeResults"); if (!r) return; const c = type === "error" ? "anime-error" : (type === "loading" ? "anime-loading" : "anime-empty"); r.innerHTML = '<div class="' + c + '">' + html + '</div>'; }
 function loadingHtml(m) { return '<span class="material-symbols-rounded" style="font-size:22px;animation:spinDragon 1.4s linear infinite;display:inline-block">autorenew</span><br>' + escapeHtml(m || "Memuat..."); }
@@ -1271,23 +1338,69 @@ function renderSourceChips() { const e = document.getElementById("sourceChips");
 function renderGenreChips() { const e = document.getElementById("genreChips"); if (!e) return; e.innerHTML = ANIME_GENRES.map(g => '<div class="genre-chip' + (g.value === currentGenre ? ' active' : '') + '" onclick="filterByGenre(\'' + g.value + '\', this)">' + g.name + '</div>').join(""); }
 function switchSource(k) { if (!ANIME_SOURCES[k]) return; currentSource = k; currentGenre = ""; renderSourceChips(); renderGenreChips(); closeAnimeDetail(); loadAnimeHome(); }
 async function loadAnimeHome() {
-  setAnimeStatus(loadingHtml("Memuat dari " + ANIME_SOURCES[currentSource].label + "..."), "loading");
+  setAnimeStatus(loadingHtml("Memuat anime..."), "loading");
   document.getElementById("animeDetailWrap").innerHTML = "";
   const src = ANIME_SOURCES[currentSource];
   try { const r = await animeFetch(src.list()); const l = src.extractList(r); if (l.length) { animeHomeLoaded = true; renderAnimeGrid(l, src); return; } } catch (e) {}
   for (let i = 0; i < SOURCE_ORDER.length; i++) { const k = SOURCE_ORDER[i]; if (k === currentSource) continue; try { const r = await animeFetch(ANIME_SOURCES[k].list()); const l = ANIME_SOURCES[k].extractList(r); if (l.length) { currentSource = k; renderSourceChips(); animeHomeLoaded = true; renderAnimeGrid(l, ANIME_SOURCES[k]); return; } } catch (e) { continue; } }
   setAnimeStatus(errorHtml("Semua sumber gagal dimuat.", "loadAnimeHome()"), "error");
 }
+function refreshAnimeList() {
+  if (currentGenre) {
+    const activeChip = document.querySelector('.genre-chip.active');
+    filterByGenre(currentGenre, activeChip);
+  } else {
+    loadAnimeHome();
+  }
+}
+
 async function filterByGenre(g, el) {
   currentGenre = g;
   document.querySelectorAll(".genre-chip").forEach(c => c.classList.remove("active"));
   if (el) el.classList.add("active");
   closeAnimeDetail();
   if (!g) { loadAnimeHome(); return; }
-  setAnimeStatus(loadingHtml("Memuat..."), "loading");
-  const src = ANIME_SOURCES[currentSource];
-  try { const r = await animeFetch(src.listByGenre(g)); const l = src.extractList(r); if (l.length) { renderAnimeGrid(l, src); return; } } catch (e) {}
-  for (let i = 0; i < SOURCE_ORDER.length; i++) { const k = SOURCE_ORDER[i]; if (k === currentSource) continue; try { const r = await animeFetch(ANIME_SOURCES[k].listByGenre(g)); const l = ANIME_SOURCES[k].extractList(r); if (l.length) { currentSource = k; renderSourceChips(); renderAnimeGrid(l, ANIME_SOURCES[k]); return; } } catch (e) { continue; } }
+  setAnimeStatus(loadingHtml("Memuat genre " + g + "..."), "loading");
+
+  const trySource = function(k, useSearch) {
+    const src = ANIME_SOURCES[k];
+    return (async function() {
+      try {
+        const r = useSearch ? await animeFetch(src.search(g)) : await animeFetch(src.listByGenre(g));
+        const l = src.extractList(r);
+        if (l && l.length) return { k: k, src: src, l: l };
+      } catch (e) {}
+      return null;
+    })();
+  };
+
+  const firstValid = function(promises) {
+    return new Promise(function(resolve) {
+      let done = false, pending = promises.length;
+      if (!pending) return resolve(null);
+      promises.forEach(function(p) {
+        Promise.resolve(p).then(function(v) {
+          if (done) return;
+          if (v) { done = true; resolve(v); return; }
+          if (--pending === 0) { done = true; resolve(null); }
+        }).catch(function() {
+          if (done) return;
+          if (--pending === 0) { done = true; resolve(null); }
+        });
+      });
+    });
+  };
+
+  let hit = await firstValid(SOURCE_ORDER.map(k => trySource(k, false)));
+  if (!hit) {
+    setAnimeStatus(loadingHtml("Mencari genre " + g + "..."), "loading");
+    hit = await firstValid(SOURCE_ORDER.map(k => trySource(k, true)));
+  }
+  if (hit) {
+    currentSource = hit.k;
+    renderAnimeGrid(hit.l, hit.src);
+    return;
+  }
   setAnimeStatus("Tidak ada anime genre ini.");
 }
 async function searchAnime() {
@@ -1295,12 +1408,76 @@ async function searchAnime() {
   closeAnimeDetail();
   if (!q) { filterByGenre("", null); return; }
   setAnimeStatus(loadingHtml('Mencari "' + q + '"...'), "loading");
-  const src = ANIME_SOURCES[currentSource];
-  try { const r = await animeFetch(src.search(q)); const l = src.extractList(r); if (l.length) { renderAnimeGrid(l, src); return; } } catch (e) {}
-  for (let i = 0; i < SOURCE_ORDER.length; i++) { const k = SOURCE_ORDER[i]; if (k === currentSource) continue; try { const r = await animeFetch(ANIME_SOURCES[k].search(q)); const l = ANIME_SOURCES[k].extractList(r); if (l.length) { currentSource = k; renderSourceChips(); renderAnimeGrid(l, ANIME_SOURCES[k]); return; } } catch (e) { continue; } }
+
+  const trySource = function(k) {
+    const src = ANIME_SOURCES[k];
+    return (async function() {
+      try {
+        const r = await animeFetch(src.search(q));
+        const l = src.extractList(r);
+        if (l && l.length) return { k: k, src: src, l: l };
+      } catch (e) {}
+      return null;
+    })();
+  };
+
+  const firstValid = function(promises) {
+    return new Promise(function(resolve) {
+      let done = false, pending = promises.length;
+      if (!pending) return resolve(null);
+      promises.forEach(function(p) {
+        Promise.resolve(p).then(function(v) {
+          if (done) return;
+          if (v) { done = true; resolve(v); return; }
+          if (--pending === 0) { done = true; resolve(null); }
+        }).catch(function() {
+          if (done) return;
+          if (--pending === 0) { done = true; resolve(null); }
+        });
+      });
+    });
+  };
+
+  const hit = await firstValid(SOURCE_ORDER.map(k => trySource(k)));
+  if (hit) {
+    currentSource = hit.k;
+    renderAnimeGrid(hit.l, hit.src);
+    return;
+  }
   setAnimeStatus('Anime "' + escapeHtml(q) + '" tidak ditemukan.');
 }
-function renderAnimeGrid(l, src) { const r = document.getElementById("animeResults"); if (!l || !l.length) { setAnimeStatus("Anime tidak ditemukan."); return; } r.innerHTML = l.map(function(a) { const c = src.normalizeCard(a); animeCache[c.cacheKey] = c; let p = c.poster; if (!p && c.posterFallback) p = c.posterFallback; const st = escapeHtml(c.title), sp = escapeHtml(p); const sk = String(c.cacheKey).replace(/'/g, "\\'"); const rt = (Math.random() * 2 + 6.5).toFixed(2); const vw = (Math.floor(Math.random() * 90) + 10) + "K"; return '<div class="anime-card" onclick="openAnimeDetail(\'' + sk + '\')"><div class="anime-poster-wrap"><div class="anime-new-badge">New</div><div class="anime-rating"><span class="material-symbols-rounded">star</span>' + rt + '</div><span class="anime-poster-title">' + st + '</span>' + (sp ? '<img src="' + sp + '" alt="" loading="lazy" onerror="this.className=\'broken\'">' : '') + '</div><div class="anime-views"><span class="material-symbols-rounded">visibility</span>' + vw + ' views</div><div class="anime-title">' + st + '</div></div>'; }).join(""); }
+function renderAnimeGrid(l, src) {
+  const r = document.getElementById("animeResults");
+  if (!l || !l.length) { setAnimeStatus("Anime tidak ditemukan."); return; }
+  const items = l.map(a => src.normalizeCard(a));
+  items.forEach(c => { animeCache[c.cacheKey] = c; });
+  r.innerHTML = items.map(function(c) {
+    const p = c.poster || c.posterFallback || "";
+    const st = escapeHtml(c.title);
+    const sp = escapeHtml(p);
+    const sk = String(c.cacheKey).replace(/'/g, "\\'");
+    const rt = (Math.random() * 2 + 6.5).toFixed(2);
+    const vw = (Math.floor(Math.random() * 90) + 10) + "K";
+    return '<div class="anime-card" data-cachekey="' + escapeHtml(c.cacheKey) + '" onclick="openAnimeDetail(\'' + sk + '\')"><div class="anime-poster-wrap"><div class="anime-new-badge">New</div><div class="anime-rating"><span class="material-symbols-rounded">star</span>' + rt + '</div><span class="anime-poster-title">' + st + '</span>' + (sp ? '<img src="' + sp + '" alt="" loading="lazy" onerror="this.className=\'broken\'">' : '') + '</div><div class="anime-views"><span class="material-symbols-rounded">visibility</span>' + vw + ' views</div><div class="anime-title">' + st + '</div></div>';
+  }).join("");
+  r.querySelectorAll(".anime-card").forEach(async function(card) {
+    const ck = card.getAttribute("data-cachekey");
+    const ctx = animeCache[ck];
+    if (!ctx || ctx.poster) return;
+    const poster = await fetchPosterFromAniList(ctx.title);
+    if (!poster) return;
+    ctx.poster = poster;
+    const wrap = card.querySelector(".anime-poster-wrap");
+    if (!wrap) return;
+    const existing = wrap.querySelector("img");
+    if (existing) { existing.src = poster; existing.classList.remove("broken"); }
+    else {
+      const img = document.createElement("img");
+      img.src = poster; img.loading = "lazy";
+      wrap.insertBefore(img, wrap.querySelector(".anime-poster-title"));
+    }
+  });
+}
 function backToAnimeList() { closeAnimeDetail(); loadAnimeHome(); }
 function closeAnimeDetail() { document.getElementById("animeResults").innerHTML = ""; document.getElementById("animeDetailWrap").innerHTML = ""; closeAnimePlayer(); currentEpisodeList = []; currentEpisodeIndex = -1; currentAnimeCtx = null; }
 async function openAnimeDetail(k) {
@@ -1319,7 +1496,7 @@ async function openAnimeDetail(k) {
     let d = info.synopsis || ""; if (d.length > 500) d = d.slice(0, 500) + "...";
     const g = info.genres || [];
     const gh = g.length ? '<div class="anime-genre-tags">' + g.map(x => '<span class="anime-genre-tag">' + escapeHtml(x) + '</span>').join("") + '</div>' : "";
-    w.innerHTML = '<div class="anime-detail"><button class="player-btn" onclick="backToAnimeList()" style="width:auto;padding:8px 14px;flex-direction:row;gap:6px;margin-bottom:12px;background:var(--wibu-bg3);border:1px solid var(--wibu-border);border-radius:8px;font-size:11px;color:#fff"><span class="material-symbols-rounded">arrow_back</span>Kembali</button><div style="font-size:10px;margin-bottom:8px;display:inline-flex;align-items:center;gap:4px;background:var(--wibu-blue);color:#fff;padding:3px 8px;border-radius:10px;font-weight:700"><span class="material-symbols-rounded" style="font-size:12px">' + src.icon + '</span>' + src.label + '</div>' + (p ? '<img src="' + escapeHtml(p) + '" alt="" onerror="this.style.display=\'none\'">' : "") + '<h2>' + escapeHtml(info.title) + '</h2>' + gh + '<div class="anime-desc">' + escapeHtml(d) + '</div><div style="clear:both;margin-top:14px"><strong style="font-size:12px">DAFTAR EPISODE (' + info.episodes.length + ')</strong></div>' + (info.episodes.length ? '<div class="episode-list" id="episodeListInline"></div>' : '<div class="anime-empty" style="margin-top:10px">Belum ada episode.</div>') + '<div id="animePlayerWrap" style="display:none;margin-top:14px"><div class="anime-player-header"><span class="material-symbols-rounded" style="font-size:18px">smart_display</span><div class="anime-player-title" id="playerAnimeTitle"></div></div><div id="animeVideoBox" class="anime-video"></div><div class="video-status" id="videoStatus"><span class="material-symbols-rounded">info</span><span>Pilih episode untuk menonton.</span></div><div class="player-controls"><div class="player-row-2"><button class="player-btn prev" id="btnPrevEp" onclick="playPrevEpisode()"><span class="material-symbols-rounded">skip_previous</span>SEBELUM</button><button class="player-btn close-btn" onclick="closeAnimePlayerOnly()"><span class="material-symbols-rounded">close</span>TUTUP</button><button class="player-btn next" id="btnNextEp" onclick="playNextEpisode()"><span class="material-symbols-rounded">skip_next</span>LANJUT</button></div></div><div class="player-info"><span class="material-symbols-rounded">info</span><span id="playerInfoText">-</span></div></div></div>';
+    w.innerHTML = '<div class="anime-detail"><button class="player-btn" onclick="backToAnimeList()" style="width:auto;padding:8px 14px;flex-direction:row;gap:6px;margin-bottom:12px;background:var(--wibu-bg3);border:1px solid var(--wibu-border);border-radius:8px;font-size:11px;color:#fff"><span class="material-symbols-rounded">arrow_back</span>Kembali</button><div style="font-size:10px;margin-bottom:8px;display:inline-flex;align-items:center;gap:4px;background:var(--wibu-blue);color:#fff;padding:3px 8px;border-radius:10px;font-weight:700"><span class="material-symbols-rounded" style="font-size:12px">movie</span>ANIME</div>' + (p ? '<img src="' + escapeHtml(p) + '" alt="" onerror="this.style.display=\'none\'">' : "") + '<h2>' + escapeHtml(info.title) + '</h2>' + gh + '<div class="anime-desc">' + escapeHtml(d) + '</div><div style="clear:both;margin-top:14px"><strong style="font-size:12px">DAFTAR EPISODE (' + info.episodes.length + ')</strong></div>' + (info.episodes.length ? '<div class="episode-list" id="episodeListInline"></div>' : '<div class="anime-empty" style="margin-top:10px">Belum ada episode.</div>') + '<div id="animePlayerWrap" style="display:none;margin-top:14px"><div class="anime-player-header"><span class="material-symbols-rounded" style="font-size:18px">smart_display</span><div class="anime-player-title" id="playerAnimeTitle"></div></div><div id="animeVideoBox" class="anime-video"></div><div class="video-status" id="videoStatus"><span class="material-symbols-rounded">info</span><span>Pilih episode untuk menonton.</span></div><div class="player-controls"><div class="player-row-2"><button class="player-btn prev" id="btnPrevEp" onclick="playPrevEpisode()"><span class="material-symbols-rounded">skip_previous</span>SEBELUM</button><button class="player-btn close-btn" onclick="closeAnimePlayerOnly()"><span class="material-symbols-rounded">close</span>TUTUP</button><button class="player-btn next" id="btnNextEp" onclick="playNextEpisode()"><span class="material-symbols-rounded">skip_next</span>LANJUT</button></div></div><div class="player-info"><span class="material-symbols-rounded">info</span><span id="playerInfoText">-</span></div></div></div>';
     if (info.episodes.length) renderEpisodeList(info.episodes);
   } catch (e) { w.innerHTML = '<div class="anime-detail">' + errorHtml("Gagal memuat: " + e.message) + '</div>'; }
 }
@@ -1374,27 +1551,70 @@ async function playEpisode(eId, num, idx) {
   updatePlayerInfo();
   pw.scrollIntoView({ behavior: "smooth", block: "start" });
   if (currentUser && currentAnimeCtx) saveWatchHistory({ animeId: currentAnimeCtx.cacheKey, cacheKey: currentAnimeCtx.cacheKey, slug: currentAnimeCtx.slug, animeTitle: currentAnimeTitle, poster: currentAnimeCtx.poster || currentAnimeCtx.posterFallback || "", episodeId: eId, episodeNumber: num, source: currentSource, time: Date.now(), progressPct: 10 });
-  await loadEpisodeSource(eId);
+    await loadEpisodeSource(eId, num);
 }
+
+
 function playPrevEpisode() { if (currentEpisodeIndex <= 0) return; const t = currentEpisodeIndex - 1; const ep = currentEpisodeList[t]; if (!ep) return; playEpisode(ep.id, ep.number || (t + 1), t); }
 function playNextEpisode() { if (currentEpisodeIndex >= currentEpisodeList.length - 1) return; const t = currentEpisodeIndex + 1; const ep = currentEpisodeList[t]; if (!ep) return; playEpisode(ep.id, ep.number || (t + 1), t); }
-async function loadEpisodeSource(eId) {
+async function loadEpisodeSource(eId, epNum) {
   const b = document.getElementById("animeVideoBox"); if (!b || !currentAnimeCtx) return;
   if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
-  b.innerHTML = "";
-  setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Memuat video...', "loading");
-  const src = ANIME_SOURCES[currentSource];
-  try {
-    const res = await animeFetch(src.episodePath({ id: eId }, currentAnimeCtx));
-    let url = src.extractStream(res);
-    if (!url) throw new Error("Tidak ada sumber video");
-    const isB = /blogger\.com|video\.g\?|googleusercontent|youtube\.com|youtu\.be/.test(url);
-    const isM = /\.m3u8(\?|$)/i.test(url);
-    const isIF = isB || /\/embed\//.test(url);
-    if (isIF) { b.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen style="border:0;display:block;width:100%;height:100%"></iframe>'; setVideoStatus('✅ Sedang memutar.', ""); }
-    else if (isM || /\.(mp4|webm|mkv)(\?|$)/i.test(url)) { const v = document.createElement('video'); v.id = "animeVideo"; v.className = "anime-video"; v.controls = true; v.playsInline = true; b.appendChild(v); await attachAndPlayVideo(v, url); setVideoStatus('✅ Sedang memutar.', ""); }
-    else { b.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen style="border:0;display:block;width:100%;height:100%"></iframe>'; setVideoStatus('✅ Sedang memutar.', ""); }
-  } catch (e) { setVideoStatus('❌ Gagal: ' + e.message, "error"); }
+
+  // Urutan sumber: coba yang aktif dulu, lalu fallback ke sisanya
+  const tryOrder = [currentSource, ...SOURCE_ORDER.filter(k => k !== currentSource)];
+  let lastError = "";
+
+  for (const srcKey of tryOrder) {
+    const src = ANIME_SOURCES[srcKey];
+    b.innerHTML = "";
+    setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Memuat anime...', "loading");
+
+    try {
+      let targetId = eId;
+      let targetCtx = currentAnimeCtx;
+
+      // Kalau beda source, cari anime yang sama di source fallback
+      if (srcKey !== currentSource) {
+        setVideoStatus('<span class="material-symbols-rounded" style="font-size:16px;animation:spinDragon 1.2s linear infinite;display:inline-block">autorenew</span> Mencari anime...', "loading");
+        const searchRes = await animeFetch(src.search(currentAnimeTitle));
+        const list = src.extractList(searchRes);
+        if (!list.length) { lastError = src.label + ": anime tidak ditemukan"; continue; }
+        const match = src.normalizeCard(list[0]);
+        const detailRes = await animeFetch(src.detailPath(match));
+        const info = src.extractDetail(detailRes);
+        const ep = info.episodes.find(e => Number(e.number) === Number(epNum)) || info.episodes[Number(epNum) - 1];
+        if (!ep) { lastError = src.label + ": episode tidak ditemukan"; continue; }
+        targetId = ep.id;
+        targetCtx = match;
+      }
+
+      const res = await animeFetch(src.episodePath({ id: targetId }, targetCtx));
+      let url = src.extractStream(res);
+      if (!url) throw new Error("Link kosong");
+
+      const isB = /blogger\.com|video\.g\?|googleusercontent|youtube\.com|youtu\.be/.test(url);
+      const isM = /\.m3u8(\?|$)/i.test(url);
+      const isIF = isB || /\/embed\//.test(url);
+      const isVid = isM || /\.(mp4|webm|mkv)(\?|$)/i.test(url);
+
+      if (isVid) {
+        const v = document.createElement('video');
+        v.id = "animeVideo"; v.className = "anime-video"; v.controls = true; v.playsInline = true;
+        b.appendChild(v);
+        await attachAndPlayVideo(v, url);
+      } else {
+        b.innerHTML = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" style="border:0;display:block;width:100%;height:100%"></iframe>';
+      }
+      setVideoStatus('✅ Sedang memutar.', "");
+      return;
+    } catch (e) {
+      lastError = src.label + ": " + (e.message || "gagal");
+      continue;
+    }
+  }
+
+  setVideoStatus('❌ Semua sumber gagal memutar. Terakhir: ' + escapeHtml(lastError), "error");
 }
 function attachAndPlayVideo(v, url) {
   return new Promise(function(resolve, reject) {
@@ -1475,6 +1695,26 @@ Promise.all([fetchKeylist(), refreshUsersFromFirebase(), refreshPhotosFromFireba
   updateChatNotifBadge();
 });
 renderProducts(); updateCartCount(); startBanners(); drawSnake(); renderGameCenter(); updateAuthUI();
+
+// Cek adblock sekali saat load
+detectAdBlock().then(function(blocked) {
+  adBlockDetected = blocked;
+  if (blocked && currentUser && !sessionStorage.getItem("adblock_warned")) {
+    sessionStorage.setItem("adblock_warned", "1");
+    setTimeout(function() {
+      themedAlert(
+        "⚠️ ADBLOCK TERDETEKSI\n\n" +
+        "Sistem mendeteksi kamu menggunakan AdBlock.\n\n" +
+        "Selama AdBlock aktif:\n" +
+        "• Iklan tidak akan dimuat\n" +
+        "• Kamu TIDAK BISA mendapatkan Key gratis\n\n" +
+        "Harap matikan AdBlock / whitelist website ini, lalu refresh halaman.",
+        "warn",
+        "PERINGATAN"
+      );
+    }, 1500);
+  }
+});
 startChatBgPoller(); startAutoClearScheduler(); startExpTracker(); updateMiniPlayer(); refreshAccountCard();
 setInterval(async function() { if (!currentUser || currentUser.role !== "admin") return; const ok = await refreshUsersFromFirebase(); if (ok) { updateAdminNotifBadge(); const p = document.getElementById("adminPanelPage"); if (p && p.classList.contains("active")) { renderAdminStats(); renderAdminUsers(); } } }, 15000);
 setInterval(refreshAccountCard, 30000);
