@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>VOLKA STORE</title>
-<meta name="monetag" content="f7c56ed0820a0341c5b7d64261f7193f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0,0&display=swap" rel="stylesheet">
@@ -488,6 +487,181 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
 .splash-video{width:100%;height:100%;object-fit:cover;display:none}
 .splash-fallback{color:white;font-family:"Space Mono",monospace;font-size:16px;font-weight:700;text-align:center;padding:20px;display:none}
 .splash-skip-btn{position:absolute;top:20px;right:20px;padding:6px 14px;border-radius:50px;border:2px solid var(--ink);background:var(--cream);font-weight:700;font-size:11px;font-family:inherit;box-shadow:2px 2px 0 var(--ink);cursor:pointer;z-index:100000;display:none}
+
+/* ===== WIBU PLAY STYLE (GAME CENTER) ===== */
+:root{
+  /* =========================================
+     🎨 TEMA WARNA WIBU PLAY - GAMPANG DIGANTI
+     ========================================= */
+  --wp-bg-1:#1a0a2e;                    /* warna glow atas */
+  --wp-bg-2:#0a0a0f;                    /* warna background utama */
+  --wp-text:#ffffff;
+  --wp-card-size:min(28vw,120px);       /* ukuran card diamond */
+  --wp-card-radius:24px;                /* kelengkungan sudut */
+  --wp-card-gap:6px;                    /* jarak antar card */
+
+  /* Card Profile (Volz) */
+  --wp-profile-bg:rgba(255,255,255,.08);
+  --wp-profile-border:rgba(255,255,255,.18);
+
+  /* Card WibuGacha */
+  --wp-gacha-bg:linear-gradient(135deg,#3b82f6 0%,#1e40af 100%);
+  --wp-gacha-border:#3b82f6;
+  --wp-gacha-glow:0 0 25px rgba(59,130,246,.55);
+
+  /* Card Games (WibuPet lama) */
+  --wp-games-bg:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);
+  --wp-games-border:#fbbf24;
+  --wp-games-glow:0 0 25px rgba(251,191,36,.55);
+
+  /* Card Customer Service */
+  --wp-cs-bg:linear-gradient(135deg,#10b981 0%,#059669 100%);
+  --wp-cs-border:#10b981;
+  --wp-cs-glow:0 0 25px rgba(16,185,129,.55);
+
+  /* Card WibuGem (Key) */
+  --wp-gem-bg:rgba(20,20,30,.95);
+  --wp-gem-border:rgba(167,139,250,.5);
+  --wp-gem-glow:0 0 25px rgba(167,139,250,.5);
+}
+
+.wibuplay-page{
+  background:radial-gradient(circle at 50% 0%,var(--wp-bg-1) 0%,var(--wp-bg-2) 60%)!important;
+  color:var(--wp-text)!important;
+  min-height:100dvh;padding-bottom:0!important;
+}
+.wibuplay-page .topbar{
+  background:transparent!important;border-bottom:0!important;padding:12px 16px;
+}
+.wibuplay-page .topbar .top-title,
+.wibuplay-page .topbar .top-sub{color:var(--wp-text)!important;}
+.wibuplay-page .back-btn{
+  background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.15)!important;
+  box-shadow:none!important;color:var(--wp-text)!important;border-radius:50%;
+}
+
+
+  .wibuplay-wrap{
+  position:relative;min-height:calc(100dvh - 70px);
+  padding:20px 14px 100px;overflow:hidden;
+}
+.wibuplay-wrap::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 15% 25%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1.5px 1.5px at 75% 15%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.5px 1.5px at 45% 65%,rgba(255,255,255,.5),transparent),
+    radial-gradient(1.5px 1.5px at 85% 55%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.5px 1.5px at 25% 85%,rgba(255,255,255,.5),transparent),
+    radial-gradient(1.5px 1.5px at 65% 90%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.5px 1.5px at 5% 55%,rgba(255,255,255,.5),transparent);
+  pointer-events:none;
+}
+.wibuplay-wrap::after{
+  content:"";position:absolute;top:8%;left:50%;transform:translateX(-50%);
+  width:340px;height:340px;
+  background:radial-gradient(circle,rgba(167,139,250,.25) 0%,transparent 70%);
+  pointer-events:none;filter:blur(20px);
+}
+
+/* Stage = area tempat card berhamburan */
+.wibuplay-grid{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  height:640px;
+  margin:0 auto;
+}
+
+/* Base card */
+.wp-card{
+  position:absolute;
+  border-radius:26px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  border:2px solid transparent;
+  transform:rotate(45deg);
+  transition:transform .25s ease,filter .25s ease;
+}
+.wp-card:active{transform:rotate(45deg) scale(.94);}
+.wp-inner{
+  transform:rotate(-45deg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;text-align:center;color:#fff;padding:8px;
+  width:100%;pointer-events:none;
+}
+.wp-icon{font-size:36px!important;line-height:1;}
+.wp-label{font-size:13px;font-weight:700;line-height:1.1;color:#fff;}
+.wp-sub{font-size:9px;line-height:1.15;color:rgba(255,255,255,.85);}
+
+/* ====== POSISI & UKURAN MASING-MASING CARD ====== */
+
+/* 1. Profile (Volz) - atas tengah, ukuran sedang */
+.wp-profile{
+  width:130px;height:130px;
+  top:10px;
+  left:50%;
+  margin-left:-65px;
+  background:var(--wp-profile-bg);
+  border-color:var(--wp-profile-border);
+  backdrop-filter:blur(10px);
+}
+.wp-avatar{
+  width:50px;height:50px;border-radius:50%;overflow:hidden;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);
+}
+.wp-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.wp-avatar .material-symbols-rounded{font-size:26px;color:#fff;}
+.wp-name{font-size:13px;font-weight:700;color:#fff;}
+
+/* 2. WibuGacha - kanan atas, ukuran sedang-besar */
+.wp-gacha{
+  width:160px;height:160px;
+  top:150px;
+  right:10px;
+  background:var(--wp-gacha-bg);
+  border-color:var(--wp-gacha-border);
+  box-shadow:var(--wp-gacha-glow);
+}
+
+/* 3. Games (maskot) - kiri tengah, PALING BESAR */
+.wp-games{
+  width:180px;height:180px;
+  top:250px;
+  left:5px;
+  background:var(--wp-games-bg);
+  border-color:var(--wp-games-border);
+  box-shadow:var(--wp-games-glow);
+}
+
+/* 4. Customer Service - kanan bawah */
+.wp-cs{
+  width:150px;height:150px;
+  top:410px;
+  right:15px;
+  background:var(--wp-cs-bg);
+  border-color:var(--wp-cs-border);
+  box-shadow:var(--wp-cs-glow);
+}
+
+/* 5. WibuGem - bawah tengah, kecil */
+.wp-gem{
+  width:110px;height:110px;
+  bottom:20px;
+  left:50%;
+  margin-left:-55px;
+  background:var(--wp-gem-bg);
+  border-color:var(--wp-gem-border);
+  box-shadow:var(--wp-gem-glow);
+}
+.wp-gem .wp-icon{color:#a78bfa;font-size:28px!important;}
+
+.wp-mascot{width:70px;height:70px;object-fit:contain;}
+.wp-beta{
+  display:inline-block;font-size:8px;font-weight:700;padding:2px 6px;
+  background:#22c55e;color:#fff;border-radius:6px;margin-left:4px;vertical-align:middle;
+}
 </style>
 </head>
 <body>
@@ -682,19 +856,68 @@ h1{font-size:26px;line-height:1.05;margin:14px 0 7px}.hero p{font-size:11px;line
   <div class="full-lyrics-content" id="fullLyricsContent"></div>
 </div>
 
-<main id="gameCenter" class="page">
-  <div class="topbar"><div class="logo"><span class="material-symbols-rounded">sports_esports</span></div><div class="top-title-wrap"><div class="top-title">GAME CENTER</div><div class="top-sub">PILIH GAME FAVORITMU</div></div><button class="header-btn admin-add-btn hidden" onclick="openAddProduct()"><span class="material-symbols-rounded">add</span></button><button class="header-btn admin-panel-btn hidden" onclick="openAdminPanel()"><span class="material-symbols-rounded">admin_panel_settings</span></button><button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="gameCartCount">0</span></button></div>
+<main id="gameCenter" class="page wibuplay-page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('home')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div class="top-title-wrap">
+      <div class="top-title">Volka Store<span class="wp-beta">New</span></div>
+    </div>
+  </div>
+  <div class="wibuplay-wrap">
+    <div class="wibuplay-grid">
+      <!-- Card Profile (Volz) -->
+      <div class="wp-card wp-profile" onclick="openSettings()">
+        <div class="wp-inner">
+          <div class="wp-avatar" id="wpAvatar"><span class="material-symbols-rounded">person</span></div>
+          <div class="wp-name" id="wpName">Guest</div>
+        </div>
+      </div>
+      <!-- Card WibuGacha (Coming Soon) -->
+      <div class="wp-card wp-gacha" onclick="wpComingSoon('WibuGacha')">
+        <div class="wp-inner">
+          <span class="material-symbols-rounded wp-icon">auto_awesome</span>
+          <div class="wp-label">WibuGacha</div>
+          <div class="wp-sub">Coming soon</div>
+        </div>
+      </div>
+      <!-- Card Games (dengan maskot video) -->
+      <div class="wp-card wp-games" onclick="openGameList()">
+        <div class="wp-inner">
+          <video class="wp-mascot" src="maskot.mp4" autoplay muted loop playsinline></video>
+          <div class="wp-label">Games</div>
+          <div class="wp-sub">20+ Game</div>
+        </div>
+      </div>
+      <!-- Card Customer Service -->
+      <div class="wp-card wp-cs" onclick="chatAdmin()">
+        <div class="wp-inner">
+          <span class="material-symbols-rounded wp-icon">support_agent</span>
+          <div class="wp-label">Customer Service</div>
+          <div class="wp-sub">Chat Admin</div>
+        </div>
+      </div>
+      <!-- Card WibuGem (Key) -->
+      <div class="wp-card wp-gem">
+        <div class="wp-inner">
+          <span class="material-symbols-rounded wp-icon">diamond</span>
+          <div class="wp-label" id="wpKeyCount">0</div>
+          <div class="wp-sub">Key</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- HALAMAN DAFTAR GAME (grid lama) -->
+<main id="gameListPage" class="page">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('gameCenter')"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div class="top-title-wrap"><div class="top-title">DAFTAR GAME</div><div class="top-sub">PILIH GAME FAVORITMU</div></div>
+    <button class="header-btn admin-add-btn hidden" onclick="openAddProduct()"><span class="material-symbols-rounded">add</span></button>
+    <button class="header-btn admin-panel-btn hidden" onclick="openAdminPanel()"><span class="material-symbols-rounded">admin_panel_settings</span></button>
+    <button class="header-btn" onclick="openCart()"><span class="material-symbols-rounded">shopping_cart</span><span class="cart-count" id="gameCartCount">0</span></button>
+  </div>
   <div class="game-center-grid with-nav" id="gameCenterGrid"></div>
-</main>
-
-<main id="gamePlay" class="page game-page">
-  <div class="topbar"><button class="back-btn" onclick="closeGamePlay()"><span class="material-symbols-rounded">arrow_back</span></button><div class="top-title-wrap"><div class="top-title" id="gamePlayTitle">GAME</div><div class="top-sub" id="gamePlaySub">MAIN GAME</div></div></div>
-  <div class="tool-body"><div class="game-wrap" id="gamePlayBody"></div></div>
-</main>
-
-<main id="gamePage" class="page game-page">
-  <div class="topbar"><button class="back-btn" onclick="stopSnake();showPage('gameCenter')"><span class="material-symbols-rounded">arrow_back</span></button><div class="top-title-wrap"><div class="top-title">GAME CACING NOKIA</div><div class="top-sub">SNAKE CLASSIC</div></div></div>
-  <div class="tool-body"><div class="game-wrap"><div class="game-head"><span>SCORE: <b id="snakeScore">0</b></span><span id="snakeStatus">SIAP</span></div><canvas id="snakeCanvas" class="snake-canvas" width="360" height="360"></canvas><div class="game-controls"><span class="empty-control"></span><button onclick="setSnakeDirection(0,-1)">▲</button><span class="empty-control"></span><button onclick="setSnakeDirection(-1,0)">◀</button><button onclick="startSnake()">START</button><button onclick="setSnakeDirection(1,0)">▶</button><span class="empty-control"></span><button onclick="setSnakeDirection(0,1)">▼</button><span class="empty-control"></span></div></div></div>
 </main>
 
 <main id="animePage" class="page anime-page">
@@ -788,7 +1011,7 @@ const FIREBASE_PHOTOS_PATH = "/profile_photos";
 const FIREBASE_PIN_PATH = "/pinned_message";
 const FIREBASE_STATS_PATH = "/user_stats";
 const FIREBASE_HISTORY_PATH = "/watch_history";
-const AD_URL = "https://omg10.com/4/11868540";
+const AD_URL = "https://www.profitableratecpmnetwork.com/hsr620dxd?key=a78806e6ed66708e07165857ffbd1448";
 
 // ===== ADBLOCK DETECTION =====
 let adBlockDetected = false;
@@ -895,13 +1118,15 @@ function isEpisodeUnlocked(aid, eid) { const all = getUnlockedEpisodes(); return
 function refreshAccountCard() {
   const n = document.getElementById("acName"), i = document.getElementById("acId"), a = document.getElementById("acAvatar"), l = document.getElementById("acLevel"), f = document.getElementById("acExpFill"), e = document.getElementById("acExpNum"), k = document.getElementById("acKey");
   if (!n) return;
-  if (!currentUser) { n.textContent = "Guest"; i.textContent = "#000000"; a.innerHTML = '<span class="material-symbols-rounded">person</span>'; l.textContent = "1"; f.style.width = "0%"; e.textContent = "0/100"; k.textContent = "0"; return; }
+  if (!currentUser) { n.textContent = "Guest"; i.textContent = "#000000"; a.innerHTML = '<span class="material-symbols-rounded">person</span>'; l.textContent = "1"; f.style.width = "0%"; e.textContent = "0/100"; k.textContent = "0"; const wpX = document.getElementById("wpKeyCount"); if (wpX) wpX.textContent = "0"; return; }
   const p = getProfilePhoto(currentUser.username);
   if (p) a.innerHTML = '<img src="' + p + '" alt="">'; else a.innerHTML = '<span class="material-symbols-rounded">' + (currentUser.role === "admin" ? "shield_person" : "person") + '</span>';
   n.textContent = currentUser.username; i.textContent = getUserId(currentUser.username);
   const s = userStatsCache[String(currentUser.username).toLowerCase()] || getLocalStats(currentUser.username) || { totalExp: 0, key: 0 };
   const lv = computeLevelFromExp(s.totalExp || 0);
   l.textContent = lv.level; f.style.width = ((lv.currentExp / lv.nextLevelExp) * 100) + "%"; e.textContent = lv.currentExp + "/" + lv.nextLevelExp; k.textContent = s.key || 0;
+  const wpKey2 = document.getElementById("wpKeyCount");
+  if (wpKey2) wpKey2.textContent = s.key || 0;
 }
 
 // ===== EXP TRACKER =====
@@ -945,82 +1170,84 @@ async function loadUserStats() {
   else { const l = getLocalStats(currentUser.username); if (l) userStatsCache[String(currentUser.username).toLowerCase()] = l; else { const i = { totalExp: 0, key: 0 }; userStatsCache[String(currentUser.username).toLowerCase()] = i; saveLocalStats(currentUser.username, i); pushUserStats(currentUser.username, i); } }
   refreshAccountCard(); refreshSettingsModal();
 }
-
-// ===== REWARDED ADS (USER MUST CLAIM) =====
+// ===== REWARDED ADS (COUNTDOWN + TOMBOL LEWATI + AUTO REWARD) =====
 let adInProgress = false;
 let adTimer = null;
 async function watchAdForKeys() {
   if (!currentUser) { themedAlert("Login dulu buat nonton iklan.", "warn"); return; }
   if (adInProgress) { themedAlert("Iklan sedang berjalan...", "warn"); return; }
-  setAnimeStatus(loadingHtml("Memeriksa..."), "loading");
+
   const isBlocked = await detectAdBlock();
   adBlockDetected = isBlocked;
   if (isBlocked) {
-    await themedAlert(
-      "🚫 ADBLOCK TERDETEKSI!\n\n" +
-      "Akun kamu terdeteksi menggunakan AdBlock / pemblokir iklan.\n\n" +
-      "Karena iklan tidak bisa dimuat, kamu TIDAK BISA mendapatkan Key gratis.\n\n" +
-      "Cara mengatasi:\n" +
-      "1. Matikan AdBlock / pemblokir iklan\n" +
-      "2. Whitelist (kecualikan) website ini\n" +
-      "3. Refresh halaman\n\n" +
-      "Terima kasih 🙏",
-      "error",
-      "ADBLOCK AKTIF"
-    );
+    await themedAlert("🚫 ADBLOCK TERDETEKSI!\n\nMatikan AdBlock dulu ya, terus refresh halaman.", "error", "ADBLOCK AKTIF");
     return;
   }
+
   adInProgress = true;
-  const ok = await themedConfirm("Tonton iklan sampai selesai buat dapet 3 Key.\n\nKlik TONTON buat buka iklan di tab baru.\nSetelah iklan selesai, balik ke sini & klik KLAIM.", { okLabel: "TONTON IKLAN", okIcon: "play_circle", okStyle: "primary", type: "info", title: "REWARDED ADS" });
+  const ok = await themedConfirm(
+    "Tonton iklan sampai selesai buat dapet 3 Key.\n\nKlik TONTON buat mulai. Tunggu hitungan mundur selesai,\n\nDengan Menonton iklan DapatMembantu Membiayai server🙏",
+    { okLabel: "TONTON IKLAN", okIcon: "play_circle", okStyle: "primary", type: "info", title: "REWARDED ADS" }
+  );
   if (!ok) { adInProgress = false; return; }
-  window.open(AD_URL, "_blank");
+
+  // Buka iklan di tab baru, simpan referensinya supaya bisa ditutup otomatis
+  const adWindow = window.open(AD_URL, "_blank");
+
+  const requiredSecs = 20;
   let elapsed = 0;
-  const requiredSecs = 15;
+
   showModal({
     type: "info",
-    title: "IKLAN BERJALAN",
-    message: "Silakan tonton iklan di tab baru.\n\nWaktu: 0 / " + requiredSecs + " detik",
-    buttons: [
-      { label: "BATAL", icon: "close", style: "", onClick: () => { if (adTimer) { clearInterval(adTimer); adTimer = null; } adInProgress = false; } }
-    ]
+    title: "INFORMASI",
+    message: "Tunggu Timer Ampe kelar Aje,\n\nNOTE: dilarang refresh halaman website\n\nTunggu Timer Sampe selesai Dan Klaim Key Secara Free.\n\nHitungan mundur: " + requiredSecs + " detik",
+    buttons: []
   });
+
+  const modalBox = document.querySelector("#customModal .modal-box");
+  const modalActions = document.getElementById("modalActions");
+  modalActions.innerHTML = "";
+
+  // Tombol "Lewati" bergaya splash, tersembunyi sampai countdown selesai
+  let skipBtn = document.getElementById("adSkipBtn");
+  if (skipBtn) skipBtn.remove();
+  skipBtn = document.createElement("button");
+  skipBtn.id = "adSkipBtn";
+  skipBtn.innerHTML = "✕ Lewati";
+  skipBtn.style.cssText = "position:absolute;top:10px;right:10px;padding:6px 12px;border-radius:50px;border:2px solid #171717;background:#ff4b3e;color:#fff;font-weight:700;font-size:11px;font-family:inherit;box-shadow:2px 2px 0 #171717;cursor:pointer;display:none;z-index:10;";
+  modalBox.appendChild(skipBtn);
+
+  async function giveReward() {
+    if (adTimer) { clearInterval(adTimer); adTimer = null; }
+    try { if (adWindow && !adWindow.closed) adWindow.close(); } catch(e) {}
+    hideModal();
+    try { if (skipBtn && skipBtn.parentNode) skipBtn.parentNode.removeChild(skipBtn); } catch(e) {}
+
+    const k = String(currentUser.username).toLowerCase();
+    let s = userStatsCache[k] || getLocalStats(currentUser.username) || { totalExp: 0, key: 0 };
+    s.key = (s.key || 0) + 3;
+    userStatsCache[k] = s;
+    saveLocalStats(currentUser.username, s);
+    await pushUserStats(currentUser.username, s);
+    refreshAccountCard(); refreshSettingsModal();
+    if (document.getElementById("animePage")?.classList.contains("active") && currentAnimeCtx) renderEpisodeList(currentEpisodeList);
+    themedAlert("🎉 Kamu dapat 3 Key!\n\nTotal: " + s.key + " Key", "success", "BERHASIL");
+    adInProgress = false;
+  }
+
+  skipBtn.onclick = giveReward;
+
   adTimer = setInterval(() => {
     elapsed++;
+    const sisa = requiredSecs - elapsed;
+    const msgEl = document.getElementById("modalMsg");
     if (elapsed < requiredSecs) {
-      const msgEl = document.getElementById("modalMsg");
-      if (msgEl) msgEl.textContent = "Silakan tonton iklan di tab baru.\n\nWaktu: " + elapsed + " / " + requiredSecs + " detik";
+      if (msgEl) msgEl.textContent = "Sbr cuy Tunggu Timer selesai Dulu.\n\nNOTE: Jangn refres Halaman\n\nHitungan mundur: " + sisa + " detik";
     } else {
       clearInterval(adTimer);
       adTimer = null;
-      const ic = document.getElementById("modalIcon"), is = document.getElementById("modalIconSymbol");
-      const t = document.getElementById("modalTitle"), m = document.getElementById("modalMsg"), a = document.getElementById("modalActions");
-      ic.className = "modal-icon success";
-      is.textContent = "check_circle";
-      t.textContent = "IKLAN SELESAI";
-      m.textContent = "Apakah kamu sudah selesai nonton iklan?\n\nKlik KLAIM 3 KEY buat dapet reward.";
-      a.innerHTML = "";
-      const btnClose = document.createElement("button");
-      btnClose.className = "modal-btn";
-      btnClose.innerHTML = '<span class="material-symbols-rounded">close</span>TUTUP';
-      btnClose.onclick = () => { hideModal(); adInProgress = false; };
-      const btnClaim = document.createElement("button");
-      btnClaim.className = "modal-btn primary";
-      btnClaim.innerHTML = '<span class="material-symbols-rounded">check_circle</span>KLAIM 3 KEY';
-      btnClaim.onclick = async () => {
-        hideModal();
-        const k = String(currentUser.username).toLowerCase();
-        let s = userStatsCache[k] || getLocalStats(currentUser.username) || { totalExp: 0, key: 0 };
-        s.key = (s.key || 0) + 3;
-        userStatsCache[k] = s;
-        saveLocalStats(currentUser.username, s);
-        await pushUserStats(currentUser.username, s);
-        refreshAccountCard(); refreshSettingsModal();
-        if (document.getElementById("animePage")?.classList.contains("active") && currentAnimeCtx) renderEpisodeList(currentEpisodeList);
-        themedAlert("🎉 Kamu dapat 3 Key!\n\nTotal: " + s.key + " Key", "success", "BERHASIL");
-        adInProgress = false;
-      };
-      a.appendChild(btnClose);
-      a.appendChild(btnClaim);
+      if (msgEl) msgEl.textContent = "Iklan selesai!\n\nKlik tombol \"Lewati\" di pojok kanan atas buat klaim 3 Key.";
+      skipBtn.style.display = "block";
     }
   }, 1000);
 }
@@ -1076,7 +1303,7 @@ function showAuthError(id, msg) { const e = document.getElementById(id); if (!e)
 async function submitLogin() { const u = (document.getElementById("loginUsername").value || "").trim(); const p = document.getElementById("loginPassword").value || ""; if (!u || !p) { showAuthError("loginError", "Username dan password wajib diisi."); return; } await refreshUsersFromFirebase(); await refreshPhotosFromFirebase(); const user = findUser(u); if (!user) { showAuthError("loginError", "Username tidak ditemukan."); return; } if (user.password !== p) { showAuthError("loginError", "Password salah."); return; } currentUser = { username: user.username, role: String(user.role || "member").toLowerCase() }; localStorage.setItem("volka_user", JSON.stringify(currentUser)); await loadUserStats(); loadWatchHistory(); updateAuthUI(); document.getElementById("loginUsername").value = ""; document.getElementById("loginPassword").value = ""; document.querySelectorAll(".page").forEach(p => p.classList.remove("active")); showSplash(function() { showPage("home"); }); }
 async function submitRegister() { const u = (document.getElementById("regUsername").value || "").trim(); const p = (document.getElementById("regPassword").value || ""); const c = (document.getElementById("regConfirm").value || ""); if (u.length < 3) { showAuthError("registerError", "Username minimal 3 karakter."); return; } if (p.length < 6) { showAuthError("registerError", "Password minimal 6 karakter."); return; } if (p !== c) { showAuthError("registerError", "Konfirmasi password tidak cocok."); return; } await refreshUsersFromFirebase(); if (findUser(u)) { showAuthError("registerError", "Username sudah dipakai."); return; } const nu = { username: u, password: p, role: "member" }; localUsers.push(nu); saveLocalUsers(); firebaseUsers.push(nu); await pushUserToFirebase(nu); currentUser = { username: u, role: "member" }; localStorage.setItem("volka_user", JSON.stringify(currentUser)); const i = { totalExp: 0, key: 0 }; userStatsCache[String(u).toLowerCase()] = i; saveLocalStats(u, i); pushUserStats(u, i); updateAuthUI(); refreshAccountCard(); const s = document.getElementById("registerSuccess"); if (s) { s.textContent = "Akun berhasil dibuat! Selamat datang, " + u; s.classList.add("show"); } document.getElementById("regUsername").value = ""; document.getElementById("regPassword").value = ""; document.getElementById("regConfirm").value = ""; document.querySelectorAll(".page").forEach(p => p.classList.remove("active")); showSplash(function() { showPage("home"); }); }
 async function doLogout() { const ok = await themedConfirm("Yakin mau keluar?", { okLabel: "KELUAR", okStyle: "danger" }); if (!ok) return; currentUser = null; localStorage.removeItem("volka_user"); updateAuthUI(); refreshAccountCard(); showPage("loginPage"); }
-function updateAuthUI() { const a = currentUser && currentUser.role === "admin"; document.querySelectorAll(".admin-add-btn").forEach(function(b) { if (a) b.classList.remove("hidden"); else b.classList.add("hidden"); }); document.querySelectorAll(".admin-panel-btn").forEach(function(b) { if (a) b.classList.remove("hidden"); else b.classList.add("hidden"); }); const ac = document.getElementById("adminPanelCard"); if (ac) { if (a) ac.classList.remove("hidden"); else ac.classList.add("hidden"); } updateAdminNotifBadge(); updateChatNotifBadge(); refreshAccountCard(); }
+function updateAuthUI() { const a = currentUser && currentUser.role === "admin"; document.querySelectorAll(".admin-add-btn").forEach(function(b) { if (a) b.classList.remove("hidden"); else b.classList.add("hidden"); }); document.querySelectorAll(".admin-panel-btn").forEach(function(b) { if (a) b.classList.remove("hidden"); else b.classList.add("hidden"); }); const ac = document.getElementById("adminPanelCard"); if (ac) { if (a) ac.classList.remove("hidden"); else ac.classList.add("hidden"); } updateAdminNotifBadge(); updateChatNotifBadge(); refreshAccountCard(); renderGameCenter(); }
 function updateAdminNotifBadge() { const a = currentUser && currentUser.role === "admin"; const t = getAllUsers().length; const bi = document.getElementById("adminNotifBadge"), bn = document.getElementById("navInfoNotif"), ic = document.getElementById("adminUserCountInline"); if (ic) ic.textContent = t; if (a) { if (bi) { bi.textContent = t; bi.classList.remove("hidden"); } if (bn) { bn.textContent = t; bn.classList.remove("hidden"); } } else { if (bi) bi.classList.add("hidden"); if (bn) bn.classList.add("hidden"); } }
 function openProfile() { openSettings(); }
 
@@ -1179,7 +1406,7 @@ function showPage(id, btn) {
   if (id === "adminPanelPage" && (!currentUser || currentUser.role !== "admin")) { themedAlert("Hanya ADMIN.", "error"); id = currentUser ? "home" : "loginPage"; }
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   const page = document.getElementById(id); if (!page) return; page.classList.add("active");
-  if (["productDetail","checkout","globalChatPage","gamePage","animePage","gamePlay","musicPage","musicPlayerPage","loginPage","registerPage","addProductPage","adminPanelPage"].includes(id)) hideBottomNav(); else showBottomNav();
+  if (["productDetail","checkout","globalChatPage","gamePage","animePage","gamePlay","musicPage","musicPlayerPage","loginPage","registerPage","addProductPage","adminPanelPage","gameListPage"].includes(id)) hideBottomNav(); else showBottomNav();
   
   // Auto-update bottom nav state
   const navBtns = document.querySelectorAll(".nav button");
@@ -1197,6 +1424,7 @@ function showPage(id, btn) {
   window.scrollTo({ top: 0, behavior: "smooth" });
   if (id === "gamePage") drawSnake();
   if (id === "gameCenter") renderGameCenter();
+if (id === "gameListPage") renderGameList();
   if (id === "musicPage") { const e = document.getElementById("musicResults"); if (e && !e.dataset.loaded) loadTrendingMusic(); updateMiniPlayer(); }
   if (id === "animePage") { renderSourceChips(); renderGenreChips(); renderWatchHistory(); if (!animeHomeLoaded) loadAnimeHome(); }
   if (id === "adminPanelPage") { renderAdminStats(); renderAdminUsers(); startAdminPanelPolling(); } else { stopAdminPanelPolling(); }
@@ -1634,14 +1862,42 @@ document.getElementById("animeSearchInput").addEventListener("keydown", e => { i
 
 // ===== GAMES =====
 function renderGameCenter() {
+  // Update card profile Wibu Play (Volz)
+  const wpAvatar = document.getElementById("wpAvatar");
+  const wpName = document.getElementById("wpName");
+  const wpKey = document.getElementById("wpKeyCount");
+  if (wpAvatar && wpName) {
+    if (currentUser) {
+      const p = getProfilePhoto(currentUser.username);
+      if (p) wpAvatar.innerHTML = '<img src="' + p + '" alt="">';
+      else wpAvatar.innerHTML = '<span class="material-symbols-rounded">' + (currentUser.role === "admin" ? "shield_person" : "person") + '</span>';
+      wpName.textContent = currentUser.username;
+    } else {
+      wpAvatar.innerHTML = '<span class="material-symbols-rounded">person</span>';
+      wpName.textContent = "Guest";
+    }
+  }
+  if (wpKey) {
+    const s = currentUser ? (userStatsCache[String(currentUser.username).toLowerCase()] || getLocalStats(currentUser.username) || { key: 0 }) : { key: 0 };
+    wpKey.textContent = s.key || 0;
+  }
+}
+
+function renderGameList() {
   const g = document.getElementById("gameCenterGrid"); if (!g) return;
   g.innerHTML = CONFIG.games.map(x => {
     if (x.playable) { const a = x.action || `openGame('${x.id}')`; return '<div class="game-center-card playable"><div class="game-icon"><span class="material-symbols-rounded">' + x.icon + '</span></div><div class="game-name">' + escapeHtml(x.name) + '</div><div class="game-desc">' + escapeHtml(x.desc) + '</div><button class="play-btn" onclick="' + a + '"><span class="material-symbols-rounded">play_arrow</span>MAIN</button></div>'; }
     return '<div class="game-center-card"><span class="soon-badge">SOON</span><div class="game-icon"><span class="material-symbols-rounded">' + x.icon + '</span></div><div class="game-name">' + escapeHtml(x.name) + '</div><div class="game-desc">' + escapeHtml(x.desc) + '</div></div>';
   }).join("");
 }
+
+function openGameList() { showPage("gameListPage"); renderGameList(); }
+
+function wpComingSoon(feature) {
+  themedAlert("🚧 " + feature + " masih dalam pengembangan.\n\nComing Soon!", "info", "COMING SOON");
+}
 function openSnakeGame() { showPage("gamePage"); drawSnake(); }
-function closeGamePlay() { if (currentGameCleanup) { try { currentGameCleanup(); } catch (e) {} currentGameCleanup = null; } showPage("gameCenter"); }
+function closeGamePlay() { if (currentGameCleanup) { try { currentGameCleanup(); } catch (e) {} currentGameCleanup = null; } showPage("gameListPage"); renderGameList(); }
 function openGame(id) {
   const g = CONFIG.games.find(x => x.id === id);
   document.getElementById("gamePlayTitle").textContent = g ? g.name : "GAME";
